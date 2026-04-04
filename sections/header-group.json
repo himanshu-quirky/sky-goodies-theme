@@ -1,3 +1,12 @@
+/*
+ * ------------------------------------------------------------
+ * IMPORTANT: The contents of this file are auto-generated.
+ *
+ * This file may be updated by the Shopify admin theme editor
+ * or related systems. Please exercise caution as any changes
+ * made to this file may be overwritten.
+ * ------------------------------------------------------------
+ */
 {
   "name": "Header",
   "type": "header",
@@ -30,7 +39,7 @@
         "ann3"
       ],
       "settings": {
-        "bg_color": "#FD9963",
+        "bg_color": "#fd9963",
         "text_color": "#ffffff"
       }
     },
@@ -38,7 +47,8 @@
       "type": "skygoodies-header",
       "settings": {
         "bg_color": "#ffffff",
-        "logo_height": 48
+        "logo_height": 48,
+        "menu": "new-menu"
       }
     }
   },
