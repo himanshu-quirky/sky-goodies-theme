@@ -1,0 +1,91 @@
+<section class="cols" style="background: {{ section.settings.bg_color }}; padding-top: {{ section.settings.padding_top }}px; padding-bottom: {{ section.settings.padding_bottom }}px;">
+  <div class="cols__row">
+    {%- for block in section.blocks -%}
+      <a href="{{ block.settings.link }}" class="col-c" {{ block.shopify_attributes }}>
+        <div class="col-c__img">
+          {%- if block.settings.image != blank -%}
+            <img src="{{ block.settings.image | image_url: width: 200 }}" alt="{{ block.settings.title | escape }}">
+          {%- else -%}
+            {{ 'collection-1' | placeholder_svg_tag: 'placeholder-svg' }}
+          {%- endif -%}
+        </div>
+        <span class="col-c__lbl" style="color: {{ section.settings.text_color }}">{{ block.settings.title }}</span>
+      </a>
+    {%- endfor -%}
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "Sky Collections Circles",
+  "settings": [
+    {
+      "type": "color",
+      "id": "bg_color",
+      "label": "Background Color",
+      "default": "#ffffff"
+    },
+    {
+      "type": "color",
+      "id": "text_color",
+      "label": "Text Color",
+      "default": "#2C2825"
+    },
+    {
+      "type": "range",
+      "id": "padding_top",
+      "min": 0,
+      "max": 100,
+      "step": 4,
+      "unit": "px",
+      "label": "Padding Top",
+      "default": 48
+    },
+    {
+      "type": "range",
+      "id": "padding_bottom",
+      "min": 0,
+      "max": 100,
+      "step": 4,
+      "unit": "px",
+      "label": "Padding Bottom",
+      "default": 40
+    }
+  ],
+  "blocks": [
+    {
+      "type": "collection",
+      "name": "Collection Circle",
+      "settings": [
+        {
+          "type": "image_picker",
+          "id": "image",
+          "label": "Image"
+        },
+        {
+          "type": "text",
+          "id": "title",
+          "label": "Collection Title",
+          "default": "Collection"
+        },
+        {
+          "type": "url",
+          "id": "link",
+          "label": "Link"
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "Sky Collections Circles",
+      "blocks": [
+        { "type": "collection", "settings": { "title": "Calendars" } },
+        { "type": "collection", "settings": { "title": "Party Decor" } },
+        { "type": "collection", "settings": { "title": "Kids Activities" } },
+        { "type": "collection", "settings": { "title": "DIYs for Adults" } }
+      ]
+    }
+  ]
+}
+{% endschema %}

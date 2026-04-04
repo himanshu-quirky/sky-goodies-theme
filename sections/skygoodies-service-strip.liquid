@@ -1,0 +1,68 @@
+<section class="svc" style="background: {{ section.settings.bg_color }}; border-bottom: 1px solid {{ section.settings.border_color }};">
+  <div class="svc__row">
+    {%- for block in section.blocks -%}
+      <div class="svc__item" {{ block.shopify_attributes }}>
+        {%- if block.settings.image != blank -%}
+          <img src="{{ block.settings.image | image_url: width: 100 }}" alt="{{ block.settings.text | escape }}">
+        {%- endif -%}
+        <span style="color: {{ section.settings.text_color }}">{{ block.settings.text }}</span>
+      </div>
+    {%- endfor -%}
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "Sky Service Strip",
+  "settings": [
+    {
+      "type": "color",
+      "id": "bg_color",
+      "label": "Background Color",
+      "default": "#ffffff"
+    },
+    {
+      "type": "color",
+      "id": "border_color",
+      "label": "Bottom Border Color",
+      "default": "rgba(0,0,0,0.04)"
+    },
+    {
+      "type": "color",
+      "id": "text_color",
+      "label": "Text Color",
+      "default": "#6B6560"
+    }
+  ],
+  "blocks": [
+    {
+      "type": "service",
+      "name": "Service",
+      "settings": [
+        {
+          "type": "image_picker",
+          "id": "image",
+          "label": "Icon Image"
+        },
+        {
+          "type": "text",
+          "id": "text",
+          "label": "Text",
+          "default": "Mindful Activities"
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "Sky Service Strip",
+      "blocks": [
+        { "type": "service", "settings": { "text": "Mindful Activities for Relaxation" } },
+        { "type": "service", "settings": { "text": "Travel Friendly Souvenirs of India" } },
+        { "type": "service", "settings": { "text": "Made in India" } },
+        { "type": "service", "settings": { "text": "Educational Fun for Kids" } }
+      ]
+    }
+  ]
+}
+{% endschema %}

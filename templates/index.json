@@ -1,1 +1,120 @@
-{"sections":{"slideshow_kA7w3Q":{"type":"slideshow","blocks":{"slide_Y9nfeQ":{"type":"_slide","settings":{"media_type_1":"image","image_1":"shopify:\/\/shop_images\/BOGO-New-website-2025-home_desktop_horizontal_banner_copy.jpg","content_direction":"column","vertical_on_mobile":true,"horizontal_alignment":"flex-start","vertical_alignment":"center","align_baseline":false,"horizontal_alignment_flex_direction_column":"center","vertical_alignment_flex_direction_column":"center","gap":12,"inherit_color_scheme":false,"color_scheme":"scheme-6","toggle_overlay":false,"overlay_color":"#00000026","overlay_style":"solid","gradient_direction":"to top","padding-block-start":48,"padding-block-end":48,"padding-inline-start":48,"padding-inline-end":48},"blocks":{}},"slide_pe884p":{"type":"_slide","settings":{"media_type_1":"image","content_direction":"column","vertical_on_mobile":true,"horizontal_alignment":"flex-start","vertical_alignment":"center","align_baseline":false,"horizontal_alignment_flex_direction_column":"center","vertical_alignment_flex_direction_column":"center","gap":12,"inherit_color_scheme":false,"color_scheme":"scheme-6","toggle_overlay":false,"overlay_color":"#00000026","overlay_style":"solid","gradient_direction":"to top","padding-block-start":48,"padding-block-end":48,"padding-inline-start":48,"padding-inline-end":48},"blocks":{}}},"block_order":["slide_Y9nfeQ","slide_pe884p"],"custom_css":["@media (max-width: 649px) {.slideshow-section {display: none; }}"],"name":"Desktop Temp Ban","settings":{"display_mode":"full_frame","section_width":"full-width","full_frame_on_mobile":false,"slideshow_gap":12,"corner_radius":0,"slide_height":"small","content_position":"on-media","color_scheme":"","icons_style":"arrows_large","icons_shape":"none","slideshow_controls_style":"dots","autoplay":false,"autoplay_speed":4,"padding-block-start":0,"padding-block-end":0}},"slideshow_NGAq8f":{"type":"slideshow","blocks":{"slide_UaWrHd":{"type":"_slide","settings":{"media_type_1":"image","image_1":"shopify:\/\/shop_images\/BOGO_New-website-2025-home_mobile_banner_copy.jpg","content_direction":"column","vertical_on_mobile":true,"horizontal_alignment":"flex-start","vertical_alignment":"center","align_baseline":false,"horizontal_alignment_flex_direction_column":"center","vertical_alignment_flex_direction_column":"center","gap":12,"inherit_color_scheme":false,"color_scheme":"scheme-6","toggle_overlay":false,"overlay_color":"#00000026","overlay_style":"solid","gradient_direction":"to top","padding-block-start":48,"padding-block-end":48,"padding-inline-start":48,"padding-inline-end":48},"blocks":{}},"slide_xiHrcV":{"type":"_slide","settings":{"media_type_1":"image","content_direction":"column","vertical_on_mobile":true,"horizontal_alignment":"flex-start","vertical_alignment":"center","align_baseline":false,"horizontal_alignment_flex_direction_column":"center","vertical_alignment_flex_direction_column":"center","gap":12,"inherit_color_scheme":false,"color_scheme":"scheme-6","toggle_overlay":false,"overlay_color":"#00000026","overlay_style":"solid","gradient_direction":"to top","padding-block-start":48,"padding-block-end":48,"padding-inline-start":48,"padding-inline-end":48},"blocks":{}}},"block_order":["slide_UaWrHd","slide_xiHrcV"],"custom_css":["@media (min-width: 650px) {.slideshow-section {display: none; }}"],"name":"Mobile Temp Ban","settings":{"display_mode":"full_frame","section_width":"full-width","full_frame_on_mobile":false,"slideshow_gap":12,"corner_radius":0,"slide_height":"large","content_position":"on-media","color_scheme":"","icons_style":"arrows_large","icons_shape":"none","slideshow_controls_style":"dots","autoplay":true,"autoplay_speed":7,"padding-block-start":0,"padding-block-end":0}},"collection_list_QgDKNT":{"type":"collection-list","blocks":{"group_YXBxyB":{"type":"group","name":"t:names.header","settings":{"content_direction":"column","vertical_on_mobile":true,"horizontal_alignment":"flex-start","vertical_alignment":"center","align_baseline":false,"horizontal_alignment_flex_direction_column":"center","vertical_alignment_flex_direction_column":"center","gap":12,"width":"fill","custom_width":100,"width_mobile":"fill","custom_width_mobile":100,"height":"fit","custom_height":100,"inherit_color_scheme":true,"color_scheme":"","background_media":"none","video_position":"cover","background_image_position":"cover","border":"none","border_width":1,"border_opacity":100,"border_radius":0,"toggle_overlay":false,"overlay_color":"#00000026","overlay_style":"solid","gradient_direction":"to top","link":"","open_in_new_tab":false,"placeholder":"","padding-block-start":0,"padding-block-end":0,"padding-inline-start":0,"padding-inline-end":0},"blocks":{"text_MzgQQn":{"type":"text","name":"t:names.text","settings":{"text":"<h3>Shop by collection<\/h3>","width":"fit-content","max_width":"normal","alignment":"left","type_preset":"rte","font":"var(--font-body--family)","font_size":"1rem","line_height":"normal","letter_spacing":"normal","case":"none","wrap":"pretty","color":"var(--color-foreground)","background":false,"background_color":"#00000026","corner_radius":0,"padding-block-start":0,"padding-block-end":16,"padding-inline-start":0,"padding-inline-end":0},"blocks":{}}},"block_order":["text_MzgQQn"]},"static-collection-card":{"type":"_collection-card","name":"t:names.collection_card","static":true,"settings":{"placement":"below_image","horizontal_alignment":"flex-start","vertical_alignment":"center","collection_card_gap":8,"inherit_color_scheme":true,"color_scheme":"","border":"none","border_width":1,"border_opacity":100,"border_radius":0},"blocks":{"collection_title_8NKzF3":{"type":"collection-title","name":"t:names.collection_title","settings":{"width":"fit-content","max_width":"normal","alignment":"left","type_preset":"rte","font":"var(--font-body--family)","font_size":"1rem","line_height":"normal","letter_spacing":"normal","case":"none","wrap":"pretty","color":"var(--color-foreground)","background":false,"background_color":"#00000026","corner_radius":0,"padding-block-start":0,"padding-block-end":0,"padding-inline-start":0,"padding-inline-end":0},"blocks":{}},"collection-card-image":{"type":"_collection-card-image","name":"t:names.collection_card_image","static":true,"settings":{"image_ratio":"square","toggle_overlay":false,"overlay_color":"#00000026","overlay_style":"solid","gradient_direction":"to top","border":"none","border_width":1,"border_opacity":100,"border_radius":0},"blocks":{}}},"block_order":["collection_title_8NKzF3"]}},"block_order":["group_YXBxyB"],"custom_css":["img {border-radius: 50%;}"],"name":"t:names.collections_carousel","settings":{"collection_list":["2025-calendars"],"layout_type":"carousel","carousel_on_mobile":false,"columns":3,"mobile_columns":"2","mobile_card_size":"60cqw","columns_gap":8,"bento_gap":8,"rows_gap":8,"max_collections":4,"icons_style":"arrow","icons_shape":"circle","section_width":"page-width","gap":12,"color_scheme":"","padding-block-start":48,"padding-block-end":48}},"product_list_EDUBdR":{"type":"product-list","blocks":{"static-header":{"type":"_product-list-content","static":true,"settings":{"content_direction":"column","vertical_on_mobile":true,"horizontal_alignment":"flex-start","vertical_alignment":"center","align_baseline":false,"horizontal_alignment_flex_direction_column":"center","vertical_alignment_flex_direction_column":"center","gap":12,"width":"fill","custom_width":100,"width_mobile":"fill","custom_width_mobile":100,"height":"fit","custom_height":100,"inherit_color_scheme":true,"color_scheme":"","background_media":"none","video_position":"cover","background_image_position":"cover","border":"none","border_width":1,"border_opacity":100,"border_radius":0,"padding-block-start":0,"padding-block-end":0,"padding-inline-start":0,"padding-inline-end":0},"blocks":{"product_list_text_qK4EWG":{"type":"_product-list-text","name":"t:names.collection_title","settings":{"text":"<h3>Make Your Workspace Yours<\/h3>","width":"fit-content","max_width":"normal","alignment":"left","type_preset":"h2","font":"var(--font-primary--family)","font_size":"","line_height":"normal","letter_spacing":"normal","case":"none","wrap":"pretty","color":"","background":false,"background_color":"#00000026","corner_radius":0,"padding-block-start":0,"padding-block-end":0,"padding-inline-start":0,"padding-inline-end":0},"blocks":{}}},"block_order":["product_list_text_qK4EWG"]},"static-product-card":{"type":"_product-card","name":"t:names.product_card","static":true,"settings":{"product_card_gap":0,"inherit_color_scheme":false,"color_scheme":"scheme-2","border":"none","border_width":1,"border_opacity":100,"border_radius":10,"padding-block-start":0,"padding-block-end":0,"padding-inline-start":0,"padding-inline-end":0},"blocks":{"product_card_gallery_hpki3q":{"type":"_product-card-gallery","name":"t:names.product_card_media","settings":{"image_ratio":"square","border":"none","border_width":1,"border_opacity":100,"border_radius":0,"padding-block-start":0,"padding-block-end":0,"padding-inline-start":0,"padding-inline-end":0},"blocks":{}},"group_jHUdWN":{"type":"_product-card-group","name":"t:names.group","settings":{"content_direction":"column","vertical_on_mobile":true,"horizontal_alignment":"flex-start","vertical_alignment":"center","align_baseline":false,"horizontal_alignment_flex_direction_column":"flex-start","vertical_alignment_flex_direction_column":"center","gap":4,"width":"fill","custom_width":100,"width_mobile":"fill","custom_width_mobile":100,"height":"fit","custom_height":100,"inherit_color_scheme":true,"color_scheme":"","background_media":"none","video_position":"cover","background_image_position":"cover","border":"none","border_width":1,"border_opacity":100,"border_radius":0,"toggle_overlay":false,"overlay_color":"#00000026","overlay_style":"solid","gradient_direction":"to top","link":"","open_in_new_tab":false,"padding-block-start":24,"padding-block-end":24,"padding-inline-start":24,"padding-inline-end":24},"blocks":{"product_title_gH3cpy":{"type":"product-title","name":"t:names.product_title","settings":{"width":"fit-content","max_width":"normal","alignment":"left","type_preset":"paragraph","font":"var(--font-body--family)","font_size":"1rem","line_height":"normal","letter_spacing":"normal","case":"none","wrap":"pretty","color":"var(--color-foreground)","background":false,"background_color":"#00000026","corner_radius":0,"padding-block-start":0,"padding-block-end":0,"padding-inline-start":0,"padding-inline-end":0},"blocks":{}},"price_anAima":{"type":"price","name":"t:names.product_price","settings":{"show_sale_price_first":true,"show_installments":false,"show_tax_info":false,"type_preset":"paragraph","width":"100%","alignment":"left","font":"var(--font-body--family)","font_size":"1rem","line_height":"normal","letter_spacing":"normal","case":"none","color":"var(--color-foreground)","padding-block-start":0,"padding-block-end":0,"padding-inline-start":0,"padding-inline-end":0},"blocks":{}},"swatches_eYcKAz":{"type":"swatches","name":"t:names.swatches","settings":{"product_swatches_alignment":"flex-start","product_swatches_alignment_mobile":"flex-start","hide_padding":false,"product_swatches_padding_top":4,"product_swatches_padding_bottom":0,"product_swatches_padding_left":0,"product_swatches_padding_right":0},"blocks":{}}},"block_order":["product_title_gH3cpy","price_anAima","swatches_eYcKAz"]}},"block_order":["product_card_gallery_hpki3q","group_jHUdWN"]}},"name":"Featured collection","settings":{"collection":"all","layout_type":"grid","carousel_on_mobile":false,"max_products":8,"columns":4,"mobile_columns":"2","mobile_card_size":"60cqw","columns_gap":12,"rows_gap":12,"icons_style":"arrow","icons_shape":"none","section_width":"page-width","horizontal_alignment":"flex-start","gap":28,"color_scheme":"scheme-1","padding-block-start":48,"padding-block-end":64}},"media_with_content_LfPdEJ":{"type":"media-with-content","blocks":{"media":{"type":"_media-without-appearance","static":true,"settings":{"media_type":"video","link":"","video_loop":true,"video_autoplay":true,"image_position":"cover","video_position":"cover"},"blocks":{}},"content":{"type":"_content-without-appearance","static":true,"settings":{"horizontal_alignment_flex_direction_column":"center","vertical_alignment_flex_direction_column":"center","gap":24},"blocks":{"image_y4ApqF":{"type":"image","name":"t:names.image","settings":{"link":"","image_ratio":"adapt","width":"fill","custom_width":100,"width_mobile":"fill","custom_width_mobile":100,"height":"fit","border":"none","border_width":1,"border_opacity":100,"border_radius":0,"padding-block-start":0,"padding-block-end":0,"padding-inline-start":0,"padding-inline-end":0},"blocks":{}},"text_Hf79zK":{"type":"text","name":"t:names.heading","settings":{"text":"<h2>Productivity Essentials<\/h2>","width":"fit-content","max_width":"normal","alignment":"left","type_preset":"h3","font":"var(--font-primary--family)","font_size":"","line_height":"normal","letter_spacing":"normal","case":"none","wrap":"pretty","color":"","background":false,"background_color":"#00000026","corner_radius":0,"padding-block-start":0,"padding-block-end":0,"padding-inline-start":0,"padding-inline-end":0},"blocks":{}},"text_jxGhdJ":{"type":"text","settings":{"text":"<p>Objects that partner with your digital tools so you can focus on your most important work.<\/p>","width":"fit-content","max_width":"narrow","alignment":"left","type_preset":"rte","font":"var(--font-primary--family)","font_size":"","line_height":"normal","letter_spacing":"normal","case":"none","wrap":"pretty","color":"","background":false,"background_color":"#00000026","corner_radius":0,"padding-block-start":0,"padding-block-end":0,"padding-inline-start":0,"padding-inline-end":0},"blocks":{}},"button_zg4nUF":{"type":"button","settings":{"label":"Shop Now","link":"shopify:\/\/collections\/all","open_in_new_tab":false,"style_class":"button","width":"fit-content","custom_width":100,"width_mobile":"fit-content","custom_width_mobile":100},"blocks":{}}},"block_order":["image_y4ApqF","text_Hf79zK","text_jxGhdJ","button_zg4nUF"]}},"name":"t:names.media_with_text","settings":{"media_position":"left","media_width":"medium","media_height":"50svh","section_width":"page-width","extend_media":true,"color_scheme":"scheme-41dbb9c3-0866-4036-9494-aa0e1c1cedda","padding-block-start":0,"padding-block-end":0}},"collection_list_xpBxCm":{"type":"collection-list","blocks":{"group_mfTd9p":{"type":"group","name":"t:names.header","settings":{"content_direction":"column","vertical_on_mobile":true,"horizontal_alignment":"flex-start","vertical_alignment":"center","align_baseline":false,"horizontal_alignment_flex_direction_column":"center","vertical_alignment_flex_direction_column":"center","gap":16,"width":"fill","custom_width":100,"width_mobile":"fill","custom_width_mobile":100,"height":"fit","custom_height":100,"inherit_color_scheme":true,"color_scheme":"","background_media":"none","video_position":"cover","background_image_position":"cover","border":"none","border_width":1,"border_opacity":100,"border_radius":0,"toggle_overlay":false,"overlay_color":"#00000026","overlay_style":"solid","gradient_direction":"to top","link":"","open_in_new_tab":false,"placeholder":"","padding-block-start":0,"padding-block-end":16,"padding-inline-start":0,"padding-inline-end":0},"blocks":{"text_AYrwfM":{"type":"text","name":"t:names.text","settings":{"text":"<h2>Shop by Collection<\/h2>","width":"fit-content","max_width":"normal","alignment":"left","type_preset":"h2","font":"var(--font-body--family)","font_size":"1rem","line_height":"normal","letter_spacing":"normal","case":"none","wrap":"pretty","color":"","background":false,"background_color":"#00000026","corner_radius":0,"padding-block-start":0,"padding-block-end":0,"padding-inline-start":0,"padding-inline-end":0},"blocks":{}}},"block_order":["text_AYrwfM"]},"static-collection-card":{"type":"_collection-card","name":"t:names.collection_card","static":true,"settings":{"placement":"on_image","horizontal_alignment":"flex-start","vertical_alignment":"flex-start","collection_card_gap":8,"inherit_color_scheme":true,"color_scheme":"scheme-6","border":"none","border_width":1,"border_opacity":100,"border_radius":10},"blocks":{"collection_title_zyBdAJ":{"type":"collection-title","name":"t:names.collection_title","settings":{"width":"fit-content","max_width":"normal","alignment":"left","type_preset":"h5","font":"var(--font-body--family)","font_size":"1rem","line_height":"normal","letter_spacing":"normal","case":"none","wrap":"pretty","color":"var(--color-foreground)","background":false,"background_color":"#00000026","corner_radius":0,"padding-block-start":0,"padding-block-end":0,"padding-inline-start":0,"padding-inline-end":0},"blocks":{}},"collection-card-image":{"type":"_collection-card-image","static":true,"settings":{"image_ratio":"portrait","toggle_overlay":false,"overlay_color":"#00000026","overlay_style":"solid","gradient_direction":"to top","border":"none","border_width":1,"border_opacity":100,"border_radius":0},"blocks":{}}},"block_order":["collection_title_zyBdAJ"]}},"block_order":["group_mfTd9p"],"name":"Collection list","settings":{"collection_list":[],"layout_type":"bento","carousel_on_mobile":true,"columns":4,"mobile_columns":"2","mobile_card_size":"60cqw","columns_gap":16,"bento_gap":12,"rows_gap":16,"max_collections":4,"icons_style":"arrow","icons_shape":"none","section_width":"page-width","gap":12,"color_scheme":"","padding-block-start":48,"padding-block-end":64}}},"order":["slideshow_kA7w3Q","slideshow_NGAq8f","collection_list_QgDKNT","product_list_EDUBdR","media_with_content_LfPdEJ","collection_list_xpBxCm"]}
+{
+  "sections": {
+    "hero": {
+      "type": "skygoodies-hero",
+      "blocks": {
+        "slide_1": {"type": "slide"},
+        "slide_2": {"type": "slide"},
+        "slide_3": {"type": "slide"}
+      },
+      "block_order": ["slide_1", "slide_2", "slide_3"],
+      "settings": {}
+    },
+    "service_strip": {
+      "type": "skygoodies-service-strip",
+      "blocks": {
+        "svc_1": {"type": "service", "settings": {"text": "Mindful Activities"}},
+        "svc_2": {"type": "service", "settings": {"text": "Travel Friendly Souvenirs of India"}},
+        "svc_3": {"type": "service", "settings": {"text": "Made in India"}},
+        "svc_4": {"type": "service", "settings": {"text": "Educational Fun for Kids"}}
+      },
+      "block_order": ["svc_1", "svc_2", "svc_3", "svc_4"],
+      "settings": {}
+    },
+    "collections": {
+      "type": "skygoodies-collections",
+      "blocks": {
+        "col_1": {"type": "collection", "settings": {"title": "Calendars"}},
+        "col_2": {"type": "collection", "settings": {"title": "Party Decor"}},
+        "col_3": {"type": "collection", "settings": {"title": "Kids Activities"}},
+        "col_4": {"type": "collection", "settings": {"title": "DIYs for Adults"}},
+        "col_5": {"type": "collection", "settings": {"title": "Home Decor"}},
+        "col_6": {"type": "collection", "settings": {"title": "Pooja Decor"}},
+        "col_7": {"type": "collection", "settings": {"title": "Notebooks"}},
+        "col_8": {"type": "collection", "settings": {"title": "Christmas Decor"}}
+      },
+      "block_order": ["col_1", "col_2", "col_3", "col_4", "col_5", "col_6", "col_7", "col_8"],
+      "settings": {}
+    },
+    "featured_collection": {
+      "type": "skygoodies-featured-collection",
+      "settings": {}
+    },
+    "kids_kits": {
+      "type": "skygoodies-kids-kits",
+      "settings": {}
+    },
+    "diy_grown_up": {
+      "type": "skygoodies-diy-grown-up",
+      "settings": {}
+    },
+    "gifting_grid": {
+      "type": "skygoodies-gifting-grid",
+      "blocks": {
+        "gift_1": {"type": "card", "settings": {"heading": "Kids' Gifts & Return Gifts"}},
+        "gift_2": {"type": "card", "settings": {"heading": "Bulk & Party Orders"}},
+        "gift_3": {"type": "card", "settings": {"heading": "Corporate & Custom Gifts"}}
+      },
+      "block_order": ["gift_1", "gift_2", "gift_3"],
+      "settings": {}
+    },
+    "process_cards": {
+      "type": "skygoodies-process-cards",
+      "blocks": {
+        "step_1": {"type": "step", "settings": {"step": "Step 01", "title": "Open the kit"}},
+        "step_2": {"type": "step", "settings": {"step": "Step 02", "title": "Follow along"}},
+        "step_3": {"type": "step", "settings": {"step": "Step 03", "title": "Show it off"}}
+      },
+      "block_order": ["step_1", "step_2", "step_3"],
+      "settings": {}
+    },
+    "about_founders": {
+      "type": "skygoodies-about-founders",
+      "blocks": {
+        "founder_1": {"type": "founder", "settings": {"name": "Amit Gudibanda", "color": "#FD9963"}},
+        "founder_2": {"type": "founder", "settings": {"name": "Misha Gudibanda", "color": "#3EB8A8"}},
+        "val_1": {"type": "value", "settings": {"text": "Eco-first"}},
+        "val_2": {"type": "value", "settings": {"text": "Made in India"}},
+        "val_3": {"type": "value", "settings": {"text": "NID-designed"}}
+      },
+      "block_order": ["founder_1", "founder_2", "val_1", "val_2", "val_3"],
+      "settings": {}
+    },
+    "testimonials": {
+      "type": "skygoodies-testimonials",
+      "blocks": {
+        "testi_1": {"type": "testimonial", "settings": {"name": "Priya M.", "avatar_bg": "#3EB8A8"}},
+        "testi_2": {"type": "testimonial", "settings": {"name": "Ankit R.", "avatar_bg": "#FD9963"}},
+        "testi_3": {"type": "testimonial", "settings": {"name": "Sneha K.", "avatar_bg": "#6BBF6A"}}
+      },
+      "block_order": ["testi_1", "testi_2", "testi_3"],
+      "settings": {}
+    },
+    "instafeed": {
+      "type": "skygoodies-instafeed",
+      "blocks": {
+        "img_1": {"type": "image"},
+        "img_2": {"type": "image"},
+        "img_3": {"type": "image"},
+        "img_4": {"type": "image"},
+        "img_5": {"type": "image"},
+        "img_6": {"type": "image"}
+      },
+      "block_order": ["img_1", "img_2", "img_3", "img_4", "img_5", "img_6"],
+      "settings": {}
+    }
+  },
+  "order": [
+    "hero",
+    "service_strip",
+    "collections",
+    "featured_collection",
+    "kids_kits",
+    "diy_grown_up",
+    "gifting_grid",
+    "process_cards",
+    "about_founders",
+    "testimonials",
+    "instafeed"
+  ]
+}

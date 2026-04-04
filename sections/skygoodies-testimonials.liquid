@@ -1,0 +1,152 @@
+<section class="testi rv" style="background: {{ section.settings.bg_color }}; padding-top: {{ section.settings.padding_top }}px; padding-bottom: {{ section.settings.padding_bottom }}px;">
+  <div class="testi__inner">
+    <div class="testi__hd">
+      <p class="eyebrow" style="color: {{ section.settings.accent_color }}">{{ section.settings.eyebrow }}</p>
+      <h2 class="sh" style="color: {{ section.settings.heading_color }}">{{ section.settings.heading }}</h2>
+    </div>
+    <div class="testi__grid">
+      {%- for block in section.blocks -%}
+        <div class="tc rv" {{ block.shopify_attributes }}>
+          <div class="tc__top">
+            <div class="tc__quote">&ldquo;</div>
+            <div class="tc__stars">
+              {%- for i in (1..5) -%}
+                <svg viewBox="0 0 24 24"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
+              {%- endfor -%}
+            </div>
+            <p class="tc__text">{{ block.settings.text }}</p>
+          </div>
+          <div class="tc__bot">
+            <div class="tc__av" style="background: {{ block.settings.avatar_bg }}">
+              {%- if block.settings.avatar_image != blank -%}
+                <img style="width:100%;height:100%;border-radius:50%;object-fit:cover" src="{{ block.settings.avatar_image | image_url: width: 80 }}" alt="{{ block.settings.name | escape }}">
+              {%- else -%}
+                {{ block.settings.name | slice: 0, 1 }}
+              {%- endif -%}
+            </div>
+            <div>
+              <div class="tc__name" style="color: {{ section.settings.heading_color }}">{{ block.settings.name }}</div>
+              <div class="tc__detail">{{ block.settings.detail }}</div>
+              {%- if block.settings.verified -%}
+               <div class="tc__veri">
+                 <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" style="width:12px;height:12px"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg> Verified
+               </div>
+              {%- endif -%}
+            </div>
+          </div>
+        </div>
+      {%- endfor -%}
+    </div>
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "Sky Testimonials",
+  "settings": [
+    {
+      "type": "color",
+      "id": "bg_color",
+      "label": "Background Color",
+      "default": "#F2EBDF"
+    },
+    {
+      "type": "color",
+      "id": "heading_color",
+      "label": "Heading Color",
+      "default": "#2C2825"
+    },
+    {
+      "type": "color",
+      "id": "accent_color",
+      "label": "Accent Color",
+      "default": "#FD9963"
+    },
+    {
+      "type": "text",
+      "id": "eyebrow",
+      "label": "Eyebrow",
+      "default": "Real makers, real words"
+    },
+    {
+      "type": "text",
+      "id": "heading",
+      "label": "Heading",
+      "default": "What people are saying"
+    },
+    {
+      "type": "range",
+      "id": "padding_top",
+      "min": 0,
+      "max": 100,
+      "step": 4,
+      "unit": "px",
+      "label": "Padding Top",
+      "default": 72
+    },
+    {
+      "type": "range",
+      "id": "padding_bottom",
+      "min": 0,
+      "max": 100,
+      "step": 4,
+      "unit": "px",
+      "label": "Padding Bottom",
+      "default": 72
+    }
+  ],
+  "blocks": [
+    {
+      "type": "testimonial",
+      "name": "Testimonial",
+      "settings": [
+        {
+          "type": "textarea",
+          "id": "text",
+          "label": "Review Text",
+          "default": "My daughter spent the entire afternoon building the animal set..."
+        },
+        {
+          "type": "image_picker",
+          "id": "avatar_image",
+          "label": "Avatar Image"
+        },
+        {
+          "type": "color",
+          "id": "avatar_bg",
+          "label": "Avatar Fallback Color",
+          "default": "#3EB8A8"
+        },
+        {
+          "type": "text",
+          "id": "name",
+          "label": "Name",
+          "default": "Priya M."
+        },
+        {
+          "type": "text",
+          "id": "detail",
+          "label": "Sub-detail",
+          "default": "Purchased DIY Paper Animals"
+        },
+        {
+          "type": "checkbox",
+          "id": "verified",
+          "label": "Show Verified Badge",
+          "default": true
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "Sky Testimonials",
+      "blocks": [
+        { "type": "testimonial", "settings": { "name": "Priya M.", "avatar_bg": "#3EB8A8" } },
+        { "type": "testimonial", "settings": { "name": "Ankit R.", "avatar_bg": "#FD9963" } },
+        { "type": "testimonial", "settings": { "name": "Sneha K.", "avatar_bg": "#6BBF6A" } }
+      ]
+    }
+  ]
+}
+{% endschema %}

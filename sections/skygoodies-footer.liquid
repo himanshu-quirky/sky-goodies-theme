@@ -1,0 +1,163 @@
+<footer class="ftr" style="background: {{ section.settings.bg_color }}; color: {{ section.settings.text_color }}; padding-top: {{ section.settings.padding_top }}px; padding-bottom: {{ section.settings.padding_bottom }}px;">
+  <div class="ftr__inner">
+    <div class="ftr__brand">
+      {%- if section.settings.logo != blank -%}
+        <img src="{{ section.settings.logo | image_url: width: 400 }}" alt="{{ section.settings.logo.alt | default: shop.name | escape }}">
+      {%- else -%}
+        <span class="sh" style="margin-bottom:14px;display:block;">{{ shop.name }}</span>
+      {%- endif -%}
+      <p>{{ section.settings.text }}</p>
+      
+      {%- if section.settings.show_social -%}
+        <div class="ftr__social">
+          {%- if settings.social_instagram_link != blank -%}
+            <a href="{{ settings.social_instagram_link }}"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="2" width="20" height="20" rx="5" ry="5"/><path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"/><line x1="17.5" y1="6.5" x2="17.51" y2="6.5"/></svg></a>
+          {%- endif -%}
+          {%- if settings.social_facebook_link != blank -%}
+            <a href="{{ settings.social_facebook_link }}"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 2h-3a5 5 0 0 0-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 0 1 1-1h3z"/></svg></a>
+          {%- endif -%}
+          {%- if settings.social_youtube_link != blank -%}
+            <a href="{{ settings.social_youtube_link }}"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22.54 6.42a2.78 2.78 0 0 0-1.94-2C18.88 4 12 4 12 4s-6.88 0-8.6.46a2.78 2.78 0 0 0-1.94 2A29 29 0 0 0 1 11.75a29 29 0 0 0 .46 5.33A2.78 2.78 0 0 0 3.4 19.1c1.72.46 8.6.46 8.6.46s6.88 0 8.6-.46a2.78 2.78 0 0 0 1.94-2 29 29 0 0 0 .46-5.25 29 29 0 0 0-.46-5.43z"/><polygon points="9.75 15.02 15.5 11.75 9.75 8.48 9.75 15.02"/></svg></a>
+          {%- endif -%}
+          {%- if section.settings.fallback_socials -%}
+            <a href="#"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="2" width="20" height="20" rx="5" ry="5"/><path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"/><line x1="17.5" y1="6.5" x2="17.51" y2="6.5"/></svg></a>
+            <a href="#"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 2h-3a5 5 0 0 0-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 0 1 1-1h3z"/></svg></a>
+            <a href="#"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22.54 6.42a2.78 2.78 0 0 0-1.94-2C18.88 4 12 4 12 4s-6.88 0-8.6.46a2.78 2.78 0 0 0-1.94 2A29 29 0 0 0 1 11.75a29 29 0 0 0 .46 5.33A2.78 2.78 0 0 0 3.4 19.1c1.72.46 8.6.46 8.6.46s6.88 0 8.6-.46a2.78 2.78 0 0 0 1.94-2 29 29 0 0 0 .46-5.25 29 29 0 0 0-.46-5.43z"/><polygon points="9.75 15.02 15.5 11.75 9.75 8.48 9.75 15.02"/></svg></a>
+          {%- endif -%}
+        </div>
+      {%- endif -%}
+    </div>
+    
+    {%- for block in section.blocks -%}
+      {%- if block.type == 'menu' -%}
+        <div class="ftr__col" {{ block.shopify_attributes }}>
+          <h4 style="color: {{ section.settings.heading_color }}">{{ block.settings.title }}</h4>
+          {%- assign footer_linklist = block.settings.menu -%}
+          {%- if footer_linklist != blank -%}
+            <ul>
+              {%- for link in footer_linklist.links -%}
+                <li><a href="{{ link.url }}">{{ link.title }}</a></li>
+              {%- endfor -%}
+            </ul>
+          {%- endif -%}
+        </div>
+      {%- endif -%}
+    {%- endfor -%}
+  </div>
+  
+  <div class="ftr__bot">
+    <p>&copy; {{ 'now' | date: '%Y' }} {{ shop.name }}. All rights reserved.</p>
+    {%- if section.settings.show_payment_icons -%}
+      <div class="ftr__pays">
+        <span>Visa</span><span>Mastercard</span><span>UPI</span><span>Net Banking</span><span>COD</span>
+      </div>
+    {%- endif -%}
+  </div>
+</footer>
+
+{% schema %}
+{
+  "name": "Sky Footer",
+  "settings": [
+    {
+      "type": "color",
+      "id": "bg_color",
+      "label": "Background Color",
+      "default": "#F2EBDF"
+    },
+    {
+      "type": "color",
+      "id": "text_color",
+      "label": "Text Color",
+      "default": "#6B6560"
+    },
+    {
+      "type": "color",
+      "id": "heading_color",
+      "label": "Heading Color",
+      "default": "#2C2825"
+    },
+    {
+      "type": "image_picker",
+      "id": "logo",
+      "label": "Logo Image"
+    },
+    {
+      "type": "textarea",
+      "id": "text",
+      "label": "Brand Text",
+      "default": "Simple joys in a complex world. Beautiful paper craft kits..."
+    },
+    {
+      "type": "checkbox",
+      "id": "show_social",
+      "label": "Show Social Icons",
+      "default": true
+    },
+    {
+      "type": "checkbox",
+      "id": "fallback_socials",
+      "label": "Show Placeholder Socials",
+      "default": true
+    },
+    {
+      "type": "checkbox",
+      "id": "show_payment_icons",
+      "label": "Show Payment Icons",
+      "default": true
+    },
+    {
+      "type": "range",
+      "id": "padding_top",
+      "min": 0,
+      "max": 100,
+      "step": 4,
+      "unit": "px",
+      "label": "Padding Top",
+      "default": 64
+    },
+    {
+      "type": "range",
+      "id": "padding_bottom",
+      "min": 0,
+      "max": 100,
+      "step": 4,
+      "unit": "px",
+      "label": "Padding Bottom",
+      "default": 32
+    }
+  ],
+  "blocks": [
+    {
+      "type": "menu",
+      "name": "Menu",
+      "settings": [
+        {
+          "type": "text",
+          "id": "title",
+          "label": "Heading",
+          "default": "Links"
+        },
+        {
+          "type": "link_list",
+          "id": "menu",
+          "label": "Menu"
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "Sky Footer",
+      "blocks": [
+        { "type": "menu", "settings": { "title": "Shop" } },
+        { "type": "menu", "settings": { "title": "Help" } },
+        { "type": "menu", "settings": { "title": "Company" } }
+      ]
+    }
+  ],
+  "enabled_on": {
+    "groups": ["footer"]
+  }
+}
+{% endschema %}

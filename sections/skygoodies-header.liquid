@@ -1,0 +1,100 @@
+<header class="hdr" style="background: {{ section.settings.bg_color }};">
+  <div class="hdr__in">
+    <a href="{{ routes.root_url }}" class="hdr__logo">
+      {%- if section.settings.logo != blank -%}
+        <img src="{{ section.settings.logo | image_url: width: 600 }}" alt="{{ section.settings.logo.alt | default: shop.name | escape }}" style="height: {{ section.settings.logo_height }}px; width: auto;">
+      {%- else -%}
+        <span class="sh" style="margin: 0; font-size: 1.5rem;">{{ shop.name }}</span>
+      {%- endif -%}
+    </a>
+    
+    {%- if section.settings.menu != blank -%}
+      <ul class="hdr__nav">
+        {%- for link in section.settings.menu.links -%}
+          <li>
+            <a href="{{ link.url }}">
+              {{ link.title }}
+              {%- if link.links != blank -%}
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="6 9 12 15 18 9"/></svg>
+              {%- endif -%}
+            </a>
+            
+            {%- if link.links != blank -%}
+              <div class="mega">
+                {%- for childlink in link.links -%}
+                  <a href="{{ childlink.url }}">{{ childlink.title }}</a>
+                  {%- if childlink.links != blank -%}
+                    {%- for grandchildlink in childlink.links -%}
+                       <a href="{{ grandchildlink.url }}" style="padding-left: 15px;">- {{ grandchildlink.title }}</a>
+                    {%- endfor -%}
+                  {%- endif -%}
+                {%- endfor -%}
+              </div>
+            {%- endif -%}
+          </li>
+        {%- endfor -%}
+      </ul>
+    {%- endif -%}
+    
+    <div class="hdr__icons">
+      <!-- Search -->
+      <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="cursor: pointer;"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
+      <!-- Account -->
+      <a href="{%- if customer -%}{{ routes.account_url }}{%- else -%}{{ routes.account_login_url }}{%- endif -%}">
+        <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
+      </a>
+      <!-- Cart -->
+      <a href="{{ routes.cart_url }}" class="hdr__cart">
+        <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 2L3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4z"/><line x1="3" y1="6" x2="21" y2="6"/><path d="M16 10a4 4 0 0 1-8 0"/></svg>
+        <span>{{ cart.item_count }}</span>
+      </a>
+      <!-- Mobile Menu Toggle -->
+      <button class="hdr__mob" aria-label="Menu" onclick="alert('Mobile menu toggle placeholder');">
+        <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="3" y1="6" x2="21" y2="6"/><line x1="3" y1="12" x2="21" y2="12"/><line x1="3" y1="18" x2="21" y2="18"/></svg>
+      </button>
+    </div>
+  </div>
+</header>
+
+{% schema %}
+{
+  "name": "Sky Header",
+  "settings": [
+    {
+      "type": "color",
+      "id": "bg_color",
+      "label": "Background Color",
+      "default": "#ffffff"
+    },
+    {
+      "type": "image_picker",
+      "id": "logo",
+      "label": "Logo Image"
+    },
+    {
+      "type": "range",
+      "id": "logo_height",
+      "min": 20,
+      "max": 100,
+      "step": 2,
+      "unit": "px",
+      "label": "Logo Height",
+      "default": 48
+    },
+    {
+      "type": "link_list",
+      "id": "menu",
+      "default": "main-menu",
+      "label": "Menu"
+    }
+  ],
+  "presets": [
+    {
+      "name": "Sky Header"
+    }
+  ],
+  "enabled_on": {
+    "groups": ["header"]
+  }
+}
+{% endschema %}

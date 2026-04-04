@@ -1,0 +1,119 @@
+<section class="hero" id="heroSlider-{{ section.id }}" style="background: {{ section.settings.bg_color }};">
+  <div class="hero__slides" id="heroTrack-{{ section.id }}">
+    {%- for block in section.blocks -%}
+      <div class="hero__slide" {{ block.shopify_attributes }}>
+        {%- if block.settings.image != blank -%}
+          <img src="{{ block.settings.image | image_url: width: 2000 }}" alt="{{ block.settings.image.alt | default: 'Slide image' | escape }}" style="object-position: {{ block.settings.image_position }};">
+        {%- else -%}
+          {{ 'lifestyle-1' | placeholder_svg_tag: 'placeholder-svg' }}
+        {%- endif -%}
+      </div>
+    {%- endfor -%}
+  </div>
+  
+  {%- if section.blocks.size > 1 -%}
+    <div class="hero__arrows">
+      <button class="hero__arr" id="heroPrev-{{ section.id }}"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="15 18 9 12 15 6"/></svg></button>
+      <button class="hero__arr" id="heroNext-{{ section.id }}"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="9 6 15 12 9 18"/></svg></button>
+    </div>
+    <div class="hero__dots" id="heroDots-{{ section.id }}">
+      {%- for block in section.blocks -%}
+        <button class="hero__dot {% if forloop.first %}active{% endif %}"></button>
+      {%- endfor -%}
+    </div>
+  {%- endif -%}
+</section>
+
+{%- if section.blocks.size > 1 -%}
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+  const track = document.getElementById('heroTrack-{{ section.id }}');
+  if(!track) return;
+  const dotsContainer = document.getElementById('heroDots-{{ section.id }}');
+  const dots = dotsContainer ? dotsContainer.querySelectorAll('.hero__dot') : [];
+  let ci = 0;
+  const total = {{ section.blocks.size }};
+  
+  function go(i) {
+    ci = i;
+    track.style.transform = `translateX(-${ci * 100}%)`;
+    dots.forEach((d, j) => d.classList.toggle('active', j === ci));
+  }
+  
+  const nextBtn = document.getElementById('heroNext-{{ section.id }}');
+  const prevBtn = document.getElementById('heroPrev-{{ section.id }}');
+  
+  if (nextBtn) nextBtn.onclick = () => go((ci + 1) % total);
+  if (prevBtn) prevBtn.onclick = () => go((ci - 1 + total) % total);
+  dots.forEach((d, i) => d.onclick = () => go(i));
+  
+  {%- if section.settings.autoplay -%}
+    setInterval(() => go((ci + 1) % total), {{ section.settings.autoplay_speed }} * 1000);
+  {%- endif -%}
+});
+</script>
+{%- endif -%}
+
+{% schema %}
+{
+  "name": "Sky Hero Slideshow",
+  "settings": [
+    {
+      "type": "color",
+      "id": "bg_color",
+      "label": "Background Color",
+      "default": "#F2EBDF"
+    },
+    {
+      "type": "checkbox",
+      "id": "autoplay",
+      "label": "Autoplay slideshow",
+      "default": true
+    },
+    {
+      "type": "range",
+      "id": "autoplay_speed",
+      "min": 3,
+      "max": 10,
+      "step": 1,
+      "unit": "s",
+      "label": "Autoplay speed",
+      "default": 5
+    }
+  ],
+  "blocks": [
+    {
+      "type": "slide",
+      "name": "Slide",
+      "settings": [
+        {
+          "type": "image_picker",
+          "id": "image",
+          "label": "Desktop Image"
+        },
+        {
+          "type": "select",
+          "id": "image_position",
+          "label": "Image Position",
+          "options": [
+            { "value": "center center", "label": "Center" },
+            { "value": "center top", "label": "Top" },
+            { "value": "center bottom", "label": "Bottom" }
+          ],
+          "default": "center center"
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "Sky Hero Slideshow",
+      "blocks": [
+        { "type": "slide" },
+        { "type": "slide" },
+        { "type": "slide" }
+      ]
+    }
+  ]
+}
+{% endschema %}

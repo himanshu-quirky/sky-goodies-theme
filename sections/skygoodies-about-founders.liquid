@@ -1,0 +1,200 @@
+<section class="about rv" style="background: {{ section.settings.bg_color }}; padding-top: {{ section.settings.padding_top }}px; padding-bottom: {{ section.settings.padding_bottom }}px;">
+  <div class="about__inner rv">
+    <div class="about__img">
+      {%- if section.settings.image != blank -%}
+        <img src="{{ section.settings.image | image_url: width: 800 }}" alt="{{ section.settings.heading | escape }}">
+      {%- else -%}
+         {{ 'lifestyle-1' | placeholder_svg_tag: 'placeholder-svg' }}
+      {%- endif -%}
+    </div>
+    <div class="about__text">
+      <p class="eyebrow" style="color: {{ section.settings.accent_color }}">{{ section.settings.eyebrow }}</p>
+      <h2 class="sh" style="color: {{ section.settings.heading_color }}">{{ section.settings.heading }}</h2>
+      <div style="color: {{ section.settings.text_color }}; margin-bottom: 20px;">
+        {{ section.settings.text }}
+      </div>
+      
+      {%- if section.blocks.size > 0 -%}
+        {%- assign founders = section.blocks | where: "type", "founder" -%}
+        {%- if founders.size > 0 -%}
+          <div class="about__founders">
+            {%- for block in founders -%}
+              <div class="about__founder" {{ block.shopify_attributes }}>
+                <div class="about__founder-av" style="background: {{ block.settings.color }}; display:flex;align-items:center;justify-content:center;font-family:var(--hd);font-size:1rem;font-weight:700;color:#fff">
+                  {%- if block.settings.image != blank -%}
+                    <img src="{{ block.settings.image | image_url: width: 100 }}" alt="{{ block.settings.name | escape }}">
+                  {%- else -%}
+                    {{ block.settings.name | slice: 0, 1 }}
+                  {%- endif -%}
+                </div>
+                <div>
+                  <div class="about__founder-name">{{ block.settings.name }}</div>
+                  <div class="about__founder-role">{{ block.settings.role }}</div>
+                </div>
+              </div>
+            {%- endfor -%}
+          </div>
+        {%- endif -%}
+
+        {%- assign values = section.blocks | where: "type", "value" -%}
+        {%- if values.size > 0 -%}
+          <div class="about__vals">
+            {%- for block in values -%}
+              <div class="about__val" {{ block.shopify_attributes }}>
+                <div class="about__val-icon">
+                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
+                </div>
+                <span class="about__val-text">{{ block.settings.text }}</span>
+              </div>
+            {%- endfor -%}
+          </div>
+        {%- endif -%}
+      {%- endif -%}
+      
+      {%- if section.settings.button_link != blank -%}
+        <a href="{{ section.settings.button_link }}" class="btn btn-p" style="margin-top:24px">{{ section.settings.button_text }}</a>
+      {%- endif -%}
+    </div>
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "Sky About / Founders",
+  "settings": [
+    {
+      "type": "color",
+      "id": "bg_color",
+      "label": "Background Color",
+      "default": "#ffffff"
+    },
+    {
+      "type": "color",
+      "id": "heading_color",
+      "label": "Heading Color",
+      "default": "#2C2825"
+    },
+    {
+      "type": "color",
+      "id": "text_color",
+      "label": "Text Color",
+      "default": "#6B6560"
+    },
+    {
+      "type": "color",
+      "id": "accent_color",
+      "label": "Accent Color",
+      "default": "#FD9963"
+    },
+    {
+      "type": "image_picker",
+      "id": "image",
+      "label": "Main Image"
+    },
+    {
+      "type": "text",
+      "id": "eyebrow",
+      "label": "Eyebrow",
+      "default": "The Sky Goodies story"
+    },
+    {
+      "type": "text",
+      "id": "heading",
+      "label": "Heading",
+      "default": "Paper can spark something wonderful."
+    },
+    {
+      "type": "richtext",
+      "id": "text",
+      "label": "Text",
+      "default": "<p>In 2013, Amit and Misha Gudibanda left successful corporate careers to chase a simple idea...</p>"
+    },
+    {
+      "type": "text",
+      "id": "button_text",
+      "label": "Button Text",
+      "default": "Read the full story"
+    },
+    {
+      "type": "url",
+      "id": "button_link",
+      "label": "Button Link"
+    },
+    {
+      "type": "range",
+      "id": "padding_top",
+      "min": 0,
+      "max": 120,
+      "step": 4,
+      "unit": "px",
+      "label": "Padding Top",
+      "default": 80
+    },
+    {
+      "type": "range",
+      "id": "padding_bottom",
+      "min": 0,
+      "max": 120,
+      "step": 4,
+      "unit": "px",
+      "label": "Padding Bottom",
+      "default": 80
+    }
+  ],
+  "blocks": [
+    {
+      "type": "founder",
+      "name": "Founder",
+      "settings": [
+        {
+          "type": "image_picker",
+          "id": "image",
+          "label": "Avatar Image"
+        },
+        {
+          "type": "color",
+          "id": "color",
+          "label": "Fallback Avatar Color",
+          "default": "#FD9963"
+        },
+        {
+          "type": "text",
+          "id": "name",
+          "label": "Name",
+          "default": "Amit Gudibanda"
+        },
+        {
+          "type": "text",
+          "id": "role",
+          "label": "Role",
+          "default": "CEO & Co-Founder"
+        }
+      ]
+    },
+    {
+      "type": "value",
+      "name": "Brand Value",
+      "settings": [
+        {
+          "type": "text",
+          "id": "text",
+          "label": "Value Text",
+          "default": "Eco-first"
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "Sky About / Founders",
+      "blocks": [
+        { "type": "founder", "settings": { "name": "Amit Gudibanda", "color": "#FD9963" } },
+        { "type": "founder", "settings": { "name": "Misha Gudibanda", "color": "#3EB8A8" } },
+        { "type": "value", "settings": { "text": "Eco-first" } },
+        { "type": "value", "settings": { "text": "Made in India" } },
+        { "type": "value", "settings": { "text": "NID-designed" } }
+      ]
+    }
+  ]
+}
+{% endschema %}

@@ -1,0 +1,108 @@
+<div class="ann" id="annBar-{{ section.id }}" style="background: {{ section.settings.bg_color }}; color: {{ section.settings.text_color }}">
+  <div class="ann__track">
+    {% for block in section.blocks %}
+      <div class="ann__slide {% if forloop.first %}active{% endif %}" {{ block.shopify_attributes }}>
+        {{ block.settings.text }}
+      </div>
+    {% endfor %}
+  </div>
+  {% if section.blocks.size > 1 %}
+    <button class="ann__btn ann__prev" aria-label="Previous"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="15 18 9 12 15 6"/></svg></button>
+    <button class="ann__btn ann__next" aria-label="Next"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="9 6 15 12 9 18"/></svg></button>
+  {% endif %}
+</div>
+
+{% if section.blocks.size > 1 %}
+<script>
+  document.addEventListener('DOMContentLoaded', function() {
+    const sectionId = '{{ section.id }}';
+    const container = document.getElementById('annBar-' + sectionId);
+    if (!container) return;
+    
+    const slides = container.querySelectorAll('.ann__slide');
+    let ci = 0;
+    
+    function show(i) {
+      slides.forEach(s => s.classList.remove('active'));
+      if(slides[i]) slides[i].classList.add('active');
+    }
+    
+    function next() {
+      ci = (ci + 1) % slides.length;
+      show(ci);
+    }
+    
+    function prev() {
+      ci = (ci - 1 + slides.length) % slides.length;
+      show(ci);
+    }
+    
+    const nextBtn = container.querySelector('.ann__next');
+    const prevBtn = container.querySelector('.ann__prev');
+    
+    let iv = setInterval(next, 4000);
+    
+    if (nextBtn) {
+      nextBtn.addEventListener('click', function() {
+        next();
+        clearInterval(iv);
+        iv = setInterval(next, 4000);
+      });
+    }
+    
+    if (prevBtn) {
+      prevBtn.addEventListener('click', function() {
+        prev();
+        clearInterval(iv);
+        iv = setInterval(next, 4000);
+      });
+    }
+  });
+</script>
+{% endif %}
+
+{% schema %}
+{
+  "name": "Sky Announcement Bar",
+  "settings": [
+    {
+      "type": "color",
+      "id": "bg_color",
+      "label": "Background Color",
+      "default": "#FD9963"
+    },
+    {
+      "type": "color",
+      "id": "text_color",
+      "label": "Text Color",
+      "default": "#ffffff"
+    }
+  ],
+  "blocks": [
+    {
+      "type": "announcement",
+      "name": "Announcement",
+      "settings": [
+        {
+          "type": "text",
+          "id": "text",
+          "label": "Text",
+          "default": "Free shipping over Rs.1000"
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "Sky Announcement Bar",
+      "blocks": [
+        { "type": "announcement" },
+        { "type": "announcement" }
+      ]
+    }
+  ],
+  "enabled_on": {
+    "groups": ["header"]
+  }
+}
+{% endschema %}
