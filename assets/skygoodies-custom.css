@@ -280,3 +280,32 @@ button{font-family:var(--bd);cursor:pointer;border:none;outline:none;background:
 /* ═══ REVEAL ═══ */
 .rv{opacity:0;transform:translateY(18px);transition:opacity .5s ease,transform .5s ease}
 .rv.vis{opacity:1;transform:translateY(0)}
+
+/* ═══ MOBILE FIXES ═══ */
+@media(max-width:600px){
+  .feat__top,.kits__top,.diy__top{flex-direction:column;align-items:flex-start;gap:10px}
+}
+@media(max-width:900px){
+  .feat__layout{grid-template-columns:1fr}
+  .feat__static{min-height:260px}
+  .feat__track{padding-bottom:12px}
+  .pc{min-width:230px}
+  .diy__layout{grid-template-columns:1fr}
+  .diy__hero{min-height:280px}
+  .diy__grid{grid-template-columns:1fr 1fr}
+  .about__inner{grid-template-columns:1fr;gap:32px}
+}
+@media(max-width:700px){
+  .gift__row{grid-template-columns:1fr 1fr}
+  .proc__cards{grid-template-columns:1fr;max-width:340px;margin:0 auto}
+  .testi__grid{grid-template-columns:1fr}
+  .insta__grid{grid-template-columns:repeat(3,1fr)}
+}
+@media(max-width:550px){
+  .gift__row{grid-template-columns:1fr}
+  .gift__card{aspect-ratio:16/9}
+}
+@media(max-width:500px){
+  .kits__grid{grid-template-columns:1fr 1fr}
+  .kits__grid .pc,.diy__grid .pc{min-width:unset;max-width:unset;width:100%}
+}
