@@ -15,6 +15,7 @@
         "slide_1": {
           "type": "slide",
           "settings": {
+            "image": "shopify://shop_images/BOGO-New-website-2025-home_desktop_horizontal_banner_copy.jpg",
             "image_position": "center center"
           }
         },
@@ -50,6 +51,7 @@
         "svc_1": {
           "type": "service",
           "settings": {
+            "image": "shopify://shop_images/travel-friendly.svg",
             "text": "Mindful Activities for Relaxation"
           }
         },
