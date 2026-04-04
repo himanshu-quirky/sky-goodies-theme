@@ -1,4 +1,4 @@
-<section class="feat rv" style="background: {{ section.settings.bg_color }}; padding-top: {{ section.settings.padding_top }}px; padding-bottom: {{ section.settings.padding_bottom }}px;">
+<section class="feat" style="background: {{ section.settings.bg_color }}; padding-top: {{ section.settings.padding_top }}px; padding-bottom: {{ section.settings.padding_bottom }}px;">
   <div class="feat__inner">
     <div class="feat__top">
       <div>
@@ -14,7 +14,7 @@
       {%- endif -%}
     </div>
     <div class="feat__layout">
-      <div class="feat__static rv">
+      <div class="feat__static">
         {%- if section.settings.image != blank -%}
           <img src="{{ section.settings.image | image_url: width: 800 }}" alt="{{ section.settings.image_heading | escape }}">
         {%- else -%}

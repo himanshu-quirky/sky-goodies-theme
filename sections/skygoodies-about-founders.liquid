@@ -1,5 +1,5 @@
-<section class="about rv" style="background: {{ section.settings.bg_color }}; padding-top: {{ section.settings.padding_top }}px; padding-bottom: {{ section.settings.padding_bottom }}px;">
-  <div class="about__inner rv">
+<section class="about" style="background: {{ section.settings.bg_color }}; padding-top: {{ section.settings.padding_top }}px; padding-bottom: {{ section.settings.padding_bottom }}px;">
+  <div class="about__inner">
     <div class="about__img">
       {%- if section.settings.image != blank -%}
         <img src="{{ section.settings.image | image_url: width: 800 }}" alt="{{ section.settings.heading | escape }}">

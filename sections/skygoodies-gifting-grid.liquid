@@ -1,4 +1,4 @@
-<section class="gift rv" style="background: {{ section.settings.bg_color }}; padding-top: {{ section.settings.padding_top }}px; padding-bottom: {{ section.settings.padding_bottom }}px;">
+<section class="gift" style="background: {{ section.settings.bg_color }}; padding-top: {{ section.settings.padding_top }}px; padding-bottom: {{ section.settings.padding_bottom }}px;">
   <div class="gift__inner">
     <div class="gift__hd">
       <p class="eyebrow" style="color: {{ section.settings.accent_color }}">{{ section.settings.eyebrow }}</p>
@@ -7,7 +7,7 @@
     </div>
     <div class="gift__row">
       {%- for block in section.blocks -%}
-        <div class="gift__card rv" {{ block.shopify_attributes }}>
+        <div class="gift__card" {{ block.shopify_attributes }}>
           {%- if block.settings.image != blank -%}
             <img src="{{ block.settings.image | image_url: width: 600 }}" alt="{{ block.settings.heading | escape }}">
           {%- else -%}

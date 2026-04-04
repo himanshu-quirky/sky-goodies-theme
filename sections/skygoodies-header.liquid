@@ -25,7 +25,7 @@
                   <a href="{{ childlink.url }}">{{ childlink.title }}</a>
                   {%- if childlink.links != blank -%}
                     {%- for grandchildlink in childlink.links -%}
-                       <a href="{{ grandchildlink.url }}" style="padding-left: 15px;">- {{ grandchildlink.title }}</a>
+                       <a href="{{ grandchildlink.url }}">{{ grandchildlink.title }}</a>
                     {%- endfor -%}
                   {%- endif -%}
                 {%- endfor -%}

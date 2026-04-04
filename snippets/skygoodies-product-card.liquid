@@ -2,7 +2,7 @@
   Accepts:
   - product: {Object} Product Liquid object
 {%- endcomment -%}
-<div class="pc rv">
+<div class="pc">
   <div class="pc__img">
     <a href="{{ product.url }}">
       {%- if product.featured_image != blank -%}
@@ -51,7 +51,7 @@
           <s>{{ product.compare_at_price | money_without_trailing_zeros }}</s>
         {%- endif -%}
       </span>
-      {%- form 'product', product -%}
+      {%- form 'product', product, style: "margin:0;padding:0;display:flex;" -%}
         <input type="hidden" name="id" value="{{ product.variants.first.id }}">
         <button type="submit" class="pc__atc" {% if product.available == false %}disabled{% endif %}>
           {%- if product.available == false -%}
