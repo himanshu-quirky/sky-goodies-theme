@@ -1,0 +1,43 @@
+<div class="sg-pc">
+  <div class="sg-pc__img">
+    <a href="{{ product.url }}">
+      {%- if product.featured_image != blank -%}
+        <img
+          src="{{ product.featured_image | image_url: width: 400 }}"
+          alt="{{ product.title | escape }}"
+          width="400"
+          height="400"
+          loading="lazy"
+        >
+      {%- else -%}
+        <div class="sg-placeholder">{{ product.title }}</div>
+      {%- endif -%}
+    </a>
+    {%- if product.compare_at_price > product.price -%}
+      {%- assign save_pct = product.compare_at_price | minus: product.price | times: 100.0 | divided_by: product.compare_at_price | round -%}
+      <span class="sg-pc__badge sg-pc__badge--sale">{{ save_pct }}% off</span>
+    {%- elsif product.tags contains 'New' -%}
+      <span class="sg-pc__badge sg-pc__badge--new">New</span>
+    {%- endif -%}
+  </div>
+  <div class="sg-pc__body">
+    {%- if product.type != blank -%}
+      <div class="sg-pc__category">{{ product.type }}</div>
+    {%- endif -%}
+    <h3 class="sg-pc__title"><a href="{{ product.url }}">{{ product.title }}</a></h3>
+    <div class="sg-pc__footer">
+      <span class="sg-pc__price">
+        {{ product.price | money_without_trailing_zeros }}
+        {%- if product.compare_at_price > product.price -%}
+          <del>{{ product.compare_at_price | money_without_trailing_zeros }}</del>
+        {%- endif -%}
+      </span>
+      {%- form 'product', product -%}
+        <input type="hidden" name="id" value="{{ product.variants.first.id }}">
+        <button type="submit" class="sg-pc__atc" {% unless product.available %}disabled{% endunless %}>
+          {%- if product.available -%}Add to Cart{%- else -%}Sold out{%- endif -%}
+        </button>
+      {%- endform -%}
+    </div>
+  </div>
+</div>

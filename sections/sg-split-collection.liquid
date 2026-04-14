@@ -13,6 +13,18 @@
   }
 {%- endstyle -%}
 
+{%- liquid
+  assign split_collection = section.settings.collection
+  assign split_img = nil
+  if section.settings.image != blank
+    assign split_img = section.settings.image
+  elsif split_collection != blank and split_collection.image != blank
+    assign split_img = split_collection.image
+  elsif split_collection != blank and split_collection.products.first.featured_image != blank
+    assign split_img = split_collection.products.first.featured_image
+  endif
+-%}
+
 <section
   class="sg-section sg-split {% if section.settings.flip_layout %}sg-split--flip{% endif %} sg-section-{{ section.id }}-pad"
   style="background: {{ section.settings.bg_color }};"
@@ -34,17 +46,31 @@
     <div class="sg-split__layout">
       <!-- Image side -->
       <div class="sg-split__image">
-        {%- if section.settings.image != blank -%}
-          <img src="{{ section.settings.image | image_url: width: 800 }}" alt="{{ section.settings.image_heading | escape }}" width="800" height="1000" loading="lazy">
+        {%- if split_img != nil -%}
+          <img
+            src="{{ split_img | image_url: width: 800 }}"
+            srcset="{{ split_img | image_url: width: 400 }} 400w, {{ split_img | image_url: width: 800 }} 800w"
+            sizes="(max-width: 749px) 100vw, 50vw"
+            alt="{{ section.settings.image_heading | default: section.settings.heading | escape }}"
+            width="800"
+            height="1000"
+            loading="lazy"
+          >
         {%- else -%}
-          <div class="sg-placeholder" style="min-height:400px">Feature image</div>
+          <div class="sg-placeholder" style="min-height:400px">
+            <span style="font-size:14px;font-weight:600;">Add image or link a collection</span>
+          </div>
         {%- endif -%}
         <div class="sg-split__image-ov">
           {%- if section.settings.image_heading != blank -%}
             <p>{{ section.settings.image_heading }}</p>
           {%- endif -%}
-          {%- if section.settings.image_link != blank -%}
-            <a href="{{ section.settings.image_link }}" class="sg-split__image-link">
+          {%- assign split_image_link = section.settings.image_link -%}
+          {%- if split_image_link == blank and split_collection != blank -%}
+            {%- assign split_image_link = split_collection.url -%}
+          {%- endif -%}
+          {%- if split_image_link != blank -%}
+            <a href="{{ split_image_link }}" class="sg-split__image-link">
               {{ section.settings.image_link_text | default: 'Shop now' }}
               <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" width="14" height="14"><polyline points="9 18 15 12 9 6"/></svg>
             </a>
@@ -54,40 +80,9 @@
 
       <!-- Products side -->
       <div class="sg-products-grid">
-        {%- assign split_collection = section.settings.collection -%}
         {%- if split_collection != blank and split_collection.products_count > 0 -%}
           {%- for product in split_collection.products limit: section.settings.products_to_show -%}
-            <div class="sg-pc">
-              <div class="sg-pc__img">
-                <a href="{{ product.url }}">
-                  {%- if product.featured_image != blank -%}
-                    <img src="{{ product.featured_image | image_url: width: 400 }}" alt="{{ product.title | escape }}" width="400" height="400" loading="lazy">
-                  {%- else -%}
-                    <div class="sg-placeholder">{{ product.title }}</div>
-                  {%- endif -%}
-                </a>
-                {%- if product.compare_at_price > product.price -%}
-                  {%- assign save_pct = product.compare_at_price | minus: product.price | times: 100.0 | divided_by: product.compare_at_price | round -%}
-                  <span class="sg-pc__badge sg-pc__badge--sale">{{ save_pct }}% off</span>
-                {%- endif -%}
-              </div>
-              <div class="sg-pc__body">
-                <div class="sg-pc__category">{{ product.type }}</div>
-                <h3 class="sg-pc__title"><a href="{{ product.url }}">{{ product.title }}</a></h3>
-                <div class="sg-pc__footer">
-                  <span class="sg-pc__price">
-                    {{ product.price | money_without_trailing_zeros }}
-                    {%- if product.compare_at_price > product.price -%}<del>{{ product.compare_at_price | money_without_trailing_zeros }}</del>{%- endif -%}
-                  </span>
-                  {%- form 'product', product -%}
-                    <input type="hidden" name="id" value="{{ product.variants.first.id }}">
-                    <button type="submit" class="sg-pc__atc" {% unless product.available %}disabled{% endunless %}>
-                      {%- if product.available -%}Add{%- else -%}Sold out{%- endif -%}
-                    </button>
-                  {%- endform -%}
-                </div>
-              </div>
-            </div>
+            {%- render 'sg-product-card', product: product -%}
           {%- endfor -%}
         {%- else -%}
           {%- for i in (1..4) -%}
@@ -138,7 +133,8 @@
     {
       "type": "image_picker",
       "id": "image",
-      "label": "Feature Image"
+      "label": "Feature Image",
+      "info": "Overrides the collection image. If empty, collection image is used automatically."
     },
     {
       "type": "text",
@@ -155,7 +151,8 @@
     {
       "type": "url",
       "id": "image_link",
-      "label": "Image Link URL"
+      "label": "Image Link URL",
+      "info": "If empty, links to the collection automatically."
     },
     {
       "type": "header",

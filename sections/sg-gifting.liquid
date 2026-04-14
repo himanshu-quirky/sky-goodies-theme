@@ -26,9 +26,18 @@
 
     <div class="sg-gifting__grid">
       {%- for block in section.blocks -%}
-        <a href="{{ block.settings.link }}" class="sg-gift" {{ block.shopify_attributes }}>
+        {%- assign gift_link = block.settings.link -%}
+        {%- if gift_link == blank and block.settings.collection != blank -%}
+          {%- assign gift_link = block.settings.collection.url -%}
+        {%- endif -%}
+
+        <a href="{{ gift_link }}" class="sg-gift" {{ block.shopify_attributes }}>
           {%- if block.settings.image != blank -%}
             <img src="{{ block.settings.image | image_url: width: 600 }}" alt="{{ block.settings.heading | escape }}" width="600" height="800" loading="lazy">
+          {%- elsif block.settings.collection != blank and block.settings.collection.image != blank -%}
+            <img src="{{ block.settings.collection.image | image_url: width: 600 }}" alt="{{ block.settings.collection.title | default: block.settings.heading | escape }}" width="600" height="800" loading="lazy">
+          {%- elsif block.settings.collection != blank and block.settings.collection.products.first.featured_image != blank -%}
+            <img src="{{ block.settings.collection.products.first.featured_image | image_url: width: 600 }}" alt="{{ block.settings.heading | escape }}" width="600" height="800" loading="lazy">
           {%- else -%}
             <div class="sg-placeholder" style="position:absolute;inset:0;">{{ block.settings.heading }}</div>
           {%- endif -%}
@@ -101,9 +110,15 @@
       "name": "Gift Card",
       "settings": [
         {
+          "type": "collection",
+          "id": "collection",
+          "label": "Collection",
+          "info": "Used for automatic image and link when no custom ones are set."
+        },
+        {
           "type": "image_picker",
           "id": "image",
-          "label": "Background Image"
+          "label": "Custom Image (overrides collection image)"
         },
         {
           "type": "text",
@@ -126,7 +141,7 @@
         {
           "type": "url",
           "id": "link",
-          "label": "Link URL"
+          "label": "Custom Link (overrides collection link)"
         }
       ]
     }
