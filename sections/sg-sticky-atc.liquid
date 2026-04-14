@@ -1,0 +1,135 @@
+{{ 'sg-theme.css' | asset_url | stylesheet_tag }}
+
+<style>
+  .sg-prod-sticky {
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    z-index: 999;
+    background: #fff;
+    border-top: 1px solid var(--sg-border);
+    box-shadow: 0 -4px 20px rgba(0,0,0,0.08);
+    transform: translateY(100%);
+    transition: transform 0.3s ease;
+    font-family: var(--sg-sans);
+  }
+  .sg-prod-sticky--visible {
+    transform: translateY(0);
+  }
+  .sg-prod-sticky__inner {
+    max-width: var(--sg-max-w);
+    margin: 0 auto;
+    padding: 12px var(--sg-gutter);
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 16px;
+  }
+  .sg-prod-sticky__info {
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+    min-width: 0;
+  }
+  .sg-prod-sticky__title {
+    font-size: 13px;
+    font-weight: 600;
+    color: var(--sg-dark);
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+  .sg-prod-sticky__price {
+    font-size: 15px;
+    font-weight: 700;
+    color: var(--sg-dark);
+  }
+  .sg-prod-sticky__btn {
+    padding: 12px 28px;
+    border-radius: 100px;
+    background: var(--sg-dark);
+    color: #fff;
+    font-size: 13px;
+    font-weight: 600;
+    font-family: var(--sg-sans);
+    border: none;
+    cursor: pointer;
+    white-space: nowrap;
+    transition: background 0.25s, transform 0.25s;
+    flex-shrink: 0;
+  }
+  .sg-prod-sticky__btn:hover {
+    background: var(--sg-orange);
+    transform: translateY(-1px);
+  }
+  .sg-prod-sticky__btn:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+  }
+  @media (min-width: 750px) {
+    .sg-prod-sticky__inner {
+      padding: 14px var(--sg-gutter);
+    }
+    .sg-prod-sticky__title { font-size: 14px; }
+    .sg-prod-sticky__btn { padding: 12px 36px; font-size: 14px; }
+  }
+</style>
+
+{%- assign current_variant = product.selected_or_first_available_variant -%}
+
+<div class="sg-prod-sticky" id="sg-sticky-atc" {{ section.shopify_attributes }}>
+  <div class="sg-prod-sticky__inner">
+    <div class="sg-prod-sticky__info">
+      <span class="sg-prod-sticky__title">{{ product.title | truncate: 30 }}</span>
+      <span class="sg-prod-sticky__price">{{ current_variant.price | money_without_trailing_zeros }}</span>
+    </div>
+    {%- form 'product', product -%}
+      <input type="hidden" name="id" value="{{ current_variant.id }}">
+      <button type="submit" class="sg-prod-sticky__btn" {% unless current_variant.available %}disabled{% endunless %}>
+        {%- if current_variant.available -%}Add to Cart{%- else -%}Sold out{%- endif -%}
+      </button>
+    {%- endform -%}
+  </div>
+</div>
+
+<script>
+  (function() {
+    var sticky = document.getElementById('sg-sticky-atc');
+    if (!sticky) return;
+
+    var mainATC = document.querySelector('.product-information [name="add"], .product-information button[type="submit"], form[action*="/cart/add"] button[type="submit"]');
+    if (!mainATC) {
+      sticky.classList.add('sg-prod-sticky--visible');
+      return;
+    }
+
+    var observer = new IntersectionObserver(function(entries) {
+      entries.forEach(function(entry) {
+        if (entry.isIntersecting) {
+          sticky.classList.remove('sg-prod-sticky--visible');
+        } else {
+          sticky.classList.add('sg-prod-sticky--visible');
+        }
+      });
+    }, { threshold: 0 });
+
+    observer.observe(mainATC);
+  })();
+</script>
+
+{% schema %}
+{
+  "name": "SG - Sticky Add to Cart",
+  "tag": "section",
+  "class": "sg-sticky-atc-section",
+  "settings": [
+    {
+      "type": "checkbox",
+      "id": "enabled",
+      "label": "Enable sticky add to cart",
+      "default": true
+    }
+  ]
+}
+{% endschema %}

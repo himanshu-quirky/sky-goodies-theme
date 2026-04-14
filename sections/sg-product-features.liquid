@@ -1,0 +1,181 @@
+{{ 'sg-theme.css' | asset_url | stylesheet_tag }}
+
+<style>
+  .sg-prod-features {
+    padding: 40px 0;
+    background: var(--sg-cream);
+  }
+  .sg-prod-features__inner {
+    max-width: var(--sg-max-w);
+    margin: 0 auto;
+    padding: 0 var(--sg-gutter);
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 16px;
+  }
+  @media (min-width: 750px) {
+    .sg-prod-features__inner {
+      grid-template-columns: repeat(4, 1fr);
+      gap: 20px;
+    }
+  }
+  .sg-prod-features__item {
+    background: #fff;
+    border-radius: var(--sg-radius);
+    padding: 20px 16px;
+    text-align: center;
+    border: 1px solid var(--sg-border);
+    transition: transform 0.2s, box-shadow 0.2s;
+  }
+  .sg-prod-features__item:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 8px 20px rgba(0,0,0,0.04);
+  }
+  .sg-prod-features__icon {
+    width: 44px;
+    height: 44px;
+    border-radius: 50%;
+    background: var(--sg-peach);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin: 0 auto 12px;
+  }
+  .sg-prod-features__icon svg {
+    width: 20px;
+    height: 20px;
+    stroke: var(--sg-orange);
+    fill: none;
+    stroke-width: 1.8;
+    stroke-linecap: round;
+    stroke-linejoin: round;
+  }
+  .sg-prod-features__label {
+    font-size: 11px;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    color: var(--sg-muted);
+    margin-bottom: 4px;
+  }
+  .sg-prod-features__value {
+    font-size: 15px;
+    font-weight: 700;
+    color: var(--sg-dark);
+  }
+</style>
+
+<section class="sg-section sg-prod-features" {{ section.shopify_attributes }}>
+  <div class="sg-prod-features__inner">
+    {%- for block in section.blocks -%}
+      <div class="sg-prod-features__item" {{ block.shopify_attributes }}>
+        <div class="sg-prod-features__icon">
+          {%- case block.settings.icon -%}
+            {%- when 'clock' -%}
+              <svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
+            {%- when 'users' -%}
+              <svg viewBox="0 0 24 24"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>
+            {%- when 'gauge' -%}
+              <svg viewBox="0 0 24 24"><path d="M12 2a10 10 0 1 0 0 20 10 10 0 0 0 0-20z"/><path d="M12 6v6l4 2"/></svg>
+            {%- when 'leaf' -%}
+              <svg viewBox="0 0 24 24"><path d="M17 8C8 10 5.9 16.17 3.82 21.34l1.89.66.95-2.3c.48.17.98.3 1.34.3C19 20 22 3 22 3c-1 2-8 2.25-13 3.25S2 11.5 2 13.5s1.75 3.75 1.75 3.75"/></svg>
+            {%- when 'scissors' -%}
+              <svg viewBox="0 0 24 24"><circle cx="6" cy="6" r="3"/><circle cx="6" cy="18" r="3"/><line x1="20" y1="4" x2="8.12" y2="15.88"/><line x1="14.47" y1="14.48" x2="20" y2="20"/><line x1="8.12" y1="8.12" x2="12" y2="12"/></svg>
+            {%- when 'box' -%}
+              <svg viewBox="0 0 24 24"><path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"/><polyline points="3.27 6.96 12 12.01 20.73 6.96"/><line x1="12" y1="22.08" x2="12" y2="12"/></svg>
+            {%- when 'star' -%}
+              <svg viewBox="0 0 24 24"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
+            {%- when 'award' -%}
+              <svg viewBox="0 0 24 24"><circle cx="12" cy="8" r="7"/><polyline points="8.21 13.89 7 23 12 20 17 23 15.79 13.88"/></svg>
+          {%- endcase -%}
+        </div>
+        <div class="sg-prod-features__label">{{ block.settings.label }}</div>
+        <div class="sg-prod-features__value">{{ block.settings.value }}</div>
+      </div>
+    {%- endfor -%}
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "SG - Product Features",
+  "tag": "section",
+  "class": "sg-product-features-section",
+  "settings": [],
+  "blocks": [
+    {
+      "type": "feature",
+      "name": "Feature",
+      "settings": [
+        {
+          "type": "select",
+          "id": "icon",
+          "label": "Icon",
+          "options": [
+            { "value": "clock", "label": "Clock (Time)" },
+            { "value": "users", "label": "Users (Age)" },
+            { "value": "gauge", "label": "Gauge (Difficulty)" },
+            { "value": "leaf", "label": "Leaf (Eco)" },
+            { "value": "scissors", "label": "Scissors (Craft)" },
+            { "value": "box", "label": "Box (Package)" },
+            { "value": "star", "label": "Star (Rating)" },
+            { "value": "award", "label": "Award (Quality)" }
+          ],
+          "default": "clock"
+        },
+        {
+          "type": "text",
+          "id": "label",
+          "label": "Label",
+          "default": "Assembly Time"
+        },
+        {
+          "type": "text",
+          "id": "value",
+          "label": "Value",
+          "default": "30-45 min"
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "SG - Product Features",
+      "blocks": [
+        {
+          "type": "feature",
+          "settings": {
+            "icon": "clock",
+            "label": "Assembly Time",
+            "value": "30-45 min"
+          }
+        },
+        {
+          "type": "feature",
+          "settings": {
+            "icon": "users",
+            "label": "Age",
+            "value": "8+"
+          }
+        },
+        {
+          "type": "feature",
+          "settings": {
+            "icon": "gauge",
+            "label": "Difficulty",
+            "value": "Easy"
+          }
+        },
+        {
+          "type": "feature",
+          "settings": {
+            "icon": "leaf",
+            "label": "Material",
+            "value": "Eco-friendly Paper"
+          }
+        }
+      ]
+    }
+  ]
+}
+{% endschema %}

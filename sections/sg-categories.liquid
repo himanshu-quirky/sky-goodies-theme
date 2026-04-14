@@ -22,10 +22,43 @@
 
   <div class="sg-categories__scroll">
     {%- for block in section.blocks -%}
-      <a href="{{ block.settings.link }}" class="sg-cat" {{ block.shopify_attributes }}>
+      {%- assign cat_link = block.settings.link -%}
+      {%- if cat_link == blank and block.settings.collection != blank -%}
+        {%- assign cat_link = block.settings.collection.url -%}
+      {%- endif -%}
+
+      <a href="{{ cat_link }}" class="sg-cat" {{ block.shopify_attributes }}>
         <div class="sg-cat__img">
           {%- if block.settings.image != blank -%}
-            <img src="{{ block.settings.image | image_url: width: 200 }}" alt="{{ block.settings.title | escape }}" width="200" height="200" loading="lazy">
+            <img
+              src="{{ block.settings.image | image_url: width: 240 }}"
+              srcset="{{ block.settings.image | image_url: width: 200 }} 200w, {{ block.settings.image | image_url: width: 400 }} 400w"
+              sizes="(max-width: 749px) 120px, 200px"
+              alt="{{ block.settings.title | escape }}"
+              width="240"
+              height="240"
+              loading="lazy"
+            >
+          {%- elsif block.settings.collection != blank and block.settings.collection.image != blank -%}
+            <img
+              src="{{ block.settings.collection.image | image_url: width: 240 }}"
+              srcset="{{ block.settings.collection.image | image_url: width: 200 }} 200w, {{ block.settings.collection.image | image_url: width: 400 }} 400w"
+              sizes="(max-width: 749px) 120px, 200px"
+              alt="{{ block.settings.collection.title | default: block.settings.title | escape }}"
+              width="240"
+              height="240"
+              loading="lazy"
+            >
+          {%- elsif block.settings.collection != blank and block.settings.collection.products.first.featured_image != blank -%}
+            <img
+              src="{{ block.settings.collection.products.first.featured_image | image_url: width: 240 }}"
+              srcset="{{ block.settings.collection.products.first.featured_image | image_url: width: 200 }} 200w, {{ block.settings.collection.products.first.featured_image | image_url: width: 400 }} 400w"
+              sizes="(max-width: 749px) 120px, 200px"
+              alt="{{ block.settings.title | escape }}"
+              width="240"
+              height="240"
+              loading="lazy"
+            >
           {%- else -%}
             <div class="sg-placeholder">{{ block.settings.title }}</div>
           {%- endif -%}
@@ -79,9 +112,14 @@
       "name": "Category",
       "settings": [
         {
+          "type": "collection",
+          "id": "collection",
+          "label": "Collection"
+        },
+        {
           "type": "image_picker",
           "id": "image",
-          "label": "Category Image"
+          "label": "Custom Image (overrides collection image)"
         },
         {
           "type": "text",
@@ -92,7 +130,7 @@
         {
           "type": "url",
           "id": "link",
-          "label": "Link"
+          "label": "Custom Link (overrides collection link)"
         }
       ]
     }

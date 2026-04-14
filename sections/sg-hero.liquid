@@ -13,14 +13,25 @@
   }
 {%- endstyle -%}
 
-<section class="sg-section sg-hero sg-section-{{ section.id }}-pad" {{ section.shopify_attributes }}>
+{%- liquid
+  assign hero_img = nil
+  if section.settings.image != blank
+    assign hero_img = section.settings.image
+  elsif section.settings.collection != blank and section.settings.collection.image != blank
+    assign hero_img = section.settings.collection.image
+  elsif section.settings.collection != blank and section.settings.collection.products.first.featured_image != blank
+    assign hero_img = section.settings.collection.products.first.featured_image
+  endif
+-%}
+
+<section class="sg-section sg-hero{% if request.page_type == 'index' %} sg-hero--full{% endif %} sg-section-{{ section.id }}-pad" {{ section.shopify_attributes }}>
   <div class="sg-hero__media">
-    {%- if section.settings.image != blank -%}
+    {%- if hero_img != nil -%}
       <img
-        src="{{ section.settings.image | image_url: width: 2000 }}"
-        srcset="{{ section.settings.image | image_url: width: 750 }} 750w, {{ section.settings.image | image_url: width: 1200 }} 1200w, {{ section.settings.image | image_url: width: 2000 }} 2000w"
+        src="{{ hero_img | image_url: width: 2000 }}"
+        srcset="{{ hero_img | image_url: width: 750 }} 750w, {{ hero_img | image_url: width: 1200 }} 1200w, {{ hero_img | image_url: width: 2000 }} 2000w"
         sizes="100vw"
-        alt="{{ section.settings.image.alt | default: section.settings.heading | escape }}"
+        alt="{{ hero_img.alt | default: section.settings.heading | escape }}"
         width="2000"
         height="900"
         loading="eager"
@@ -28,7 +39,9 @@
         style="object-position: {{ section.settings.image_position }};"
       >
     {%- else -%}
-      <div class="sg-placeholder" style="min-height: 400px;">Hero image placeholder</div>
+      <div class="sg-placeholder" style="min-height: 400px;">
+        <span style="font-size:14px;font-weight:600;">Add hero image in theme editor or link a collection</span>
+      </div>
     {%- endif -%}
   </div>
 
@@ -46,7 +59,11 @@
     {%- endif -%}
 
     {%- if section.settings.button_text != blank -%}
-      <a href="{{ section.settings.button_link }}" class="sg-btn sg-btn--white">
+      {%- assign hero_btn_link = section.settings.button_link -%}
+      {%- if hero_btn_link == blank and section.settings.collection != blank -%}
+        {%- assign hero_btn_link = section.settings.collection.url -%}
+      {%- endif -%}
+      <a href="{{ hero_btn_link }}" class="sg-btn sg-btn--white">
         {{ section.settings.button_text }}
         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="9 18 15 12 9 6"/></svg>
       </a>
@@ -62,6 +79,12 @@
       "type": "image_picker",
       "id": "image",
       "label": "Hero Image"
+    },
+    {
+      "type": "collection",
+      "id": "collection",
+      "label": "Fallback Collection",
+      "info": "If no hero image is uploaded, the collection image or first product image will be used."
     },
     {
       "type": "select",

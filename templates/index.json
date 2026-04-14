@@ -28,6 +28,7 @@
     "hero": {
       "type": "sg-hero",
       "settings": {
+        "collection": "featured-collection",
         "image_position": "center center",
         "eyebrow": "Handcrafted Paper Kits",
         "heading": "Simple paper. Real joy.",
@@ -85,14 +86,14 @@
     "categories": {
       "type": "sg-categories",
       "blocks": {
-        "cat_1": { "type": "category", "settings": { "title": "Party Decor", "link": "shopify://collections/paper-party-decor" } },
-        "cat_2": { "type": "category", "settings": { "title": "Kids Kits", "link": "shopify://collections/thoughtful-gifts-for-kids" } },
-        "cat_3": { "type": "category", "settings": { "title": "DIY for Adults", "link": "shopify://collections/quirky-gifts-for-adults" } },
-        "cat_4": { "type": "category", "settings": { "title": "Home Decor", "link": "shopify://collections/home-decor-lighting" } },
-        "cat_5": { "type": "category", "settings": { "title": "Fairy Lights", "link": "shopify://collections/fairy-lights-and-lamps" } },
-        "cat_6": { "type": "category", "settings": { "title": "Calendars", "link": "shopify://collections/2025-calendars" } },
-        "cat_7": { "type": "category", "settings": { "title": "Pooja Decor", "link": "shopify://collections/ganpati-festival-eco-friendly-collection" } },
-        "cat_8": { "type": "category", "settings": { "title": "Notebooks", "link": "shopify://collections/matchbook-notebooks" } }
+        "cat_1": { "type": "category", "settings": { "title": "Party Decor", "collection": "paper-party-decor", "link": "shopify://collections/paper-party-decor" } },
+        "cat_2": { "type": "category", "settings": { "title": "Kids Kits", "collection": "thoughtful-gifts-for-kids", "link": "shopify://collections/thoughtful-gifts-for-kids" } },
+        "cat_3": { "type": "category", "settings": { "title": "DIY for Adults", "collection": "quirky-gifts-for-adults", "link": "shopify://collections/quirky-gifts-for-adults" } },
+        "cat_4": { "type": "category", "settings": { "title": "Home Decor", "collection": "home-decor-lighting", "link": "shopify://collections/home-decor-lighting" } },
+        "cat_5": { "type": "category", "settings": { "title": "Fairy Lights", "collection": "fairy-lights-and-lamps", "link": "shopify://collections/fairy-lights-and-lamps" } },
+        "cat_6": { "type": "category", "settings": { "title": "Calendars", "collection": "2025-calendars", "link": "shopify://collections/2025-calendars" } },
+        "cat_7": { "type": "category", "settings": { "title": "Pooja Decor", "collection": "ganpati-festival-eco-friendly-collection", "link": "shopify://collections/ganpati-festival-eco-friendly-collection" } },
+        "cat_8": { "type": "category", "settings": { "title": "Notebooks", "collection": "matchbook-notebooks", "link": "shopify://collections/matchbook-notebooks" } }
       },
       "block_order": ["cat_1", "cat_2", "cat_3", "cat_4", "cat_5", "cat_6", "cat_7", "cat_8"],
       "settings": {
@@ -173,6 +174,7 @@
         "step_1": {
           "type": "step",
           "settings": {
+            "icon": "scissors",
             "step_label": "Step 01",
             "title": "Open the kit",
             "description": "Pre-cut, pre-scored, colour-coded pieces. Just pop them out."
@@ -181,6 +183,7 @@
         "step_2": {
           "type": "step",
           "settings": {
+            "icon": "play",
             "step_label": "Step 02",
             "title": "Follow along",
             "description": "Scan the QR code for a step-by-step video tutorial."
@@ -189,6 +192,7 @@
         "step_3": {
           "type": "step",
           "settings": {
+            "icon": "gift",
             "step_label": "Step 03",
             "title": "Show it off",
             "description": "Display it, gift it, or keep it. It will look gorgeous either way."

@@ -844,6 +844,146 @@
         "padding-block-end": 0
       }
     },
+    "sg_product_features": {
+      "type": "sg-product-features",
+      "blocks": {
+        "feature_time": {
+          "type": "feature",
+          "settings": {
+            "icon": "clock",
+            "label": "Assembly Time",
+            "value": "30-45 min"
+          }
+        },
+        "feature_age": {
+          "type": "feature",
+          "settings": {
+            "icon": "users",
+            "label": "Age",
+            "value": "8+"
+          }
+        },
+        "feature_difficulty": {
+          "type": "feature",
+          "settings": {
+            "icon": "gauge",
+            "label": "Difficulty",
+            "value": "Easy"
+          }
+        },
+        "feature_material": {
+          "type": "feature",
+          "settings": {
+            "icon": "leaf",
+            "label": "Material",
+            "value": "Eco-friendly Paper"
+          }
+        }
+      },
+      "block_order": [
+        "feature_time",
+        "feature_age",
+        "feature_difficulty",
+        "feature_material"
+      ],
+      "settings": {}
+    },
+    "sg_product_trust": {
+      "type": "sg-product-trust",
+      "blocks": {
+        "badge_shipping": {
+          "type": "badge",
+          "settings": {
+            "icon": "truck",
+            "title": "Free Shipping",
+            "description": "On orders over Rs.1000"
+          }
+        },
+        "badge_returns": {
+          "type": "badge",
+          "settings": {
+            "icon": "return",
+            "title": "Easy Returns",
+            "description": "7-day return policy"
+          }
+        },
+        "badge_eco": {
+          "type": "badge",
+          "settings": {
+            "icon": "leaf",
+            "title": "100% Eco-friendly",
+            "description": "Sustainable materials"
+          }
+        }
+      },
+      "block_order": [
+        "badge_shipping",
+        "badge_returns",
+        "badge_eco"
+      ],
+      "settings": {}
+    },
+    "sg_product_content": {
+      "type": "sg-product-content",
+      "blocks": {
+        "tab_description": {
+          "type": "tab",
+          "settings": {
+            "title": "Description",
+            "use_product_description": true,
+            "content": "<p>Product description will appear here.</p>"
+          }
+        },
+        "tab_included": {
+          "type": "tab",
+          "settings": {
+            "title": "What's Included",
+            "use_product_description": false,
+            "content": "<p>Your DIY kit includes:</p><ul><li>Pre-cut and pre-scored paper sheets</li><li>Step-by-step instruction booklet</li><li>QR code for video tutorial</li><li>Eco-friendly glue stick</li></ul>"
+          }
+        },
+        "tab_howto": {
+          "type": "tab",
+          "settings": {
+            "title": "How to Make",
+            "use_product_description": false,
+            "content": "<p>Each kit comes with a detailed instruction booklet and a QR code that links to our video tutorial. No special tools or skills required -- just fold, score, and glue your way to a beautiful paper craft.</p><p>Average assembly time: 30-45 minutes.</p>"
+          }
+        },
+        "tab_shipping": {
+          "type": "tab",
+          "settings": {
+            "title": "Shipping & Returns",
+            "use_product_description": false,
+            "content": "<p><strong>Shipping:</strong> We ship across India. Orders are dispatched within 1-2 business days. Standard delivery takes 4-7 business days.</p><p><strong>Free shipping</strong> on orders above Rs.1000.</p><p><strong>Returns:</strong> We accept returns within 7 days of delivery. Items must be unused and in original packaging. Please email us at hello@skygoodies.co for return requests.</p>"
+          }
+        }
+      },
+      "block_order": [
+        "tab_description",
+        "tab_included",
+        "tab_howto",
+        "tab_shipping"
+      ],
+      "settings": {}
+    },
+    "sg_product_related": {
+      "type": "sg-product-related",
+      "settings": {
+        "heading": "You May Also Like",
+        "subheading": "More craft kits you'll love",
+        "products_to_show": 6,
+        "bg_color": "#FAF6F0",
+        "padding_top": 56,
+        "padding_bottom": 64
+      }
+    },
+    "sg_sticky_atc": {
+      "type": "sg-sticky-atc",
+      "settings": {
+        "enabled": true
+      }
+    },
     "product_list_zR9Cym": {
       "type": "product-list",
       "blocks": {
@@ -1083,7 +1223,12 @@
   },
   "order": [
     "main",
+    "sg_product_features",
+    "sg_product_trust",
+    "sg_product_content",
     "section_NaqU9X",
-    "product_list_zR9Cym"
+    "sg_product_related",
+    "product_list_zR9Cym",
+    "sg_sticky_atc"
   ]
 }

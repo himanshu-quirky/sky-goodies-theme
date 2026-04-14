@@ -19,7 +19,9 @@
       {%- if section.settings.image != blank -%}
         <img src="{{ section.settings.image | image_url: width: 800 }}" alt="{{ section.settings.heading | escape }}" width="800" height="600" loading="lazy">
       {%- else -%}
-        <div class="sg-placeholder" style="min-height:300px">Founders photo</div>
+        <div class="sg-placeholder" style="min-height:300px;background:linear-gradient(135deg, var(--sg-cream, #FAF6F0) 0%, var(--sg-peach, #FCEEE6) 100%);">
+          <span style="font-size:14px;font-weight:600;">Add founders photo in theme editor</span>
+        </div>
       {%- endif -%}
     </div>
 
@@ -43,7 +45,8 @@
                 {%- if block.settings.image != blank -%}
                   <img src="{{ block.settings.image | image_url: width: 88 }}" alt="{{ block.settings.name | escape }}" width="88" height="88" loading="lazy">
                 {%- else -%}
-                  <div class="sg-placeholder">{{ block.settings.name | slice: 0 }}</div>
+                  {%- assign founder_initial = block.settings.name | slice: 0 -%}
+                  <div class="sg-placeholder" style="width:44px;height:44px;border-radius:50%;display:flex;align-items:center;justify-content:center;background:var(--sg-peach, #FCEEE6);color:var(--sg-charcoal, #1E1B18);font-weight:700;font-size:18px;">{{ founder_initial }}</div>
                 {%- endif -%}
               </div>
               <div>

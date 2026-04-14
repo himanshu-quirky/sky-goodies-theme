@@ -1,0 +1,172 @@
+{{ 'sg-theme.css' | asset_url | stylesheet_tag }}
+
+<style>
+  .sg-prod-tabs {
+    padding: 48px 0 56px;
+  }
+  .sg-prod-tabs__inner {
+    max-width: var(--sg-max-w);
+    margin: 0 auto;
+    padding: 0 var(--sg-gutter);
+    max-width: 800px;
+  }
+  .sg-prod-tabs__item {
+    border-bottom: 1px solid var(--sg-border);
+  }
+  .sg-prod-tabs__item:first-child {
+    border-top: 1px solid var(--sg-border);
+  }
+  .sg-prod-tabs__header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    width: 100%;
+    padding: 20px 4px;
+    cursor: pointer;
+    list-style: none;
+    font-family: var(--sg-sans);
+    font-size: 15px;
+    font-weight: 600;
+    color: var(--sg-dark);
+    transition: color 0.2s;
+  }
+  .sg-prod-tabs__header::-webkit-details-marker { display: none; }
+  .sg-prod-tabs__header::marker { display: none; content: ''; }
+  .sg-prod-tabs__header:hover { color: var(--sg-orange); }
+  .sg-prod-tabs__header svg {
+    width: 18px;
+    height: 18px;
+    flex-shrink: 0;
+    color: var(--sg-muted);
+    transition: transform 0.3s ease;
+  }
+  .sg-prod-tabs__item[open] > .sg-prod-tabs__header svg {
+    transform: rotate(180deg);
+  }
+  .sg-prod-tabs__body {
+    padding: 0 4px 24px;
+    font-size: 14px;
+    color: var(--sg-text);
+    line-height: 1.75;
+  }
+  .sg-prod-tabs__body p { margin-bottom: 12px; }
+  .sg-prod-tabs__body p:last-child { margin-bottom: 0; }
+  .sg-prod-tabs__body ul,
+  .sg-prod-tabs__body ol {
+    padding-left: 20px;
+    margin-bottom: 12px;
+  }
+  .sg-prod-tabs__body li {
+    margin-bottom: 6px;
+  }
+  .sg-prod-tabs__body h3,
+  .sg-prod-tabs__body h4 {
+    font-weight: 600;
+    color: var(--sg-dark);
+    margin-bottom: 8px;
+  }
+  @media (min-width: 750px) {
+    .sg-prod-tabs {
+      padding: 64px 0 72px;
+    }
+    .sg-prod-tabs__header {
+      padding: 24px 4px;
+      font-size: 16px;
+    }
+  }
+</style>
+
+<section class="sg-section sg-prod-tabs" {{ section.shopify_attributes }}>
+  <div class="sg-prod-tabs__inner">
+    {%- for block in section.blocks -%}
+      <details class="sg-prod-tabs__item" {{ block.shopify_attributes }} {% if forloop.first %}open{% endif %}>
+        <summary class="sg-prod-tabs__header">
+          <span>{{ block.settings.title }}</span>
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"/></svg>
+        </summary>
+        <div class="sg-prod-tabs__body">
+          {%- if block.settings.use_product_description -%}
+            {{ product.description }}
+          {%- else -%}
+            {{ block.settings.content }}
+          {%- endif -%}
+        </div>
+      </details>
+    {%- endfor -%}
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "SG - Product Content",
+  "tag": "section",
+  "class": "sg-product-content-section",
+  "settings": [],
+  "blocks": [
+    {
+      "type": "tab",
+      "name": "Content Tab",
+      "settings": [
+        {
+          "type": "text",
+          "id": "title",
+          "label": "Tab Title",
+          "default": "Description"
+        },
+        {
+          "type": "checkbox",
+          "id": "use_product_description",
+          "label": "Use product description",
+          "info": "When enabled, displays the product description instead of custom content below.",
+          "default": false
+        },
+        {
+          "type": "richtext",
+          "id": "content",
+          "label": "Content",
+          "default": "<p>Add your content here.</p>"
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "SG - Product Content",
+      "blocks": [
+        {
+          "type": "tab",
+          "settings": {
+            "title": "Description",
+            "use_product_description": true,
+            "content": "<p>Product description will appear here.</p>"
+          }
+        },
+        {
+          "type": "tab",
+          "settings": {
+            "title": "What's Included",
+            "use_product_description": false,
+            "content": "<p>Your DIY kit includes:</p><ul><li>Pre-cut and pre-scored paper sheets</li><li>Step-by-step instruction booklet</li><li>QR code for video tutorial</li><li>Eco-friendly glue stick</li></ul>"
+          }
+        },
+        {
+          "type": "tab",
+          "settings": {
+            "title": "How to Make",
+            "use_product_description": false,
+            "content": "<p>Each kit comes with a detailed instruction booklet and a QR code that links to our video tutorial. No special tools or skills required -- just fold, score, and glue your way to a beautiful paper craft.</p><p>Average assembly time: 30-45 minutes.</p>"
+          }
+        },
+        {
+          "type": "tab",
+          "settings": {
+            "title": "Shipping & Returns",
+            "use_product_description": false,
+            "content": "<p><strong>Shipping:</strong> We ship across India. Orders are dispatched within 1-2 business days. Standard delivery takes 4-7 business days.</p><p><strong>Free shipping</strong> on orders above Rs.1000.</p><p><strong>Returns:</strong> We accept returns within 7 days of delivery. Items must be unused and in original packaging. Please email us at hello@skygoodies.co for return requests.</p>"
+          }
+        }
+      ]
+    }
+  ]
+}
+{% endschema %}
