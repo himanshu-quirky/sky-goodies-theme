@@ -1,0 +1,51 @@
+{{ 'sg-theme.css' | asset_url | stylesheet_tag }}
+
+<div class="sg-section sg-announce" style="background: {{ section.settings.bg_color }}; color: {{ section.settings.text_color }};" {{ section.shopify_attributes }}>
+  {%- for block in section.blocks -%}
+    {%- if forloop.first -%}
+      {{ block.settings.text }}
+    {%- endif -%}
+  {%- endfor -%}
+</div>
+
+{% schema %}
+{
+  "name": "SG Announcement",
+  "settings": [
+    {
+      "type": "color",
+      "id": "bg_color",
+      "label": "Background Color",
+      "default": "#1E1B18"
+    },
+    {
+      "type": "color",
+      "id": "text_color",
+      "label": "Text Color",
+      "default": "#ffffff"
+    }
+  ],
+  "blocks": [
+    {
+      "type": "message",
+      "name": "Message",
+      "settings": [
+        {
+          "type": "richtext",
+          "id": "text",
+          "label": "Announcement Text",
+          "default": "<p><strong>Free shipping</strong> on orders above Rs.1,000 | Proudly made in India</p>"
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "SG Announcement",
+      "blocks": [
+        { "type": "message", "settings": { "text": "<p><strong>Free shipping</strong> on orders above Rs.1,000 | Proudly made in India</p>" } }
+      ]
+    }
+  ]
+}
+{% endschema %}

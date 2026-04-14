@@ -1,0 +1,135 @@
+{{ 'sg-theme.css' | asset_url | stylesheet_tag }}
+
+{%- style -%}
+  .sg-section-{{ section.id }}-pad {
+    padding-top: {{ section.settings.padding_top | times: 0.5 | round: 0 }}px;
+    padding-bottom: {{ section.settings.padding_bottom | times: 0.5 | round: 0 }}px;
+  }
+  @media screen and (min-width: 750px) {
+    .sg-section-{{ section.id }}-pad {
+      padding-top: {{ section.settings.padding_top }}px;
+      padding-bottom: {{ section.settings.padding_bottom }}px;
+    }
+  }
+{%- endstyle -%}
+
+<section class="sg-section sg-reviews sg-section-{{ section.id }}-pad" style="background: {{ section.settings.bg_color }};" {{ section.shopify_attributes }}>
+  <div class="sg-reviews__inner">
+    <div class="sg-reviews__head">
+      {%- if section.settings.heading != blank -%}
+        <h2 class="sg-heading">{{ section.settings.heading }}</h2>
+      {%- endif -%}
+    </div>
+
+    <div class="sg-reviews__grid">
+      {%- for block in section.blocks -%}
+        <div class="sg-rc" {{ block.shopify_attributes }}>
+          <div class="sg-rc__stars">&#9733;&#9733;&#9733;&#9733;&#9733;</div>
+          <p class="sg-rc__text">"{{ block.settings.text }}"</p>
+          <div class="sg-rc__author">
+            <div class="sg-rc__avatar" style="background: {{ block.settings.avatar_color }};">
+              {{ block.settings.name | slice: 0 }}
+            </div>
+            <div>
+              <div class="sg-rc__name">{{ block.settings.name }}</div>
+              {%- if block.settings.detail != blank -%}
+                <div class="sg-rc__detail">{{ block.settings.detail }}</div>
+              {%- endif -%}
+              {%- if block.settings.verified -%}
+                <div class="sg-rc__verified">Verified buyer</div>
+              {%- endif -%}
+            </div>
+          </div>
+        </div>
+      {%- endfor -%}
+    </div>
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "SG Testimonials",
+  "settings": [
+    {
+      "type": "text",
+      "id": "heading",
+      "label": "Heading",
+      "default": "What people are saying"
+    },
+    {
+      "type": "color",
+      "id": "bg_color",
+      "label": "Background Color",
+      "default": "#FAF6F0"
+    },
+    {
+      "type": "range",
+      "id": "padding_top",
+      "min": 0,
+      "max": 100,
+      "step": 4,
+      "unit": "px",
+      "label": "Padding Top",
+      "default": 72
+    },
+    {
+      "type": "range",
+      "id": "padding_bottom",
+      "min": 0,
+      "max": 100,
+      "step": 4,
+      "unit": "px",
+      "label": "Padding Bottom",
+      "default": 72
+    }
+  ],
+  "blocks": [
+    {
+      "type": "testimonial",
+      "name": "Testimonial",
+      "settings": [
+        {
+          "type": "textarea",
+          "id": "text",
+          "label": "Review Text",
+          "default": "Genuinely impressive quality. The instructions were clear and the end result looks stunning."
+        },
+        {
+          "type": "text",
+          "id": "name",
+          "label": "Reviewer Name",
+          "default": "Priya M."
+        },
+        {
+          "type": "text",
+          "id": "detail",
+          "label": "Purchase Detail",
+          "default": "Purchased Kids' Activity Kit"
+        },
+        {
+          "type": "color",
+          "id": "avatar_color",
+          "label": "Avatar Color",
+          "default": "#FCEEE6"
+        },
+        {
+          "type": "checkbox",
+          "id": "verified",
+          "label": "Show Verified Badge",
+          "default": true
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "SG Testimonials",
+      "blocks": [
+        { "type": "testimonial", "settings": { "text": "My daughter spent the entire afternoon building the animal set. She was so proud of what she made. We are ordering more for her birthday party.", "name": "Priya M.", "detail": "Purchased Kids' Activity Kit", "avatar_color": "#FCEEE6" } },
+        { "type": "testimonial", "settings": { "text": "Genuinely impressive quality. The instructions were clear and the end result looks stunning on our shelf. Already eyeing the next one.", "name": "Ankit R.", "detail": "Purchased Paper Sculpture Kit", "avatar_color": "#E8F5F2" } },
+        { "type": "testimonial", "settings": { "text": "Ordered return gifts for 30 kids. Everything arrived packed beautifully. The parents were equally impressed. Will definitely order again.", "name": "Sneha K.", "detail": "Purchased Party Decor Bundle", "avatar_color": "#E8F0E8" } }
+      ]
+    }
+  ]
+}
+{% endschema %}

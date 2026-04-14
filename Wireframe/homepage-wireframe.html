@@ -1,0 +1,1669 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Sky Goodies - Homepage Wireframe</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;0,9..40,600;0,9..40,700;1,9..40,400&family=DM+Serif+Display&display=swap" rel="stylesheet">
+<style>
+/* ============================================================
+   SKY GOODIES - HOMEPAGE WIREFRAME
+   Design philosophy: Warm, tactile, craft-forward.
+   Think: an artisan studio that happens to sell online.
+   Mobile-first. Every line intentional.
+   ============================================================ */
+
+:root {
+  --sg-orange: #E8845A;
+  --sg-orange-soft: #F5A67A;
+  --sg-cream: #FAF6F0;
+  --sg-warm-white: #FDFCFA;
+  --sg-dark: #1E1B18;
+  --sg-text: #3D3833;
+  --sg-muted: #7A7168;
+  --sg-light: #B5ADA5;
+  --sg-border: #EDE8E2;
+  --sg-teal: #4BA89A;
+  --sg-gold: #D4A853;
+  --sg-peach: #FCEEE6;
+  --sans: 'DM Sans', -apple-system, sans-serif;
+  --serif: 'DM Serif Display', Georgia, serif;
+  --radius: 12px;
+  --radius-lg: 20px;
+  --max-w: 1200px;
+  --gutter: 20px;
+}
+
+@media (min-width: 750px) { :root { --gutter: 32px; } }
+@media (min-width: 1024px) { :root { --gutter: 40px; } }
+
+*, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+html { scroll-behavior: smooth; -webkit-font-smoothing: antialiased; -moz-osx-font-smoothing: grayscale; }
+body { font-family: var(--sans); color: var(--sg-text); background: var(--sg-warm-white); line-height: 1.6; overflow-x: hidden; font-size: 15px; }
+img { max-width: 100%; display: block; }
+a { text-decoration: none; color: inherit; }
+button { font-family: var(--sans); cursor: pointer; border: none; background: none; }
+h1, h2, h3 { line-height: 1.15; }
+
+.wrap { max-width: var(--max-w); margin: 0 auto; padding: 0 var(--gutter); }
+
+/* ============================================================
+   01. ANNOUNCEMENT BAR
+   Thin, purposeful. Not screaming - informing.
+   ============================================================ */
+.announce {
+  background: var(--sg-dark);
+  color: rgba(255,255,255,.88);
+  text-align: center;
+  padding: 10px var(--gutter);
+  font-size: 12px;
+  letter-spacing: .04em;
+  font-weight: 500;
+}
+.announce strong { color: #fff; font-weight: 600; }
+
+/* ============================================================
+   02. HEADER
+   Compact. Logo left, nav center, actions right.
+   On mobile: logo left, burger + cart right.
+   ============================================================ */
+.header {
+  position: sticky;
+  top: 0;
+  z-index: 100;
+  background: rgba(253,252,250,.97);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  border-bottom: 1px solid var(--sg-border);
+}
+.header__inner {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 12px var(--gutter);
+  max-width: var(--max-w);
+  margin: 0 auto;
+  gap: 24px;
+}
+.header__logo {
+  font-family: var(--serif);
+  font-size: 22px;
+  color: var(--sg-dark);
+  letter-spacing: -.01em;
+  white-space: nowrap;
+}
+.header__logo span { color: var(--sg-orange); }
+.header__nav {
+  display: none;
+  list-style: none;
+  gap: 28px;
+  align-items: center;
+}
+@media (min-width: 900px) { .header__nav { display: flex; } }
+.header__nav a {
+  font-size: 13.5px;
+  font-weight: 500;
+  color: var(--sg-text);
+  padding: 6px 0;
+  position: relative;
+  transition: color .2s;
+}
+.header__nav a::after {
+  content: '';
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 0;
+  height: 1.5px;
+  background: var(--sg-orange);
+  transition: width .3s;
+}
+.header__nav a:hover { color: var(--sg-dark); }
+.header__nav a:hover::after { width: 100%; }
+.header__actions {
+  display: flex;
+  align-items: center;
+  gap: 18px;
+}
+.header__actions svg {
+  width: 20px;
+  height: 20px;
+  stroke: var(--sg-text);
+  fill: none;
+  stroke-width: 1.8;
+  cursor: pointer;
+  transition: stroke .2s;
+}
+.header__actions svg:hover { stroke: var(--sg-dark); }
+.header__cart-count {
+  position: relative;
+}
+.header__cart-count::after {
+  content: '2';
+  position: absolute;
+  top: -4px;
+  right: -6px;
+  width: 16px;
+  height: 16px;
+  border-radius: 50%;
+  background: var(--sg-orange);
+  color: #fff;
+  font-size: 9px;
+  font-weight: 700;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.header__burger { display: block; }
+@media (min-width: 900px) { .header__burger { display: none; } }
+
+/* ============================================================
+   03. HERO
+   Full bleed. Lifestyle image. Minimal text.
+   The image does the selling. Copy is a whisper, not a shout.
+   ============================================================ */
+.hero {
+  position: relative;
+  background: var(--sg-cream);
+  overflow: hidden;
+}
+.hero__media {
+  aspect-ratio: 3/4;
+  overflow: hidden;
+}
+@media (min-width: 750px) { .hero__media { aspect-ratio: 21/9; } }
+.hero__media img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+.hero__content {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  padding: 40px var(--gutter) 32px;
+  background: linear-gradient(to top, rgba(30,27,24,.65) 0%, rgba(30,27,24,.2) 60%, transparent 100%);
+}
+@media (min-width: 750px) {
+  .hero__content {
+    padding: 60px 48px 48px;
+    max-width: 560px;
+    left: auto;
+    right: auto;
+    bottom: 0;
+  }
+}
+.hero__tag {
+  display: inline-block;
+  font-size: 11px;
+  font-weight: 600;
+  letter-spacing: .12em;
+  text-transform: uppercase;
+  color: var(--sg-orange-soft);
+  margin-bottom: 12px;
+}
+.hero__title {
+  font-family: var(--serif);
+  font-size: clamp(26px, 5vw, 42px);
+  color: #fff;
+  margin-bottom: 12px;
+  max-width: 420px;
+}
+.hero__sub {
+  font-size: 14px;
+  color: rgba(255,255,255,.78);
+  margin-bottom: 20px;
+  max-width: 360px;
+  line-height: 1.6;
+}
+.hero__cta {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 12px 28px;
+  background: #fff;
+  color: var(--sg-dark);
+  border-radius: 100px;
+  font-size: 13px;
+  font-weight: 600;
+  transition: all .3s;
+}
+.hero__cta:hover {
+  background: var(--sg-orange);
+  color: #fff;
+  transform: translateY(-1px);
+  box-shadow: 0 8px 24px rgba(232,132,90,.25);
+}
+.hero__cta svg { width: 16px; height: 16px; }
+
+/* ============================================================
+   04. TRUST STRIP
+   Social proof + USPs. Thin. Scrolls on mobile.
+   ============================================================ */
+.trust {
+  border-bottom: 1px solid var(--sg-border);
+  background: var(--sg-warm-white);
+  overflow: hidden;
+}
+.trust__track {
+  display: flex;
+  align-items: center;
+  gap: 32px;
+  padding: 16px var(--gutter);
+  max-width: var(--max-w);
+  margin: 0 auto;
+  overflow-x: auto;
+  scrollbar-width: none;
+  -webkit-overflow-scrolling: touch;
+}
+.trust__track::-webkit-scrollbar { display: none; }
+.trust__item {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  flex-shrink: 0;
+  white-space: nowrap;
+}
+.trust__icon {
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  background: var(--sg-peach);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+}
+.trust__icon svg { width: 16px; height: 16px; stroke: var(--sg-orange); fill: none; stroke-width: 1.8; }
+.trust__label { font-size: 12.5px; font-weight: 500; color: var(--sg-muted); }
+.trust__label strong { color: var(--sg-text); font-weight: 600; }
+
+@media (min-width: 750px) {
+  .trust__track { justify-content: center; overflow: visible; }
+}
+
+/* ============================================================
+   05. SHOP BY CATEGORY
+   Clean horizontal scroll on mobile, grid on desktop.
+   Circular images with labels. Simple, tactile.
+   ============================================================ */
+.categories {
+  padding: 48px 0 40px;
+  background: var(--sg-warm-white);
+}
+.categories__head {
+  text-align: center;
+  margin-bottom: 32px;
+  padding: 0 var(--gutter);
+}
+.categories__head h2 {
+  font-family: var(--serif);
+  font-size: clamp(22px, 3.5vw, 30px);
+  color: var(--sg-dark);
+}
+.categories__scroll {
+  display: flex;
+  gap: 20px;
+  padding: 0 var(--gutter);
+  overflow-x: auto;
+  scrollbar-width: none;
+  -webkit-overflow-scrolling: touch;
+  scroll-snap-type: x mandatory;
+}
+.categories__scroll::-webkit-scrollbar { display: none; }
+@media (min-width: 750px) {
+  .categories__scroll {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(100px, 1fr));
+    gap: 24px;
+    max-width: var(--max-w);
+    margin: 0 auto;
+    overflow: visible;
+  }
+}
+.cat-item {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 10px;
+  flex-shrink: 0;
+  scroll-snap-align: center;
+  cursor: pointer;
+  transition: transform .3s;
+}
+.cat-item:hover { transform: translateY(-3px); }
+.cat-item__img {
+  width: 80px;
+  height: 80px;
+  border-radius: 50%;
+  overflow: hidden;
+  border: 2px solid var(--sg-border);
+  transition: border-color .3s;
+}
+@media (min-width: 750px) { .cat-item__img { width: 96px; height: 96px; } }
+.cat-item:hover .cat-item__img { border-color: var(--sg-orange); }
+.cat-item__img img { width: 100%; height: 100%; object-fit: cover; }
+.cat-item__label {
+  font-size: 12px;
+  font-weight: 600;
+  color: var(--sg-text);
+  text-align: center;
+  letter-spacing: .01em;
+}
+
+/* ============================================================
+   06. FEATURED COLLECTION (BESTSELLERS)
+   Horizontal scroll of product cards.
+   ============================================================ */
+.featured {
+  padding: 56px 0 64px;
+  background: var(--sg-cream);
+}
+.featured__head {
+  display: flex;
+  align-items: flex-end;
+  justify-content: space-between;
+  padding: 0 var(--gutter);
+  max-width: var(--max-w);
+  margin: 0 auto 32px;
+  gap: 16px;
+}
+.featured__head h2 {
+  font-family: var(--serif);
+  font-size: clamp(22px, 3.5vw, 30px);
+  color: var(--sg-dark);
+}
+.featured__head p {
+  font-size: 14px;
+  color: var(--sg-muted);
+  margin-top: 6px;
+  max-width: 400px;
+}
+.view-all {
+  font-size: 13px;
+  font-weight: 600;
+  color: var(--sg-orange);
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  white-space: nowrap;
+  transition: gap .2s;
+  flex-shrink: 0;
+}
+.view-all:hover { gap: 10px; }
+.view-all svg { width: 16px; height: 16px; }
+
+.products-scroll {
+  display: flex;
+  gap: 16px;
+  padding: 0 var(--gutter);
+  overflow-x: auto;
+  scrollbar-width: none;
+  -webkit-overflow-scrolling: touch;
+  scroll-snap-type: x mandatory;
+  max-width: calc(var(--max-w) + var(--gutter) * 2);
+  margin: 0 auto;
+}
+.products-scroll::-webkit-scrollbar { display: none; }
+
+/* ── Product Card ── */
+.p-card {
+  background: #fff;
+  border-radius: var(--radius-lg);
+  overflow: hidden;
+  min-width: 240px;
+  max-width: 280px;
+  flex-shrink: 0;
+  scroll-snap-align: start;
+  transition: transform .3s, box-shadow .3s;
+  border: 1px solid var(--sg-border);
+}
+.p-card:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 12px 32px rgba(0,0,0,.06);
+  border-color: transparent;
+}
+.p-card__img {
+  aspect-ratio: 1;
+  overflow: hidden;
+  position: relative;
+  background: var(--sg-cream);
+}
+.p-card__img img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: transform .5s;
+}
+.p-card:hover .p-card__img img { transform: scale(1.04); }
+.p-card__badge {
+  position: absolute;
+  top: 12px;
+  left: 12px;
+  padding: 4px 12px;
+  border-radius: 100px;
+  font-size: 11px;
+  font-weight: 600;
+  letter-spacing: .02em;
+}
+.p-card__badge--sale { background: var(--sg-orange); color: #fff; }
+.p-card__badge--new { background: var(--sg-dark); color: #fff; }
+.p-card__badge--age { background: rgba(255,255,255,.92); backdrop-filter: blur(6px); color: var(--sg-muted); }
+.p-card__body { padding: 16px 16px 18px; }
+.p-card__category {
+  font-size: 11px;
+  font-weight: 500;
+  color: var(--sg-light);
+  text-transform: uppercase;
+  letter-spacing: .06em;
+  margin-bottom: 4px;
+}
+.p-card__title {
+  font-size: 14.5px;
+  font-weight: 600;
+  color: var(--sg-dark);
+  line-height: 1.35;
+  margin-bottom: 8px;
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+.p-card__rating {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  margin-bottom: 10px;
+}
+.p-card__stars { color: var(--sg-gold); font-size: 12px; letter-spacing: 1px; }
+.p-card__count { font-size: 11.5px; color: var(--sg-light); }
+.p-card__footer {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 8px;
+}
+.p-card__price {
+  font-size: 16px;
+  font-weight: 700;
+  color: var(--sg-dark);
+}
+.p-card__price del {
+  font-size: 13px;
+  font-weight: 400;
+  color: var(--sg-light);
+  margin-left: 4px;
+}
+.p-card__atc {
+  padding: 8px 18px;
+  border-radius: 100px;
+  background: var(--sg-dark);
+  color: #fff;
+  font-size: 12px;
+  font-weight: 600;
+  transition: all .25s;
+  white-space: nowrap;
+}
+.p-card__atc:hover {
+  background: var(--sg-orange);
+  transform: translateY(-1px);
+}
+
+/* ============================================================
+   07. SPLIT FEATURE (reusable for Kids / Adults)
+   Image on one side, product grid on the other.
+   Flips on alternate use.
+   ============================================================ */
+.split {
+  padding: 64px 0;
+}
+.split--alt { background: var(--sg-cream); }
+.split__inner {
+  max-width: var(--max-w);
+  margin: 0 auto;
+  padding: 0 var(--gutter);
+}
+.split__head {
+  margin-bottom: 32px;
+}
+.split__eyebrow {
+  font-size: 11px;
+  font-weight: 600;
+  letter-spacing: .12em;
+  text-transform: uppercase;
+  color: var(--sg-orange);
+  margin-bottom: 8px;
+}
+.split__title {
+  font-family: var(--serif);
+  font-size: clamp(22px, 3.5vw, 30px);
+  color: var(--sg-dark);
+  margin-bottom: 6px;
+}
+.split__desc {
+  font-size: 14px;
+  color: var(--sg-muted);
+  max-width: 440px;
+  line-height: 1.65;
+}
+.split__layout {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 24px;
+}
+@media (min-width: 750px) {
+  .split__layout { grid-template-columns: 1fr 1fr; gap: 28px; }
+  .split--flip .split__image { order: 2; }
+}
+.split__image {
+  border-radius: var(--radius-lg);
+  overflow: hidden;
+  aspect-ratio: 4/5;
+  position: relative;
+}
+@media (min-width: 750px) { .split__image { aspect-ratio: auto; min-height: 520px; } }
+.split__image img { width: 100%; height: 100%; object-fit: cover; }
+.split__image-overlay {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  padding: 28px 24px;
+  background: linear-gradient(to top, rgba(30,27,24,.6) 0%, transparent 100%);
+}
+.split__image-overlay p {
+  font-family: var(--serif);
+  font-size: 20px;
+  color: #fff;
+  margin-bottom: 12px;
+  max-width: 280px;
+}
+.split__image-cta {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 12.5px;
+  font-weight: 600;
+  color: #fff;
+  transition: gap .2s;
+}
+.split__image-cta:hover { gap: 10px; }
+.split__products {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 14px;
+}
+.split__products .p-card { min-width: unset; max-width: unset; }
+
+/* ============================================================
+   08. AS SEEN WITH (Press / Collaborations)
+   Clean logo row. Understated flex.
+   ============================================================ */
+.press {
+  padding: 48px 0;
+  background: var(--sg-warm-white);
+  border-top: 1px solid var(--sg-border);
+  border-bottom: 1px solid var(--sg-border);
+}
+.press__inner {
+  max-width: var(--max-w);
+  margin: 0 auto;
+  padding: 0 var(--gutter);
+  text-align: center;
+}
+.press__label {
+  font-size: 11px;
+  font-weight: 600;
+  letter-spacing: .12em;
+  text-transform: uppercase;
+  color: var(--sg-light);
+  margin-bottom: 24px;
+}
+.press__logos {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 36px;
+  flex-wrap: wrap;
+}
+.press__logo {
+  height: 28px;
+  opacity: .35;
+  transition: opacity .3s;
+  filter: grayscale(1);
+}
+.press__logo:hover { opacity: .7; filter: none; }
+@media (min-width: 750px) { .press__logos { gap: 56px; } .press__logo { height: 32px; } }
+
+/* ============================================================
+   09. HOW IT WORKS
+   3 steps. Clean. Process-oriented.
+   ============================================================ */
+.process {
+  padding: 72px 0;
+  background: var(--sg-cream);
+}
+.process__inner {
+  max-width: var(--max-w);
+  margin: 0 auto;
+  padding: 0 var(--gutter);
+}
+.process__head {
+  text-align: center;
+  margin-bottom: 48px;
+}
+.process__head h2 {
+  font-family: var(--serif);
+  font-size: clamp(22px, 3.5vw, 30px);
+  color: var(--sg-dark);
+  margin-bottom: 8px;
+}
+.process__head p {
+  font-size: 14px;
+  color: var(--sg-muted);
+  max-width: 420px;
+  margin: 0 auto;
+}
+.process__steps {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 20px;
+}
+@media (min-width: 600px) { .process__steps { grid-template-columns: repeat(3, 1fr); gap: 24px; } }
+.step {
+  background: #fff;
+  border-radius: var(--radius-lg);
+  overflow: hidden;
+  transition: transform .3s;
+}
+.step:hover { transform: translateY(-3px); }
+.step__media {
+  aspect-ratio: 4/5;
+  overflow: hidden;
+  position: relative;
+  background: var(--sg-dark);
+}
+.step__media img { width: 100%; height: 100%; object-fit: cover; opacity: .85; }
+.step__play {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 52px;
+  height: 52px;
+  border-radius: 50%;
+  background: rgba(255,255,255,.92);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 4px 16px rgba(0,0,0,.15);
+}
+.step__play svg { width: 20px; height: 20px; color: var(--sg-orange); margin-left: 2px; }
+.step__body { padding: 20px; }
+.step__num {
+  font-size: 11px;
+  font-weight: 700;
+  color: var(--sg-orange);
+  letter-spacing: .1em;
+  text-transform: uppercase;
+  margin-bottom: 6px;
+}
+.step__title {
+  font-size: 17px;
+  font-weight: 600;
+  color: var(--sg-dark);
+  margin-bottom: 4px;
+}
+.step__desc {
+  font-size: 13px;
+  color: var(--sg-muted);
+  line-height: 1.6;
+}
+
+/* ============================================================
+   10. GIFTING GRID
+   For occasions. Warm overlays on images.
+   ============================================================ */
+.gifting {
+  padding: 72px 0;
+  background: var(--sg-warm-white);
+}
+.gifting__inner {
+  max-width: var(--max-w);
+  margin: 0 auto;
+  padding: 0 var(--gutter);
+}
+.gifting__head {
+  text-align: center;
+  margin-bottom: 40px;
+}
+.gifting__head h2 {
+  font-family: var(--serif);
+  font-size: clamp(22px, 3.5vw, 30px);
+  color: var(--sg-dark);
+  margin-bottom: 8px;
+}
+.gifting__head p {
+  font-size: 14px;
+  color: var(--sg-muted);
+  max-width: 440px;
+  margin: 0 auto;
+}
+.gifting__grid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 16px;
+}
+@media (min-width: 600px) { .gifting__grid { grid-template-columns: repeat(3, 1fr); } }
+.gift-card {
+  border-radius: var(--radius-lg);
+  overflow: hidden;
+  position: relative;
+  aspect-ratio: 3/4;
+  cursor: pointer;
+  transition: transform .3s;
+}
+@media (max-width: 599px) { .gift-card { aspect-ratio: 16/9; } }
+.gift-card:hover { transform: translateY(-4px); }
+.gift-card img { width: 100%; height: 100%; object-fit: cover; }
+.gift-card__content {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(to top, rgba(30,27,24,.65) 0%, rgba(30,27,24,.1) 50%, transparent 100%);
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+  padding: 24px;
+}
+.gift-card h3 {
+  font-family: var(--serif);
+  font-size: 19px;
+  color: #fff;
+  margin-bottom: 4px;
+}
+.gift-card p {
+  font-size: 13px;
+  color: rgba(255,255,255,.72);
+  margin-bottom: 12px;
+  line-height: 1.5;
+}
+.gift-card__link {
+  font-size: 12.5px;
+  font-weight: 600;
+  color: #fff;
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  transition: gap .2s;
+}
+.gift-card__link:hover { gap: 10px; }
+
+/* ============================================================
+   11. TESTIMONIALS
+   Real voices. Clean cards. No stars overload.
+   ============================================================ */
+.reviews {
+  padding: 72px 0;
+  background: var(--sg-cream);
+}
+.reviews__inner {
+  max-width: var(--max-w);
+  margin: 0 auto;
+  padding: 0 var(--gutter);
+}
+.reviews__head {
+  text-align: center;
+  margin-bottom: 40px;
+}
+.reviews__head h2 {
+  font-family: var(--serif);
+  font-size: clamp(22px, 3.5vw, 30px);
+  color: var(--sg-dark);
+}
+.reviews__grid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 16px;
+}
+@media (min-width: 600px) { .reviews__grid { grid-template-columns: repeat(3, 1fr); } }
+.review-card {
+  background: #fff;
+  border-radius: var(--radius-lg);
+  padding: 28px 24px;
+  display: flex;
+  flex-direction: column;
+}
+.review-card__stars {
+  color: var(--sg-gold);
+  font-size: 14px;
+  letter-spacing: 2px;
+  margin-bottom: 14px;
+}
+.review-card__text {
+  font-size: 14px;
+  color: var(--sg-text);
+  line-height: 1.7;
+  flex: 1;
+  margin-bottom: 20px;
+  font-style: italic;
+}
+.review-card__author {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding-top: 16px;
+  border-top: 1px solid var(--sg-border);
+}
+.review-card__avatar {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  background: var(--sg-peach);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: 700;
+  font-size: 14px;
+  color: var(--sg-orange);
+  flex-shrink: 0;
+}
+.review-card__name { font-size: 13px; font-weight: 600; color: var(--sg-dark); }
+.review-card__detail { font-size: 11.5px; color: var(--sg-muted); margin-top: 1px; }
+.review-card__verified {
+  font-size: 11px;
+  color: var(--sg-teal);
+  font-weight: 600;
+  margin-top: 2px;
+}
+
+/* ============================================================
+   12. BRAND STORY
+   Warm, personal. Not corporate.
+   ============================================================ */
+.story {
+  padding: 80px 0;
+  background: var(--sg-warm-white);
+}
+.story__inner {
+  max-width: var(--max-w);
+  margin: 0 auto;
+  padding: 0 var(--gutter);
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 40px;
+  align-items: center;
+}
+@media (min-width: 750px) { .story__inner { grid-template-columns: 1fr 1fr; gap: 56px; } }
+.story__image {
+  border-radius: var(--radius-lg);
+  overflow: hidden;
+  aspect-ratio: 4/3;
+}
+.story__image img { width: 100%; height: 100%; object-fit: cover; }
+.story__eyebrow {
+  font-size: 11px;
+  font-weight: 600;
+  letter-spacing: .12em;
+  text-transform: uppercase;
+  color: var(--sg-orange);
+  margin-bottom: 10px;
+}
+.story__title {
+  font-family: var(--serif);
+  font-size: clamp(24px, 4vw, 34px);
+  color: var(--sg-dark);
+  margin-bottom: 16px;
+}
+.story__text {
+  font-size: 14.5px;
+  color: var(--sg-muted);
+  line-height: 1.75;
+  margin-bottom: 24px;
+}
+.story__founders {
+  display: flex;
+  gap: 20px;
+  margin-bottom: 20px;
+}
+.founder {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+.founder__avatar {
+  width: 44px;
+  height: 44px;
+  border-radius: 50%;
+  overflow: hidden;
+  background: var(--sg-cream);
+}
+.founder__avatar img { width: 100%; height: 100%; object-fit: cover; }
+.founder__name { font-size: 13px; font-weight: 600; color: var(--sg-dark); }
+.founder__role { font-size: 11.5px; color: var(--sg-muted); }
+.story__values {
+  display: flex;
+  gap: 20px;
+  flex-wrap: wrap;
+}
+.value-tag {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 12.5px;
+  font-weight: 600;
+  color: var(--sg-text);
+}
+.value-tag svg { width: 16px; height: 16px; stroke: var(--sg-orange); fill: none; stroke-width: 2; }
+
+/* ============================================================
+   13. FOOTER
+   Clean, warm. Not cluttered.
+   ============================================================ */
+.footer {
+  background: var(--sg-dark);
+  color: rgba(255,255,255,.6);
+  padding: 64px 0 32px;
+}
+.footer__inner {
+  max-width: var(--max-w);
+  margin: 0 auto;
+  padding: 0 var(--gutter);
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 36px;
+}
+@media (min-width: 600px) { .footer__inner { grid-template-columns: 1.5fr 1fr 1fr; } }
+@media (min-width: 900px) { .footer__inner { grid-template-columns: 1.8fr 1fr 1fr 1fr; } }
+.footer__brand p { font-size: 13px; line-height: 1.7; margin-bottom: 20px; max-width: 300px; }
+.footer__logo {
+  font-family: var(--serif);
+  font-size: 20px;
+  color: #fff;
+  margin-bottom: 12px;
+}
+.footer__logo span { color: var(--sg-orange-soft); }
+.footer__social { display: flex; gap: 10px; }
+.footer__social a {
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  background: rgba(255,255,255,.08);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all .3s;
+}
+.footer__social a:hover { background: var(--sg-orange); }
+.footer__social svg { width: 16px; height: 16px; stroke: rgba(255,255,255,.5); fill: none; stroke-width: 1.8; }
+.footer__social a:hover svg { stroke: #fff; }
+.footer__col h4 {
+  font-size: 12px;
+  font-weight: 600;
+  color: rgba(255,255,255,.9);
+  text-transform: uppercase;
+  letter-spacing: .08em;
+  margin-bottom: 16px;
+}
+.footer__col ul { list-style: none; display: flex; flex-direction: column; gap: 10px; }
+.footer__col a { font-size: 13px; transition: color .2s; }
+.footer__col a:hover { color: rgba(255,255,255,.9); }
+.footer__bottom {
+  max-width: var(--max-w);
+  margin: 0 auto;
+  padding: 24px var(--gutter) 0;
+  border-top: 1px solid rgba(255,255,255,.08);
+  display: flex;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 12px;
+  margin-top: 40px;
+}
+.footer__bottom p { font-size: 12px; }
+
+/* ============================================================
+   UTILITIES
+   ============================================================ */
+.sr-only {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0,0,0,0);
+  border: 0;
+}
+
+/* Placeholder images for wireframe */
+.placeholder-img {
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(135deg, var(--sg-cream) 0%, var(--sg-peach) 100%);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-family: var(--sans);
+  font-size: 11px;
+  color: var(--sg-light);
+  letter-spacing: .05em;
+  text-transform: uppercase;
+}
+</style>
+</head>
+<body>
+
+<!-- ============================================================
+     01. ANNOUNCEMENT BAR
+     ============================================================ -->
+<div class="announce">
+  <strong>Free shipping</strong> on orders above Rs.1,000 &nbsp;|&nbsp; Proudly made in India
+</div>
+
+<!-- ============================================================
+     02. HEADER
+     ============================================================ -->
+<header class="header">
+  <div class="header__inner">
+    <a href="/" class="header__logo">Sky <span>Goodies</span></a>
+
+    <nav>
+      <ul class="header__nav">
+        <li><a href="#">Party Decor</a></li>
+        <li><a href="#">DIY Kits</a></li>
+        <li><a href="#">Calendars</a></li>
+        <li><a href="#">Home Decor</a></li>
+        <li><a href="#">Gifting</a></li>
+        <li><a href="#">Notebooks</a></li>
+      </ul>
+    </nav>
+
+    <div class="header__actions">
+      <svg viewBox="0 0 24 24"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
+      <svg viewBox="0 0 24 24" class="header__burger"><line x1="3" y1="6" x2="21" y2="6"/><line x1="3" y1="12" x2="21" y2="12"/><line x1="3" y1="18" x2="21" y2="18"/></svg>
+      <svg viewBox="0 0 24 24"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
+      <span class="header__cart-count">
+        <svg viewBox="0 0 24 24"><path d="M6 2L3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4z"/><line x1="3" y1="6" x2="21" y2="6"/><path d="M16 10a4 4 0 0 1-8 0"/></svg>
+      </span>
+    </div>
+  </div>
+</header>
+
+<!-- ============================================================
+     03. HERO
+     ============================================================ -->
+<section class="hero">
+  <div class="hero__media">
+    <div class="placeholder-img" style="min-height: 400px;">
+      Lifestyle photo: A family at a table, colorful paper lanterns glowing around them, a child assembling a paper craft kit with pure focus and delight.
+    </div>
+  </div>
+  <div class="hero__content">
+    <span class="hero__tag">Handcrafted Paper Kits</span>
+    <h1 class="hero__title">Simple paper. Real joy.</h1>
+    <p class="hero__sub">Pre-cut, easy-to-make craft kits designed to bring families together and fill homes with warmth.</p>
+    <a href="#" class="hero__cta">
+      Explore the collection
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="9 18 15 12 9 6"/></svg>
+    </a>
+  </div>
+</section>
+
+<!-- ============================================================
+     04. TRUST STRIP
+     ============================================================ -->
+<div class="trust">
+  <div class="trust__track">
+    <div class="trust__item">
+      <div class="trust__icon"><svg viewBox="0 0 24 24"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg></div>
+      <span class="trust__label"><strong>50,000+</strong> happy makers</span>
+    </div>
+    <div class="trust__item">
+      <div class="trust__icon"><svg viewBox="0 0 24 24"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg></div>
+      <span class="trust__label"><strong>Made in</strong> Mumbai, India</span>
+    </div>
+    <div class="trust__item">
+      <div class="trust__icon"><svg viewBox="0 0 24 24"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg></div>
+      <span class="trust__label"><strong>NID-designed</strong> craft kits</span>
+    </div>
+    <div class="trust__item">
+      <div class="trust__icon"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><path d="M8 14s1.5 2 4 2 4-2 4-2"/><line x1="9" y1="9" x2="9.01" y2="9"/><line x1="15" y1="9" x2="15.01" y2="9"/></svg></div>
+      <span class="trust__label"><strong>Eco-friendly</strong> &amp; biodegradable</span>
+    </div>
+    <div class="trust__item">
+      <div class="trust__icon"><svg viewBox="0 0 24 24"><rect x="1" y="3" width="15" height="13"/><polygon points="16 8 20 8 23 11 23 16 16 16 16 8"/><circle cx="5.5" cy="18.5" r="2.5"/><circle cx="18.5" cy="18.5" r="2.5"/></svg></div>
+      <span class="trust__label"><strong>Free shipping</strong> over Rs.1,000</span>
+    </div>
+  </div>
+</div>
+
+<!-- ============================================================
+     05. SHOP BY CATEGORY
+     ============================================================ -->
+<section class="categories">
+  <div class="categories__head">
+    <h2>Shop by category</h2>
+  </div>
+  <div class="categories__scroll">
+    <a href="#" class="cat-item">
+      <div class="cat-item__img"><div class="placeholder-img">Party Decor</div></div>
+      <span class="cat-item__label">Party Decor</span>
+    </a>
+    <a href="#" class="cat-item">
+      <div class="cat-item__img"><div class="placeholder-img">Kids Kits</div></div>
+      <span class="cat-item__label">Kids Kits</span>
+    </a>
+    <a href="#" class="cat-item">
+      <div class="cat-item__img"><div class="placeholder-img">DIY Adults</div></div>
+      <span class="cat-item__label">DIY for Adults</span>
+    </a>
+    <a href="#" class="cat-item">
+      <div class="cat-item__img"><div class="placeholder-img">Home Decor</div></div>
+      <span class="cat-item__label">Home Decor</span>
+    </a>
+    <a href="#" class="cat-item">
+      <div class="cat-item__img"><div class="placeholder-img">Fairy Lights</div></div>
+      <span class="cat-item__label">Fairy Lights</span>
+    </a>
+    <a href="#" class="cat-item">
+      <div class="cat-item__img"><div class="placeholder-img">Calendars</div></div>
+      <span class="cat-item__label">Calendars</span>
+    </a>
+    <a href="#" class="cat-item">
+      <div class="cat-item__img"><div class="placeholder-img">Pooja Decor</div></div>
+      <span class="cat-item__label">Pooja Decor</span>
+    </a>
+    <a href="#" class="cat-item">
+      <div class="cat-item__img"><div class="placeholder-img">Notebooks</div></div>
+      <span class="cat-item__label">Notebooks</span>
+    </a>
+  </div>
+</section>
+
+<!-- ============================================================
+     06. FEATURED PRODUCTS (BESTSELLERS)
+     ============================================================ -->
+<section class="featured">
+  <div class="featured__head">
+    <div>
+      <h2>Loved by thousands</h2>
+      <p>Our most popular kits, chosen by makers across India.</p>
+    </div>
+    <a href="#" class="view-all">View all <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="9 18 15 12 9 6"/></svg></a>
+  </div>
+  <div class="products-scroll">
+
+    <div class="p-card">
+      <div class="p-card__img">
+        <div class="placeholder-img">Paper Mini Lanterns</div>
+        <span class="p-card__badge p-card__badge--sale">30% off</span>
+      </div>
+      <div class="p-card__body">
+        <div class="p-card__category">Fairy Lights</div>
+        <h3 class="p-card__title">Paper Mini Lanterns Colourful Fairy Lights</h3>
+        <div class="p-card__rating">
+          <span class="p-card__stars">&#9733;&#9733;&#9733;&#9733;&#9733;</span>
+          <span class="p-card__count">42 reviews</span>
+        </div>
+        <div class="p-card__footer">
+          <span class="p-card__price">Rs. 699 <del>Rs. 999</del></span>
+          <button class="p-card__atc">Add to Cart</button>
+        </div>
+      </div>
+    </div>
+
+    <div class="p-card">
+      <div class="p-card__img">
+        <div class="placeholder-img">Ganesha Idol Kit</div>
+        <span class="p-card__badge p-card__badge--age">Ages 8+</span>
+      </div>
+      <div class="p-card__body">
+        <div class="p-card__category">DIY Kits</div>
+        <h3 class="p-card__title">Big Ganesha Idol DIY Paper Craft Kit</h3>
+        <div class="p-card__rating">
+          <span class="p-card__stars">&#9733;&#9733;&#9733;&#9733;&#9733;</span>
+          <span class="p-card__count">87 reviews</span>
+        </div>
+        <div class="p-card__footer">
+          <span class="p-card__price">Rs. 899</span>
+          <button class="p-card__atc">Add to Cart</button>
+        </div>
+      </div>
+    </div>
+
+    <div class="p-card">
+      <div class="p-card__img">
+        <div class="placeholder-img">Daisy Party Decor</div>
+        <span class="p-card__badge p-card__badge--new">New</span>
+      </div>
+      <div class="p-card__body">
+        <div class="p-card__category">Party Decor</div>
+        <h3 class="p-card__title">Pink Daisy Flower Paper Bunting &amp; Wall Decor</h3>
+        <div class="p-card__rating">
+          <span class="p-card__stars">&#9733;&#9733;&#9733;&#9733;&#9733;</span>
+          <span class="p-card__count">23 reviews</span>
+        </div>
+        <div class="p-card__footer">
+          <span class="p-card__price">Rs. 599</span>
+          <button class="p-card__atc">Add to Cart</button>
+        </div>
+      </div>
+    </div>
+
+    <div class="p-card">
+      <div class="p-card__img">
+        <div class="placeholder-img">Typewriter Calendar</div>
+      </div>
+      <div class="p-card__body">
+        <div class="p-card__category">Calendars</div>
+        <h3 class="p-card__title">Colourful Typewriter Desk Calendar 2026</h3>
+        <div class="p-card__rating">
+          <span class="p-card__stars">&#9733;&#9733;&#9733;&#9733;&#9733;</span>
+          <span class="p-card__count">56 reviews</span>
+        </div>
+        <div class="p-card__footer">
+          <span class="p-card__price">Rs. 599 <del>Rs. 899</del></span>
+          <button class="p-card__atc">Add to Cart</button>
+        </div>
+      </div>
+    </div>
+
+    <div class="p-card">
+      <div class="p-card__img">
+        <div class="placeholder-img">Matchbook Notebooks</div>
+      </div>
+      <div class="p-card__body">
+        <div class="p-card__category">Notebooks</div>
+        <h3 class="p-card__title">Hot Heart Matchbook Notebook</h3>
+        <div class="p-card__rating">
+          <span class="p-card__stars">&#9733;&#9733;&#9733;&#9733;&#9733;</span>
+          <span class="p-card__count">31 reviews</span>
+        </div>
+        <div class="p-card__footer">
+          <span class="p-card__price">Rs. 199</span>
+          <button class="p-card__atc">Add to Cart</button>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+<!-- ============================================================
+     07. SPLIT: FOR KIDS
+     ============================================================ -->
+<section class="split">
+  <div class="split__inner">
+    <div class="split__head">
+      <div class="split__eyebrow">For little makers</div>
+      <h2 class="split__title">Busy hands, bright minds</h2>
+      <p class="split__desc">Paper kits that turn a quiet afternoon into something they made themselves. Ages 4 to 12.</p>
+    </div>
+    <div class="split__layout">
+      <div class="split__image">
+        <div class="placeholder-img">Lifestyle: Child proudly holding up a finished paper animal craft, paint-free hands, big smile</div>
+        <div class="split__image-overlay">
+          <p>40+ activity kits for every kind of curious kid</p>
+          <a href="#" class="split__image-cta">
+            Shop kids' kits
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" width="14" height="14"><polyline points="9 18 15 12 9 6"/></svg>
+          </a>
+        </div>
+      </div>
+      <div class="split__products">
+        <div class="p-card">
+          <div class="p-card__img"><div class="placeholder-img">Animal Kit</div><span class="p-card__badge p-card__badge--age">Ages 4+</span></div>
+          <div class="p-card__body">
+            <div class="p-card__category">Kids Kits</div>
+            <h3 class="p-card__title">Paper Safari Animal Set</h3>
+            <div class="p-card__footer"><span class="p-card__price">Rs. 499</span><button class="p-card__atc">Add</button></div>
+          </div>
+        </div>
+        <div class="p-card">
+          <div class="p-card__img"><div class="placeholder-img">Dollhouse</div><span class="p-card__badge p-card__badge--age">Ages 6+</span></div>
+          <div class="p-card__body">
+            <div class="p-card__category">Kids Kits</div>
+            <h3 class="p-card__title">DIY Paper Dollhouse Kit</h3>
+            <div class="p-card__footer"><span class="p-card__price">Rs. 699</span><button class="p-card__atc">Add</button></div>
+          </div>
+        </div>
+        <div class="p-card">
+          <div class="p-card__img"><div class="placeholder-img">Bird Mobile</div><span class="p-card__badge p-card__badge--age">Ages 5+</span></div>
+          <div class="p-card__body">
+            <div class="p-card__category">Kids Kits</div>
+            <h3 class="p-card__title">Colourful Bird Mobile Kit</h3>
+            <div class="p-card__footer"><span class="p-card__price">Rs. 399</span><button class="p-card__atc">Add</button></div>
+          </div>
+        </div>
+        <div class="p-card">
+          <div class="p-card__img"><div class="placeholder-img">Castle Kit</div><span class="p-card__badge p-card__badge--new">New</span></div>
+          <div class="p-card__body">
+            <div class="p-card__category">Kids Kits</div>
+            <h3 class="p-card__title">Medieval Castle Paper Craft</h3>
+            <div class="p-card__footer"><span class="p-card__price">Rs. 599</span><button class="p-card__atc">Add</button></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============================================================
+     07b. SPLIT: FOR ADULTS (flipped layout)
+     ============================================================ -->
+<section class="split split--alt split--flip">
+  <div class="split__inner">
+    <div class="split__head">
+      <div class="split__eyebrow">Slow making for fast lives</div>
+      <h2 class="split__title">Calm crafty time for grown-ups</h2>
+      <p class="split__desc">Detail-rich paper kits that feel satisfying to make and even nicer to keep. No craft skills required.</p>
+    </div>
+    <div class="split__layout">
+      <div class="split__image">
+        <div class="placeholder-img">Lifestyle: Adult hands carefully assembling an intricate paper sculpture, warm lighting, cup of tea nearby</div>
+        <div class="split__image-overlay">
+          <p>Paper projects that feel like a deep breath</p>
+          <a href="#" class="split__image-cta">
+            Shop adult kits
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" width="14" height="14"><polyline points="9 18 15 12 9 6"/></svg>
+          </a>
+        </div>
+      </div>
+      <div class="split__products">
+        <div class="p-card">
+          <div class="p-card__img"><div class="placeholder-img">Paper Lamp</div></div>
+          <div class="p-card__body">
+            <div class="p-card__category">Home Decor</div>
+            <h3 class="p-card__title">Elegant Kandil Paper Lamp Shade</h3>
+            <div class="p-card__footer"><span class="p-card__price">Rs. 699 <del>Rs. 899</del></span><button class="p-card__atc">Add</button></div>
+          </div>
+        </div>
+        <div class="p-card">
+          <div class="p-card__img"><div class="placeholder-img">Lotus Diyas</div></div>
+          <div class="p-card__body">
+            <div class="p-card__category">Pooja Decor</div>
+            <h3 class="p-card__title">Set of 12 Hanging Lotus Diyas</h3>
+            <div class="p-card__footer"><span class="p-card__price">Rs. 1,199</span><button class="p-card__atc">Add</button></div>
+          </div>
+        </div>
+        <div class="p-card">
+          <div class="p-card__img"><div class="placeholder-img">Wall Art</div></div>
+          <div class="p-card__body">
+            <div class="p-card__category">Wall Decor</div>
+            <h3 class="p-card__title">Butterfly Wall Art Paper Kit</h3>
+            <div class="p-card__footer"><span class="p-card__price">Rs. 499</span><button class="p-card__atc">Add</button></div>
+          </div>
+        </div>
+        <div class="p-card">
+          <div class="p-card__img"><div class="placeholder-img">Banana Trees</div></div>
+          <div class="p-card__body">
+            <div class="p-card__category">Pooja Decor</div>
+            <h3 class="p-card__title">DIY Paper Banana Trees Pair</h3>
+            <div class="p-card__footer"><span class="p-card__price">Rs. 599</span><button class="p-card__atc">Add</button></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============================================================
+     08. AS SEEN WITH
+     ============================================================ -->
+<section class="press">
+  <div class="press__inner">
+    <div class="press__label">Trusted by brands you know</div>
+    <div class="press__logos">
+      <div class="press__logo placeholder-img" style="width:120px;height:32px;border-radius:4px">Nat Geo</div>
+      <div class="press__logo placeholder-img" style="width:120px;height:32px;border-radius:4px">Hot Wheels</div>
+      <div class="press__logo placeholder-img" style="width:120px;height:32px;border-radius:4px">CRED</div>
+      <div class="press__logo placeholder-img" style="width:120px;height:32px;border-radius:4px">Barbie</div>
+      <div class="press__logo placeholder-img" style="width:120px;height:32px;border-radius:4px">Discovery</div>
+    </div>
+  </div>
+</section>
+
+<!-- ============================================================
+     09. HOW IT WORKS
+     ============================================================ -->
+<section class="process">
+  <div class="process__inner">
+    <div class="process__head">
+      <h2>From flat pack to finished piece</h2>
+      <p>Every kit comes with everything you need. No tools, no glue gun, no craft degree.</p>
+    </div>
+    <div class="process__steps">
+      <div class="step">
+        <div class="step__media">
+          <div class="placeholder-img">Video thumbnail: Hands opening a flat-packed kit</div>
+          <div class="step__play"><svg viewBox="0 0 24 24" fill="currentColor"><polygon points="5 3 19 12 5 21 5 3"/></svg></div>
+        </div>
+        <div class="step__body">
+          <div class="step__num">Step 01</div>
+          <h3 class="step__title">Open the kit</h3>
+          <p class="step__desc">Pre-cut, pre-scored, colour-coded pieces. Just pop them out.</p>
+        </div>
+      </div>
+      <div class="step">
+        <div class="step__media">
+          <div class="placeholder-img">Video thumbnail: Person following QR code video on phone</div>
+          <div class="step__play"><svg viewBox="0 0 24 24" fill="currentColor"><polygon points="5 3 19 12 5 21 5 3"/></svg></div>
+        </div>
+        <div class="step__body">
+          <div class="step__num">Step 02</div>
+          <h3 class="step__title">Follow along</h3>
+          <p class="step__desc">Scan the QR code for a step-by-step video tutorial.</p>
+        </div>
+      </div>
+      <div class="step">
+        <div class="step__media">
+          <div class="placeholder-img">Video thumbnail: Finished craft piece on a shelf, looking gorgeous</div>
+          <div class="step__play"><svg viewBox="0 0 24 24" fill="currentColor"><polygon points="5 3 19 12 5 21 5 3"/></svg></div>
+        </div>
+        <div class="step__body">
+          <div class="step__num">Step 03</div>
+          <h3 class="step__title">Show it off</h3>
+          <p class="step__desc">Display it, gift it, or keep it. It will look gorgeous either way.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============================================================
+     10. GIFTING GRID
+     ============================================================ -->
+<section class="gifting">
+  <div class="gifting__inner">
+    <div class="gifting__head">
+      <h2>Good gifts. Better reactions.</h2>
+      <p>Whether it's a birthday return gift, a souvenir, or a corporate order -- we've got something thoughtful.</p>
+    </div>
+    <div class="gifting__grid">
+      <div class="gift-card">
+        <div class="placeholder-img" style="position:absolute;inset:0">Kids' Return Gifts</div>
+        <div class="gift-card__content">
+          <h3>Kids' Return Gifts</h3>
+          <p>Colourful kits kids can actually make and keep.</p>
+          <a href="#" class="gift-card__link">
+            Browse kids' gifts
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" width="14" height="14"><polyline points="9 18 15 12 9 6"/></svg>
+          </a>
+        </div>
+      </div>
+      <div class="gift-card">
+        <div class="placeholder-img" style="position:absolute;inset:0">Bulk Orders</div>
+        <div class="gift-card__content">
+          <h3>Bulk &amp; Party Orders</h3>
+          <p>Return gifts for 20 or 200. We have you covered.</p>
+          <a href="#" class="gift-card__link">
+            Enquire now
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" width="14" height="14"><polyline points="9 18 15 12 9 6"/></svg>
+          </a>
+        </div>
+      </div>
+      <div class="gift-card">
+        <div class="placeholder-img" style="position:absolute;inset:0">Corporate Gifts</div>
+        <div class="gift-card__content">
+          <h3>Corporate &amp; Custom Gifts</h3>
+          <p>Thoughtful branded gifts that stand out.</p>
+          <a href="#" class="gift-card__link">
+            Get a quote
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" width="14" height="14"><polyline points="9 18 15 12 9 6"/></svg>
+          </a>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============================================================
+     11. TESTIMONIALS
+     ============================================================ -->
+<section class="reviews">
+  <div class="reviews__inner">
+    <div class="reviews__head">
+      <h2>What people are saying</h2>
+    </div>
+    <div class="reviews__grid">
+      <div class="review-card">
+        <div class="review-card__stars">&#9733;&#9733;&#9733;&#9733;&#9733;</div>
+        <p class="review-card__text">"My daughter spent the entire afternoon building the animal set. She was so proud of what she made. We are ordering more for her birthday party."</p>
+        <div class="review-card__author">
+          <div class="review-card__avatar">P</div>
+          <div>
+            <div class="review-card__name">Priya M.</div>
+            <div class="review-card__detail">Purchased Kids' Activity Kit</div>
+            <div class="review-card__verified">Verified buyer</div>
+          </div>
+        </div>
+      </div>
+      <div class="review-card">
+        <div class="review-card__stars">&#9733;&#9733;&#9733;&#9733;&#9733;</div>
+        <p class="review-card__text">"Genuinely impressive quality. The instructions were clear and the end result looks stunning on our shelf. Already eyeing the next one."</p>
+        <div class="review-card__author">
+          <div class="review-card__avatar">A</div>
+          <div>
+            <div class="review-card__name">Ankit R.</div>
+            <div class="review-card__detail">Purchased Paper Sculpture Kit</div>
+            <div class="review-card__verified">Verified buyer</div>
+          </div>
+        </div>
+      </div>
+      <div class="review-card">
+        <div class="review-card__stars">&#9733;&#9733;&#9733;&#9733;&#9733;</div>
+        <p class="review-card__text">"Ordered return gifts for 30 kids. Everything arrived packed beautifully. The parents were equally impressed. Will definitely order again."</p>
+        <div class="review-card__author">
+          <div class="review-card__avatar">S</div>
+          <div>
+            <div class="review-card__name">Sneha K.</div>
+            <div class="review-card__detail">Purchased Party Decor Bundle</div>
+            <div class="review-card__verified">Verified buyer</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============================================================
+     12. BRAND STORY
+     ============================================================ -->
+<section class="story">
+  <div class="story__inner">
+    <div class="story__image">
+      <div class="placeholder-img" style="min-height:300px">Photo of Amit and Misha Gudibanda in their studio, surrounded by colorful paper crafts</div>
+    </div>
+    <div class="story__content">
+      <div class="story__eyebrow">The Sky Goodies story</div>
+      <h2 class="story__title">Paper can spark something wonderful.</h2>
+      <p class="story__text">In 2013, Amit and Misha Gudibanda left successful corporate careers to chase a simple idea -- that beautiful paper crafts can make everyday life more joyful. Every kit is designed at their Mumbai studio, with the kind of care you would put into a handmade gift for someone you love.</p>
+      <div class="story__founders">
+        <div class="founder">
+          <div class="founder__avatar"><div class="placeholder-img">A</div></div>
+          <div>
+            <div class="founder__name">Amit Gudibanda</div>
+            <div class="founder__role">CEO &amp; Co-Founder</div>
+          </div>
+        </div>
+        <div class="founder">
+          <div class="founder__avatar"><div class="placeholder-img">M</div></div>
+          <div>
+            <div class="founder__name">Misha Gudibanda</div>
+            <div class="founder__role">Creative Director</div>
+          </div>
+        </div>
+      </div>
+      <div class="story__values">
+        <div class="value-tag">
+          <svg viewBox="0 0 24 24"><path d="M12 22c5.523 0 10-4.477 10-10S17.523 2 12 2 2 6.477 2 12s4.477 10 10 10z"/><path d="M7.5 12l3 3 6-6"/></svg>
+          Eco-first
+        </div>
+        <div class="value-tag">
+          <svg viewBox="0 0 24 24"><path d="M12 22c5.523 0 10-4.477 10-10S17.523 2 12 2 2 6.477 2 12s4.477 10 10 10z"/><path d="M7.5 12l3 3 6-6"/></svg>
+          Made in India
+        </div>
+        <div class="value-tag">
+          <svg viewBox="0 0 24 24"><path d="M12 22c5.523 0 10-4.477 10-10S17.523 2 12 2 2 6.477 2 12s4.477 10 10 10z"/><path d="M7.5 12l3 3 6-6"/></svg>
+          NID-designed
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============================================================
+     13. FOOTER
+     ============================================================ -->
+<footer class="footer">
+  <div class="footer__inner">
+    <div class="footer__brand">
+      <div class="footer__logo">Sky <span>Goodies</span></div>
+      <p>Handcrafted paper kits designed to bring simple joys to everyday life. Made with love in Mumbai, India.</p>
+      <div class="footer__social">
+        <a href="#" aria-label="Instagram"><svg viewBox="0 0 24 24"><rect x="2" y="2" width="20" height="20" rx="5" ry="5"/><path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"/><line x1="17.5" y1="6.5" x2="17.51" y2="6.5"/></svg></a>
+        <a href="#" aria-label="Facebook"><svg viewBox="0 0 24 24"><path d="M18 2h-3a5 5 0 0 0-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 0 1 1-1h3z"/></svg></a>
+        <a href="#" aria-label="YouTube"><svg viewBox="0 0 24 24"><path d="M22.54 6.42a2.78 2.78 0 0 0-1.94-2C18.88 4 12 4 12 4s-6.88 0-8.6.46a2.78 2.78 0 0 0-1.94 2A29 29 0 0 0 1 11.75a29 29 0 0 0 .46 5.33A2.78 2.78 0 0 0 3.4 19.1c1.72.46 8.6.46 8.6.46s6.88 0 8.6-.46a2.78 2.78 0 0 0 1.94-2 29 29 0 0 0 .46-5.25 29 29 0 0 0-.46-5.33z"/><polygon points="9.75 15.02 15.5 11.75 9.75 8.48 9.75 15.02"/></svg></a>
+      </div>
+    </div>
+    <div class="footer__col">
+      <h4>Shop</h4>
+      <ul>
+        <li><a href="#">Party Decor</a></li>
+        <li><a href="#">DIY Kits for Kids</a></li>
+        <li><a href="#">DIY Kits for Adults</a></li>
+        <li><a href="#">Home Decor &amp; Lights</a></li>
+        <li><a href="#">Calendars</a></li>
+        <li><a href="#">Notebooks</a></li>
+      </ul>
+    </div>
+    <div class="footer__col">
+      <h4>Company</h4>
+      <ul>
+        <li><a href="#">Our Story</a></li>
+        <li><a href="#">Free Craft Ideas</a></li>
+        <li><a href="#">Bulk &amp; Corporate</a></li>
+        <li><a href="#">Contact Us</a></li>
+        <li><a href="#">Blog</a></li>
+      </ul>
+    </div>
+    <div class="footer__col">
+      <h4>Help</h4>
+      <ul>
+        <li><a href="#">Shipping &amp; Delivery</a></li>
+        <li><a href="#">Returns &amp; Exchange</a></li>
+        <li><a href="#">FAQs</a></li>
+        <li><a href="#">Privacy Policy</a></li>
+        <li><a href="#">Terms of Service</a></li>
+      </ul>
+    </div>
+  </div>
+  <div class="footer__bottom">
+    <p>2024 Sky Goodies. All rights reserved.</p>
+    <p>Designed with care in Mumbai, India</p>
+  </div>
+</footer>
+
+</body>
+</html>

@@ -1,0 +1,149 @@
+{{ 'sg-theme.css' | asset_url | stylesheet_tag }}
+
+{%- style -%}
+  .sg-section-{{ section.id }}-pad {
+    padding-top: {{ section.settings.padding_top | times: 0.5 | round: 0 }}px;
+    padding-bottom: {{ section.settings.padding_bottom | times: 0.5 | round: 0 }}px;
+  }
+  @media screen and (min-width: 750px) {
+    .sg-section-{{ section.id }}-pad {
+      padding-top: {{ section.settings.padding_top }}px;
+      padding-bottom: {{ section.settings.padding_bottom }}px;
+    }
+  }
+{%- endstyle -%}
+
+<section class="sg-section sg-process sg-section-{{ section.id }}-pad" style="background: {{ section.settings.bg_color }};" {{ section.shopify_attributes }}>
+  <div class="sg-process__inner">
+    <div class="sg-process__head">
+      {%- if section.settings.heading != blank -%}
+        <h2 class="sg-heading">{{ section.settings.heading }}</h2>
+      {%- endif -%}
+      {%- if section.settings.subheading != blank -%}
+        <p class="sg-subtext">{{ section.settings.subheading }}</p>
+      {%- endif -%}
+    </div>
+
+    <div class="sg-process__steps">
+      {%- for block in section.blocks -%}
+        <div class="sg-step" {{ block.shopify_attributes }}>
+          <div class="sg-step__media">
+            {%- if block.settings.image != blank -%}
+              <img src="{{ block.settings.image | image_url: width: 500 }}" alt="{{ block.settings.title | escape }}" width="500" height="625" loading="lazy">
+            {%- else -%}
+              <div class="sg-placeholder">Step {{ forloop.index }} video</div>
+            {%- endif -%}
+            {%- if block.settings.video_url != blank -%}
+              <a href="{{ block.settings.video_url }}" target="_blank" class="sg-step__play" aria-label="Play video">
+                <svg viewBox="0 0 24 24" fill="currentColor"><polygon points="5 3 19 12 5 21 5 3"/></svg>
+              </a>
+            {%- endif -%}
+          </div>
+          <div class="sg-step__body">
+            {%- if block.settings.step_label != blank -%}
+              <div class="sg-step__num">{{ block.settings.step_label }}</div>
+            {%- endif -%}
+            {%- if block.settings.title != blank -%}
+              <h3 class="sg-step__title">{{ block.settings.title }}</h3>
+            {%- endif -%}
+            {%- if block.settings.description != blank -%}
+              <p class="sg-step__desc">{{ block.settings.description }}</p>
+            {%- endif -%}
+          </div>
+        </div>
+      {%- endfor -%}
+    </div>
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "SG How It Works",
+  "settings": [
+    {
+      "type": "text",
+      "id": "heading",
+      "label": "Heading",
+      "default": "From flat pack to finished piece"
+    },
+    {
+      "type": "textarea",
+      "id": "subheading",
+      "label": "Subheading",
+      "default": "Every kit comes with everything you need. No tools, no glue gun, no craft degree."
+    },
+    {
+      "type": "color",
+      "id": "bg_color",
+      "label": "Background Color",
+      "default": "#FAF6F0"
+    },
+    {
+      "type": "range",
+      "id": "padding_top",
+      "min": 0,
+      "max": 100,
+      "step": 4,
+      "unit": "px",
+      "label": "Padding Top",
+      "default": 72
+    },
+    {
+      "type": "range",
+      "id": "padding_bottom",
+      "min": 0,
+      "max": 100,
+      "step": 4,
+      "unit": "px",
+      "label": "Padding Bottom",
+      "default": 72
+    }
+  ],
+  "blocks": [
+    {
+      "type": "step",
+      "name": "Step",
+      "settings": [
+        {
+          "type": "image_picker",
+          "id": "image",
+          "label": "Image or Video Thumbnail"
+        },
+        {
+          "type": "url",
+          "id": "video_url",
+          "label": "Video URL (optional)"
+        },
+        {
+          "type": "text",
+          "id": "step_label",
+          "label": "Step Label",
+          "default": "Step 01"
+        },
+        {
+          "type": "text",
+          "id": "title",
+          "label": "Title",
+          "default": "Open the kit"
+        },
+        {
+          "type": "textarea",
+          "id": "description",
+          "label": "Description",
+          "default": "Pre-cut, pre-scored, colour-coded pieces. Just pop them out."
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "SG How It Works",
+      "blocks": [
+        { "type": "step", "settings": { "step_label": "Step 01", "title": "Open the kit", "description": "Pre-cut, pre-scored, colour-coded pieces. Just pop them out." } },
+        { "type": "step", "settings": { "step_label": "Step 02", "title": "Follow along", "description": "Scan the QR code for a step-by-step video tutorial." } },
+        { "type": "step", "settings": { "step_label": "Step 03", "title": "Show it off", "description": "Display it, gift it, or keep it. It will look gorgeous either way." } }
+      ]
+    }
+  ]
+}
+{% endschema %}
