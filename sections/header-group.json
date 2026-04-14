@@ -45,7 +45,7 @@
         "announcement_mxxhta": {
           "type": "_announcement",
           "settings": {
-            "text": "Free Shipping in India on orders above Rs. 1000",
+            "text": "<strong>Free shipping</strong> on orders above Rs.1,000 | Proudly made in India",
             "link": "shopify://collections/all",
             "font": "var(--font-subheading--family)",
             "font_size": "0.875rem",

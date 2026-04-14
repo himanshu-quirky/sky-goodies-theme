@@ -9,24 +9,6 @@
  */
 {
   "sections": {
-    "announcement": {
-      "type": "sg-announcement",
-      "blocks": {
-        "msg_1": {
-          "type": "message",
-          "settings": {
-            "text": "<p><strong>Free shipping</strong> on orders above Rs.1,000 | Proudly made in India</p>"
-          }
-        }
-      },
-      "block_order": [
-        "msg_1"
-      ],
-      "settings": {
-        "bg_color": "#1e1b18",
-        "text_color": "#ffffff"
-      }
-    },
     "hero": {
       "type": "sg-hero",
       "settings": {
@@ -466,7 +448,6 @@
     }
   },
   "order": [
-    "announcement",
     "hero",
     "trust_strip",
     "categories",
