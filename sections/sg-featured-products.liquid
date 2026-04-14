@@ -1,0 +1,170 @@
+{{ 'sg-theme.css' | asset_url | stylesheet_tag }}
+
+{%- style -%}
+  .sg-section-{{ section.id }}-pad {
+    padding-top: {{ section.settings.padding_top | times: 0.5 | round: 0 }}px;
+    padding-bottom: {{ section.settings.padding_bottom | times: 0.5 | round: 0 }}px;
+  }
+  @media screen and (min-width: 750px) {
+    .sg-section-{{ section.id }}-pad {
+      padding-top: {{ section.settings.padding_top }}px;
+      padding-bottom: {{ section.settings.padding_bottom }}px;
+    }
+  }
+{%- endstyle -%}
+
+<section class="sg-section sg-featured sg-section-{{ section.id }}-pad" style="background: {{ section.settings.bg_color }};" {{ section.shopify_attributes }}>
+  <div class="sg-featured__head">
+    <div>
+      {%- if section.settings.heading != blank -%}
+        <h2 class="sg-heading">{{ section.settings.heading }}</h2>
+      {%- endif -%}
+      {%- if section.settings.subheading != blank -%}
+        <p class="sg-subtext">{{ section.settings.subheading }}</p>
+      {%- endif -%}
+    </div>
+    {%- if section.settings.button_link != blank -%}
+      <a href="{{ section.settings.button_link }}" class="sg-view-all">
+        {{ section.settings.button_text | default: 'View all' }}
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="9 18 15 12 9 6"/></svg>
+      </a>
+    {%- endif -%}
+  </div>
+
+  <div class="sg-products-scroll">
+    {%- assign feat_collection = section.settings.collection -%}
+    {%- if feat_collection != blank and feat_collection.products_count > 0 -%}
+      {%- for product in feat_collection.products limit: section.settings.products_to_show -%}
+        <div class="sg-pc">
+          <div class="sg-pc__img">
+            <a href="{{ product.url }}">
+              {%- if product.featured_image != blank -%}
+                <img
+                  src="{{ product.featured_image | image_url: width: 400 }}"
+                  alt="{{ product.title | escape }}"
+                  width="400" height="400" loading="lazy"
+                >
+              {%- else -%}
+                <div class="sg-placeholder">{{ product.title }}</div>
+              {%- endif -%}
+            </a>
+            {%- if product.compare_at_price > product.price -%}
+              {%- assign save_pct = product.compare_at_price | minus: product.price | times: 100.0 | divided_by: product.compare_at_price | round -%}
+              <span class="sg-pc__badge sg-pc__badge--sale">{{ save_pct }}% off</span>
+            {%- elsif product.tags contains 'New' -%}
+              <span class="sg-pc__badge sg-pc__badge--new">New</span>
+            {%- endif -%}
+          </div>
+          <div class="sg-pc__body">
+            <div class="sg-pc__category">{{ product.type }}</div>
+            <h3 class="sg-pc__title"><a href="{{ product.url }}">{{ product.title }}</a></h3>
+            <div class="sg-pc__footer">
+              <span class="sg-pc__price">
+                {{ product.price | money_without_trailing_zeros }}
+                {%- if product.compare_at_price > product.price -%}
+                  <del>{{ product.compare_at_price | money_without_trailing_zeros }}</del>
+                {%- endif -%}
+              </span>
+              {%- form 'product', product -%}
+                <input type="hidden" name="id" value="{{ product.variants.first.id }}">
+                <button type="submit" class="sg-pc__atc" {% unless product.available %}disabled{% endunless %}>
+                  {%- if product.available -%}Add to Cart{%- else -%}Sold out{%- endif -%}
+                </button>
+              {%- endform -%}
+            </div>
+          </div>
+        </div>
+      {%- endfor -%}
+    {%- else -%}
+      {%- for i in (1..5) -%}
+        <div class="sg-pc">
+          <div class="sg-pc__img"><div class="sg-placeholder">Product {{ i }}</div></div>
+          <div class="sg-pc__body">
+            <div class="sg-pc__category">Category</div>
+            <h3 class="sg-pc__title">Sample Product {{ i }}</h3>
+            <div class="sg-pc__footer">
+              <span class="sg-pc__price">Rs. 599</span>
+              <button class="sg-pc__atc" type="button">Add to Cart</button>
+            </div>
+          </div>
+        </div>
+      {%- endfor -%}
+    {%- endif -%}
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "SG Featured Products",
+  "settings": [
+    {
+      "type": "text",
+      "id": "heading",
+      "label": "Heading",
+      "default": "Loved by thousands"
+    },
+    {
+      "type": "textarea",
+      "id": "subheading",
+      "label": "Subheading",
+      "default": "Our most popular kits, chosen by makers across India."
+    },
+    {
+      "type": "text",
+      "id": "button_text",
+      "label": "Link Text",
+      "default": "View all"
+    },
+    {
+      "type": "url",
+      "id": "button_link",
+      "label": "Link URL"
+    },
+    {
+      "type": "collection",
+      "id": "collection",
+      "label": "Collection"
+    },
+    {
+      "type": "range",
+      "id": "products_to_show",
+      "min": 2,
+      "max": 12,
+      "step": 1,
+      "default": 6,
+      "label": "Products to show"
+    },
+    {
+      "type": "color",
+      "id": "bg_color",
+      "label": "Background Color",
+      "default": "#FAF6F0"
+    },
+    {
+      "type": "range",
+      "id": "padding_top",
+      "min": 0,
+      "max": 100,
+      "step": 4,
+      "unit": "px",
+      "label": "Padding Top",
+      "default": 56
+    },
+    {
+      "type": "range",
+      "id": "padding_bottom",
+      "min": 0,
+      "max": 100,
+      "step": 4,
+      "unit": "px",
+      "label": "Padding Bottom",
+      "default": 64
+    }
+  ],
+  "presets": [
+    {
+      "name": "SG Featured Products"
+    }
+  ]
+}
+{% endschema %}

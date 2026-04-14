@@ -1,0 +1,194 @@
+{{ 'sg-theme.css' | asset_url | stylesheet_tag }}
+
+{%- style -%}
+  .sg-section-{{ section.id }}-pad {
+    padding-top: {{ section.settings.padding_top | times: 0.5 | round: 0 }}px;
+    padding-bottom: {{ section.settings.padding_bottom | times: 0.5 | round: 0 }}px;
+  }
+  @media screen and (min-width: 750px) {
+    .sg-section-{{ section.id }}-pad {
+      padding-top: {{ section.settings.padding_top }}px;
+      padding-bottom: {{ section.settings.padding_bottom }}px;
+    }
+  }
+{%- endstyle -%}
+
+<section class="sg-section sg-story sg-section-{{ section.id }}-pad" style="background: {{ section.settings.bg_color }};" {{ section.shopify_attributes }}>
+  <div class="sg-story__inner">
+    <div class="sg-story__image">
+      {%- if section.settings.image != blank -%}
+        <img src="{{ section.settings.image | image_url: width: 800 }}" alt="{{ section.settings.heading | escape }}" width="800" height="600" loading="lazy">
+      {%- else -%}
+        <div class="sg-placeholder" style="min-height:300px">Founders photo</div>
+      {%- endif -%}
+    </div>
+
+    <div class="sg-story__content">
+      {%- if section.settings.eyebrow != blank -%}
+        <div class="sg-eyebrow">{{ section.settings.eyebrow }}</div>
+      {%- endif -%}
+      {%- if section.settings.heading != blank -%}
+        <h2 class="sg-story__title">{{ section.settings.heading }}</h2>
+      {%- endif -%}
+      {%- if section.settings.text != blank -%}
+        <div class="sg-story__text">{{ section.settings.text }}</div>
+      {%- endif -%}
+
+      {%- assign founders = section.blocks | where: "type", "founder" -%}
+      {%- if founders.size > 0 -%}
+        <div class="sg-story__founders">
+          {%- for block in founders -%}
+            <div class="sg-founder" {{ block.shopify_attributes }}>
+              <div class="sg-founder__av">
+                {%- if block.settings.image != blank -%}
+                  <img src="{{ block.settings.image | image_url: width: 88 }}" alt="{{ block.settings.name | escape }}" width="88" height="88" loading="lazy">
+                {%- else -%}
+                  <div class="sg-placeholder">{{ block.settings.name | slice: 0 }}</div>
+                {%- endif -%}
+              </div>
+              <div>
+                <div class="sg-founder__name">{{ block.settings.name }}</div>
+                <div class="sg-founder__role">{{ block.settings.role }}</div>
+              </div>
+            </div>
+          {%- endfor -%}
+        </div>
+      {%- endif -%}
+
+      {%- assign values = section.blocks | where: "type", "value" -%}
+      {%- if values.size > 0 -%}
+        <div class="sg-story__values">
+          {%- for block in values -%}
+            <div class="sg-value" {{ block.shopify_attributes }}>
+              <svg viewBox="0 0 24 24"><path d="M12 22c5.523 0 10-4.477 10-10S17.523 2 12 2 2 6.477 2 12s4.477 10 10 10z"/><path d="M7.5 12l3 3 6-6"/></svg>
+              {{ block.settings.text }}
+            </div>
+          {%- endfor -%}
+        </div>
+      {%- endif -%}
+
+      {%- if section.settings.button_text != blank -%}
+        <a href="{{ section.settings.button_link }}" class="sg-btn sg-btn--outline" style="margin-top: 24px;">
+          {{ section.settings.button_text }}
+        </a>
+      {%- endif -%}
+    </div>
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "SG Brand Story",
+  "settings": [
+    {
+      "type": "image_picker",
+      "id": "image",
+      "label": "Image"
+    },
+    {
+      "type": "text",
+      "id": "eyebrow",
+      "label": "Eyebrow Text",
+      "default": "The Sky Goodies story"
+    },
+    {
+      "type": "text",
+      "id": "heading",
+      "label": "Heading",
+      "default": "Paper can spark something wonderful."
+    },
+    {
+      "type": "richtext",
+      "id": "text",
+      "label": "Body Text",
+      "default": "<p>In 2013, Amit and Misha Gudibanda left successful corporate careers to chase a simple idea -- that beautiful paper crafts can make everyday life more joyful. Every kit is designed at their Mumbai studio, with the kind of care you would put into a handmade gift for someone you love.</p>"
+    },
+    {
+      "type": "text",
+      "id": "button_text",
+      "label": "Button Text",
+      "default": "Read the full story"
+    },
+    {
+      "type": "url",
+      "id": "button_link",
+      "label": "Button Link"
+    },
+    {
+      "type": "color",
+      "id": "bg_color",
+      "label": "Background Color",
+      "default": "#FDFCFA"
+    },
+    {
+      "type": "range",
+      "id": "padding_top",
+      "min": 0,
+      "max": 100,
+      "step": 4,
+      "unit": "px",
+      "label": "Padding Top",
+      "default": 80
+    },
+    {
+      "type": "range",
+      "id": "padding_bottom",
+      "min": 0,
+      "max": 100,
+      "step": 4,
+      "unit": "px",
+      "label": "Padding Bottom",
+      "default": 80
+    }
+  ],
+  "blocks": [
+    {
+      "type": "founder",
+      "name": "Founder",
+      "settings": [
+        {
+          "type": "image_picker",
+          "id": "image",
+          "label": "Photo"
+        },
+        {
+          "type": "text",
+          "id": "name",
+          "label": "Name",
+          "default": "Amit Gudibanda"
+        },
+        {
+          "type": "text",
+          "id": "role",
+          "label": "Role",
+          "default": "CEO & Co-Founder"
+        }
+      ]
+    },
+    {
+      "type": "value",
+      "name": "Value",
+      "settings": [
+        {
+          "type": "text",
+          "id": "text",
+          "label": "Value Text",
+          "default": "Eco-first"
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "SG Brand Story",
+      "blocks": [
+        { "type": "founder", "settings": { "name": "Amit Gudibanda", "role": "CEO & Co-Founder" } },
+        { "type": "founder", "settings": { "name": "Misha Gudibanda", "role": "Creative Director" } },
+        { "type": "value", "settings": { "text": "Eco-first" } },
+        { "type": "value", "settings": { "text": "Made in India" } },
+        { "type": "value", "settings": { "text": "NID-designed" } }
+      ]
+    }
+  ]
+}
+{% endschema %}

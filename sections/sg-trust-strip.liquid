@@ -1,0 +1,83 @@
+{{ 'sg-theme.css' | asset_url | stylesheet_tag }}
+
+<div class="sg-section sg-trust" style="background: {{ section.settings.bg_color }};" {{ section.shopify_attributes }}>
+  <div class="sg-trust__track">
+    {%- for block in section.blocks -%}
+      <div class="sg-trust__item" {{ block.shopify_attributes }}>
+        <div class="sg-trust__icon">
+          {%- if block.settings.icon == 'shield' -%}
+            <svg viewBox="0 0 24 24"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
+          {%- elsif block.settings.icon == 'pin' -%}
+            <svg viewBox="0 0 24 24"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg>
+          {%- elsif block.settings.icon == 'check' -%}
+            <svg viewBox="0 0 24 24"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg>
+          {%- elsif block.settings.icon == 'leaf' -%}
+            <svg viewBox="0 0 24 24"><path d="M17 8C8 10 5.9 16.17 3.82 21.34l1.89.66L7 18l4-2 4.5-4.5C17 10 18 7 18 7l-1 1z"/></svg>
+          {%- elsif block.settings.icon == 'truck' -%}
+            <svg viewBox="0 0 24 24"><rect x="1" y="3" width="15" height="13"/><polygon points="16 8 20 8 23 11 23 16 16 16 16 8"/><circle cx="5.5" cy="18.5" r="2.5"/><circle cx="18.5" cy="18.5" r="2.5"/></svg>
+          {%- elsif block.settings.icon == 'heart' -%}
+            <svg viewBox="0 0 24 24"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg>
+          {%- else -%}
+            <svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><path d="M8 14s1.5 2 4 2 4-2 4-2"/><line x1="9" y1="9" x2="9.01" y2="9"/><line x1="15" y1="9" x2="15.01" y2="9"/></svg>
+          {%- endif -%}
+        </div>
+        <span class="sg-trust__label">{{ block.settings.text }}</span>
+      </div>
+    {%- endfor -%}
+  </div>
+</div>
+
+{% schema %}
+{
+  "name": "SG Trust Strip",
+  "settings": [
+    {
+      "type": "color",
+      "id": "bg_color",
+      "label": "Background Color",
+      "default": "#FDFCFA"
+    }
+  ],
+  "blocks": [
+    {
+      "type": "item",
+      "name": "Trust Item",
+      "settings": [
+        {
+          "type": "select",
+          "id": "icon",
+          "label": "Icon",
+          "options": [
+            { "value": "shield", "label": "Shield" },
+            { "value": "pin", "label": "Map Pin" },
+            { "value": "check", "label": "Checkmark" },
+            { "value": "leaf", "label": "Leaf" },
+            { "value": "truck", "label": "Truck" },
+            { "value": "heart", "label": "Heart" },
+            { "value": "smile", "label": "Smile" }
+          ],
+          "default": "shield"
+        },
+        {
+          "type": "richtext",
+          "id": "text",
+          "label": "Text",
+          "default": "<p><strong>50,000+</strong> happy makers</p>"
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "SG Trust Strip",
+      "blocks": [
+        { "type": "item", "settings": { "icon": "shield", "text": "<p><strong>50,000+<\/strong> happy makers<\/p>" } },
+        { "type": "item", "settings": { "icon": "pin", "text": "<p><strong>Made in<\/strong> Mumbai, India<\/p>" } },
+        { "type": "item", "settings": { "icon": "check", "text": "<p><strong>NID-designed<\/strong> craft kits<\/p>" } },
+        { "type": "item", "settings": { "icon": "leaf", "text": "<p><strong>Eco-friendly<\/strong> & biodegradable<\/p>" } },
+        { "type": "item", "settings": { "icon": "truck", "text": "<p><strong>Free shipping<\/strong> over Rs.1,000<\/p>" } }
+      ]
+    }
+  ]
+}
+{% endschema %}

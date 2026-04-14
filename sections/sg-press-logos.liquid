@@ -1,0 +1,102 @@
+{{ 'sg-theme.css' | asset_url | stylesheet_tag }}
+
+{%- style -%}
+  .sg-section-{{ section.id }}-pad {
+    padding-top: {{ section.settings.padding_top | times: 0.5 | round: 0 }}px;
+    padding-bottom: {{ section.settings.padding_bottom | times: 0.5 | round: 0 }}px;
+  }
+  @media screen and (min-width: 750px) {
+    .sg-section-{{ section.id }}-pad {
+      padding-top: {{ section.settings.padding_top }}px;
+      padding-bottom: {{ section.settings.padding_bottom }}px;
+    }
+  }
+{%- endstyle -%}
+
+<section class="sg-section sg-press sg-section-{{ section.id }}-pad" style="background: {{ section.settings.bg_color }};" {{ section.shopify_attributes }}>
+  <div class="sg-press__inner">
+    {%- if section.settings.label != blank -%}
+      <div class="sg-press__label">{{ section.settings.label }}</div>
+    {%- endif -%}
+    <div class="sg-press__logos">
+      {%- for block in section.blocks -%}
+        {%- if block.settings.logo != blank -%}
+          <img class="sg-press__logo" src="{{ block.settings.logo | image_url: width: 200 }}" alt="{{ block.settings.name | escape }}" height="32" loading="lazy" {{ block.shopify_attributes }}>
+        {%- else -%}
+          <div class="sg-placeholder" style="width:120px;height:32px;border-radius:4px;flex-shrink:0;opacity:.4;" {{ block.shopify_attributes }}>{{ block.settings.name }}</div>
+        {%- endif -%}
+      {%- endfor -%}
+    </div>
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "SG Press Logos",
+  "settings": [
+    {
+      "type": "text",
+      "id": "label",
+      "label": "Label",
+      "default": "Trusted by brands you know"
+    },
+    {
+      "type": "color",
+      "id": "bg_color",
+      "label": "Background Color",
+      "default": "#FDFCFA"
+    },
+    {
+      "type": "range",
+      "id": "padding_top",
+      "min": 0,
+      "max": 100,
+      "step": 4,
+      "unit": "px",
+      "label": "Padding Top",
+      "default": 48
+    },
+    {
+      "type": "range",
+      "id": "padding_bottom",
+      "min": 0,
+      "max": 100,
+      "step": 4,
+      "unit": "px",
+      "label": "Padding Bottom",
+      "default": 48
+    }
+  ],
+  "blocks": [
+    {
+      "type": "logo",
+      "name": "Brand Logo",
+      "settings": [
+        {
+          "type": "image_picker",
+          "id": "logo",
+          "label": "Logo Image"
+        },
+        {
+          "type": "text",
+          "id": "name",
+          "label": "Brand Name",
+          "default": "Brand"
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "SG Press Logos",
+      "blocks": [
+        { "type": "logo", "settings": { "name": "Nat Geo" } },
+        { "type": "logo", "settings": { "name": "Hot Wheels" } },
+        { "type": "logo", "settings": { "name": "CRED" } },
+        { "type": "logo", "settings": { "name": "Barbie" } },
+        { "type": "logo", "settings": { "name": "Discovery" } }
+      ]
+    }
+  ]
+}
+{% endschema %}
