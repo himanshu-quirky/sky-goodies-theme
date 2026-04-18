@@ -21,6 +21,30 @@
   {{ section.shopify_attributes }}
 >
   <div class="sg-hero__track" id="sg-hero-track-{{ section.id }}">
+    {%- if section.blocks.size == 0 -%}
+      <div class="sg-hero-slide sg-hero-slide--auto is-active" data-index="0">
+        <a class="sg-hero-slide__link" href="/collections/all" aria-label="Shop the collection"></a>
+        <div class="sg-hero-slide__content">
+          <div class="sg-hero-slide__blob" aria-hidden="true">
+            <svg viewBox="0 0 600 700" preserveAspectRatio="none" xmlns="http://www.w3.org/2000/svg">
+              <path fill="#C8E616" d="M-20,120 C120,60 300,20 440,80 C560,130 620,260 580,400 C540,540 430,660 300,680 C160,700 30,620 -10,480 C-50,340 -100,200 -20,120 Z"/>
+            </svg>
+          </div>
+          <div class="sg-hero-slide__inner">
+            <span class="sg-hero-slide__eyebrow">Handcrafted paper kits</span>
+            <h2 class="sg-hero-slide__heading">Simple paper. <em>Real joy.</em></h2>
+            <p class="sg-hero-slide__sub">Pre-cut, pre-scored, ready to make — 50,000+ happy makers can't be wrong.</p>
+            <span class="sg-hero-slide__cta">
+              Explore the collection
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
+            </span>
+          </div>
+        </div>
+        <div class="sg-hero-slide__media">
+          <img src="https://cdn.shopify.com/s/files/1/0428/5530/1271/collections/Sky-Goodies-Birthday-Party-Decor-Daisy-Birthday-01.jpg?v=1741610348" alt="Sky Goodies paper craft" loading="eager" referrerpolicy="no-referrer">
+        </div>
+      </div>
+    {%- endif -%}
     {%- for block in section.blocks -%}
       {%- assign is_first = forloop.first -%}
       {%- assign size_class = 'sg-hero-slide--' | append: block.settings.image_size -%}
