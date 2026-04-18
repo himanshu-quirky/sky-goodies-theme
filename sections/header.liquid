@@ -1115,6 +1115,46 @@
   }
 {% endstylesheet %}
 
+<script>
+  // Sky Goodies header enhancements: inject wishlist icon and wire cart icon to SG drawer
+  (function () {
+    function enhance() {
+      var actions = document.querySelector('header-actions') || document.querySelector('.header-actions') || document.querySelector('#header-component');
+      if (!actions) return;
+
+      // 1. Insert wishlist link (heart icon) before account/cart if not already present
+      if (!actions.querySelector('[data-sg-wishlist]')) {
+        var wish = document.createElement('a');
+        wish.href = '/pages/wishlist';
+        wish.className = 'header__icon-link header-actions__action';
+        wish.setAttribute('aria-label', 'Wishlist');
+        wish.setAttribute('data-sg-wishlist', '');
+        wish.innerHTML = '<svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"></path></svg>';
+
+        var cartLink = actions.querySelector('a[href="/cart"], a[href*="/cart"], cart-icon, [data-cart-icon]');
+        if (cartLink && cartLink.parentNode) {
+          cartLink.parentNode.insertBefore(wish, cartLink);
+        } else {
+          actions.appendChild(wish);
+        }
+      }
+
+      // 2. Tag cart icon for SG drawer toggle
+      var cartTriggers = document.querySelectorAll('a[href="/cart"], a[href$="/cart"]');
+      cartTriggers.forEach(function (a) {
+        if (!a.hasAttribute('data-sg-cart-toggle')) {
+          a.setAttribute('data-sg-cart-toggle', '');
+        }
+      });
+    }
+    if (document.readyState === 'loading') {
+      document.addEventListener('DOMContentLoaded', enhance);
+    } else {
+      enhance();
+    }
+  })();
+</script>
+
 {% unless request.design_mode %}
   <script type="module">
     import { hydrate } from '@theme/section-hydration';

@@ -1,130 +1,62 @@
-{{ 'sg-theme.css' | asset_url | stylesheet_tag }}
-
-{%- style -%}
-  .sg-section-{{ section.id }}-pad {
-    padding-top: {{ section.settings.padding_top | times: 0.5 | round: 0 }}px;
-    padding-bottom: {{ section.settings.padding_bottom | times: 0.5 | round: 0 }}px;
-  }
-  @media screen and (min-width: 750px) {
-    .sg-section-{{ section.id }}-pad {
-      padding-top: {{ section.settings.padding_top }}px;
-      padding-bottom: {{ section.settings.padding_bottom }}px;
-    }
-  }
-
-  .sg-step__visual {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    gap: 16px;
-    padding: 32px 24px;
-    background: linear-gradient(135deg, var(--sg-cream, #FAF6F0) 0%, var(--sg-peach, #FCEEE6) 100%);
-    border-radius: 16px;
-    min-height: 200px;
-  }
-  .sg-step__number {
-    font-size: 48px;
-    font-weight: 700;
-    line-height: 1;
-    color: var(--sg-charcoal, #1E1B18);
-    width: 80px;
-    height: 80px;
-    border-radius: 50%;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    border: 3px solid var(--sg-charcoal, #1E1B18);
-    background: rgba(255,255,255,0.6);
-  }
-  .sg-step__icon {
-    color: var(--sg-charcoal, #1E1B18);
-  }
-  .sg-step__icon svg {
-    width: 32px;
-    height: 32px;
-  }
-{%- endstyle -%}
-
-<section class="sg-section sg-process sg-section-{{ section.id }}-pad" style="background: {{ section.settings.bg_color }};" {{ section.shopify_attributes }}>
-  <div class="sg-process__inner">
-    <div class="sg-process__head">
-      {%- if section.settings.heading != blank -%}
-        <h2 class="sg-heading">{{ section.settings.heading }}</h2>
-      {%- endif -%}
-      {%- if section.settings.subheading != blank -%}
-        <p class="sg-subtext">{{ section.settings.subheading }}</p>
-      {%- endif -%}
+<section class="sg-section sg-how-it-works" style="background:{{ section.settings.background_color }}; padding-top:{{ section.settings.padding_top }}px; padding-bottom:{{ section.settings.padding_bottom }}px;">
+  <div class="sg-container">
+    <div class="sg-section-header sg-text-center">
+      {% if section.settings.eyebrow != blank %}
+        <span class="sg-eyebrow">{{ section.settings.eyebrow }}</span>
+      {% endif %}
+      {% if section.settings.heading != blank %}
+        <h2 class="sg-h2">{{ section.settings.heading }}</h2>
+      {% endif %}
+      {% if section.settings.subheading != blank %}
+        <p class="sg-subheading">{{ section.settings.subheading }}</p>
+      {% endif %}
     </div>
 
-    <div class="sg-process__steps">
-      {%- for block in section.blocks -%}
-        <div class="sg-step" {{ block.shopify_attributes }}>
-          <div class="sg-step__visual">
-            <div class="sg-step__number">
-              {%- assign step_num = forloop.index | prepend: '0' -%}
-              {{ step_num | slice: -2, 2 }}
+    <div class="sg-how-canvas">
+      <svg class="sg-plane-path" viewBox="0 0 1200 360" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true" preserveAspectRatio="none">
+        <path d="M 120 90 C 300 250, 450 250, 600 140 S 900 30, 1080 200"
+              stroke="#C9A87C"
+              stroke-width="2"
+              stroke-linecap="round"
+              stroke-dasharray="2 10"
+              fill="none" />
+        <g class="sg-plane-icon" transform="translate(1060 175) rotate(28)">
+          <path d="M 0 0 L 44 14 L 18 20 L 12 40 Z" fill="#E07856" />
+          <path d="M 18 20 L 44 14 L 24 28 Z" fill="#B85C3E" />
+        </g>
+      </svg>
+
+      <div class="sg-steps-grid">
+        {% for block in section.blocks %}
+          {% if block.type == 'step' %}
+            <div class="sg-step-card sg-step-{{ forloop.index }}" {{ block.shopify_attributes }}>
+              <div class="sg-step-circle">{{ block.settings.step_number }}</div>
+              {% if block.settings.title != blank %}
+                <h3 class="sg-step-title">{{ block.settings.title }}</h3>
+              {% endif %}
+              {% if block.settings.description != blank %}
+                <p class="sg-step-desc">{{ block.settings.description }}</p>
+              {% endif %}
             </div>
-            <div class="sg-step__icon">
-              {%- case block.settings.icon -%}
-                {%- when 'scissors' -%}
-                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
-                    <circle cx="6" cy="6" r="3"/>
-                    <circle cx="6" cy="18" r="3"/>
-                    <line x1="20" y1="4" x2="8.12" y2="15.88"/>
-                    <line x1="14.47" y1="14.48" x2="20" y2="20"/>
-                    <line x1="8.12" y1="8.12" x2="12" y2="12"/>
-                  </svg>
-                {%- when 'play' -%}
-                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
-                    <rect x="2" y="2" width="20" height="20" rx="3"/>
-                    <polygon points="10 8 16 12 10 16 10 8" fill="currentColor" stroke="none"/>
-                  </svg>
-                {%- when 'gift' -%}
-                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
-                    <polyline points="20 12 20 22 4 22 4 12"/>
-                    <rect x="2" y="7" width="20" height="5"/>
-                    <line x1="12" y1="22" x2="12" y2="7"/>
-                    <path d="M12 7H7.5a2.5 2.5 0 0 1 0-5C11 2 12 7 12 7z"/>
-                    <path d="M12 7h4.5a2.5 2.5 0 0 0 0-5C13 2 12 7 12 7z"/>
-                  </svg>
-                {%- when 'star' -%}
-                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
-                    <polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/>
-                  </svg>
-                {%- when 'heart' -%}
-                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
-                    <path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/>
-                  </svg>
-                {%- else -%}
-                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
-                    <circle cx="12" cy="12" r="10"/>
-                    <polyline points="8 12 11 15 16 9"/>
-                  </svg>
-              {%- endcase -%}
-            </div>
-          </div>
-          <div class="sg-step__body">
-            {%- if block.settings.step_label != blank -%}
-              <div class="sg-step__num">{{ block.settings.step_label }}</div>
-            {%- endif -%}
-            {%- if block.settings.title != blank -%}
-              <h3 class="sg-step__title">{{ block.settings.title }}</h3>
-            {%- endif -%}
-            {%- if block.settings.description != blank -%}
-              <p class="sg-step__desc">{{ block.settings.description }}</p>
-            {%- endif -%}
-          </div>
-        </div>
-      {%- endfor -%}
+          {% endif %}
+        {% endfor %}
+      </div>
     </div>
   </div>
 </section>
 
 {% schema %}
 {
-  "name": "SG How It Works",
+  "name": "How it works",
+  "tag": "section",
+  "class": "sg-section-wrapper",
   "settings": [
+    {
+      "type": "text",
+      "id": "eyebrow",
+      "label": "Eyebrow",
+      "default": "HOW IT WORKS"
+    },
     {
       "type": "text",
       "id": "heading",
@@ -135,81 +67,91 @@
       "type": "textarea",
       "id": "subheading",
       "label": "Subheading",
-      "default": "Every kit comes with everything you need. No tools, no glue gun, no craft degree."
+      "default": "Three simple steps. No glue gun drama. Just the joy of making."
     },
     {
       "type": "color",
-      "id": "bg_color",
-      "label": "Background Color",
-      "default": "#FAF6F0"
+      "id": "background_color",
+      "label": "Background color",
+      "default": "#FDFCFA"
     },
     {
       "type": "range",
       "id": "padding_top",
+      "label": "Padding top",
       "min": 0,
       "max": 100,
       "step": 4,
       "unit": "px",
-      "label": "Padding Top",
-      "default": 72
+      "default": 40
     },
     {
       "type": "range",
       "id": "padding_bottom",
+      "label": "Padding bottom",
       "min": 0,
       "max": 100,
       "step": 4,
       "unit": "px",
-      "label": "Padding Bottom",
-      "default": 72
+      "default": 40
     }
   ],
   "blocks": [
     {
       "type": "step",
       "name": "Step",
+      "limit": 3,
       "settings": [
         {
-          "type": "select",
-          "id": "icon",
-          "label": "Icon",
-          "options": [
-            { "value": "scissors", "label": "Scissors (Open)" },
-            { "value": "play", "label": "Play (Follow)" },
-            { "value": "gift", "label": "Gift (Show off)" },
-            { "value": "star", "label": "Star" },
-            { "value": "heart", "label": "Heart" }
-          ],
-          "default": "scissors"
-        },
-        {
           "type": "text",
-          "id": "step_label",
-          "label": "Step Label",
-          "default": "Step 01"
+          "id": "step_number",
+          "label": "Step number",
+          "default": "01"
         },
         {
           "type": "text",
           "id": "title",
           "label": "Title",
-          "default": "Open the kit"
+          "default": "Step title"
         },
         {
           "type": "textarea",
           "id": "description",
           "label": "Description",
-          "default": "Pre-cut, pre-scored, colour-coded pieces. Just pop them out."
+          "default": "Short description of this step."
         }
       ]
     }
   ],
+  "max_blocks": 3,
   "presets": [
     {
-      "name": "SG How It Works",
+      "name": "Paper plane steps",
       "blocks": [
-        { "type": "step", "settings": { "icon": "scissors", "step_label": "Step 01", "title": "Open the kit", "description": "Pre-cut, pre-scored, colour-coded pieces. Just pop them out." } },
-        { "type": "step", "settings": { "icon": "play", "step_label": "Step 02", "title": "Follow along", "description": "Scan the QR code for a step-by-step video tutorial." } },
-        { "type": "step", "settings": { "icon": "gift", "step_label": "Step 03", "title": "Show it off", "description": "Display it, gift it, or keep it. It will look gorgeous either way." } }
+        {
+          "type": "step",
+          "settings": {
+            "step_number": "01",
+            "title": "Open the kit",
+            "description": "Pre-cut, colour-coded pieces. No scissors, no tears."
+          }
+        },
+        {
+          "type": "step",
+          "settings": {
+            "step_number": "02",
+            "title": "Fold, score, slot",
+            "description": "Follow the illustrated guide. Most kits done in an hour."
+          }
+        },
+        {
+          "type": "step",
+          "settings": {
+            "step_number": "03",
+            "title": "Display & glow",
+            "description": "Keepsake-quality. Hang the lights, share the joy."
+          }
+        }
       ]
     }
   ]

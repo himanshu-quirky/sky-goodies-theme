@@ -1,12 +1,68 @@
-{{ 'sg-theme.css' | asset_url | stylesheet_tag }}
+{%- style -%}
+  .sg-announcement {
+    background: {{ section.settings.bg_color }};
+    color: {{ section.settings.text_color }};
+    text-align: center;
+    padding: 10px 16px;
+    font-size: 13px;
+    letter-spacing: 0.04em;
+    position: relative;
+    min-height: 38px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-family: 'DM Sans', -apple-system, sans-serif;
+  }
+  .sg-announcement__msg {
+    opacity: 0;
+    transition: opacity 0.6s ease;
+    position: absolute;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 90%;
+    pointer-events: none;
+  }
+  .sg-announcement__msg.is-active {
+    opacity: 1;
+    position: relative;
+    left: auto;
+    transform: none;
+    pointer-events: auto;
+  }
+  .sg-announcement__msg a {
+    color: inherit;
+    text-decoration: underline;
+  }
+{%- endstyle -%}
 
-<div class="sg-section sg-announce" style="background: {{ section.settings.bg_color }}; color: {{ section.settings.text_color }};" {{ section.shopify_attributes }}>
-  {%- for block in section.blocks -%}
-    {%- if forloop.first -%}
-      {{ block.settings.text }}
-    {%- endif -%}
-  {%- endfor -%}
+<div class="sg-announcement" id="sg-announcement-{{ section.id }}" {{ section.shopify_attributes }}>
+  {%- if section.blocks.size > 0 -%}
+    {%- for block in section.blocks -%}
+      <span class="sg-announcement__msg {% if forloop.first %}is-active{% endif %}" {{ block.shopify_attributes }}>
+        {{ block.settings.message }}
+      </span>
+    {%- endfor -%}
+  {%- else -%}
+    <span class="sg-announcement__msg is-active">Free shipping on orders above Rs.1,000</span>
+  {%- endif -%}
 </div>
+
+{%- if section.blocks.size > 1 -%}
+  <script>
+    (function () {
+      var root = document.getElementById('sg-announcement-{{ section.id }}');
+      if (!root) return;
+      var msgs = root.querySelectorAll('.sg-announcement__msg');
+      if (msgs.length < 2) return;
+      var idx = 0;
+      setInterval(function () {
+        msgs[idx].classList.remove('is-active');
+        idx = (idx + 1) % msgs.length;
+        msgs[idx].classList.add('is-active');
+      }, {{ section.settings.rotate_ms | default: 7000 }});
+    })();
+  </script>
+{%- endif -%}
 
 {% schema %}
 {
@@ -16,25 +72,36 @@
       "type": "color",
       "id": "bg_color",
       "label": "Background Color",
-      "default": "#1E1B18"
+      "default": "#3D3833"
     },
     {
       "type": "color",
       "id": "text_color",
       "label": "Text Color",
-      "default": "#ffffff"
+      "default": "#FAF6F0"
+    },
+    {
+      "type": "range",
+      "id": "rotate_ms",
+      "min": 3000,
+      "max": 15000,
+      "step": 500,
+      "unit": "ms",
+      "label": "Rotation speed",
+      "default": 7000
     }
   ],
+  "max_blocks": 6,
   "blocks": [
     {
       "type": "message",
       "name": "Message",
       "settings": [
         {
-          "type": "richtext",
-          "id": "text",
-          "label": "Announcement Text",
-          "default": "<p><strong>Free shipping</strong> on orders above Rs.1,000 | Proudly made in India</p>"
+          "type": "text",
+          "id": "message",
+          "label": "Message",
+          "default": "Free shipping over Rs.1,000"
         }
       ]
     }
@@ -43,7 +110,10 @@
     {
       "name": "SG Announcement",
       "blocks": [
-        { "type": "message", "settings": { "text": "<p><strong>Free shipping</strong> on orders above Rs.1,000 | Proudly made in India</p>" } }
+        { "type": "message", "settings": { "message": "Free shipping over Rs.1,000 (because paper should never be held hostage)" } },
+        { "type": "message", "settings": { "message": "Handcrafted by 40 makers in Mumbai - since 2013" } },
+        { "type": "message", "settings": { "message": "Loved by 50,000+ makers across India" } },
+        { "type": "message", "settings": { "message": "New: 2026 calendars have landed" } }
       ]
     }
   ]

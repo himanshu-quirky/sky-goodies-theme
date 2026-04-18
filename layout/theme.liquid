@@ -37,6 +37,9 @@
     <link href="https://fonts.googleapis.com/css2?family=Josefin+Sans:wght@300;400;500;600;700&family=Josefin+Slab:wght@300;400;500;600;700&display=swap" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;0,9..40,600;0,9..40,700;1,9..40,400&family=DM+Serif+Display&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="{{ 'skygoodies-custom.css' | asset_url }}">
+    {{ 'sg-theme.css' | asset_url | stylesheet_tag }}
+    <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=DM+Serif+Display:ital@0;1&display=swap" rel="stylesheet">
+    <meta name="referrer" content="no-referrer">
 
     {% if request.design_mode %}
       {%- render 'theme-editor' -%}
@@ -169,5 +172,7 @@
         });
       });
     </script>
+
+    {% render 'sg-cart-drawer' %}
   </body>
 </html>

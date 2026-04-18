@@ -1,0 +1,2408 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="referrer" content="no-referrer">
+<title>Sky Goodies - Handcrafted Paper Kits That Spark Joy</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;0,9..40,600;0,9..40,700;1,9..40,400&family=DM+Serif+Display:ital@0;1&display=swap" rel="stylesheet">
+<style>
+/* ===== RESET & BASE ===== */
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+html { scroll-behavior: smooth; -webkit-text-size-adjust: 100%; overflow-x: hidden; }
+body {
+  font-family: 'DM Sans', sans-serif;
+  color: #1E1B18;
+  background: #FDFCFA;
+  line-height: 1.6;
+  -webkit-font-smoothing: antialiased;
+}
+body.no-scroll { overflow: hidden; }
+img { max-width: 100%; height: auto; display: block; }
+a { color: inherit; text-decoration: none; }
+button { cursor: pointer; border: none; font-family: inherit; background: none; }
+ul { list-style: none; }
+
+/* ===== TYPOGRAPHY ===== */
+h1, h2, h3, h4 { font-family: 'DM Serif Display', serif; font-weight: 400; line-height: 1.2; }
+h1 { font-size: clamp(2rem, 5vw, 3.5rem); }
+h2 { font-size: clamp(1.6rem, 4vw, 2.6rem); }
+h3 { font-size: clamp(1.2rem, 3vw, 1.6rem); }
+.eyebrow {
+  font-family: 'DM Sans', sans-serif;
+  font-size: 0.75rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.12em;
+  color: #E8845A;
+  margin-bottom: 8px;
+}
+.subtext {
+  font-size: 1.05rem;
+  color: #5a554e;
+  line-height: 1.7;
+  max-width: 520px;
+}
+
+/* ===== LAYOUT ===== */
+.container { max-width: 1200px; margin: 0 auto; padding: 0 20px; }
+@media (min-width: 768px) { .container { padding: 0 40px; } }
+section { padding: 60px 0; }
+@media (min-width: 768px) { section { padding: 80px 0; } }
+
+/* ===== BUTTONS ===== */
+.btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 14px 28px;
+  border-radius: 50px;
+  font-size: 0.95rem;
+  font-weight: 600;
+  transition: all 0.3s ease;
+  text-align: center;
+  justify-content: center;
+}
+.btn-primary {
+  background: #E8845A;
+  color: #fff;
+}
+.btn-primary:hover { background: #d4733e; transform: translateY(-1px); box-shadow: 0 4px 16px rgba(232,132,90,0.3); }
+.btn-outline {
+  background: transparent;
+  color: #1E1B18;
+  border: 1.5px solid #1E1B18;
+}
+.btn-outline:hover { background: #1E1B18; color: #fff; }
+.btn-sm { padding: 10px 20px; font-size: 0.85rem; }
+
+/* ===== ANIMATIONS ===== */
+.fade-up {
+  opacity: 0;
+  transform: translateY(30px);
+  transition: opacity 0.7s ease, transform 0.7s ease;
+}
+.fade-up.visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+/* ===== 1. ANNOUNCEMENT BAR ===== */
+.announcement-bar {
+  background: #1E1B18;
+  color: #FAF6F0;
+  font-size: 0.8rem;
+  font-weight: 500;
+  letter-spacing: 0.02em;
+  overflow: hidden;
+  height: 36px;
+  display: flex;
+  align-items: center;
+}
+.marquee-track {
+  display: flex;
+  animation: marquee 30s linear infinite;
+  white-space: nowrap;
+}
+.marquee-track span {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 0 32px;
+}
+.marquee-track span::before {
+  content: '';
+  width: 4px;
+  height: 4px;
+  background: #E8845A;
+  border-radius: 50%;
+  flex-shrink: 0;
+}
+@keyframes marquee {
+  0% { transform: translateX(0); }
+  100% { transform: translateX(-50%); }
+}
+
+/* ===== 2. MEGA MENU HEADER ===== */
+.site-header {
+  position: sticky;
+  top: 0;
+  z-index: 1000;
+  background: #FDFCFA;
+  border-bottom: 1px solid rgba(30,27,24,0.06);
+  transition: box-shadow 0.3s ease;
+}
+.site-header.scrolled { box-shadow: 0 2px 20px rgba(30,27,24,0.08); }
+.header-inner {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  height: 64px;
+  padding: 0 20px;
+  max-width: 1400px;
+  margin: 0 auto;
+}
+@media (min-width: 768px) { .header-inner { height: 72px; padding: 0 40px; } }
+
+.header-logo img { height: 36px; width: auto; }
+@media (min-width: 768px) { .header-logo img { height: 44px; } }
+
+.header-nav { display: none; }
+@media (min-width: 900px) {
+  .header-nav {
+    display: flex;
+    align-items: center;
+    gap: 32px;
+    margin-left: 48px;
+  }
+}
+.header-nav a {
+  font-size: 0.9rem;
+  font-weight: 500;
+  color: #1E1B18;
+  position: relative;
+  padding: 4px 0;
+  transition: color 0.2s;
+}
+.header-nav a:hover { color: #E8845A; }
+.header-nav .nav-shop { cursor: pointer; }
+.header-nav .nav-shop::after {
+  content: '';
+  display: inline-block;
+  width: 0; height: 0;
+  border-left: 4px solid transparent;
+  border-right: 4px solid transparent;
+  border-top: 4px solid currentColor;
+  margin-left: 5px;
+  vertical-align: middle;
+  transition: transform 0.2s;
+}
+.header-nav .nav-shop.active::after { transform: rotate(180deg); }
+
+.header-actions {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+.header-actions button, .header-actions a {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  transition: background 0.2s;
+}
+.header-actions button:hover, .header-actions a:hover { background: #FAF6F0; }
+.header-actions svg { width: 20px; height: 20px; stroke: #1E1B18; fill: none; stroke-width: 1.8; }
+.cart-count {
+  position: relative;
+}
+.cart-count::after {
+  content: '2';
+  position: absolute;
+  top: 4px; right: 4px;
+  width: 16px; height: 16px;
+  background: #E8845A;
+  color: #fff;
+  font-size: 0.65rem;
+  font-weight: 700;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.mobile-menu-btn { display: flex; }
+@media (min-width: 900px) { .mobile-menu-btn { display: none; } }
+
+/* Mega Menu */
+.mega-menu {
+  position: absolute;
+  top: 100%;
+  left: 0;
+  right: 0;
+  background: #FDFCFA;
+  border-top: 1px solid rgba(30,27,24,0.06);
+  box-shadow: 0 16px 48px rgba(30,27,24,0.12);
+  opacity: 0;
+  visibility: hidden;
+  pointer-events: none;
+  transform: translateY(-8px);
+  transition: all 0.3s ease;
+  z-index: 999;
+}
+.mega-menu.open {
+  opacity: 1;
+  visibility: visible;
+  pointer-events: auto;
+  transform: translateY(0);
+}
+.mega-menu-inner {
+  max-width: 1400px;
+  margin: 0 auto;
+  padding: 32px 40px;
+  display: grid;
+  grid-template-columns: 220px 1fr;
+  gap: 40px;
+}
+.mega-menu-tabs {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+.mega-menu-tab {
+  padding: 12px 16px;
+  font-size: 0.9rem;
+  font-weight: 500;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: all 0.2s;
+  text-align: left;
+  color: #5a554e;
+}
+.mega-menu-tab:hover { background: #FAF6F0; color: #1E1B18; }
+.mega-menu-tab.active { background: #FAF6F0; color: #E8845A; font-weight: 600; }
+
+.mega-menu-collections {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 20px;
+}
+.mega-collection-card {
+  text-decoration: none;
+  border-radius: 12px;
+  overflow: hidden;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+  background: #fff;
+}
+.mega-collection-card:hover { transform: translateY(-4px); box-shadow: 0 8px 24px rgba(30,27,24,0.1); }
+.mega-collection-card img {
+  width: 100%;
+  aspect-ratio: 1;
+  object-fit: cover;
+}
+.mega-collection-info {
+  padding: 12px 14px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+.mega-collection-info span {
+  font-size: 0.85rem;
+  font-weight: 600;
+  color: #1E1B18;
+}
+.mega-badge {
+  font-size: 0.65rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  padding: 3px 8px;
+  border-radius: 20px;
+  background: #E8845A;
+  color: #fff;
+}
+.mega-badge.new { background: #2a7d5f; }
+
+/* Mobile Nav Drawer */
+.mobile-nav {
+  position: fixed;
+  top: 0; left: 0; bottom: 0;
+  width: 320px;
+  max-width: 85vw;
+  background: #FDFCFA;
+  z-index: 2000;
+  transform: translateX(-100%);
+  transition: transform 0.35s ease;
+  overflow-y: auto;
+  padding: 24px;
+  pointer-events: none;
+}
+.mobile-nav.open { transform: translateX(0); pointer-events: auto; }
+.mobile-nav-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 24px;
+}
+.mobile-nav-close {
+  width: 36px; height: 36px;
+  display: flex; align-items: center; justify-content: center;
+}
+.mobile-nav-links { display: flex; flex-direction: column; gap: 0; }
+.mobile-nav-links a {
+  padding: 14px 0;
+  font-size: 1.05rem;
+  font-weight: 500;
+  border-bottom: 1px solid rgba(30,27,24,0.06);
+}
+
+/* ===== 3. HERO SECTION ===== */
+.hero {
+  padding: 40px 0 60px;
+  overflow: hidden;
+}
+.hero .container {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 32px;
+  align-items: center;
+}
+@media (min-width: 768px) {
+  .hero .container {
+    grid-template-columns: 1fr 1fr;
+    gap: 60px;
+  }
+  .hero { padding: 60px 0 80px; }
+}
+.hero-content { order: 2; }
+@media (min-width: 768px) { .hero-content { order: 1; } }
+.hero-content h1 { margin: 12px 0 16px; }
+.hero-content h1 em {
+  font-family: 'DM Serif Display', serif;
+  font-style: italic;
+  color: #E8845A;
+}
+.hero-content .subtext { margin-bottom: 28px; }
+.hero-ctas { display: flex; flex-wrap: wrap; gap: 12px; }
+
+.hero-image-wrap {
+  order: 1;
+  position: relative;
+}
+@media (min-width: 768px) { .hero-image-wrap { order: 2; } }
+.hero-image-wrap img {
+  border-radius: 20px;
+  width: 100%;
+  aspect-ratio: 4/5;
+  object-fit: cover;
+}
+@media (min-width: 768px) { .hero-image-wrap img { aspect-ratio: 3/4; } }
+.hero-floating-badge {
+  position: absolute;
+  bottom: 20px;
+  left: 20px;
+  background: #fff;
+  border-radius: 50px;
+  padding: 10px 18px;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 0.8rem;
+  font-weight: 600;
+  box-shadow: 0 4px 20px rgba(30,27,24,0.12);
+}
+.hero-floating-badge svg { width: 16px; height: 16px; fill: #E8845A; stroke: none; }
+
+/* ===== 4. SOCIAL PROOF STRIP ===== */
+.social-proof {
+  background: #FAF6F0;
+  padding: 20px 0;
+  overflow-x: auto;
+  -webkit-overflow-scrolling: touch;
+}
+.social-proof::-webkit-scrollbar { display: none; }
+.social-proof-track {
+  display: flex;
+  gap: 12px;
+  padding: 0 20px;
+  min-width: max-content;
+}
+.trust-item {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 12px 20px;
+  background: #fff;
+  border-radius: 50px;
+  white-space: nowrap;
+  font-size: 0.82rem;
+  font-weight: 500;
+  color: #3a3632;
+  border: 1px solid rgba(30,27,24,0.06);
+}
+.trust-item svg {
+  width: 18px; height: 18px;
+  stroke: #E8845A;
+  fill: none;
+  stroke-width: 1.8;
+  flex-shrink: 0;
+}
+
+/* ===== 5. CATEGORIES GRID ===== */
+.categories { background: #FDFCFA; }
+.section-header {
+  text-align: center;
+  margin-bottom: 36px;
+}
+.section-header h2 { margin-bottom: 8px; }
+.section-header .subtext { margin: 0 auto; }
+
+.categories-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 16px;
+}
+@media (min-width: 768px) {
+  .categories-grid { grid-template-columns: repeat(4, 1fr); gap: 20px; }
+}
+.category-card {
+  position: relative;
+  border-radius: 16px;
+  overflow: hidden;
+  aspect-ratio: 3/4;
+  cursor: pointer;
+  transition: transform 0.3s;
+}
+.category-card:hover { transform: translateY(-4px); }
+.category-card img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: transform 0.4s;
+}
+.category-card:hover img { transform: scale(1.05); }
+.category-card-overlay {
+  position: absolute;
+  bottom: 0; left: 0; right: 0;
+  padding: 20px 16px;
+  background: linear-gradient(transparent, rgba(30,27,24,0.7));
+}
+.category-card-overlay span {
+  color: #fff;
+  font-family: 'DM Serif Display', serif;
+  font-size: 1.05rem;
+}
+.category-badge {
+  position: absolute;
+  top: 12px;
+  right: 12px;
+  font-size: 0.65rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  padding: 4px 10px;
+  border-radius: 20px;
+  background: #E8845A;
+  color: #fff;
+}
+.category-badge.popular { background: #c27d3a; }
+
+/* ===== WAVY DIVIDER ===== */
+.wavy-divider {
+  width: 100%;
+  overflow: hidden;
+  line-height: 0;
+  margin: -1px 0;
+}
+.wavy-divider svg {
+  width: 100%;
+  height: 40px;
+  display: block;
+}
+@media (min-width: 768px) { .wavy-divider svg { height: 60px; } }
+
+/* ===== 6. BESTSELLERS ===== */
+.bestsellers { background: #FAF6F0; }
+.bestsellers .section-header { text-align: left; }
+.bestsellers-header {
+  display: flex;
+  align-items: flex-end;
+  justify-content: space-between;
+  margin-bottom: 32px;
+}
+.view-all {
+  font-size: 0.9rem;
+  font-weight: 600;
+  color: #E8845A;
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  transition: gap 0.2s;
+}
+.view-all:hover { gap: 10px; }
+
+.products-scroll {
+  display: flex;
+  gap: 16px;
+  overflow-x: auto;
+  padding-bottom: 16px;
+  scroll-snap-type: x mandatory;
+  -webkit-overflow-scrolling: touch;
+}
+.products-scroll::-webkit-scrollbar { height: 4px; }
+.products-scroll::-webkit-scrollbar-track { background: transparent; }
+.products-scroll::-webkit-scrollbar-thumb { background: rgba(30,27,24,0.15); border-radius: 4px; }
+
+.product-card {
+  flex: 0 0 260px;
+  scroll-snap-align: start;
+  background: #fff;
+  border-radius: 16px;
+  overflow: hidden;
+  transition: transform 0.3s, box-shadow 0.3s;
+}
+@media (min-width: 768px) { .product-card { flex: 0 0 280px; } }
+.product-card:hover { transform: translateY(-4px); box-shadow: 0 8px 28px rgba(30,27,24,0.1); }
+
+.product-card-image {
+  position: relative;
+  aspect-ratio: 1;
+  overflow: hidden;
+  background: #f5f0ea;
+}
+.product-card-image img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: transform 0.4s;
+}
+.product-card:hover .product-card-image img { transform: scale(1.05); }
+.product-sale-badge {
+  position: absolute;
+  top: 12px; left: 12px;
+  background: #c0392b;
+  color: #fff;
+  font-size: 0.7rem;
+  font-weight: 700;
+  padding: 4px 10px;
+  border-radius: 20px;
+  letter-spacing: 0.02em;
+}
+.product-sale-badge.new-badge {
+  background: #2a7d5f;
+}
+
+.product-card-body { padding: 16px; }
+.product-pills {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+  margin-bottom: 10px;
+}
+.product-pill {
+  font-size: 0.68rem;
+  font-weight: 600;
+  padding: 3px 10px;
+  border-radius: 20px;
+  background: #FAF6F0;
+  color: #7a746c;
+  border: 1px solid rgba(30,27,24,0.06);
+}
+.product-type {
+  font-size: 0.72rem;
+  font-weight: 500;
+  color: #9a948c;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  margin-bottom: 4px;
+}
+.product-title {
+  font-family: 'DM Serif Display', serif;
+  font-size: 1rem;
+  margin-bottom: 8px;
+  line-height: 1.3;
+}
+.product-price {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin-bottom: 14px;
+}
+.product-price .current {
+  font-size: 1.05rem;
+  font-weight: 700;
+  color: #1E1B18;
+}
+.product-price .compare {
+  font-size: 0.85rem;
+  color: #9a948c;
+  text-decoration: line-through;
+}
+.product-atc {
+  width: 100%;
+  padding: 12px;
+  background: #1E1B18;
+  color: #fff;
+  border-radius: 10px;
+  font-size: 0.85rem;
+  font-weight: 600;
+  transition: background 0.2s;
+}
+.product-atc:hover { background: #E8845A; }
+
+/* ===== 7. SHOPPABLE VIDEO ===== */
+.shoppable-video { background: #FAF6F0; color: #1E1B18; }
+.shoppable-video .section-header { color: #1E1B18; }
+.shoppable-video .subtext { color: #5a554e; }
+
+.video-carousel {
+  display: flex;
+  gap: 16px;
+  overflow-x: auto;
+  padding-bottom: 12px;
+  -webkit-overflow-scrolling: touch;
+}
+.video-carousel::-webkit-scrollbar { height: 4px; }
+.video-carousel::-webkit-scrollbar-thumb { background: rgba(30,27,24,0.15); border-radius: 4px; }
+
+.video-thumb {
+  flex: 0 0 180px;
+  aspect-ratio: 9/16;
+  border-radius: 16px;
+  overflow: hidden;
+  position: relative;
+  cursor: pointer;
+  transition: transform 0.3s;
+}
+@media (min-width: 768px) { .video-thumb { flex: 0 0 220px; } }
+.video-thumb:hover { transform: scale(1.03); }
+.video-thumb-bg {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+.video-thumb-overlay {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(transparent 50%, rgba(30,27,24,0.85));
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+  padding: 16px;
+}
+.video-play-btn {
+  position: absolute;
+  top: 50%; left: 50%;
+  transform: translate(-50%, -50%);
+  width: 52px; height: 52px;
+  background: rgba(255,255,255,0.9);
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: transform 0.2s;
+}
+.video-thumb:hover .video-play-btn { transform: translate(-50%, -50%) scale(1.1); }
+.video-play-btn svg { width: 20px; height: 20px; fill: #1E1B18; margin-left: 3px; }
+.video-thumb-title {
+  font-family: 'DM Serif Display', serif;
+  font-size: 0.95rem;
+  margin-bottom: 6px;
+}
+.video-thumb-price {
+  display: inline-block;
+  background: #E8845A;
+  color: #fff;
+  font-size: 0.72rem;
+  font-weight: 700;
+  padding: 4px 10px;
+  border-radius: 20px;
+  width: fit-content;
+}
+
+/* Video Modal */
+.video-modal {
+  position: fixed;
+  inset: 0;
+  z-index: 3000;
+  background: rgba(0,0,0,0.92);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  opacity: 0;
+  visibility: hidden;
+  pointer-events: none;
+  transition: opacity 0.3s;
+}
+.video-modal.open { opacity: 1; visibility: visible; pointer-events: auto; }
+.video-modal-close {
+  position: absolute;
+  top: 20px; right: 20px;
+  width: 44px; height: 44px;
+  background: rgba(255,255,255,0.1);
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 10;
+  transition: background 0.2s;
+}
+.video-modal-close:hover { background: rgba(255,255,255,0.2); }
+.video-modal-close svg { width: 20px; height: 20px; stroke: #fff; }
+.video-modal-content {
+  width: 380px;
+  max-width: 90vw;
+  max-height: 90vh;
+  display: flex;
+  flex-direction: column;
+  border-radius: 20px;
+  overflow: hidden;
+}
+.video-modal-player {
+  aspect-ratio: 9/16;
+  background: linear-gradient(135deg, #2a2520, #3a3530);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+}
+.video-modal-player .placeholder-text {
+  color: rgba(255,255,255,0.3);
+  font-size: 0.85rem;
+  text-align: center;
+}
+.video-modal-product {
+  background: #fff;
+  padding: 16px;
+  display: flex;
+  align-items: center;
+  gap: 14px;
+}
+.video-modal-product img {
+  width: 60px; height: 60px;
+  border-radius: 10px;
+  object-fit: cover;
+}
+.video-modal-product-info {
+  flex: 1;
+}
+.video-modal-product-info .product-title {
+  font-size: 0.9rem;
+  margin-bottom: 2px;
+}
+.video-modal-product-info .product-price {
+  margin-bottom: 0;
+}
+.video-modal-atc {
+  padding: 10px 18px;
+  background: #E8845A;
+  color: #fff;
+  border-radius: 8px;
+  font-size: 0.8rem;
+  font-weight: 600;
+  white-space: nowrap;
+  transition: background 0.2s;
+}
+.video-modal-atc:hover { background: #d4733e; }
+
+/* ===== 8. KIDS SPLIT ===== */
+.kids-section { background: #FDFCFA; }
+.split-section .container {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 32px;
+  align-items: center;
+}
+@media (min-width: 768px) {
+  .split-section .container { grid-template-columns: 1fr 1fr; gap: 48px; }
+}
+.split-image {
+  position: relative;
+  border-radius: 20px;
+  overflow: hidden;
+  aspect-ratio: 4/5;
+}
+.split-image img { width: 100%; height: 100%; object-fit: cover; }
+.split-image-overlay {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(transparent 40%, rgba(30,27,24,0.75));
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+  padding: 28px;
+}
+.split-image-overlay p {
+  font-family: 'DM Serif Display', serif;
+  font-size: 1.3rem;
+  color: #fff;
+  margin-bottom: 12px;
+  line-height: 1.3;
+}
+.split-image-overlay a {
+  color: #fff;
+  font-weight: 600;
+  font-size: 0.9rem;
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  border-bottom: 1.5px solid #fff;
+  padding-bottom: 2px;
+  width: fit-content;
+}
+
+.split-products {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 12px;
+}
+.split-product-card {
+  background: #fff;
+  border-radius: 14px;
+  overflow: hidden;
+  border: 1px solid rgba(30,27,24,0.06);
+  transition: transform 0.3s, box-shadow 0.3s;
+}
+.split-product-card:hover { transform: translateY(-3px); box-shadow: 0 6px 20px rgba(30,27,24,0.08); }
+.split-product-card img {
+  width: 100%;
+  aspect-ratio: 1;
+  object-fit: cover;
+}
+.split-product-card .card-body {
+  padding: 12px;
+}
+.split-product-card .product-title { font-size: 0.85rem; margin-bottom: 4px; }
+.split-product-card .product-price { margin-bottom: 0; font-size: 0.9rem; }
+.split-product-card .current { font-size: 0.9rem; }
+
+/* ===== 9. HOW IT WORKS ===== */
+.how-it-works { background: #FAF6F0; }
+.steps-grid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 24px;
+}
+@media (min-width: 768px) { .steps-grid { grid-template-columns: repeat(3, 1fr); gap: 32px; } }
+.step-card {
+  background: #fff;
+  border-radius: 20px;
+  padding: 36px 28px;
+  position: relative;
+  overflow: hidden;
+}
+.step-number {
+  position: absolute;
+  top: -8px; right: 12px;
+  font-family: 'DM Serif Display', serif;
+  font-size: 6rem;
+  color: rgba(232,132,90,0.08);
+  line-height: 1;
+  font-weight: 400;
+}
+.step-card h3 { margin-bottom: 10px; position: relative; z-index: 1; }
+.step-card p { font-size: 0.92rem; color: #5a554e; line-height: 1.6; position: relative; z-index: 1; }
+
+/* ===== 10. ADULTS SPLIT ===== */
+.adults-section { background: #FDFCFA; }
+.adults-section .split-content { order: 1; }
+.adults-section .split-image-wrap { order: 2; }
+@media (min-width: 768px) {
+  .adults-section .split-content { order: 2; }
+  .adults-section .split-image-wrap { order: 1; }
+}
+.split-content h2 { margin: 12px 0 16px; }
+.split-content .subtext { margin-bottom: 28px; }
+
+.adults-grid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 32px;
+  align-items: center;
+}
+@media (min-width: 768px) { .adults-grid { grid-template-columns: 1fr 1fr; gap: 60px; } }
+.adults-image {
+  border-radius: 20px;
+  overflow: hidden;
+  aspect-ratio: 4/5;
+}
+.adults-image img { width: 100%; height: 100%; object-fit: cover; }
+
+/* ===== 11. GIFTING SECTION ===== */
+.gifting { background: #FAF6F0; }
+.gifting-grid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 20px;
+}
+@media (min-width: 768px) { .gifting-grid { grid-template-columns: repeat(3, 1fr); } }
+.gifting-card {
+  background: #fff;
+  border-radius: 20px;
+  padding: 32px 24px;
+  text-align: center;
+  transition: transform 0.3s, box-shadow 0.3s;
+}
+.gifting-card:hover { transform: translateY(-4px); box-shadow: 0 8px 28px rgba(30,27,24,0.08); }
+.gifting-icon {
+  width: 56px; height: 56px;
+  background: #FAF6F0;
+  border-radius: 16px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin: 0 auto 16px;
+}
+.gifting-icon svg { width: 26px; height: 26px; stroke: #E8845A; fill: none; stroke-width: 1.8; }
+.gifting-card h3 { margin-bottom: 8px; font-size: 1.15rem; }
+.gifting-card p { font-size: 0.88rem; color: #5a554e; line-height: 1.6; margin-bottom: 16px; }
+.gifting-card a { font-size: 0.85rem; font-weight: 600; color: #E8845A; }
+
+/* ===== 12. PRESS LOGOS ===== */
+.press-logos {
+  padding: 48px 0;
+  background: #FDFCFA;
+}
+.press-logos .section-header { margin-bottom: 28px; }
+.logos-row {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-wrap: wrap;
+  gap: 32px;
+}
+@media (min-width: 768px) { .logos-row { gap: 56px; } }
+.logo-item {
+  font-family: 'DM Serif Display', serif;
+  font-size: 1.2rem;
+  color: #b0aaa2;
+  opacity: 0.6;
+  transition: opacity 0.3s;
+  white-space: nowrap;
+}
+@media (min-width: 768px) { .logo-item { font-size: 1.5rem; } }
+.logo-item:hover { opacity: 1; }
+
+/* ===== 13. TESTIMONIALS ===== */
+.testimonials { background: #FAF6F0; }
+.testimonials-grid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 20px;
+}
+@media (min-width: 768px) { .testimonials-grid { grid-template-columns: repeat(3, 1fr); } }
+.testimonial-card {
+  background: #fff;
+  border-radius: 20px;
+  padding: 28px 24px;
+}
+.testimonial-stars {
+  display: flex;
+  gap: 3px;
+  margin-bottom: 14px;
+}
+.testimonial-stars svg { width: 16px; height: 16px; fill: #E8845A; }
+.testimonial-text {
+  font-size: 0.95rem;
+  line-height: 1.7;
+  color: #3a3632;
+  margin-bottom: 18px;
+}
+.testimonial-author {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+.testimonial-avatar {
+  width: 40px; height: 40px;
+  border-radius: 50%;
+  background: #E8845A;
+  color: #fff;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 0.9rem;
+  font-weight: 700;
+}
+.testimonial-meta .name {
+  font-size: 0.88rem;
+  font-weight: 600;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+.verified-badge {
+  font-size: 0.65rem;
+  font-weight: 600;
+  color: #2a7d5f;
+  background: rgba(42,125,95,0.1);
+  padding: 2px 7px;
+  border-radius: 10px;
+}
+.testimonial-meta .purchase {
+  font-size: 0.75rem;
+  color: #9a948c;
+}
+
+/* ===== 14. BRAND STORY ===== */
+.brand-story { background: #FAF6F0; color: #1E1B18; padding: 80px 0; }
+.brand-story .container {
+  max-width: 720px;
+  text-align: center;
+}
+.brand-story h2 { color: #1E1B18; margin: 12px 0 20px; }
+.brand-story .story-text {
+  font-size: 1.05rem;
+  color: #5a554e;
+  line-height: 1.8;
+  margin-bottom: 28px;
+}
+.brand-story .btn-outline { border-color: rgba(30,27,24,0.3); color: #1E1B18; }
+.brand-story .btn-outline:hover { background: #1E1B18; color: #FAF6F0; border-color: #1E1B18; }
+
+/* ===== 15. NEWSLETTER ===== */
+.newsletter { background: #FAF6F0; padding: 60px 0; }
+.newsletter .container {
+  max-width: 560px;
+  text-align: center;
+}
+.newsletter h2 { margin-bottom: 8px; }
+.newsletter .subtext { margin: 0 auto 24px; }
+.newsletter-form {
+  display: flex;
+  gap: 10px;
+}
+.newsletter-form input {
+  flex: 1;
+  padding: 14px 20px;
+  border: 1.5px solid rgba(30,27,24,0.12);
+  border-radius: 50px;
+  font-family: 'DM Sans', sans-serif;
+  font-size: 0.92rem;
+  background: #fff;
+  outline: none;
+  transition: border-color 0.2s;
+}
+.newsletter-form input:focus { border-color: #E8845A; }
+.newsletter-form button { white-space: nowrap; }
+
+/* ===== 16. FOOTER ===== */
+.site-footer {
+  background: #FAF6F0;
+  color: #5a554e;
+  padding: 60px 0 0;
+  border-top: 1px solid rgba(30,27,24,0.08);
+}
+.footer-grid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 32px;
+  margin-bottom: 40px;
+}
+@media (min-width: 768px) { .footer-grid { grid-template-columns: 2fr 1fr 1fr 1fr; gap: 48px; } }
+.footer-brand p { font-size: 0.88rem; line-height: 1.7; margin-top: 16px; max-width: 300px; }
+.footer-brand img { height: 36px; }
+.footer-col h4 {
+  font-family: 'DM Sans', sans-serif;
+  font-size: 0.78rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  color: #1E1B18;
+  margin-bottom: 16px;
+}
+.footer-col a {
+  display: block;
+  font-size: 0.88rem;
+  padding: 4px 0;
+  color: #5a554e;
+  transition: color 0.2s;
+}
+.footer-col a:hover { color: #E8845A; }
+.footer-social {
+  display: flex;
+  gap: 12px;
+  margin-top: 16px;
+}
+.footer-social a {
+  width: 36px; height: 36px;
+  background: rgba(30,27,24,0.06);
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: background 0.2s;
+}
+.footer-social a:hover { background: #E8845A; }
+.footer-social svg { width: 16px; height: 16px; stroke: #5a554e; fill: none; }
+.footer-social a:hover svg { stroke: #fff; }
+.footer-bottom {
+  border-top: 1px solid rgba(30,27,24,0.08);
+  padding: 20px 0;
+  text-align: center;
+  font-size: 0.78rem;
+}
+
+/* ===== 17. CART DRAWER ===== */
+.cart-overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(30,27,24,0.5);
+  z-index: 4000;
+  opacity: 0;
+  visibility: hidden;
+  pointer-events: none;
+  transition: opacity 0.3s;
+}
+.cart-overlay.open { opacity: 1; visibility: visible; pointer-events: auto; }
+
+.cart-drawer {
+  position: fixed;
+  top: 0; right: 0; bottom: 0;
+  width: 400px;
+  max-width: 100vw;
+  background: #FDFCFA;
+  z-index: 4001;
+  transform: translateX(100%);
+  transition: transform 0.35s ease;
+  display: flex;
+  flex-direction: column;
+  pointer-events: none;
+}
+.cart-drawer.open { transform: translateX(0); pointer-events: auto; }
+
+.cart-drawer-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 20px 24px;
+  border-bottom: 1px solid rgba(30,27,24,0.06);
+}
+.cart-drawer-header h3 {
+  font-family: 'DM Serif Display', serif;
+  font-size: 1.2rem;
+}
+.cart-drawer-close {
+  width: 36px; height: 36px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 50%;
+  transition: background 0.2s;
+}
+.cart-drawer-close:hover { background: #FAF6F0; }
+
+.cart-shipping-bar {
+  padding: 16px 24px;
+  background: #FAF6F0;
+}
+.cart-shipping-text {
+  font-size: 0.82rem;
+  font-weight: 500;
+  color: #5a554e;
+  margin-bottom: 8px;
+}
+.cart-shipping-text strong { color: #E8845A; }
+.cart-progress-track {
+  height: 6px;
+  background: rgba(30,27,24,0.08);
+  border-radius: 3px;
+  overflow: hidden;
+}
+.cart-progress-fill {
+  height: 100%;
+  width: 79.9%;
+  background: linear-gradient(90deg, #E8845A, #d4733e);
+  border-radius: 3px;
+  transition: width 0.6s ease;
+}
+
+.cart-items {
+  flex: 1;
+  overflow-y: auto;
+  padding: 0;
+}
+.cart-item {
+  display: flex;
+  gap: 14px;
+  padding: 20px 24px;
+  border-bottom: 1px solid rgba(30,27,24,0.06);
+}
+.cart-item-image {
+  width: 80px; height: 80px;
+  border-radius: 12px;
+  overflow: hidden;
+  flex-shrink: 0;
+}
+.cart-item-image img { width: 100%; height: 100%; object-fit: cover; }
+.cart-item-details { flex: 1; }
+.cart-item-title {
+  font-family: 'DM Serif Display', serif;
+  font-size: 0.92rem;
+  margin-bottom: 2px;
+}
+.cart-item-variant {
+  font-size: 0.78rem;
+  color: #9a948c;
+  margin-bottom: 10px;
+}
+.cart-item-bottom {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+.qty-selector {
+  display: flex;
+  align-items: center;
+  border: 1px solid rgba(30,27,24,0.12);
+  border-radius: 8px;
+  overflow: hidden;
+}
+.qty-selector button {
+  width: 32px;
+  height: 32px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1rem;
+  color: #5a554e;
+  transition: background 0.2s;
+}
+.qty-selector button:hover { background: #FAF6F0; }
+.qty-selector span {
+  width: 32px;
+  text-align: center;
+  font-size: 0.85rem;
+  font-weight: 600;
+}
+.cart-item-price {
+  font-size: 0.92rem;
+  font-weight: 700;
+}
+.cart-item-remove {
+  margin-top: 8px;
+  font-size: 0.75rem;
+  color: #9a948c;
+  text-decoration: underline;
+  cursor: pointer;
+  transition: color 0.2s;
+}
+.cart-item-remove:hover { color: #c0392b; }
+
+.cart-upsell {
+  padding: 20px 24px;
+  border-top: 1px solid rgba(30,27,24,0.06);
+  background: #FAF6F0;
+}
+.cart-upsell h4 {
+  font-family: 'DM Sans', sans-serif;
+  font-size: 0.82rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  margin-bottom: 14px;
+  color: #5a554e;
+}
+.upsell-scroll {
+  display: flex;
+  gap: 10px;
+  overflow-x: auto;
+}
+.upsell-scroll::-webkit-scrollbar { display: none; }
+.upsell-card {
+  flex: 0 0 120px;
+  background: #fff;
+  border-radius: 12px;
+  overflow: hidden;
+}
+.upsell-card img {
+  width: 100%;
+  aspect-ratio: 1;
+  object-fit: cover;
+}
+.upsell-card-body { padding: 8px 10px; }
+.upsell-card-body .title {
+  font-size: 0.72rem;
+  font-weight: 600;
+  line-height: 1.3;
+  margin-bottom: 4px;
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+.upsell-card-body .price {
+  font-size: 0.72rem;
+  font-weight: 700;
+  margin-bottom: 6px;
+}
+.upsell-add {
+  width: 100%;
+  padding: 6px;
+  background: #1E1B18;
+  color: #fff;
+  border-radius: 6px;
+  font-size: 0.68rem;
+  font-weight: 600;
+  transition: background 0.2s;
+}
+.upsell-add:hover { background: #E8845A; }
+
+.cart-footer {
+  padding: 20px 24px;
+  border-top: 1px solid rgba(30,27,24,0.06);
+  background: #fff;
+}
+.cart-subtotal {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 4px;
+}
+.cart-subtotal .label { font-size: 0.92rem; font-weight: 500; }
+.cart-subtotal .amount { font-size: 1.1rem; font-weight: 700; }
+.cart-tax-note {
+  font-size: 0.75rem;
+  color: #9a948c;
+  margin-bottom: 16px;
+}
+.cart-checkout-btn {
+  width: 100%;
+  padding: 16px;
+  background: #E8845A;
+  color: #fff;
+  border-radius: 12px;
+  font-size: 1rem;
+  font-weight: 700;
+  transition: background 0.2s;
+}
+.cart-checkout-btn:hover { background: #d4733e; }
+</style>
+</head>
+<body>
+
+<!-- ===== 1. ANNOUNCEMENT BAR ===== -->
+<div class="announcement-bar">
+  <div class="marquee-track">
+    <span>Free shipping on orders above Rs.1,000</span>
+    <span>Proudly made in India</span>
+    <span>50,000+ happy makers</span>
+    <span>Free shipping on orders above Rs.1,000</span>
+    <span>Proudly made in India</span>
+    <span>50,000+ happy makers</span>
+    <span>Free shipping on orders above Rs.1,000</span>
+    <span>Proudly made in India</span>
+    <span>50,000+ happy makers</span>
+  </div>
+</div>
+
+<!-- ===== 2. MEGA MENU HEADER ===== -->
+<header class="site-header" id="siteHeader">
+  <div class="header-inner">
+    <div style="display:flex;align-items:center;">
+      <button class="mobile-menu-btn" onclick="toggleMobileNav()" aria-label="Menu">
+        <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#1E1B18" stroke-width="1.8"><line x1="3" y1="6" x2="21" y2="6"/><line x1="3" y1="12" x2="21" y2="12"/><line x1="3" y1="18" x2="21" y2="18"/></svg>
+      </button>
+      <a href="#" class="header-logo" style="margin-left:12px;">
+        <img referrerpolicy="no-referrer" src="https://in.skygoodies.co/cdn/shop/files/logo_hd_600x.jpg?v=1741613405" alt="Sky Goodies">
+      </a>
+    </div>
+
+    <nav class="header-nav">
+      <a href="#" class="nav-shop" id="navShop" onclick="toggleMegaMenu(event)">Shop</a>
+      <a href="#">New Arrivals</a>
+      <a href="#">Bestsellers</a>
+      <a href="#">Bulk Orders</a>
+      <a href="#">Our Story</a>
+    </nav>
+
+    <div class="header-actions">
+      <button aria-label="Search">
+        <svg viewBox="0 0 24 24"><circle cx="11" cy="11" r="7"/><line x1="16.5" y1="16.5" x2="21" y2="21"/></svg>
+      </button>
+      <a href="#" aria-label="Account">
+        <svg viewBox="0 0 24 24"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
+      </a>
+      <button class="cart-count" aria-label="Cart" onclick="openCart()">
+        <svg viewBox="0 0 24 24"><path d="M6 2L3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4z"/><line x1="3" y1="6" x2="21" y2="6"/><path d="M16 10a4 4 0 0 1-8 0"/></svg>
+      </button>
+    </div>
+  </div>
+
+  <!-- Mega Menu Dropdown -->
+  <div class="mega-menu" id="megaMenu">
+    <div class="mega-menu-inner">
+      <div class="mega-menu-tabs">
+        <button class="mega-menu-tab active" data-tab="product">Shop by Product</button>
+        <button class="mega-menu-tab" data-tab="occasion">Shop by Occasion</button>
+        <button class="mega-menu-tab" data-tab="age">Shop by Age</button>
+      </div>
+      <div class="mega-menu-collections" id="megaCollections">
+        <a href="#" class="mega-collection-card">
+          <img referrerpolicy="no-referrer" src="https://cdn.shopify.com/s/files/1/0428/5530/1271/collections/Sky-Goodies-Birthday-Party-Decor-Daisy-Birthday-01.jpg?v=1741610348" alt="Party Decor" loading="lazy">
+          <div class="mega-collection-info">
+            <span>Party Decor</span>
+            <span class="mega-badge">Popular</span>
+          </div>
+        </a>
+        <a href="#" class="mega-collection-card">
+          <img referrerpolicy="no-referrer" src="https://cdn.shopify.com/s/files/1/0428/5530/1271/collections/Sky-Goodies-Kids-Craft-Kits-Category-Banner.jpg?v=1742904272" alt="Kids Kits" loading="lazy">
+          <div class="mega-collection-info">
+            <span>Kids Kits</span>
+          </div>
+        </a>
+        <a href="#" class="mega-collection-card">
+          <img referrerpolicy="no-referrer" src="https://cdn.shopify.com/s/files/1/0428/5530/1271/collections/2025-collection-adults-banner.jpg?v=1742828200" alt="DIY for Adults" loading="lazy">
+          <div class="mega-collection-info">
+            <span>DIY for Adults</span>
+          </div>
+        </a>
+        <a href="#" class="mega-collection-card">
+          <img referrerpolicy="no-referrer" src="https://cdn.shopify.com/s/files/1/0428/5530/1271/collections/SkyGoodies-home-banner-homedecor-vertical.jpg?v=1653296152" alt="Home Decor" loading="lazy">
+          <div class="mega-collection-info">
+            <span>Home Decor</span>
+          </div>
+        </a>
+        <a href="#" class="mega-collection-card">
+          <img referrerpolicy="no-referrer" src="https://cdn.shopify.com/s/files/1/0428/5530/1271/collections/2025-fairy-lights-lamps-collection.jpg?v=1741601713" alt="Fairy Lights" loading="lazy">
+          <div class="mega-collection-info">
+            <span>Fairy Lights</span>
+          </div>
+        </a>
+        <a href="#" class="mega-collection-card">
+          <img referrerpolicy="no-referrer" src="https://cdn.shopify.com/s/files/1/0428/5530/1271/collections/Sky-Goodies-Be-Good-This-Year-Wall-Calendar-2024-02.jpg?v=1762954753" alt="Calendars" loading="lazy">
+          <div class="mega-collection-info">
+            <span>Calendars</span>
+            <span class="mega-badge new">New</span>
+          </div>
+        </a>
+        <a href="#" class="mega-collection-card">
+          <img referrerpolicy="no-referrer" src="https://cdn.shopify.com/s/files/1/0428/5530/1271/collections/Sky-Goodies-DIY-Paper-Banana-Trees-06.jpg?v=1741609615" alt="Pooja Decor" loading="lazy">
+          <div class="mega-collection-info">
+            <span>Pooja Decor</span>
+          </div>
+        </a>
+        <a href="#" class="mega-collection-card">
+          <img referrerpolicy="no-referrer" src="https://cdn.shopify.com/s/files/1/0428/5530/1271/collections/matchbooks_home_page_offer_banner_copy_b5267a4d-84aa-4662-8adb-bba2b6514c63.jpg?v=1742904313" alt="Notebooks" loading="lazy">
+          <div class="mega-collection-info">
+            <span>Notebooks</span>
+          </div>
+        </a>
+      </div>
+    </div>
+  </div>
+</header>
+
+<!-- Mobile Nav -->
+<nav class="mobile-nav" id="mobileNav">
+  <div class="mobile-nav-header">
+    <a href="#" class="header-logo">
+      <img referrerpolicy="no-referrer" src="https://in.skygoodies.co/cdn/shop/files/logo_hd_600x.jpg?v=1741613405" alt="Sky Goodies" style="height:32px;">
+    </a>
+    <button class="mobile-nav-close" onclick="toggleMobileNav()">
+      <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#1E1B18" stroke-width="1.8"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+    </button>
+  </div>
+  <div class="mobile-nav-links">
+    <a href="#">Shop All</a>
+    <a href="#">Party Decor</a>
+    <a href="#">Kids Kits</a>
+    <a href="#">DIY for Adults</a>
+    <a href="#">Fairy Lights</a>
+    <a href="#">New Arrivals</a>
+    <a href="#">Bestsellers</a>
+    <a href="#">Bulk Orders</a>
+    <a href="#">Our Story</a>
+  </div>
+</nav>
+
+<!-- ===== 3. HERO SECTION ===== -->
+<section class="hero">
+  <div class="container">
+    <div class="hero-content fade-up">
+      <p class="eyebrow">Handcrafted Paper Kits</p>
+      <h1>Simple paper. <em>Real joy.</em></h1>
+      <p class="subtext">Beautiful DIY kits that turn a few hours and a flat pack of paper into something you will actually want to display. Designed in Mumbai, loved across India.</p>
+      <div class="hero-ctas">
+        <a href="#" class="btn btn-primary">Explore the collection</a>
+        <a href="#" class="btn btn-outline">Watch how it works</a>
+      </div>
+    </div>
+    <div class="hero-image-wrap fade-up" style="transition-delay:0.15s;">
+      <img referrerpolicy="no-referrer" src="https://cdn.shopify.com/s/files/1/0428/5530/1271/collections/Sky-Goodies-Birthday-Party-Decor-Daisy-Birthday-01.jpg?v=1741610348" alt="Sky Goodies Paper Party Decor">
+      <div class="hero-floating-badge">
+        <svg viewBox="0 0 24 24"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
+        50,000+ happy makers
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ===== 4. SOCIAL PROOF STRIP ===== -->
+<div class="social-proof">
+  <div class="social-proof-track">
+    <div class="trust-item">
+      <svg viewBox="0 0 24 24"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
+      50,000+ happy makers
+    </div>
+    <div class="trust-item">
+      <svg viewBox="0 0 24 24"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg>
+      Made in Mumbai, India
+    </div>
+    <div class="trust-item">
+      <svg viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg>
+      NID-designed craft kits
+    </div>
+    <div class="trust-item">
+      <svg viewBox="0 0 24 24"><path d="M12 22c-4.97 0-9-2.24-9-5v-4"/><path d="M12 22c4.97 0 9-2.24 9-5v-4"/><path d="M12 13c-4.97 0-9-2.24-9-5S7.03 3 12 3s9 2.24 9 5-4.03 5-9 5z"/><path d="M6 12c0 1.68 2.69 3 6 3s6-1.32 6-3"/><path d="M8 8.5c0 .83 1.79 1.5 4 1.5s4-.67 4-1.5"/></svg>
+      Eco-friendly &amp; biodegradable
+    </div>
+    <div class="trust-item">
+      <svg viewBox="0 0 24 24"><rect x="1" y="3" width="15" height="13" rx="2"/><polygon points="16 8 20 3 20 16 16 16"/><circle cx="5.5" cy="18.5" r="2.5"/><circle cx="18.5" cy="18.5" r="2.5"/></svg>
+      Free shipping over Rs.1,000
+    </div>
+  </div>
+</div>
+
+<!-- ===== 5. CATEGORIES GRID ===== -->
+<section class="categories">
+  <div class="container">
+    <div class="section-header fade-up">
+      <h2>Shop by category</h2>
+      <p class="subtext">Find the perfect kit for every occasion, age, and skill level.</p>
+    </div>
+    <div class="categories-grid">
+      <a href="#" class="category-card fade-up">
+        <img referrerpolicy="no-referrer" src="https://cdn.shopify.com/s/files/1/0428/5530/1271/collections/Sky-Goodies-Birthday-Party-Decor-Daisy-Birthday-01.jpg?v=1741610348" alt="Party Decor" loading="lazy">
+        <span class="category-badge popular">Popular</span>
+        <div class="category-card-overlay"><span>Party Decor</span></div>
+      </a>
+      <a href="#" class="category-card fade-up" style="transition-delay:0.05s;">
+        <img referrerpolicy="no-referrer" src="https://cdn.shopify.com/s/files/1/0428/5530/1271/collections/Sky-Goodies-Kids-Craft-Kits-Category-Banner.jpg?v=1742904272" alt="Kids Kits" loading="lazy">
+        <div class="category-card-overlay"><span>Kids Kits</span></div>
+      </a>
+      <a href="#" class="category-card fade-up" style="transition-delay:0.1s;">
+        <img referrerpolicy="no-referrer" src="https://cdn.shopify.com/s/files/1/0428/5530/1271/collections/2025-collection-adults-banner.jpg?v=1742828200" alt="DIY for Adults" loading="lazy">
+        <div class="category-card-overlay"><span>DIY for Adults</span></div>
+      </a>
+      <a href="#" class="category-card fade-up" style="transition-delay:0.15s;">
+        <img referrerpolicy="no-referrer" src="https://cdn.shopify.com/s/files/1/0428/5530/1271/collections/SkyGoodies-home-banner-homedecor-vertical.jpg?v=1653296152" alt="Home Decor" loading="lazy">
+        <div class="category-card-overlay"><span>Home Decor</span></div>
+      </a>
+      <a href="#" class="category-card fade-up" style="transition-delay:0.2s;">
+        <img referrerpolicy="no-referrer" src="https://cdn.shopify.com/s/files/1/0428/5530/1271/collections/2025-fairy-lights-lamps-collection.jpg?v=1741601713" alt="Fairy Lights" loading="lazy">
+        <div class="category-card-overlay"><span>Fairy Lights</span></div>
+      </a>
+      <a href="#" class="category-card fade-up" style="transition-delay:0.25s;">
+        <img referrerpolicy="no-referrer" src="https://cdn.shopify.com/s/files/1/0428/5530/1271/collections/Sky-Goodies-Be-Good-This-Year-Wall-Calendar-2024-02.jpg?v=1762954753" alt="Calendars" loading="lazy">
+        <span class="category-badge" style="background:#2a7d5f;">New</span>
+        <div class="category-card-overlay"><span>Calendars</span></div>
+      </a>
+      <a href="#" class="category-card fade-up" style="transition-delay:0.3s;">
+        <img referrerpolicy="no-referrer" src="https://cdn.shopify.com/s/files/1/0428/5530/1271/collections/Sky-Goodies-DIY-Paper-Banana-Trees-06.jpg?v=1741609615" alt="Pooja Decor" loading="lazy">
+        <div class="category-card-overlay"><span>Pooja Decor</span></div>
+      </a>
+      <a href="#" class="category-card fade-up" style="transition-delay:0.35s;">
+        <img referrerpolicy="no-referrer" src="https://cdn.shopify.com/s/files/1/0428/5530/1271/collections/matchbooks_home_page_offer_banner_copy_b5267a4d-84aa-4662-8adb-bba2b6514c63.jpg?v=1742904313" alt="Notebooks" loading="lazy">
+        <div class="category-card-overlay"><span>Notebooks</span></div>
+      </a>
+    </div>
+  </div>
+</section>
+
+<!-- Wavy Divider -->
+<div class="wavy-divider">
+  <svg viewBox="0 0 1440 60" preserveAspectRatio="none" fill="#FAF6F0"><path d="M0,30 C360,60 720,0 1080,30 C1260,45 1380,40 1440,35 L1440,60 L0,60 Z"/></svg>
+</div>
+
+<!-- ===== 6. BESTSELLERS ===== -->
+<section class="bestsellers">
+  <div class="container">
+    <div class="bestsellers-header fade-up">
+      <div>
+        <p class="eyebrow">Crowd favourites</p>
+        <h2>Loved by thousands</h2>
+        <p class="subtext">The kits people keep coming back for, and keep gifting to everyone they know.</p>
+      </div>
+      <a href="#" class="view-all">View all <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg></a>
+    </div>
+
+    <div class="products-scroll">
+      <!-- Product 1 -->
+      <div class="product-card fade-up">
+        <div class="product-card-image">
+          <img referrerpolicy="no-referrer" src="https://cdn.shopify.com/s/files/1/0428/5530/1271/files/Sky-Goodies-Mini-Lantern-Fairy-Lights-Paper-Lamp-01.jpg?v=1758263524" alt="Paper Mini Lanterns" loading="lazy">
+          <span class="product-sale-badge">30% off</span>
+        </div>
+        <div class="product-card-body">
+          <div class="product-pills">
+            <span class="product-pill">45 min</span>
+            <span class="product-pill">Age 6+</span>
+            <span class="product-pill">Easy</span>
+          </div>
+          <p class="product-type">DIY Kit</p>
+          <h3 class="product-title">Paper Mini Lanterns</h3>
+          <div class="product-price">
+            <span class="current">Rs.699</span>
+            <span class="compare">Rs.999</span>
+          </div>
+          <button class="product-atc">Add to Cart</button>
+        </div>
+      </div>
+
+      <!-- Product 2 -->
+      <div class="product-card fade-up" style="transition-delay:0.08s;">
+        <div class="product-card-image">
+          <img referrerpolicy="no-referrer" src="https://cdn.shopify.com/s/files/1/0428/5530/1271/products/Sky_Goodies_Flower_Lights_WHITE_3000_04.jpg?v=1626542655" alt="Paper Flower Bouquet" loading="lazy">
+          <span class="product-sale-badge">25% off</span>
+        </div>
+        <div class="product-card-body">
+          <div class="product-pills">
+            <span class="product-pill">90 min</span>
+            <span class="product-pill">Age 10+</span>
+            <span class="product-pill">Medium</span>
+          </div>
+          <p class="product-type">DIY Kit</p>
+          <h3 class="product-title">Paper Flower Bouquet</h3>
+          <div class="product-price">
+            <span class="current">Rs.599</span>
+            <span class="compare">Rs.799</span>
+          </div>
+          <button class="product-atc">Add to Cart</button>
+        </div>
+      </div>
+
+      <!-- Product 3 -->
+      <div class="product-card fade-up" style="transition-delay:0.16s;">
+        <div class="product-card-image">
+          <img referrerpolicy="no-referrer" src="https://cdn.shopify.com/s/files/1/0428/5530/1271/products/Sky-Goodies-DIY-animals-BOX-setof12-5.jpg?v=1624790414" alt="Paper Safari Animals" loading="lazy">
+        </div>
+        <div class="product-card-body">
+          <div class="product-pills">
+            <span class="product-pill">30 min</span>
+            <span class="product-pill">Age 4+</span>
+            <span class="product-pill">Easy</span>
+          </div>
+          <p class="product-type">Kids Kit</p>
+          <h3 class="product-title">Paper Safari Animals</h3>
+          <div class="product-price">
+            <span class="current">Rs.449</span>
+          </div>
+          <button class="product-atc">Add to Cart</button>
+        </div>
+      </div>
+
+      <!-- Product 4 -->
+      <div class="product-card fade-up" style="transition-delay:0.24s;">
+        <div class="product-card-image">
+          <img referrerpolicy="no-referrer" src="https://cdn.shopify.com/s/files/1/0428/5530/1271/files/Sky-Goodies-Typewriter-Calendar-Colourful-2026-01.jpg?v=1767328758" alt="Desktop Calendar 2025" loading="lazy">
+          <span class="product-sale-badge new-badge">New</span>
+        </div>
+        <div class="product-card-body">
+          <div class="product-pills">
+            <span class="product-pill">15 min</span>
+            <span class="product-pill">All ages</span>
+          </div>
+          <p class="product-type">Stationery</p>
+          <h3 class="product-title">Desktop Calendar 2025</h3>
+          <div class="product-price">
+            <span class="current">Rs.399</span>
+          </div>
+          <button class="product-atc">Add to Cart</button>
+        </div>
+      </div>
+
+      <!-- Product 5 -->
+      <div class="product-card fade-up" style="transition-delay:0.32s;">
+        <div class="product-card-image">
+          <img referrerpolicy="no-referrer" src="https://cdn.shopify.com/s/files/1/0428/5530/1271/products/3000-dinoboxset.jpg?v=1650606537" alt="Paper Dinosaur Kit" loading="lazy">
+          <span class="product-sale-badge">30% off</span>
+        </div>
+        <div class="product-card-body">
+          <div class="product-pills">
+            <span class="product-pill">60 min</span>
+            <span class="product-pill">Age 5+</span>
+            <span class="product-pill">Easy</span>
+          </div>
+          <p class="product-type">Kids Kit</p>
+          <h3 class="product-title">Paper Dinosaur Kit</h3>
+          <div class="product-price">
+            <span class="current">Rs.349</span>
+            <span class="compare">Rs.499</span>
+          </div>
+          <button class="product-atc">Add to Cart</button>
+        </div>
+      </div>
+
+      <!-- Product 6 -->
+      <div class="product-card fade-up" style="transition-delay:0.4s;">
+        <div class="product-card-image">
+          <img referrerpolicy="no-referrer" src="https://cdn.shopify.com/s/files/1/0428/5530/1271/products/3000-Sky_Goodies_Paper_Hot_Air_Balloon_Fair_Lights_3.jpg?v=1614786422" alt="Fairy Light Lanterns" loading="lazy">
+        </div>
+        <div class="product-card-body">
+          <div class="product-pills">
+            <span class="product-pill">45 min</span>
+            <span class="product-pill">Age 8+</span>
+            <span class="product-pill">Medium</span>
+          </div>
+          <p class="product-type">DIY Kit</p>
+          <h3 class="product-title">Fairy Light Lanterns</h3>
+          <div class="product-price">
+            <span class="current">Rs.799</span>
+          </div>
+          <button class="product-atc">Add to Cart</button>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Wavy Divider (inverted) -->
+<div class="wavy-divider">
+  <svg viewBox="0 0 1440 60" preserveAspectRatio="none" fill="#FAF6F0"><path d="M0,0 L0,30 C360,0 720,60 1080,30 C1260,15 1380,20 1440,25 L1440,0 Z"/></svg>
+</div>
+
+<!-- ===== 7. SHOPPABLE VIDEO ===== -->
+<section class="shoppable-video">
+  <div class="container">
+    <div class="section-header fade-up">
+      <p class="eyebrow" style="color:#E8845A;">See them in action</p>
+      <h2>Watch. Make. Love.</h2>
+      <p class="subtext">See our kits come alive</p>
+    </div>
+
+    <div class="video-carousel">
+      <div class="video-thumb fade-up" onclick="openVideoModal(0)">
+        <div class="video-thumb-bg" style="background:linear-gradient(135deg,#E8845A 0%,#c27d3a 100%);width:100%;height:100%;"></div>
+        <div class="video-thumb-overlay">
+          <div class="video-play-btn">
+            <svg viewBox="0 0 24 24"><polygon points="8,5 19,12 8,19"/></svg>
+          </div>
+          <p class="video-thumb-title">Paper Lanterns</p>
+          <span class="video-thumb-price">Rs.699</span>
+        </div>
+      </div>
+
+      <div class="video-thumb fade-up" style="transition-delay:0.08s;" onclick="openVideoModal(1)">
+        <div class="video-thumb-bg" style="background:linear-gradient(135deg,#c27d3a 0%,#8a6540 100%);width:100%;height:100%;"></div>
+        <div class="video-thumb-overlay">
+          <div class="video-play-btn">
+            <svg viewBox="0 0 24 24"><polygon points="8,5 19,12 8,19"/></svg>
+          </div>
+          <p class="video-thumb-title">Flower Bouquet</p>
+          <span class="video-thumb-price">Rs.599</span>
+        </div>
+      </div>
+
+      <div class="video-thumb fade-up" style="transition-delay:0.16s;" onclick="openVideoModal(2)">
+        <div class="video-thumb-bg" style="background:linear-gradient(135deg,#5a8a6a 0%,#3a6a4a 100%);width:100%;height:100%;"></div>
+        <div class="video-thumb-overlay">
+          <div class="video-play-btn">
+            <svg viewBox="0 0 24 24"><polygon points="8,5 19,12 8,19"/></svg>
+          </div>
+          <p class="video-thumb-title">Safari Animals</p>
+          <span class="video-thumb-price">Rs.449</span>
+        </div>
+      </div>
+
+      <div class="video-thumb fade-up" style="transition-delay:0.24s;" onclick="openVideoModal(3)">
+        <div class="video-thumb-bg" style="background:linear-gradient(135deg,#8a6540 0%,#5a4530 100%);width:100%;height:100%;"></div>
+        <div class="video-thumb-overlay">
+          <div class="video-play-btn">
+            <svg viewBox="0 0 24 24"><polygon points="8,5 19,12 8,19"/></svg>
+          </div>
+          <p class="video-thumb-title">Dino Kit</p>
+          <span class="video-thumb-price">Rs.349</span>
+        </div>
+      </div>
+
+      <div class="video-thumb fade-up" style="transition-delay:0.32s;" onclick="openVideoModal(4)">
+        <div class="video-thumb-bg" style="background:linear-gradient(135deg,#d4a574 0%,#b8956a 100%);width:100%;height:100%;"></div>
+        <div class="video-thumb-overlay">
+          <div class="video-play-btn">
+            <svg viewBox="0 0 24 24"><polygon points="8,5 19,12 8,19"/></svg>
+          </div>
+          <p class="video-thumb-title">Fairy Lights</p>
+          <span class="video-thumb-price">Rs.799</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Video Modal -->
+<div class="video-modal" id="videoModal">
+  <button class="video-modal-close" onclick="closeVideoModal()">
+    <svg viewBox="0 0 24 24" fill="none" stroke-width="2"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+  </button>
+  <div class="video-modal-content">
+    <div class="video-modal-player">
+      <p class="placeholder-text">Video plays here<br>(embed or hosted video)</p>
+    </div>
+    <div class="video-modal-product" id="videoModalProduct">
+      <img referrerpolicy="no-referrer" src="https://cdn.shopify.com/s/files/1/0428/5530/1271/files/Sky-Goodies-Mini-Lantern-Fairy-Lights-Paper-Lamp-01.jpg?v=1758263524" alt="" id="videoModalImg">
+      <div class="video-modal-product-info">
+        <h3 class="product-title" id="videoModalTitle">Paper Mini Lanterns</h3>
+        <div class="product-price">
+          <span class="current" id="videoModalPrice">Rs.699</span>
+        </div>
+      </div>
+      <button class="video-modal-atc">Add to Cart</button>
+    </div>
+  </div>
+</div>
+
+<!-- ===== 8. KIDS SPLIT SECTION ===== -->
+<section class="kids-section split-section">
+  <div class="container">
+    <div class="fade-up">
+      <p class="eyebrow">For little makers</p>
+      <h2 style="margin-bottom:28px;">Busy hands, bright minds</h2>
+    </div>
+    <div style="display:grid;grid-template-columns:1fr;gap:32px;align-items:center;">
+      <div class="split-image fade-up" style="grid-row:1;">
+        <img referrerpolicy="no-referrer" src="https://cdn.shopify.com/s/files/1/0428/5530/1271/collections/Sky-Goodies-Kids-Craft-Kits-Category-Banner.jpg?v=1742904272" alt="Kids Craft Kits">
+        <div class="split-image-overlay">
+          <p>40+ activity kits for every kind of curious kid</p>
+          <a href="#">Shop kids' kits <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg></a>
+        </div>
+      </div>
+      <div class="split-products fade-up" style="transition-delay:0.1s;">
+        <div class="split-product-card">
+          <img referrerpolicy="no-referrer" src="https://cdn.shopify.com/s/files/1/0428/5530/1271/products/Sky-Goodies-DIY-animals-BOX-setof12-5.jpg?v=1624790414" alt="Paper Safari Animals" loading="lazy">
+          <div class="card-body">
+            <h3 class="product-title">Paper Safari Animals</h3>
+            <div class="product-price"><span class="current">Rs.449</span></div>
+          </div>
+        </div>
+        <div class="split-product-card">
+          <img referrerpolicy="no-referrer" src="https://cdn.shopify.com/s/files/1/0428/5530/1271/products/3000-dinoboxset.jpg?v=1650606537" alt="Paper Dinosaur Kit" loading="lazy">
+          <div class="card-body">
+            <h3 class="product-title">Paper Dinosaur Kit</h3>
+            <div class="product-price"><span class="current">Rs.349</span><span class="compare">Rs.499</span></div>
+          </div>
+        </div>
+        <div class="split-product-card">
+          <img referrerpolicy="no-referrer" src="https://cdn.shopify.com/s/files/1/0428/5530/1271/files/Sky-Goodies-Mini-Lantern-Fairy-Lights-Paper-Lamp-01.jpg?v=1758263524" alt="Paper Mini Lanterns" loading="lazy">
+          <div class="card-body">
+            <h3 class="product-title">Paper Mini Lanterns</h3>
+            <div class="product-price"><span class="current">Rs.699</span><span class="compare">Rs.999</span></div>
+          </div>
+        </div>
+        <div class="split-product-card">
+          <img referrerpolicy="no-referrer" src="https://cdn.shopify.com/s/files/1/0428/5530/1271/products/Sky_Goodies_Flower_Lights_WHITE_3000_04.jpg?v=1626542655" alt="Paper Flower Bouquet" loading="lazy">
+          <div class="card-body">
+            <h3 class="product-title">Paper Flower Bouquet</h3>
+            <div class="product-price"><span class="current">Rs.599</span><span class="compare">Rs.799</span></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<style>
+  @media (min-width: 768px) {
+    .kids-section .container > div:last-child {
+      grid-template-columns: 1fr 1fr;
+      display: grid;
+      gap: 48px;
+    }
+  }
+</style>
+
+<!-- Wavy Divider -->
+<div class="wavy-divider">
+  <svg viewBox="0 0 1440 60" preserveAspectRatio="none" fill="#FAF6F0"><path d="M0,30 C240,55 480,5 720,30 C960,55 1200,5 1440,30 L1440,60 L0,60 Z"/></svg>
+</div>
+
+<!-- ===== 9. HOW IT WORKS ===== -->
+<section class="how-it-works">
+  <div class="container">
+    <div class="section-header fade-up">
+      <p class="eyebrow">Simple as 1-2-3</p>
+      <h2>From flat pack to finished piece</h2>
+      <p class="subtext">Every kit comes with everything you need. No tools, no glue gun, no craft degree.</p>
+    </div>
+    <div class="steps-grid">
+      <div class="step-card fade-up">
+        <span class="step-number">01</span>
+        <h3>Open the kit</h3>
+        <p>Pre-cut, pre-scored, colour-coded pieces. Just pop them out.</p>
+      </div>
+      <div class="step-card fade-up" style="transition-delay:0.1s;">
+        <span class="step-number">02</span>
+        <h3>Follow along</h3>
+        <p>Scan the QR code for a step-by-step video tutorial.</p>
+      </div>
+      <div class="step-card fade-up" style="transition-delay:0.2s;">
+        <span class="step-number">03</span>
+        <h3>Show it off</h3>
+        <p>Display it, gift it, or keep it. It will look gorgeous either way.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Wavy Divider (inverted) -->
+<div class="wavy-divider">
+  <svg viewBox="0 0 1440 60" preserveAspectRatio="none" fill="#FAF6F0"><path d="M0,0 L0,30 C240,5 480,55 720,30 C960,5 1200,55 1440,30 L1440,0 Z"/></svg>
+</div>
+
+<!-- ===== 10. ADULTS SPLIT SECTION ===== -->
+<section class="adults-section">
+  <div class="container">
+    <div class="adults-grid">
+      <div class="adults-image fade-up split-image-wrap" style="order:2;">
+        <img referrerpolicy="no-referrer" src="https://cdn.shopify.com/s/files/1/0428/5530/1271/collections/2025-collection-adults-banner.jpg?v=1742828200" alt="Adult Craft Kits">
+      </div>
+      <div class="split-content fade-up" style="order:1;">
+        <p class="eyebrow">Slow making for fast lives</p>
+        <h2>Calm crafty time for grown-ups</h2>
+        <p class="subtext">Put your phone down for an hour. These kits give you something beautiful to make with your hands -- and a finished piece you will actually want to keep.</p>
+        <div style="margin-top:28px;">
+          <a href="#" class="btn btn-primary">Shop adult kits</a>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<style>
+  @media (min-width: 768px) {
+    .adults-section .split-content { order: 1 !important; }
+    .adults-section .split-image-wrap { order: 2 !important; }
+  }
+</style>
+
+<!-- ===== 11. GIFTING SECTION ===== -->
+<section class="gifting">
+  <div class="container">
+    <div class="section-header fade-up">
+      <h2>Good gifts. Better reactions.</h2>
+      <p class="subtext">Whether it is one gift or a hundred, we have you covered.</p>
+    </div>
+    <div class="gifting-grid">
+      <div class="gifting-card fade-up">
+        <div class="gifting-icon">
+          <svg viewBox="0 0 24 24"><path d="M20 12v10H4V12"/><path d="M2 7h20v5H2z"/><path d="M12 22V7"/><path d="M12 7H7.5a2.5 2.5 0 0 1 0-5C11 2 12 7 12 7z"/><path d="M12 7h4.5a2.5 2.5 0 0 0 0-5C13 2 12 7 12 7z"/></svg>
+        </div>
+        <h3>Kids' Return Gifts</h3>
+        <p>Unique, fun, and actually useful. No more plastic junk bags. Every kid gets a real activity to take home.</p>
+        <a href="#">Explore return gifts</a>
+      </div>
+      <div class="gifting-card fade-up" style="transition-delay:0.1s;">
+        <div class="gifting-icon">
+          <svg viewBox="0 0 24 24"><rect x="2" y="7" width="20" height="14" rx="2"/><path d="M16 7V5a4 4 0 0 0-8 0v2"/><path d="M12 11v4"/></svg>
+        </div>
+        <h3>Bulk &amp; Party Orders</h3>
+        <p>Planning a birthday, school event, or team activity? Get bulk pricing and customised packaging for any group size.</p>
+        <a href="#">Get a quote</a>
+      </div>
+      <div class="gifting-card fade-up" style="transition-delay:0.2s;">
+        <div class="gifting-icon">
+          <svg viewBox="0 0 24 24"><rect x="2" y="3" width="20" height="14" rx="2"/><path d="M8 21h8"/><path d="M12 17v4"/></svg>
+        </div>
+        <h3>Corporate &amp; Custom Gifts</h3>
+        <p>We have worked with Nat Geo, CRED, and more. Let us design a custom kit with your branding for your next event.</p>
+        <a href="#">Talk to us</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ===== 12. PRESS LOGOS ===== -->
+<section class="press-logos">
+  <div class="container">
+    <div class="section-header fade-up">
+      <p class="subtext" style="text-align:center;margin:0 auto;">Trusted by brands you know</p>
+    </div>
+    <div class="logos-row fade-up">
+      <span class="logo-item">Nat Geo</span>
+      <span class="logo-item">Hot Wheels</span>
+      <span class="logo-item">CRED</span>
+      <span class="logo-item">Barbie</span>
+      <span class="logo-item">Discovery</span>
+    </div>
+  </div>
+</section>
+
+<!-- Wavy Divider -->
+<div class="wavy-divider">
+  <svg viewBox="0 0 1440 60" preserveAspectRatio="none" fill="#FAF6F0"><path d="M0,30 C360,60 720,0 1080,30 C1260,45 1380,40 1440,35 L1440,60 L0,60 Z"/></svg>
+</div>
+
+<!-- ===== 13. TESTIMONIALS ===== -->
+<section class="testimonials">
+  <div class="container">
+    <div class="section-header fade-up">
+      <h2>What people are saying</h2>
+      <p class="subtext">Real reviews from real makers. No filters, no fluff.</p>
+    </div>
+    <div class="testimonials-grid">
+      <div class="testimonial-card fade-up">
+        <div class="testimonial-stars">
+          <svg viewBox="0 0 24 24"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
+          <svg viewBox="0 0 24 24"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
+          <svg viewBox="0 0 24 24"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
+          <svg viewBox="0 0 24 24"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
+          <svg viewBox="0 0 24 24"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
+        </div>
+        <p class="testimonial-text">"My daughter spent an entire Sunday afternoon building the safari animals. No screens, no nagging. Just focused, happy crafting. We have ordered three more kits since."</p>
+        <div class="testimonial-author">
+          <div class="testimonial-avatar">P</div>
+          <div class="testimonial-meta">
+            <p class="name">Priya Sharma <span class="verified-badge">Verified</span></p>
+            <p class="purchase">Purchased Paper Safari Animals</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="testimonial-card fade-up" style="transition-delay:0.1s;">
+        <div class="testimonial-stars">
+          <svg viewBox="0 0 24 24"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
+          <svg viewBox="0 0 24 24"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
+          <svg viewBox="0 0 24 24"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
+          <svg viewBox="0 0 24 24"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
+          <svg viewBox="0 0 24 24"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
+        </div>
+        <p class="testimonial-text">"I ordered 40 kits as return gifts for my son's birthday party. The kids were busy for an hour, the parents were amazed. Best party decision I ever made."</p>
+        <div class="testimonial-author">
+          <div class="testimonial-avatar">R</div>
+          <div class="testimonial-meta">
+            <p class="name">Rahul Mehta <span class="verified-badge">Verified</span></p>
+            <p class="purchase">Purchased Paper Mini Lanterns (Bulk)</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="testimonial-card fade-up" style="transition-delay:0.2s;">
+        <div class="testimonial-stars">
+          <svg viewBox="0 0 24 24"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
+          <svg viewBox="0 0 24 24"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
+          <svg viewBox="0 0 24 24"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
+          <svg viewBox="0 0 24 24"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
+          <svg viewBox="0 0 24 24"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
+        </div>
+        <p class="testimonial-text">"As a grown adult, I did not expect to enjoy a paper kit this much. The flower bouquet sits on my desk and everyone asks where I got it. Therapeutic and beautiful."</p>
+        <div class="testimonial-author">
+          <div class="testimonial-avatar">A</div>
+          <div class="testimonial-meta">
+            <p class="name">Ananya Iyer <span class="verified-badge">Verified</span></p>
+            <p class="purchase">Purchased Paper Flower Bouquet</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ===== 14. BRAND STORY ===== -->
+<section class="brand-story">
+  <div class="container fade-up">
+    <p class="eyebrow" style="color:#E8845A;">The Sky Goodies story</p>
+    <h2>Paper can spark something wonderful.</h2>
+    <p class="story-text">Sky Goodies started with a simple idea from Amit and Misha Gudibanda: what if paper could bring people together? What if a flat pack of beautifully designed pieces could turn an ordinary afternoon into something memorable? From a tiny studio in Mumbai, they have built a brand that has reached 50,000+ homes, partnered with National Geographic, Hot Wheels, and CRED, and proved that the simplest material can create the most meaningful experiences.</p>
+    <a href="#" class="btn btn-outline">Read the full story</a>
+  </div>
+</section>
+
+<!-- ===== 15. NEWSLETTER ===== -->
+<section class="newsletter">
+  <div class="container fade-up">
+    <h2>Join 50,000+ makers</h2>
+    <p class="subtext">New kits, maker tips, and the occasional discount. No spam, ever.</p>
+    <form class="newsletter-form" onsubmit="event.preventDefault();">
+      <input type="email" placeholder="Your email address" required>
+      <button type="submit" class="btn btn-primary">Subscribe</button>
+    </form>
+  </div>
+</section>
+
+<!-- ===== 16. FOOTER ===== -->
+<footer class="site-footer">
+  <div class="container">
+    <div class="footer-grid">
+      <div class="footer-brand">
+        <img referrerpolicy="no-referrer" src="https://in.skygoodies.co/cdn/shop/files/logo_hd_600x.jpg?v=1741613405" alt="Sky Goodies">
+        <p>Handcrafted paper kits designed in Mumbai. Making ordinary afternoons extraordinary since 2015.</p>
+        <div class="footer-social">
+          <a href="#" aria-label="Instagram">
+            <svg viewBox="0 0 24 24"><rect x="2" y="2" width="20" height="20" rx="5"/><circle cx="12" cy="12" r="5"/><circle cx="17.5" cy="6.5" r="1.5" fill="currentColor" stroke="none"/></svg>
+          </a>
+          <a href="#" aria-label="Facebook">
+            <svg viewBox="0 0 24 24"><path d="M18 2h-3a5 5 0 0 0-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 0 1 1-1h3z"/></svg>
+          </a>
+          <a href="#" aria-label="YouTube">
+            <svg viewBox="0 0 24 24"><path d="M22.54 6.42a2.78 2.78 0 0 0-1.94-2C18.88 4 12 4 12 4s-6.88 0-8.6.46a2.78 2.78 0 0 0-1.94 2A29 29 0 0 0 1 11.75a29 29 0 0 0 .46 5.33A2.78 2.78 0 0 0 3.4 19.1c1.72.46 8.6.46 8.6.46s6.88 0 8.6-.46a2.78 2.78 0 0 0 1.94-2 29 29 0 0 0 .46-5.35 29 29 0 0 0-.46-5.33z"/><polygon points="9.75 15.02 15.5 11.75 9.75 8.48 9.75 15.02" fill="currentColor" stroke="none"/></svg>
+          </a>
+          <a href="#" aria-label="Pinterest">
+            <svg viewBox="0 0 24 24"><path d="M12 2C6.48 2 2 6.48 2 12c0 4.42 2.87 8.17 6.84 9.49-.09-.87-.17-2.2.04-3.15.19-.86 1.22-5.18 1.22-5.18s-.31-.63-.31-1.56c0-1.46.85-2.55 1.9-2.55.9 0 1.33.67 1.33 1.48 0 .9-.57 2.25-.87 3.5-.25 1.05.53 1.91 1.56 1.91 1.88 0 3.32-1.98 3.32-4.84 0-2.53-1.82-4.3-4.42-4.3-3.01 0-4.78 2.26-4.78 4.59 0 .91.35 1.88.79 2.41.09.11.1.2.07.31-.08.33-.26 1.05-.29 1.19-.05.19-.15.23-.35.14-1.31-.61-2.13-2.53-2.13-4.07 0-3.31 2.41-6.35 6.94-6.35 3.65 0 6.48 2.6 6.48 6.07 0 3.62-2.28 6.54-5.46 6.54-1.07 0-2.07-.55-2.41-1.21l-.66 2.5c-.24.91-.88 2.05-1.31 2.74A10 10 0 0 0 12 22c5.52 0 10-4.48 10-10S17.52 2 12 2z"/></svg>
+          </a>
+        </div>
+      </div>
+      <div class="footer-col">
+        <h4>Shop</h4>
+        <a href="#">All Products</a>
+        <a href="#">Party Decor</a>
+        <a href="#">Kids Kits</a>
+        <a href="#">Adult Kits</a>
+        <a href="#">Fairy Lights</a>
+        <a href="#">Calendars</a>
+      </div>
+      <div class="footer-col">
+        <h4>Help</h4>
+        <a href="#">FAQs</a>
+        <a href="#">Shipping Info</a>
+        <a href="#">Returns &amp; Exchange</a>
+        <a href="#">Track Your Order</a>
+        <a href="#">Contact Us</a>
+      </div>
+      <div class="footer-col">
+        <h4>Company</h4>
+        <a href="#">Our Story</a>
+        <a href="#">Bulk Orders</a>
+        <a href="#">Corporate Gifts</a>
+        <a href="#">Press</a>
+        <a href="#">Careers</a>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      &copy; 2026 Sky Goodies. All rights reserved. Made with care in Mumbai, India.
+    </div>
+  </div>
+</footer>
+
+<!-- ===== 17. CART DRAWER ===== -->
+<div class="cart-overlay" id="cartOverlay" onclick="closeCart()"></div>
+<div class="cart-drawer" id="cartDrawer">
+  <div class="cart-drawer-header">
+    <h3>Your Cart (2)</h3>
+    <button class="cart-drawer-close" onclick="closeCart()">
+      <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#1E1B18" stroke-width="1.8"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+    </button>
+  </div>
+
+  <div class="cart-shipping-bar">
+    <p class="cart-shipping-text">You're <strong>Rs.201 away</strong> from free shipping!</p>
+    <div class="cart-progress-track">
+      <div class="cart-progress-fill"></div>
+    </div>
+  </div>
+
+  <div class="cart-items">
+    <div class="cart-item">
+      <div class="cart-item-image">
+        <img referrerpolicy="no-referrer" src="https://cdn.shopify.com/s/files/1/0428/5530/1271/files/Sky-Goodies-Mini-Lantern-Fairy-Lights-Paper-Lamp-01.jpg?v=1758263524" alt="Paper Mini Lanterns">
+      </div>
+      <div class="cart-item-details">
+        <p class="cart-item-title">Paper Mini Lanterns</p>
+        <p class="cart-item-variant">DIY Kit / Default</p>
+        <div class="cart-item-bottom">
+          <div class="qty-selector">
+            <button>-</button>
+            <span>1</span>
+            <button>+</button>
+          </div>
+          <span class="cart-item-price">Rs.699</span>
+        </div>
+        <p class="cart-item-remove">Remove</p>
+      </div>
+    </div>
+
+    <div class="cart-item">
+      <div class="cart-item-image">
+        <img referrerpolicy="no-referrer" src="https://cdn.shopify.com/s/files/1/0428/5530/1271/products/Sky-Goodies-DIY-animals-BOX-setof12-5.jpg?v=1624790414" alt="Paper Safari Animals">
+      </div>
+      <div class="cart-item-details">
+        <p class="cart-item-title">Paper Safari Animals</p>
+        <p class="cart-item-variant">Kids Kit / Default</p>
+        <div class="cart-item-bottom">
+          <div class="qty-selector">
+            <button>-</button>
+            <span>1</span>
+            <button>+</button>
+          </div>
+          <span class="cart-item-price">Rs.449</span>
+        </div>
+        <p class="cart-item-remove">Remove</p>
+      </div>
+    </div>
+  </div>
+
+  <div class="cart-upsell">
+    <h4>You may also like</h4>
+    <div class="upsell-scroll">
+      <div class="upsell-card">
+        <img referrerpolicy="no-referrer" src="https://cdn.shopify.com/s/files/1/0428/5530/1271/products/Sky_Goodies_Flower_Lights_WHITE_3000_04.jpg?v=1626542655" alt="Paper Flower Bouquet" loading="lazy">
+        <div class="upsell-card-body">
+          <p class="title">Paper Flower Bouquet</p>
+          <p class="price">Rs.599</p>
+          <button class="upsell-add">Add</button>
+        </div>
+      </div>
+      <div class="upsell-card">
+        <img referrerpolicy="no-referrer" src="https://cdn.shopify.com/s/files/1/0428/5530/1271/products/3000-dinoboxset.jpg?v=1650606537" alt="Paper Dinosaur Kit" loading="lazy">
+        <div class="upsell-card-body">
+          <p class="title">Paper Dinosaur Kit</p>
+          <p class="price">Rs.349</p>
+          <button class="upsell-add">Add</button>
+        </div>
+      </div>
+      <div class="upsell-card">
+        <img referrerpolicy="no-referrer" src="https://cdn.shopify.com/s/files/1/0428/5530/1271/products/3000-Sky_Goodies_Paper_Hot_Air_Balloon_Fair_Lights_3.jpg?v=1614786422" alt="Fairy Light Lanterns" loading="lazy">
+        <div class="upsell-card-body">
+          <p class="title">Fairy Light Lanterns</p>
+          <p class="price">Rs.799</p>
+          <button class="upsell-add">Add</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="cart-footer">
+    <div class="cart-subtotal">
+      <span class="label">Subtotal</span>
+      <span class="amount">Rs.1,148</span>
+    </div>
+    <p class="cart-tax-note">Taxes included. Shipping calculated at checkout.</p>
+    <button class="cart-checkout-btn">Checkout &mdash; Rs.1,148</button>
+  </div>
+</div>
+
+<!-- ===== SCRIPTS ===== -->
+<script>
+// ===== Intersection Observer for fade-up animations =====
+(function() {
+  const observer = new IntersectionObserver(function(entries) {
+    entries.forEach(function(entry) {
+      if (entry.isIntersecting) {
+        entry.target.classList.add('visible');
+        observer.unobserve(entry.target);
+      }
+    });
+  }, { threshold: 0.1, rootMargin: '0px 0px -40px 0px' });
+
+  document.querySelectorAll('.fade-up').forEach(function(el) {
+    observer.observe(el);
+  });
+})();
+
+// ===== Sticky header shadow on scroll =====
+(function() {
+  var header = document.getElementById('siteHeader');
+  window.addEventListener('scroll', function() {
+    if (window.scrollY > 10) {
+      header.classList.add('scrolled');
+    } else {
+      header.classList.remove('scrolled');
+    }
+  });
+})();
+
+// ===== Mega Menu =====
+var megaMenu = document.getElementById('megaMenu');
+var navShop = document.getElementById('navShop');
+var megaOpen = false;
+
+function toggleMegaMenu(e) {
+  if (e) e.preventDefault();
+  megaOpen = !megaOpen;
+  megaMenu.classList.toggle('open', megaOpen);
+  navShop.classList.toggle('active', megaOpen);
+}
+
+// Close mega menu on outside click
+document.addEventListener('click', function(e) {
+  if (megaOpen && !megaMenu.contains(e.target) && e.target !== navShop) {
+    megaOpen = false;
+    megaMenu.classList.remove('open');
+    navShop.classList.remove('active');
+  }
+});
+
+// Mega menu tab switching
+document.querySelectorAll('.mega-menu-tab').forEach(function(tab) {
+  tab.addEventListener('click', function() {
+    document.querySelectorAll('.mega-menu-tab').forEach(function(t) { t.classList.remove('active'); });
+    this.classList.add('active');
+  });
+});
+
+// ===== Mobile Nav =====
+var mobileNav = document.getElementById('mobileNav');
+var mobileNavOpen = false;
+
+function toggleMobileNav() {
+  mobileNavOpen = !mobileNavOpen;
+  mobileNav.classList.toggle('open', mobileNavOpen);
+  document.body.classList.toggle('no-scroll', mobileNavOpen);
+}
+
+// ===== Cart Drawer =====
+var cartDrawer = document.getElementById('cartDrawer');
+var cartOverlay = document.getElementById('cartOverlay');
+
+function openCart() {
+  cartDrawer.classList.add('open');
+  cartOverlay.classList.add('open');
+  document.body.classList.add('no-scroll');
+}
+
+function closeCart() {
+  cartDrawer.classList.remove('open');
+  cartOverlay.classList.remove('open');
+  document.body.classList.remove('no-scroll');
+}
+
+// ===== Shoppable Video Modal =====
+var videoModal = document.getElementById('videoModal');
+var videoProducts = [
+  { title: 'Paper Mini Lanterns', price: 'Rs.699', img: 'https://cdn.shopify.com/s/files/1/0428/5530/1271/files/Sky-Goodies-Mini-Lantern-Fairy-Lights-Paper-Lamp-01.jpg?v=1758263524' },
+  { title: 'Paper Flower Bouquet', price: 'Rs.599', img: 'https://cdn.shopify.com/s/files/1/0428/5530/1271/products/Sky_Goodies_Flower_Lights_WHITE_3000_04.jpg?v=1626542655' },
+  { title: 'Paper Safari Animals', price: 'Rs.449', img: 'https://cdn.shopify.com/s/files/1/0428/5530/1271/products/Sky-Goodies-DIY-animals-BOX-setof12-5.jpg?v=1624790414' },
+  { title: 'Paper Dinosaur Kit', price: 'Rs.349', img: 'https://cdn.shopify.com/s/files/1/0428/5530/1271/products/3000-dinoboxset.jpg?v=1650606537' },
+  { title: 'Fairy Light Lanterns', price: 'Rs.799', img: 'https://cdn.shopify.com/s/files/1/0428/5530/1271/products/3000-Sky_Goodies_Paper_Hot_Air_Balloon_Fair_Lights_3.jpg?v=1614786422' }
+];
+
+function openVideoModal(index) {
+  var product = videoProducts[index];
+  document.getElementById('videoModalImg').src = product.img;
+  document.getElementById('videoModalImg').alt = product.title;
+  document.getElementById('videoModalTitle').textContent = product.title;
+  document.getElementById('videoModalPrice').textContent = product.price;
+  videoModal.classList.add('open');
+  document.body.classList.add('no-scroll');
+}
+
+function closeVideoModal() {
+  videoModal.classList.remove('open');
+  document.body.classList.remove('no-scroll');
+}
+
+// Close video modal on overlay click
+videoModal.addEventListener('click', function(e) {
+  if (e.target === videoModal) {
+    closeVideoModal();
+  }
+});
+
+// Close modals on Escape key
+document.addEventListener('keydown', function(e) {
+  if (e.key === 'Escape') {
+    closeVideoModal();
+    closeCart();
+    if (megaOpen) {
+      megaOpen = false;
+      megaMenu.classList.remove('open');
+      navShop.classList.remove('active');
+    }
+    if (mobileNavOpen) {
+      toggleMobileNav();
+    }
+  }
+});
+
+// ===== Quantity selectors in cart =====
+document.querySelectorAll('.qty-selector').forEach(function(selector) {
+  var minus = selector.querySelector('button:first-child');
+  var plus = selector.querySelector('button:last-child');
+  var qty = selector.querySelector('span');
+
+  minus.addEventListener('click', function() {
+    var val = parseInt(qty.textContent);
+    if (val > 1) qty.textContent = val - 1;
+  });
+
+  plus.addEventListener('click', function() {
+    var val = parseInt(qty.textContent);
+    qty.textContent = val + 1;
+  });
+});
+</script>
+
+</body>
+</html>

@@ -1,0 +1,105 @@
+<section class="sg-section sg-kids" style="background:{{ section.settings.background_color }}; padding-top:{{ section.settings.padding_top }}px; padding-bottom:{{ section.settings.padding_bottom }}px;">
+  <div class="sg-container">
+    <div class="sg-section-header sg-text-center">
+      <span class="sg-eyebrow">{{ section.settings.eyebrow }}</span>
+      <h2 class="sg-h2">{{ section.settings.heading }}</h2>
+      <p class="sg-subheading">{{ section.settings.subheading }}</p>
+    </div>
+    <div class="sg-products-grid sg-cols-4">
+      {% if section.settings.collection != blank %}
+        {% for product in section.settings.collection.products limit: section.settings.product_count %}
+          {% render 'sg-product-card', product: product %}
+        {% endfor %}
+      {% endif %}
+    </div>
+    {% if section.settings.link_url != blank %}
+      <div class="sg-section-footer-link">
+        <a href="{{ section.settings.link_url }}" class="sg-link-arrow">{{ section.settings.link_text }}</a>
+      </div>
+    {% endif %}
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "SG Kids Collection",
+  "tag": "section",
+  "class": "sg-kids-section",
+  "settings": [
+    {
+      "type": "text",
+      "id": "eyebrow",
+      "label": "Eyebrow",
+      "default": "FOR LITTLE MAKERS"
+    },
+    {
+      "type": "text",
+      "id": "heading",
+      "label": "Heading",
+      "default": "For little hands with big ideas"
+    },
+    {
+      "type": "textarea",
+      "id": "subheading",
+      "label": "Subheading",
+      "default": "Kits curated for curious kids — no screens, no stress, just craft."
+    },
+    {
+      "type": "collection",
+      "id": "collection",
+      "label": "Collection"
+    },
+    {
+      "type": "range",
+      "id": "product_count",
+      "label": "Number of products",
+      "min": 2,
+      "max": 8,
+      "step": 1,
+      "default": 4
+    },
+    {
+      "type": "text",
+      "id": "link_text",
+      "label": "Link text",
+      "default": "Shop all kids kits →"
+    },
+    {
+      "type": "url",
+      "id": "link_url",
+      "label": "Link URL"
+    },
+    {
+      "type": "range",
+      "id": "padding_top",
+      "label": "Padding top",
+      "min": 0,
+      "max": 100,
+      "step": 4,
+      "unit": "px",
+      "default": 40
+    },
+    {
+      "type": "range",
+      "id": "padding_bottom",
+      "label": "Padding bottom",
+      "min": 0,
+      "max": 100,
+      "step": 4,
+      "unit": "px",
+      "default": 40
+    },
+    {
+      "type": "color",
+      "id": "background_color",
+      "label": "Background color",
+      "default": "#FAF6F0"
+    }
+  ],
+  "presets": [
+    {
+      "name": "Kids collection"
+    }
+  ]
+}
+{% endschema %}

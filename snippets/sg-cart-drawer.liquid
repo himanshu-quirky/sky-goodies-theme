@@ -1,0 +1,120 @@
+<div class="sg-cart-overlay" id="sgCartOverlay" data-sg-cart-toggle></div>
+<aside class="sg-cart-drawer" id="sgCartDrawer" aria-hidden="true">
+  <header class="sg-cart-header">
+    <h2 class="sg-cart-title">Your cart ({{ cart.item_count }})</h2>
+    <button class="sg-cart-close" data-sg-cart-toggle aria-label="Close cart">×</button>
+  </header>
+
+  {% assign threshold = 100000 %}
+  {% assign progress_pct = cart.total_price | times: 100 | divided_by: threshold %}
+  {% if progress_pct > 100 %}{% assign progress_pct = 100 %}{% endif %}
+  <div class="sg-cart-progress-wrap">
+    {% if cart.total_price < threshold %}
+      {% assign remaining = threshold | minus: cart.total_price | divided_by: 100 %}
+      <p class="sg-cart-progress-text">You're <strong>Rs.{{ remaining }}</strong> away from free shipping!</p>
+    {% else %}
+      <p class="sg-cart-progress-text">Congratulations! You've unlocked free shipping.</p>
+    {% endif %}
+    <div class="sg-cart-progress-track">
+      <div class="sg-cart-progress-fill" style="width:{{ progress_pct }}%"></div>
+    </div>
+  </div>
+
+  <div class="sg-cart-items">
+    {% if cart.item_count > 0 %}
+      {% for item in cart.items %}
+        <div class="sg-cart-item" data-line-key="{{ item.key }}">
+          <a href="{{ item.url }}" class="sg-cart-item-img">
+            {% if item.image %}<img src="{{ item.image | image_url: width: 120 }}" alt="" referrerpolicy="no-referrer">{% endif %}
+          </a>
+          <div class="sg-cart-item-info">
+            <a href="{{ item.url }}" class="sg-cart-item-title">{{ item.product.title }}</a>
+            {% unless item.variant.title contains 'Default' %}<p class="sg-cart-item-variant">{{ item.variant.title }}</p>{% endunless %}
+            <div class="sg-cart-item-bottom">
+              <div class="sg-qty-selector" data-line-key="{{ item.key }}">
+                <button data-qty-action="decrease" aria-label="Decrease">−</button>
+                <span>{{ item.quantity }}</span>
+                <button data-qty-action="increase" aria-label="Increase">+</button>
+              </div>
+              <span class="sg-cart-item-price">{{ item.final_line_price | money }}</span>
+            </div>
+            <button class="sg-cart-item-remove" data-line-key="{{ item.key }}">Remove</button>
+          </div>
+        </div>
+      {% endfor %}
+    {% else %}
+      <p class="sg-cart-empty">Your cart is empty.</p>
+    {% endif %}
+  </div>
+
+  {% assign upsell_collection = collections.featured | default: collections.all %}
+  {% if upsell_collection.products.size > 0 and cart.item_count > 0 %}
+    <div class="sg-cart-upsell">
+      <p class="sg-cart-upsell-title">You may also like</p>
+      <div class="sg-cart-upsell-scroll">
+        {% for product in upsell_collection.products limit: 3 %}
+          <div class="sg-cart-upsell-card">
+            <img src="{{ product.featured_image | image_url: width: 200 }}" alt="" referrerpolicy="no-referrer">
+            <p class="sg-cart-upsell-name">{{ product.title }}</p>
+            <p class="sg-cart-upsell-price">{{ product.price | money }}</p>
+            <form action="/cart/add" method="post">
+              <input type="hidden" name="id" value="{{ product.variants.first.id }}">
+              <button type="submit" class="sg-cart-upsell-add">Add</button>
+            </form>
+          </div>
+        {% endfor %}
+      </div>
+    </div>
+  {% endif %}
+
+  {% if cart.item_count > 0 %}
+    <footer class="sg-cart-footer">
+      <div class="sg-cart-subtotal">
+        <span>Subtotal</span>
+        <strong>{{ cart.total_price | money }}</strong>
+      </div>
+      <p class="sg-cart-tax-note">Taxes included. Shipping calculated at checkout.</p>
+      <a href="/checkout" class="sg-cart-checkout-btn">Checkout — {{ cart.total_price | money }}</a>
+    </footer>
+  {% endif %}
+</aside>
+
+<script>
+(function() {
+  var overlay = document.getElementById('sgCartOverlay');
+  var drawer = document.getElementById('sgCartDrawer');
+  function toggleCart(open) {
+    var isOpen = open === undefined ? !drawer.classList.contains('open') : open;
+    drawer.classList.toggle('open', isOpen);
+    overlay.classList.toggle('open', isOpen);
+    drawer.setAttribute('aria-hidden', !isOpen);
+    document.body.style.overflow = isOpen ? 'hidden' : '';
+  }
+  document.addEventListener('click', function(e) {
+    if (e.target.closest('[data-sg-cart-toggle]')) { e.preventDefault(); toggleCart(); }
+  });
+  document.addEventListener('keydown', function(e) { if (e.key === 'Escape') toggleCart(false); });
+
+  drawer.addEventListener('click', function(e) {
+    var qtyBtn = e.target.closest('[data-qty-action]');
+    var removeBtn = e.target.closest('.sg-cart-item-remove');
+    if (qtyBtn) {
+      var line = qtyBtn.closest('[data-line-key]');
+      var key = line.dataset.lineKey;
+      var current = parseInt(line.querySelector('.sg-qty-selector span').textContent, 10);
+      var next = qtyBtn.dataset.qtyAction === 'increase' ? current + 1 : Math.max(0, current - 1);
+      updateLine(key, next);
+    }
+    if (removeBtn) {
+      updateLine(removeBtn.dataset.lineKey, 0);
+    }
+  });
+  function updateLine(key, qty) {
+    fetch('/cart/change.js', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ id: key, quantity: qty })
+    }).then(function() { location.reload(); });
+  }
+})();
+</script>
