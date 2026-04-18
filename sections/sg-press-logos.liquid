@@ -1,31 +1,20 @@
-{{ 'sg-theme.css' | asset_url | stylesheet_tag }}
-
-{%- style -%}
-  .sg-section-{{ section.id }}-pad {
-    padding-top: {{ section.settings.padding_top | times: 0.5 | round: 0 }}px;
-    padding-bottom: {{ section.settings.padding_bottom | times: 0.5 | round: 0 }}px;
-  }
-  @media screen and (min-width: 750px) {
-    .sg-section-{{ section.id }}-pad {
-      padding-top: {{ section.settings.padding_top }}px;
-      padding-bottom: {{ section.settings.padding_bottom }}px;
-    }
-  }
-{%- endstyle -%}
-
-<section class="sg-section sg-press sg-section-{{ section.id }}-pad" style="background: {{ section.settings.bg_color }};" {{ section.shopify_attributes }}>
-  <div class="sg-press__inner">
-    {%- if section.settings.label != blank -%}
-      <div class="sg-press__label">{{ section.settings.label }}</div>
-    {%- endif -%}
-    <div class="sg-press__logos">
-      {%- for block in section.blocks -%}
-        {%- if block.settings.logo != blank -%}
-          <img class="sg-press__logo" src="{{ block.settings.logo | image_url: width: 200 }}" alt="{{ block.settings.name | escape }}" height="32" loading="lazy" {{ block.shopify_attributes }}>
-        {%- else -%}
-          <div class="sg-placeholder" style="width:120px;height:32px;border-radius:4px;flex-shrink:0;opacity:.4;" {{ block.shopify_attributes }}>{{ block.settings.name }}</div>
-        {%- endif -%}
-      {%- endfor -%}
+<section class="sg-section sg-press" style="background:{{ section.settings.background_color }}; padding-top:{{ section.settings.padding_top }}px; padding-bottom:{{ section.settings.padding_bottom }}px;">
+  <div class="sg-container">
+    <p class="sg-press-eyebrow">{{ section.settings.eyebrow }}</p>
+  </div>
+  <div class="sg-press-marquee">
+    <div class="sg-marquee-track" style="animation-duration:{{ section.settings.scroll_speed }}s;">
+      {% for i in (1..2) %}
+        {% for block in section.blocks %}
+          <div class="sg-press-item" {{ block.shopify_attributes }}>
+            {% if block.settings.logo_image != blank %}
+              <img src="{{ block.settings.logo_image | image_url: width: 240 }}" alt="{{ block.settings.logo_text | escape }}" loading="lazy" referrerpolicy="no-referrer">
+            {% else %}
+              <span class="sg-press-text sg-press-text--{{ block.settings.logo_weight }}">{{ block.settings.logo_text }}</span>
+            {% endif %}
+          </div>
+        {% endfor %}
+      {% endfor %}
     </div>
   </div>
 </section>
@@ -33,18 +22,14 @@
 {% schema %}
 {
   "name": "SG Press Logos",
+  "tag": "section",
+  "class": "sg-section-wrapper",
   "settings": [
     {
       "type": "text",
-      "id": "label",
-      "label": "Label",
-      "default": "Trusted by brands you know"
-    },
-    {
-      "type": "color",
-      "id": "bg_color",
-      "label": "Background Color",
-      "default": "#FDFCFA"
+      "id": "eyebrow",
+      "label": "Eyebrow text",
+      "default": "The good company we keep"
     },
     {
       "type": "range",
@@ -53,8 +38,8 @@
       "max": 100,
       "step": 4,
       "unit": "px",
-      "label": "Padding Top",
-      "default": 48
+      "label": "Padding top",
+      "default": 32
     },
     {
       "type": "range",
@@ -63,25 +48,54 @@
       "max": 100,
       "step": 4,
       "unit": "px",
-      "label": "Padding Bottom",
-      "default": 48
+      "label": "Padding bottom",
+      "default": 32
+    },
+    {
+      "type": "color",
+      "id": "background_color",
+      "label": "Background color",
+      "default": "#FDFCFA"
+    },
+    {
+      "type": "range",
+      "id": "scroll_speed",
+      "min": 20,
+      "max": 60,
+      "step": 5,
+      "unit": "s",
+      "label": "Scroll speed (seconds per loop)",
+      "default": 40
     }
   ],
   "blocks": [
     {
       "type": "logo",
-      "name": "Brand Logo",
+      "name": "Logo",
+      "limit": 12,
       "settings": [
         {
           "type": "image_picker",
-          "id": "logo",
-          "label": "Logo Image"
+          "id": "logo_image",
+          "label": "Logo image (optional)"
         },
         {
           "type": "text",
-          "id": "name",
-          "label": "Brand Name",
-          "default": "Brand"
+          "id": "logo_text",
+          "label": "Logo text (fallback)",
+          "default": "NAT GEO"
+        },
+        {
+          "type": "select",
+          "id": "logo_weight",
+          "label": "Text style",
+          "options": [
+            { "value": "regular", "label": "Regular" },
+            { "value": "bold", "label": "Bold" },
+            { "value": "italic", "label": "Italic" },
+            { "value": "serif", "label": "Serif" }
+          ],
+          "default": "regular"
         }
       ]
     }
@@ -90,11 +104,14 @@
     {
       "name": "SG Press Logos",
       "blocks": [
-        { "type": "logo", "settings": { "name": "Nat Geo" } },
-        { "type": "logo", "settings": { "name": "Hot Wheels" } },
-        { "type": "logo", "settings": { "name": "CRED" } },
-        { "type": "logo", "settings": { "name": "Barbie" } },
-        { "type": "logo", "settings": { "name": "Discovery" } }
+        { "type": "logo", "settings": { "logo_text": "NAT GEO", "logo_weight": "bold" } },
+        { "type": "logo", "settings": { "logo_text": "Hot Wheels", "logo_weight": "italic" } },
+        { "type": "logo", "settings": { "logo_text": "CRED", "logo_weight": "regular" } },
+        { "type": "logo", "settings": { "logo_text": "Barbie", "logo_weight": "serif" } },
+        { "type": "logo", "settings": { "logo_text": "DISCOVERY", "logo_weight": "bold" } },
+        { "type": "logo", "settings": { "logo_text": "UNESCO", "logo_weight": "regular" } },
+        { "type": "logo", "settings": { "logo_text": "TATA", "logo_weight": "serif" } },
+        { "type": "logo", "settings": { "logo_text": "NCPEDP", "logo_weight": "bold" } }
       ]
     }
   ]

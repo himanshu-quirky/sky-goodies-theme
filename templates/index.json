@@ -1,463 +1,130 @@
-/*
- * ------------------------------------------------------------
- * IMPORTANT: The contents of this file are auto-generated.
- *
- * This file may be updated by the Shopify admin theme editor
- * or related systems. Please exercise caution as any changes
- * made to this file may be overwritten.
- * ------------------------------------------------------------
- */
 {
   "sections": {
-    "hero": {
-      "type": "sg-hero",
-      "settings": {
-        "image": "shopify://shop_images/BOGO-New-website-2025-home_desktop_horizontal_banner_copy.jpg",
-        "collection": "",
-        "image_position": "center center",
-        "eyebrow": "Handcrafted Paper Kits",
-        "heading": "Simple paper. Real joy.",
-        "subheading": "Pre-cut, easy-to-make craft kits designed to bring families together and fill homes with warmth.",
-        "button_text": "Explore the collection",
-        "button_link": "shopify://collections/all",
-        "padding_top": 0,
-        "padding_bottom": 0
-      }
-    },
-    "trust_strip": {
-      "type": "sg-trust-strip",
+    "sg_announcement": {
+      "type": "sg-announcement",
       "blocks": {
-        "trust_1": {
-          "type": "item",
-          "settings": {
-            "icon": "shield",
-            "text": "<p><strong>50,000+</strong> happy makers</p>"
-          }
-        },
-        "trust_2": {
-          "type": "item",
-          "settings": {
-            "icon": "pin",
-            "text": "<p><strong>Made in</strong> Mumbai, India</p>"
-          }
-        },
-        "trust_3": {
-          "type": "item",
-          "settings": {
-            "icon": "check",
-            "text": "<p><strong>NID-designed</strong> craft kits</p>"
-          }
-        },
-        "trust_4": {
-          "type": "item",
-          "settings": {
-            "icon": "leaf",
-            "text": "<p><strong>Eco-friendly</strong> & biodegradable</p>"
-          }
-        },
-        "trust_5": {
-          "type": "item",
-          "settings": {
-            "icon": "truck",
-            "text": "<p><strong>Free shipping</strong> over Rs.1,000</p>"
-          }
-        }
+        "msg-1": { "type": "message", "settings": { "text": "<p><strong>Free shipping</strong> on orders above Rs.1,000</p>" } },
+        "msg-2": { "type": "message", "settings": { "text": "<p>Handcrafted paper kits, <strong>made in India</strong></p>" } },
+        "msg-3": { "type": "message", "settings": { "text": "<p><strong>50,000+</strong> happy makers and counting</p>" } },
+        "msg-4": { "type": "message", "settings": { "text": "<p>Eco-friendly &amp; <strong>biodegradable</strong> materials</p>" } }
       },
-      "block_order": [
-        "trust_1",
-        "trust_2",
-        "trust_3",
-        "trust_4",
-        "trust_5"
-      ],
-      "settings": {
-        "bg_color": "#fdfcfa"
-      }
+      "block_order": ["msg-1", "msg-2", "msg-3", "msg-4"],
+      "settings": {}
     },
-    "categories": {
+    "sg_hero": {
+      "type": "sg-hero",
+      "blocks": {
+        "slide-1": { "type": "slide", "settings": { "eyebrow": "Handcrafted Paper Kits", "heading": "Simple paper. Real joy.", "subheading": "Pre-cut, easy-to-make craft kits designed to bring families together.", "button_text": "Explore the collection", "button_link": "shopify://collections/all" } },
+        "slide-2": { "type": "slide", "settings": { "eyebrow": "For Little Makers", "heading": "Busy hands, bright minds.", "subheading": "Activity kits for ages 4 to 12.", "button_text": "Shop kids' kits", "button_link": "shopify://collections/thoughtful-gifts-for-kids" } },
+        "slide-3": { "type": "slide", "settings": { "eyebrow": "Slow making for fast lives", "heading": "Calm crafty time for grown-ups.", "subheading": "Detail-rich paper kits, no skills required.", "button_text": "Shop adult kits", "button_link": "shopify://collections/quirky-gifts-for-adults" } }
+      },
+      "block_order": ["slide-1", "slide-2", "slide-3"],
+      "settings": {}
+    },
+    "sg_categories": {
       "type": "sg-categories",
       "blocks": {
-        "cat_1": {
-          "type": "category",
-          "settings": {
-            "collection": "",
-            "title": "Party Decor",
-            "link": "shopify://collections/paper-party-decor"
-          }
-        },
-        "cat_2": {
-          "type": "category",
-          "settings": {
-            "collection": "",
-            "title": "Kids Kits",
-            "link": "shopify://collections/thoughtful-gifts-for-kids"
-          }
-        },
-        "cat_3": {
-          "type": "category",
-          "settings": {
-            "collection": "",
-            "title": "DIY for Adults",
-            "link": "shopify://collections/quirky-gifts-for-adults"
-          }
-        },
-        "cat_4": {
-          "type": "category",
-          "settings": {
-            "collection": "",
-            "title": "Home Decor",
-            "link": "shopify://collections/home-decor-lighting"
-          }
-        },
-        "cat_5": {
-          "type": "category",
-          "settings": {
-            "collection": "",
-            "title": "Fairy Lights",
-            "link": "shopify://collections/fairy-lights-and-lamps"
-          }
-        },
-        "cat_6": {
-          "type": "category",
-          "settings": {
-            "collection": "",
-            "title": "Calendars",
-            "link": "shopify://collections/2025-calendars"
-          }
-        },
-        "cat_7": {
-          "type": "category",
-          "settings": {
-            "collection": "",
-            "title": "Pooja Decor",
-            "link": "shopify://collections/ganpati-festival-eco-friendly-collection"
-          }
-        },
-        "cat_8": {
-          "type": "category",
-          "settings": {
-            "collection": "",
-            "title": "Notebooks",
-            "link": "shopify://collections/matchbook-notebooks"
-          }
-        }
+        "cat-1": { "type": "category", "settings": { "title": "Lanterns" } },
+        "cat-2": { "type": "category", "settings": { "title": "Fairy Lights" } },
+        "cat-3": { "type": "category", "settings": { "title": "Calendars" } },
+        "cat-4": { "type": "category", "settings": { "title": "Party Decor" } },
+        "cat-5": { "type": "category", "settings": { "title": "Animals" } },
+        "cat-6": { "type": "category", "settings": { "title": "Dinosaurs" } },
+        "cat-7": { "type": "category", "settings": { "title": "Flowers" } },
+        "cat-8": { "type": "category", "settings": { "title": "Ganpati" } }
       },
-      "block_order": [
-        "cat_1",
-        "cat_2",
-        "cat_3",
-        "cat_4",
-        "cat_5",
-        "cat_6",
-        "cat_7",
-        "cat_8"
-      ],
-      "settings": {
-        "heading": "Shop by category",
-        "bg_color": "#fdfcfa",
-        "padding_top": 48,
-        "padding_bottom": 40
-      }
+      "block_order": ["cat-1", "cat-2", "cat-3", "cat-4", "cat-5", "cat-6", "cat-7", "cat-8"],
+      "settings": {}
     },
-    "featured_products": {
+    "sg_featured_products": {
       "type": "sg-featured-products",
       "settings": {
         "heading": "Loved by thousands",
-        "subheading": "Our most popular kits, chosen by makers across India.",
-        "button_text": "View all",
-        "button_link": "shopify://collections/featured-collection",
-        "collection": "featured-collection",
-        "products_to_show": 6,
-        "bg_color": "#faf6f0",
-        "padding_top": 56,
-        "padding_bottom": 64
+        "collection": "featured-collection"
       }
     },
-    "kids_split": {
-      "type": "sg-split-collection",
-      "settings": {
-        "eyebrow": "For little makers",
-        "heading": "Busy hands, bright minds",
-        "subheading": "Paper kits that turn a quiet afternoon into something they made themselves. Ages 4 to 12.",
-        "image_heading": "40+ activity kits for every kind of curious kid",
-        "image_link_text": "Shop kids' kits",
-        "image_link": "shopify://collections/thoughtful-gifts-for-kids",
-        "collection": "thoughtful-gifts-for-kids",
-        "products_to_show": 4,
-        "flip_layout": false,
-        "bg_color": "#fdfcfa",
-        "padding_top": 64,
-        "padding_bottom": 64
-      }
-    },
-    "adults_split": {
-      "type": "sg-split-collection",
-      "settings": {
-        "eyebrow": "Slow making for fast lives",
-        "heading": "Calm crafty time for grown-ups",
-        "subheading": "Detail-rich paper kits that feel satisfying to make and even nicer to keep. No craft skills required.",
-        "image_heading": "Paper projects that feel like a deep breath",
-        "image_link_text": "Shop adult kits",
-        "image_link": "shopify://collections/quirky-gifts-for-adults",
-        "collection": "quirky-gifts-for-adults",
-        "products_to_show": 4,
-        "flip_layout": true,
-        "bg_color": "#faf6f0",
-        "padding_top": 64,
-        "padding_bottom": 64
-      }
-    },
-    "press_logos": {
-      "type": "sg-press-logos",
+    "sg_shoppable_video": {
+      "type": "sg-shoppable-video",
       "blocks": {
-        "logo_1": {
-          "type": "logo",
-          "settings": {
-            "name": "Nat Geo"
-          }
-        },
-        "logo_2": {
-          "type": "logo",
-          "settings": {
-            "name": "Hot Wheels"
-          }
-        },
-        "logo_3": {
-          "type": "logo",
-          "settings": {
-            "name": "CRED"
-          }
-        },
-        "logo_4": {
-          "type": "logo",
-          "settings": {
-            "name": "Barbie"
-          }
-        },
-        "logo_5": {
-          "type": "logo",
-          "settings": {
-            "name": "Discovery"
-          }
-        }
+        "vid-1": { "type": "video", "settings": {} },
+        "vid-2": { "type": "video", "settings": {} },
+        "vid-3": { "type": "video", "settings": {} },
+        "vid-4": { "type": "video", "settings": {} }
       },
-      "block_order": [
-        "logo_1",
-        "logo_2",
-        "logo_3",
-        "logo_4",
-        "logo_5"
-      ],
-      "settings": {
-        "label": "Trusted by brands you know",
-        "bg_color": "#fdfcfa",
-        "padding_top": 48,
-        "padding_bottom": 48
-      }
+      "block_order": ["vid-1", "vid-2", "vid-3", "vid-4"],
+      "settings": {}
     },
-    "process": {
+    "sg_kids_collection": {
+      "type": "sg-kids-collection",
+      "settings": {}
+    },
+    "sg_process": {
       "type": "sg-process",
       "blocks": {
-        "step_1": {
-          "type": "step",
-          "settings": {
-            "icon": "scissors",
-            "step_label": "Step 01",
-            "title": "Open the kit",
-            "description": "Pre-cut, pre-scored, colour-coded pieces. Just pop them out."
-          }
-        },
-        "step_2": {
-          "type": "step",
-          "settings": {
-            "icon": "scissors",
-            "step_label": "Step 02",
-            "title": "Follow along",
-            "description": "Scan the QR code for a step-by-step video tutorial."
-          }
-        },
-        "step_3": {
-          "type": "step",
-          "settings": {
-            "icon": "scissors",
-            "step_label": "Step 03",
-            "title": "Show it off",
-            "description": "Display it, gift it, or keep it. It will look gorgeous either way."
-          }
-        }
+        "step-1": { "type": "step", "settings": { "step_label": "Step 01", "title": "Open the kit", "description": "Pre-cut, pre-scored, colour-coded pieces. Just pop them out." } },
+        "step-2": { "type": "step", "settings": { "step_label": "Step 02", "title": "Fold score slot", "description": "Follow the simple guides to fold and slot pieces together." } },
+        "step-3": { "type": "step", "settings": { "step_label": "Step 03", "title": "Display & glow", "description": "Show off your finished piece. It'll look gorgeous." } }
       },
-      "block_order": [
-        "step_1",
-        "step_2",
-        "step_3"
-      ],
-      "settings": {
-        "heading": "From flat pack to finished piece",
-        "subheading": "Every kit comes with everything you need. No tools, no glue gun, no craft degree.",
-        "bg_color": "#faf6f0",
-        "padding_top": 72,
-        "padding_bottom": 72
-      }
+      "block_order": ["step-1", "step-2", "step-3"],
+      "settings": {}
     },
-    "gifting": {
+    "sg_adults_banner": {
+      "type": "sg-adults-banner",
+      "settings": {}
+    },
+    "sg_gifting": {
       "type": "sg-gifting",
       "blocks": {
-        "gift_1": {
-          "type": "card",
-          "settings": {
-            "collection": "",
-            "heading": "Kids' Return Gifts",
-            "text": "Colourful kits kids can actually make and keep.",
-            "link_text": "Browse kids' gifts",
-            "link": "shopify://collections/thoughtful-gifts-for-kids"
-          }
-        },
-        "gift_2": {
-          "type": "card",
-          "settings": {
-            "collection": "",
-            "heading": "Bulk & Party Orders",
-            "text": "Return gifts for 20 or 200. We have you covered.",
-            "link_text": "Enquire now",
-            "link": "shopify://pages/contact"
-          }
-        },
-        "gift_3": {
-          "type": "card",
-          "settings": {
-            "collection": "",
-            "heading": "Corporate & Custom Gifts",
-            "text": "Thoughtful branded gifts that stand out.",
-            "link_text": "Get a quote",
-            "link": "shopify://pages/contact"
-          }
-        }
+        "gift-1": { "type": "card", "settings": { "heading": "Kids' Return Gifts", "text": "Colourful kits kids can actually make and keep.", "link_text": "Browse kids' gifts", "link": "shopify://collections/thoughtful-gifts-for-kids" } },
+        "gift-2": { "type": "card", "settings": { "heading": "Bulk & Party Orders", "text": "Return gifts for 20 or 200. We have you covered.", "link_text": "Enquire now", "link": "shopify://pages/contact" } },
+        "gift-3": { "type": "card", "settings": { "heading": "Corporate Gifts", "text": "Thoughtful branded gifts that stand out.", "link_text": "Get a quote", "link": "shopify://pages/contact" } }
       },
-      "block_order": [
-        "gift_1",
-        "gift_2",
-        "gift_3"
-      ],
-      "settings": {
-        "heading": "Good gifts. Better reactions.",
-        "subheading": "Whether it's a birthday return gift, a souvenir, or a corporate order -- we've got something thoughtful.",
-        "bg_color": "#fdfcfa",
-        "padding_top": 72,
-        "padding_bottom": 72
-      }
+      "block_order": ["gift-1", "gift-2", "gift-3"],
+      "settings": {}
     },
-    "testimonials": {
+    "sg_press_logos": {
+      "type": "sg-press-logos",
+      "blocks": {
+        "logo-1": { "type": "logo", "settings": { "name": "Nat Geo" } },
+        "logo-2": { "type": "logo", "settings": { "name": "Hot Wheels" } },
+        "logo-3": { "type": "logo", "settings": { "name": "CRED" } },
+        "logo-4": { "type": "logo", "settings": { "name": "Barbie" } },
+        "logo-5": { "type": "logo", "settings": { "name": "Discovery" } },
+        "logo-6": { "type": "logo", "settings": { "name": "Disney" } },
+        "logo-7": { "type": "logo", "settings": { "name": "Vogue" } },
+        "logo-8": { "type": "logo", "settings": { "name": "Forbes" } }
+      },
+      "block_order": ["logo-1", "logo-2", "logo-3", "logo-4", "logo-5", "logo-6", "logo-7", "logo-8"],
+      "settings": {}
+    },
+    "sg_testimonials": {
       "type": "sg-testimonials",
       "blocks": {
-        "testi_1": {
-          "type": "testimonial",
-          "settings": {
-            "text": "My daughter spent the entire afternoon building the animal set. She was so proud of what she made. We are ordering more for her birthday party.",
-            "name": "Priya M.",
-            "detail": "Purchased Kids' Activity Kit",
-            "avatar_color": "#fceee6",
-            "verified": true
-          }
-        },
-        "testi_2": {
-          "type": "testimonial",
-          "settings": {
-            "text": "Genuinely impressive quality. The instructions were clear and the end result looks stunning on our shelf. Already eyeing the next one.",
-            "name": "Ankit R.",
-            "detail": "Purchased Paper Sculpture Kit",
-            "avatar_color": "#e8f5f2",
-            "verified": true
-          }
-        },
-        "testi_3": {
-          "type": "testimonial",
-          "settings": {
-            "text": "Ordered return gifts for 30 kids. Everything arrived packed beautifully. The parents were equally impressed. Will definitely order again.",
-            "name": "Sneha K.",
-            "detail": "Purchased Party Decor Bundle",
-            "avatar_color": "#e8f0e8",
-            "verified": true
-          }
-        }
+        "review-1": { "type": "testimonial", "settings": { "text": "My daughter spent the entire afternoon building the animal set. So proud of what she made.", "name": "Priya M.", "detail": "Purchased Kids' Activity Kit", "verified": true } },
+        "review-2": { "type": "testimonial", "settings": { "text": "Genuinely impressive quality. Clear instructions, stunning end result. Already eyeing the next one.", "name": "Ankit R.", "detail": "Purchased Paper Sculpture Kit", "verified": true } },
+        "review-3": { "type": "testimonial", "settings": { "text": "Ordered return gifts for 30 kids. Everything packed beautifully. Parents were impressed.", "name": "Sneha K.", "detail": "Purchased Party Decor Bundle", "verified": true } },
+        "review-4": { "type": "testimonial", "settings": { "text": "Beautiful kit, calming to make, looks great on my shelf. Highly recommend.", "name": "Rohan D.", "detail": "Purchased Adult DIY Kit", "verified": true } }
       },
-      "block_order": [
-        "testi_1",
-        "testi_2",
-        "testi_3"
-      ],
-      "settings": {
-        "heading": "What people are saying",
-        "bg_color": "#faf6f0",
-        "padding_top": 72,
-        "padding_bottom": 72
-      }
+      "block_order": ["review-1", "review-2", "review-3", "review-4"],
+      "settings": {}
     },
-    "brand_story": {
+    "sg_brand_story": {
       "type": "sg-brand-story",
-      "blocks": {
-        "founder_1": {
-          "type": "founder",
-          "settings": {
-            "name": "Amit Gudibanda",
-            "role": "CEO & Co-Founder"
-          }
-        },
-        "founder_2": {
-          "type": "founder",
-          "settings": {
-            "name": "Misha Gudibanda",
-            "role": "Creative Director"
-          }
-        },
-        "val_1": {
-          "type": "value",
-          "settings": {
-            "text": "Eco-first"
-          }
-        },
-        "val_2": {
-          "type": "value",
-          "settings": {
-            "text": "Made in India"
-          }
-        },
-        "val_3": {
-          "type": "value",
-          "settings": {
-            "text": "NID-designed"
-          }
-        }
-      },
-      "block_order": [
-        "founder_1",
-        "founder_2",
-        "val_1",
-        "val_2",
-        "val_3"
-      ],
-      "settings": {
-        "eyebrow": "The Sky Goodies story",
-        "heading": "Paper can spark something wonderful.",
-        "text": "<p>In 2013, Amit and Misha Gudibanda left successful corporate careers to chase a simple idea -- that beautiful paper crafts can make everyday life more joyful. Every kit is designed at their Mumbai studio, with the kind of care you would put into a handmade gift for someone you love.</p>",
-        "button_text": "Read the full story",
-        "button_link": "shopify://pages/about",
-        "bg_color": "#fdfcfa",
-        "padding_top": 80,
-        "padding_bottom": 80
-      }
+      "settings": {}
     }
   },
   "order": [
-    "hero",
-    "trust_strip",
-    "categories",
-    "featured_products",
-    "kids_split",
-    "adults_split",
-    "press_logos",
-    "process",
-    "gifting",
-    "testimonials",
-    "brand_story"
+    "sg_announcement",
+    "sg_hero",
+    "sg_categories",
+    "sg_featured_products",
+    "sg_shoppable_video",
+    "sg_kids_collection",
+    "sg_process",
+    "sg_adults_banner",
+    "sg_gifting",
+    "sg_press_logos",
+    "sg_testimonials",
+    "sg_brand_story"
   ]
 }

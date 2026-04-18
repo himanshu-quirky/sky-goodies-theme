@@ -1,47 +1,31 @@
-{{ 'sg-theme.css' | asset_url | stylesheet_tag }}
-
-{%- style -%}
-  .sg-section-{{ section.id }}-pad {
-    padding-top: {{ section.settings.padding_top | times: 0.5 | round: 0 }}px;
-    padding-bottom: {{ section.settings.padding_bottom | times: 0.5 | round: 0 }}px;
-  }
-  @media screen and (min-width: 750px) {
-    .sg-section-{{ section.id }}-pad {
-      padding-top: {{ section.settings.padding_top }}px;
-      padding-bottom: {{ section.settings.padding_bottom }}px;
-    }
-  }
-{%- endstyle -%}
-
-<section class="sg-section sg-reviews sg-section-{{ section.id }}-pad" style="background: {{ section.settings.bg_color }};" {{ section.shopify_attributes }}>
-  <div class="sg-reviews__inner">
-    <div class="sg-reviews__head">
-      {%- if section.settings.heading != blank -%}
-        <h2 class="sg-heading">{{ section.settings.heading }}</h2>
-      {%- endif -%}
+<section class="sg-section sg-testimonials" style="background:{{ section.settings.background_color }}; padding-top:{{ section.settings.padding_top }}px; padding-bottom:{{ section.settings.padding_bottom }}px;">
+  <div class="sg-container">
+    <div class="sg-section-header sg-text-center">
+      <span class="sg-eyebrow">{{ section.settings.eyebrow }}</span>
+      <h2 class="sg-h2">{{ section.settings.heading }}</h2>
+      <p class="sg-subheading">{{ section.settings.subheading }}</p>
     </div>
-
-    <div class="sg-reviews__grid">
-      {%- for block in section.blocks -%}
-        <div class="sg-rc" {{ block.shopify_attributes }}>
-          <div class="sg-rc__stars">&#9733;&#9733;&#9733;&#9733;&#9733;</div>
-          <p class="sg-rc__text">"{{ block.settings.text }}"</p>
-          <div class="sg-rc__author">
-            <div class="sg-rc__avatar" style="background: {{ block.settings.avatar_color }};">
-              {{ block.settings.name | slice: 0 }}
+    <div class="sg-reviews-scroll">
+      {% for block in section.blocks %}
+        <div class="sg-review-card" {{ block.shopify_attributes }}>
+          {% if block.settings.customer_image != blank %}
+            <div class="sg-review-image">
+              <img src="{{ block.settings.customer_image | image_url: width: 800 }}" alt="" loading="lazy" referrerpolicy="no-referrer">
             </div>
-            <div>
-              <div class="sg-rc__name">{{ block.settings.name }}</div>
-              {%- if block.settings.detail != blank -%}
-                <div class="sg-rc__detail">{{ block.settings.detail }}</div>
-              {%- endif -%}
-              {%- if block.settings.verified -%}
-                <div class="sg-rc__verified">Verified buyer</div>
-              {%- endif -%}
+          {% endif %}
+          <div class="sg-review-body">
+            <div class="sg-review-stars">
+              {% for star in (1..block.settings.rating) %}<span>★</span>{% endfor %}
+            </div>
+            <p class="sg-review-text">{{ block.settings.review_text }}</p>
+            <div class="sg-review-meta">
+              <strong>{{ block.settings.customer_name }}</strong>
+              {% if block.settings.verified %}<span class="sg-verified-badge">✓ Verified</span>{% endif %}
+              {% if block.settings.date != blank %}<span class="sg-review-date">{{ block.settings.date }}</span>{% endif %}
             </div>
           </div>
         </div>
-      {%- endfor -%}
+      {% endfor %}
     </div>
   </div>
 </section>
@@ -49,18 +33,25 @@
 {% schema %}
 {
   "name": "SG Testimonials",
+  "tag": "section",
+  "class": "sg-section-wrapper",
   "settings": [
+    {
+      "type": "text",
+      "id": "eyebrow",
+      "label": "Eyebrow",
+      "default": "REVIEWS"
+    },
     {
       "type": "text",
       "id": "heading",
       "label": "Heading",
-      "default": "What people are saying"
+      "default": "Real people, real craft"
     },
     {
-      "type": "color",
-      "id": "bg_color",
-      "label": "Background Color",
-      "default": "#FAF6F0"
+      "type": "textarea",
+      "id": "subheading",
+      "label": "Subheading"
     },
     {
       "type": "range",
@@ -69,8 +60,8 @@
       "max": 100,
       "step": 4,
       "unit": "px",
-      "label": "Padding Top",
-      "default": 72
+      "label": "Padding top",
+      "default": 40
     },
     {
       "type": "range",
@@ -79,44 +70,57 @@
       "max": 100,
       "step": 4,
       "unit": "px",
-      "label": "Padding Bottom",
-      "default": 72
+      "label": "Padding bottom",
+      "default": 40
+    },
+    {
+      "type": "color",
+      "id": "background_color",
+      "label": "Background color",
+      "default": "#FDFCFA"
     }
   ],
   "blocks": [
     {
-      "type": "testimonial",
-      "name": "Testimonial",
+      "type": "review",
+      "name": "Review",
+      "limit": 12,
       "settings": [
         {
+          "type": "image_picker",
+          "id": "customer_image",
+          "label": "Customer image"
+        },
+        {
+          "type": "range",
+          "id": "rating",
+          "min": 1,
+          "max": 5,
+          "step": 1,
+          "label": "Rating",
+          "default": 5
+        },
+        {
           "type": "textarea",
-          "id": "text",
-          "label": "Review Text",
-          "default": "Genuinely impressive quality. The instructions were clear and the end result looks stunning."
+          "id": "review_text",
+          "label": "Review text"
         },
         {
           "type": "text",
-          "id": "name",
-          "label": "Reviewer Name",
-          "default": "Priya M."
-        },
-        {
-          "type": "text",
-          "id": "detail",
-          "label": "Purchase Detail",
-          "default": "Purchased Kids' Activity Kit"
-        },
-        {
-          "type": "color",
-          "id": "avatar_color",
-          "label": "Avatar Color",
-          "default": "#FCEEE6"
+          "id": "customer_name",
+          "label": "Customer name"
         },
         {
           "type": "checkbox",
           "id": "verified",
-          "label": "Show Verified Badge",
+          "label": "Verified buyer",
           "default": true
+        },
+        {
+          "type": "text",
+          "id": "date",
+          "label": "Date",
+          "default": "12 March 2026"
         }
       ]
     }
@@ -125,9 +129,46 @@
     {
       "name": "SG Testimonials",
       "blocks": [
-        { "type": "testimonial", "settings": { "text": "My daughter spent the entire afternoon building the animal set. She was so proud of what she made. We are ordering more for her birthday party.", "name": "Priya M.", "detail": "Purchased Kids' Activity Kit", "avatar_color": "#FCEEE6" } },
-        { "type": "testimonial", "settings": { "text": "Genuinely impressive quality. The instructions were clear and the end result looks stunning on our shelf. Already eyeing the next one.", "name": "Ankit R.", "detail": "Purchased Paper Sculpture Kit", "avatar_color": "#E8F5F2" } },
-        { "type": "testimonial", "settings": { "text": "Ordered return gifts for 30 kids. Everything arrived packed beautifully. The parents were equally impressed. Will definitely order again.", "name": "Sneha K.", "detail": "Purchased Party Decor Bundle", "avatar_color": "#E8F0E8" } }
+        {
+          "type": "review",
+          "settings": {
+            "rating": 5,
+            "review_text": "The paper lantern arrived beautifully packed and lit up our living room like magic. Honestly didn't expect this level of craft for the price.",
+            "customer_name": "Ananya Rao",
+            "verified": true,
+            "date": "2 March 2026"
+          }
+        },
+        {
+          "type": "review",
+          "settings": {
+            "rating": 5,
+            "review_text": "Built the elephant with my 7-year-old over a rainy Sunday. The instructions were clear and the finished piece is now proudly on his shelf.",
+            "customer_name": "Vikram Shetty",
+            "verified": true,
+            "date": "18 February 2026"
+          }
+        },
+        {
+          "type": "review",
+          "settings": {
+            "rating": 5,
+            "review_text": "Bought the paper flowers for my mum's birthday — she thought they were real until she touched them. So much better than cut flowers.",
+            "customer_name": "Priya Menon",
+            "verified": true,
+            "date": "9 March 2026"
+          }
+        },
+        {
+          "type": "review",
+          "settings": {
+            "rating": 4,
+            "review_text": "The 2026 calendar is a small joy every morning. Lovely illustrations, sturdy paper, and just the right size for my desk.",
+            "customer_name": "Rohan Bhattacharya",
+            "verified": true,
+            "date": "27 January 2026"
+          }
+        }
       ]
     }
   ]

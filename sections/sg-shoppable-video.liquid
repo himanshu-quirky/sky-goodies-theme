@@ -1,0 +1,246 @@
+{{ 'sg-theme.css' | asset_url | stylesheet_tag }}
+
+{%- style -%}
+  .sg-shoppable-video-{{ section.id }} {
+    background: {{ section.settings.background_color }};
+    padding-top: {{ section.settings.padding_top | times: 0.5 | round: 0 }}px;
+    padding-bottom: {{ section.settings.padding_bottom | times: 0.5 | round: 0 }}px;
+  }
+  @media screen and (min-width: 750px) {
+    .sg-shoppable-video-{{ section.id }} {
+      padding-top: {{ section.settings.padding_top }}px;
+      padding-bottom: {{ section.settings.padding_bottom }}px;
+    }
+  }
+{%- endstyle -%}
+
+<section class="sg-section sg-shoppable-video sg-shoppable-video-{{ section.id }}" data-sg-shoppable="{{ section.id }}" {{ section.shopify_attributes }}>
+  <div class="sg-shoppable-video__inner">
+    <div class="sg-shoppable-video__header">
+      {%- if section.settings.eyebrow != blank -%}
+        <span class="sg-eyebrow">{{ section.settings.eyebrow }}</span>
+      {%- endif -%}
+      {%- if section.settings.heading != blank -%}
+        <h2 class="sg-heading">{{ section.settings.heading }}</h2>
+      {%- endif -%}
+      {%- if section.settings.subheading != blank -%}
+        <p class="sg-subtext">{{ section.settings.subheading }}</p>
+      {%- endif -%}
+    </div>
+
+    <div class="sg-shoppable-video__scroll">
+      {%- for block in section.blocks -%}
+        {%- assign product = block.settings.product -%}
+        <article
+          class="sg-shoppable-video__card"
+          data-sg-video-card
+          data-video-url="{{ block.settings.video_url }}"
+          data-product-url="{% if product != blank %}{{ product.url }}{% endif %}"
+          {{ block.shopify_attributes }}
+        >
+          <button type="button" class="sg-shoppable-video__card-btn" aria-label="Play video">
+            <div class="sg-shoppable-video__poster">
+              {%- if block.settings.poster_image != blank -%}
+                <img
+                  src="{{ block.settings.poster_image | image_url: width: 600 }}"
+                  srcset="{{ block.settings.poster_image | image_url: width: 400 }} 400w, {{ block.settings.poster_image | image_url: width: 600 }} 600w, {{ block.settings.poster_image | image_url: width: 900 }} 900w"
+                  sizes="(min-width: 750px) 280px, 75vw"
+                  alt="{{ block.settings.overlay_label | default: product.title | escape }}"
+                  loading="lazy"
+                  width="600"
+                  height="1067"
+                >
+              {%- elsif product != blank and product.featured_image != blank -%}
+                <img src="{{ product.featured_image | image_url: width: 600 }}" alt="{{ product.title | escape }}" loading="lazy">
+              {%- else -%}
+                {{ 'lifestyle-1' | placeholder_svg_tag: 'sg-placeholder-svg' }}
+              {%- endif -%}
+              <span class="sg-shoppable-video__play" aria-hidden="true">
+                <svg width="22" height="22" viewBox="0 0 24 24" fill="currentColor"><polygon points="5 3 19 12 5 21 5 3"/></svg>
+              </span>
+              {%- if block.settings.overlay_label != blank -%}
+                <span class="sg-shoppable-video__overlay-label">{{ block.settings.overlay_label }}</span>
+              {%- endif -%}
+            </div>
+          </button>
+          <div class="sg-shoppable-video__info">
+            <span class="sg-shoppable-video__name">
+              {%- if product != blank -%}{{ product.title }}{%- else -%}{{ block.settings.overlay_label }}{%- endif -%}
+            </span>
+            {%- if product != blank -%}
+              <span class="sg-shoppable-video__price">{{ product.price | money }}</span>
+            {%- endif -%}
+          </div>
+        </article>
+      {%- endfor -%}
+    </div>
+  </div>
+
+  <div class="sg-shoppable-video__modal" data-sg-video-modal hidden>
+    <div class="sg-shoppable-video__modal-overlay" data-sg-video-close></div>
+    <div class="sg-shoppable-video__modal-inner" role="dialog" aria-modal="true" aria-label="Video">
+      <button type="button" class="sg-shoppable-video__modal-close" data-sg-video-close aria-label="Close video">
+        <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+      </button>
+      <div class="sg-shoppable-video__modal-media" data-sg-video-slot></div>
+      <a href="#" class="sg-shoppable-video__modal-cta" data-sg-video-cta hidden>Shop this product</a>
+    </div>
+  </div>
+</section>
+
+<script>
+  (function () {
+    var root = document.querySelector('[data-sg-shoppable="{{ section.id }}"]');
+    if (!root) return;
+    var modal = root.querySelector('[data-sg-video-modal]');
+    var slot = root.querySelector('[data-sg-video-slot]');
+    var cta = root.querySelector('[data-sg-video-cta]');
+    var cards = root.querySelectorAll('[data-sg-video-card]');
+
+    function open(url, productUrl) {
+      slot.innerHTML = '';
+      if (url) {
+        var isExternal = /youtube\.com|youtu\.be|vimeo\.com/.test(url);
+        if (isExternal) {
+          var src = url;
+          if (/youtube\.com\/watch/.test(url)) {
+            src = url.replace('watch?v=', 'embed/');
+          } else if (/youtu\.be\//.test(url)) {
+            src = url.replace('youtu.be/', 'www.youtube.com/embed/');
+          }
+          var iframe = document.createElement('iframe');
+          iframe.src = src + (src.indexOf('?') > -1 ? '&' : '?') + 'autoplay=1';
+          iframe.setAttribute('allow', 'autoplay; encrypted-media');
+          iframe.setAttribute('allowfullscreen', '');
+          slot.appendChild(iframe);
+        } else {
+          var v = document.createElement('video');
+          v.src = url;
+          v.controls = true;
+          v.autoplay = true;
+          v.playsInline = true;
+          slot.appendChild(v);
+        }
+      }
+      if (productUrl) {
+        cta.href = productUrl;
+        cta.hidden = false;
+      } else {
+        cta.hidden = true;
+      }
+      modal.hidden = false;
+      document.body.style.overflow = 'hidden';
+    }
+    function close() {
+      modal.hidden = true;
+      slot.innerHTML = '';
+      document.body.style.overflow = '';
+    }
+    cards.forEach(function (c) {
+      c.addEventListener('click', function () {
+        open(c.getAttribute('data-video-url'), c.getAttribute('data-product-url'));
+      });
+    });
+    root.querySelectorAll('[data-sg-video-close]').forEach(function (el) {
+      el.addEventListener('click', close);
+    });
+    document.addEventListener('keydown', function (e) {
+      if (e.key === 'Escape' && !modal.hidden) close();
+    });
+  })();
+</script>
+
+{% schema %}
+{
+  "name": "SG Shoppable Video",
+  "class": "sg-shoppable-video-section",
+  "settings": [
+    {
+      "type": "text",
+      "id": "eyebrow",
+      "label": "Eyebrow",
+      "default": "WATCH & SHOP"
+    },
+    {
+      "type": "text",
+      "id": "heading",
+      "label": "Heading",
+      "default": "watch, make, love"
+    },
+    {
+      "type": "textarea",
+      "id": "subheading",
+      "label": "Subheading",
+      "default": "Thirty-second reels. Zero overwhelm. Tap any video to shop what you see."
+    },
+    {
+      "type": "color",
+      "id": "background_color",
+      "label": "Background color",
+      "default": "#FAF6F0"
+    },
+    {
+      "type": "range",
+      "id": "padding_top",
+      "min": 0,
+      "max": 100,
+      "step": 4,
+      "unit": "px",
+      "label": "Padding top",
+      "default": 72
+    },
+    {
+      "type": "range",
+      "id": "padding_bottom",
+      "min": 0,
+      "max": 100,
+      "step": 4,
+      "unit": "px",
+      "label": "Padding bottom",
+      "default": 72
+    }
+  ],
+  "blocks": [
+    {
+      "type": "video_card",
+      "name": "Video card",
+      "limit": 6,
+      "settings": [
+        {
+          "type": "url",
+          "id": "video_url",
+          "label": "Video URL",
+          "info": "Paste a direct .mp4 URL or a YouTube / Vimeo link."
+        },
+        {
+          "type": "image_picker",
+          "id": "poster_image",
+          "label": "Poster image (9:16)"
+        },
+        {
+          "type": "product",
+          "id": "product",
+          "label": "Product"
+        },
+        {
+          "type": "text",
+          "id": "overlay_label",
+          "label": "Overlay label",
+          "default": "Paper Lanterns"
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "SG Shoppable Video",
+      "blocks": [
+        { "type": "video_card" },
+        { "type": "video_card" },
+        { "type": "video_card" },
+        { "type": "video_card" }
+      ]
+    }
+  ]
+}
+{% endschema %}

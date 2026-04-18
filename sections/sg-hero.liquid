@@ -1,157 +1,318 @@
 {{ 'sg-theme.css' | asset_url | stylesheet_tag }}
 
 {%- style -%}
-  .sg-section-{{ section.id }}-pad {
+  .sg-hero-{{ section.id }} {
     padding-top: {{ section.settings.padding_top | times: 0.5 | round: 0 }}px;
     padding-bottom: {{ section.settings.padding_bottom | times: 0.5 | round: 0 }}px;
   }
   @media screen and (min-width: 750px) {
-    .sg-section-{{ section.id }}-pad {
+    .sg-hero-{{ section.id }} {
       padding-top: {{ section.settings.padding_top }}px;
       padding-bottom: {{ section.settings.padding_bottom }}px;
     }
   }
 {%- endstyle -%}
 
-{%- liquid
-  assign hero_img = nil
-  if section.settings.image != blank
-    assign hero_img = section.settings.image
-  elsif section.settings.collection != blank and section.settings.collection.image != blank
-    assign hero_img = section.settings.collection.image
-  elsif section.settings.collection != blank and section.settings.collection.products.first.featured_image != blank
-    assign hero_img = section.settings.collection.products.first.featured_image
-  endif
--%}
-
-<section class="sg-section sg-hero{% if request.page_type == 'index' %} sg-hero--full{% endif %} sg-section-{{ section.id }}-pad" {{ section.shopify_attributes }}>
-  <div class="sg-hero__media">
-    {%- if hero_img != nil -%}
-      <img
-        src="{{ hero_img | image_url: width: 2000 }}"
-        srcset="{{ hero_img | image_url: width: 750 }} 750w, {{ hero_img | image_url: width: 1200 }} 1200w, {{ hero_img | image_url: width: 2000 }} 2000w"
-        sizes="100vw"
-        alt="{{ hero_img.alt | default: section.settings.heading | escape }}"
-        width="2000"
-        height="900"
-        loading="eager"
-        fetchpriority="high"
-        style="object-position: {{ section.settings.image_position }};"
+<section
+  class="sg-section sg-hero-slideshow sg-hero-{{ section.id }}"
+  data-sg-hero="{{ section.id }}"
+  data-autoplay="{{ section.settings.autoplay }}"
+  data-autoplay-speed="{{ section.settings.autoplay_speed }}"
+  {{ section.shopify_attributes }}
+>
+  <div class="sg-hero__track" id="sg-hero-track-{{ section.id }}">
+    {%- for block in section.blocks -%}
+      {%- assign is_first = forloop.first -%}
+      {%- assign size_class = 'sg-hero-slide--' | append: block.settings.image_size -%}
+      <div
+        class="sg-hero-slide {{ size_class }}{% if is_first %} is-active{% endif %}"
+        data-index="{{ forloop.index0 }}"
+        {{ block.shopify_attributes }}
       >
-    {%- else -%}
-      <div class="sg-placeholder" style="min-height: 400px;">
-        <span style="font-size:14px;font-weight:600;">Add hero image in theme editor or link a collection</span>
+        {%- if block.settings.button_link != blank -%}
+          <a class="sg-hero-slide__link" href="{{ block.settings.button_link }}" aria-label="{{ block.settings.heading | escape }}"></a>
+        {%- endif -%}
+
+        <div class="sg-hero-slide__content">
+          <div class="sg-hero-slide__blob" aria-hidden="true">
+            <svg viewBox="0 0 600 700" preserveAspectRatio="none" xmlns="http://www.w3.org/2000/svg">
+              <path fill="{{ block.settings.blob_color }}" d="M-20,120 C120,60 300,20 440,80 C560,130 620,260 580,400 C540,540 430,660 300,680 C160,700 30,620 -10,480 C-50,340 -100,200 -20,120 Z"/>
+            </svg>
+          </div>
+          <div class="sg-hero-slide__inner">
+            {%- if block.settings.eyebrow != blank -%}
+              <span class="sg-hero-slide__eyebrow">{{ block.settings.eyebrow }}</span>
+            {%- endif -%}
+            {%- if block.settings.heading != blank -%}
+              <h2 class="sg-hero-slide__heading">{{ block.settings.heading }}</h2>
+            {%- endif -%}
+            {%- if block.settings.subheading != blank -%}
+              <p class="sg-hero-slide__sub">{{ block.settings.subheading }}</p>
+            {%- endif -%}
+            {%- if block.settings.button_label != blank -%}
+              <span class="sg-hero-slide__cta">
+                {{ block.settings.button_label }}
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
+                  <line x1="5" y1="12" x2="19" y2="12"/>
+                  <polyline points="12 5 19 12 12 19"/>
+                </svg>
+              </span>
+            {%- endif -%}
+          </div>
+        </div>
+
+        <div class="sg-hero-slide__media">
+          {%- if block.settings.image != blank -%}
+            <picture>
+              {%- if block.settings.image_mobile != blank -%}
+                <source
+                  media="(max-width: 749px)"
+                  srcset="{{ block.settings.image_mobile | image_url: width: 750 }} 750w, {{ block.settings.image_mobile | image_url: width: 1100 }} 1100w"
+                  sizes="100vw"
+                >
+              {%- endif -%}
+              <img
+                src="{{ block.settings.image | image_url: width: 1600 }}"
+                srcset="{{ block.settings.image | image_url: width: 800 }} 800w, {{ block.settings.image | image_url: width: 1200 }} 1200w, {{ block.settings.image | image_url: width: 1600 }} 1600w, {{ block.settings.image | image_url: width: 2000 }} 2000w"
+                sizes="(min-width: 750px) 50vw, 100vw"
+                alt="{{ block.settings.image.alt | default: block.settings.heading | escape }}"
+                width="{{ block.settings.image.width }}"
+                height="{{ block.settings.image.height }}"
+                loading="{% if is_first %}eager{% else %}lazy{% endif %}"
+                {% if is_first %}fetchpriority="high"{% endif %}
+              >
+            </picture>
+          {%- elsif block.settings.image_mobile != blank -%}
+            <picture>
+              <img src="{{ block.settings.image_mobile | image_url: width: 1200 }}" alt="{{ block.settings.heading | escape }}" loading="lazy">
+            </picture>
+          {%- else -%}
+            <div class="sg-placeholder" style="min-height: 400px;">
+              {{ 'lifestyle-1' | placeholder_svg_tag: 'sg-placeholder-svg' }}
+            </div>
+          {%- endif -%}
+        </div>
       </div>
-    {%- endif -%}
+    {%- endfor -%}
   </div>
 
-  <div class="sg-hero__content">
-    {%- if section.settings.eyebrow != blank -%}
-      <span class="sg-hero__tag">{{ section.settings.eyebrow }}</span>
-    {%- endif -%}
+  {%- if section.settings.show_arrows and section.blocks.size > 1 -%}
+    <div class="sg-hero__arrows">
+      <button type="button" class="sg-hero__arrow" data-sg-hero-prev aria-label="Previous slide">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="15 18 9 12 15 6"/></svg>
+      </button>
+      <button type="button" class="sg-hero__arrow" data-sg-hero-next aria-label="Next slide">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="9 18 15 12 9 6"/></svg>
+      </button>
+    </div>
+  {%- endif -%}
 
-    {%- if section.settings.heading != blank -%}
-      <h1 class="sg-hero__title">{{ section.settings.heading }}</h1>
-    {%- endif -%}
-
-    {%- if section.settings.subheading != blank -%}
-      <p class="sg-hero__sub">{{ section.settings.subheading }}</p>
-    {%- endif -%}
-
-    {%- if section.settings.button_text != blank -%}
-      {%- assign hero_btn_link = section.settings.button_link -%}
-      {%- if hero_btn_link == blank and section.settings.collection != blank -%}
-        {%- assign hero_btn_link = section.settings.collection.url -%}
-      {%- endif -%}
-      <a href="{{ hero_btn_link }}" class="sg-btn sg-btn--white">
-        {{ section.settings.button_text }}
-        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="9 18 15 12 9 6"/></svg>
-      </a>
-    {%- endif -%}
-  </div>
+  {%- if section.settings.show_dots and section.blocks.size > 1 -%}
+    <div class="sg-hero__dots">
+      {%- for block in section.blocks -%}
+        <button
+          type="button"
+          class="sg-hero__dot{% if forloop.first %} is-active{% endif %}"
+          data-sg-hero-dot="{{ forloop.index0 }}"
+          aria-label="Slide {{ forloop.index }}"
+        ></button>
+      {%- endfor -%}
+    </div>
+  {%- endif -%}
 </section>
+
+<script>
+  (function () {
+    var root = document.querySelector('[data-sg-hero="{{ section.id }}"]');
+    if (!root) return;
+    var slides = root.querySelectorAll('.sg-hero-slide');
+    if (slides.length < 2) return;
+    var dots = root.querySelectorAll('[data-sg-hero-dot]');
+    var prev = root.querySelector('[data-sg-hero-prev]');
+    var next = root.querySelector('[data-sg-hero-next]');
+    var autoplay = root.getAttribute('data-autoplay') === 'true';
+    var speed = (parseInt(root.getAttribute('data-autoplay-speed'), 10) || 5) * 1000;
+    var i = 0;
+    var timer;
+
+    function go(n) {
+      slides[i].classList.remove('is-active');
+      if (dots[i]) dots[i].classList.remove('is-active');
+      i = (n + slides.length) % slides.length;
+      slides[i].classList.add('is-active');
+      if (dots[i]) dots[i].classList.add('is-active');
+    }
+    function reset() {
+      if (!autoplay) return;
+      clearInterval(timer);
+      timer = setInterval(function () { go(i + 1); }, speed);
+    }
+    if (prev) prev.addEventListener('click', function () { go(i - 1); reset(); });
+    if (next) next.addEventListener('click', function () { go(i + 1); reset(); });
+    dots.forEach(function (d) {
+      d.addEventListener('click', function () {
+        go(parseInt(d.getAttribute('data-sg-hero-dot'), 10));
+        reset();
+      });
+    });
+    reset();
+  })();
+</script>
 
 {% schema %}
 {
-  "name": "SG Hero",
+  "name": "SG Hero Slideshow",
+  "class": "sg-hero-section",
   "settings": [
     {
-      "type": "image_picker",
-      "id": "image",
-      "label": "Hero Image"
+      "type": "checkbox",
+      "id": "autoplay",
+      "label": "Autoplay",
+      "default": true
     },
     {
-      "type": "collection",
-      "id": "collection",
-      "label": "Fallback Collection",
-      "info": "If no hero image is uploaded, the collection image or first product image will be used."
+      "type": "range",
+      "id": "autoplay_speed",
+      "min": 3,
+      "max": 10,
+      "step": 1,
+      "unit": "s",
+      "label": "Autoplay speed",
+      "default": 5
     },
     {
-      "type": "select",
-      "id": "image_position",
-      "label": "Image Focus",
-      "options": [
-        { "value": "center center", "label": "Center" },
-        { "value": "center top", "label": "Top" },
-        { "value": "center bottom", "label": "Bottom" },
-        { "value": "left center", "label": "Left" },
-        { "value": "right center", "label": "Right" }
-      ],
-      "default": "center center"
+      "type": "checkbox",
+      "id": "show_arrows",
+      "label": "Show arrows",
+      "default": true
     },
     {
-      "type": "text",
-      "id": "eyebrow",
-      "label": "Eyebrow Text",
-      "default": "Handcrafted Paper Kits"
-    },
-    {
-      "type": "text",
-      "id": "heading",
-      "label": "Heading",
-      "default": "Simple paper. Real joy."
-    },
-    {
-      "type": "textarea",
-      "id": "subheading",
-      "label": "Subheading",
-      "default": "Pre-cut, easy-to-make craft kits designed to bring families together and fill homes with warmth."
-    },
-    {
-      "type": "text",
-      "id": "button_text",
-      "label": "Button Text",
-      "default": "Explore the collection"
-    },
-    {
-      "type": "url",
-      "id": "button_link",
-      "label": "Button Link"
+      "type": "checkbox",
+      "id": "show_dots",
+      "label": "Show dots",
+      "default": true
     },
     {
       "type": "range",
       "id": "padding_top",
       "min": 0,
-      "max": 40,
+      "max": 100,
       "step": 4,
       "unit": "px",
-      "label": "Padding Top",
+      "label": "Padding top",
       "default": 0
     },
     {
       "type": "range",
       "id": "padding_bottom",
       "min": 0,
-      "max": 40,
+      "max": 100,
       "step": 4,
       "unit": "px",
-      "label": "Padding Bottom",
-      "default": 0
+      "label": "Padding bottom",
+      "default": 40
+    }
+  ],
+  "blocks": [
+    {
+      "type": "slide",
+      "name": "Slide",
+      "limit": 5,
+      "settings": [
+        {
+          "type": "image_picker",
+          "id": "image",
+          "label": "Image (desktop)"
+        },
+        {
+          "type": "image_picker",
+          "id": "image_mobile",
+          "label": "Image (mobile)",
+          "info": "Used on screens narrower than 750px."
+        },
+        {
+          "type": "select",
+          "id": "image_size",
+          "label": "Slide size",
+          "options": [
+            { "value": "auto", "label": "Auto" },
+            { "value": "small", "label": "Small" },
+            { "value": "medium", "label": "Medium" },
+            { "value": "large", "label": "Large" }
+          ],
+          "default": "medium"
+        },
+        {
+          "type": "text",
+          "id": "eyebrow",
+          "label": "Eyebrow",
+          "default": "Fresh off the press"
+        },
+        {
+          "type": "text",
+          "id": "heading",
+          "label": "Heading",
+          "default": "Turn the page, turn a new leaf"
+        },
+        {
+          "type": "textarea",
+          "id": "subheading",
+          "label": "Subheading",
+          "default": "Our new collection has landed — desk-side joy, one tear-off sheet at a time."
+        },
+        {
+          "type": "text",
+          "id": "button_label",
+          "label": "Button label",
+          "default": "Shop now"
+        },
+        {
+          "type": "url",
+          "id": "button_link",
+          "label": "Slide link",
+          "info": "Used for both the CTA button and the whole slide click area."
+        },
+        {
+          "type": "color",
+          "id": "blob_color",
+          "label": "Blob color",
+          "default": "#C8E616"
+        }
+      ]
     }
   ],
   "presets": [
     {
-      "name": "SG Hero"
+      "name": "Hero slideshow",
+      "blocks": [
+        {
+          "type": "slide",
+          "settings": {
+            "eyebrow": "Fresh off the press",
+            "heading": "Turn the page, turn a new leaf",
+            "subheading": "Our 2026 calendar collection has landed — desk-side joy, one tear-off sheet at a time.",
+            "button_label": "Shop calendars"
+          }
+        },
+        {
+          "type": "slide",
+          "settings": {
+            "eyebrow": "Glow season",
+            "heading": "Tiny lights, enormous feelings",
+            "subheading": "Paper lanterns, string lights, and every cozy corner you've ever dreamed of.",
+            "button_label": "Shop fairy lights"
+          }
+        },
+        {
+          "type": "slide",
+          "settings": {
+            "eyebrow": "Screen-free sundays",
+            "heading": "Keep little hands beautifully busy",
+            "subheading": "Craft kits designed by parents, loved by kids aged four to fourteen.",
+            "button_label": "Shop kids kits"
+          }
+        }
+      ]
     }
   ]
 }
