@@ -1,18 +1,33 @@
-<section class="sg-section sg-brand-story" style="background:{{ section.settings.background_color }}; padding-top:{{ section.settings.padding_top }}px; padding-bottom:{{ section.settings.padding_bottom }}px;">
+<style>
+  .sg-brand-story .sg-story-grid { display: grid; grid-template-columns: 1fr; gap: 32px; align-items: center; max-width: 1100px; margin: 0 auto; }
+  @media (min-width: 750px) { .sg-brand-story .sg-story-grid { grid-template-columns: 1fr 1fr; gap: 56px; } }
+  .sg-brand-story .sg-story-image { border-radius: 24px; overflow: hidden; aspect-ratio: 4/5; max-height: 520px; background: #FAF6F0; }
+  .sg-brand-story .sg-story-image img { width: 100%; height: 100%; object-fit: cover; display: block; }
+  .sg-brand-story .sg-story-content .sg-eyebrow { font-size: 12px; font-weight: 600; letter-spacing: 0.12em; color: #E8845A; text-transform: uppercase; }
+  .sg-brand-story .sg-story-content .sg-h2 { font-family: 'DM Serif Display', serif; font-weight: 400; font-size: clamp(28px, 4vw, 44px); color: #1E1B18; line-height: 1.15; margin: 8px 0 16px; }
+  .sg-brand-story .sg-story-content p { color: #3D3833; font-size: 15px; line-height: 1.7; margin-bottom: 14px; }
+  .sg-brand-story .sg-link-arrow { display: inline-block; margin-top: 8px; color: #E8845A; font-weight: 600; font-size: 14px; text-decoration: none; }
+  .sg-brand-story .sg-link-arrow:hover { text-decoration: underline; }
+</style>
+<section class="sg-section sg-brand-story" style="background:{{ section.settings.background_color | default: '#FAF6F0' }}; padding:{{ section.settings.padding_top | default: 40 }}px 20px {{ section.settings.padding_bottom | default: 40 }}px;">
   <div class="sg-container">
     <div class="sg-story-grid">
       <div class="sg-story-image">
         {% if section.settings.image != blank %}
           <img src="{{ section.settings.image | image_url: width: 1200 }}" alt="" loading="lazy" referrerpolicy="no-referrer">
+        {% else %}
+          <img src="https://cdn.shopify.com/s/files/1/0428/5530/1271/collections/Sky-Goodies-DIY-Paper-Banana-Trees-06.jpg?v=1741609615" alt="" loading="lazy" referrerpolicy="no-referrer">
         {% endif %}
       </div>
       <div class="sg-story-content">
-        <span class="sg-eyebrow">{{ section.settings.eyebrow }}</span>
-        <h2 class="sg-h2">{{ section.settings.heading }}</h2>
-        <p>{{ section.settings.story_para_1 }}</p>
-        <p>{{ section.settings.story_para_2 }}</p>
+        <span class="sg-eyebrow">{{ section.settings.eyebrow | default: 'THE SKY GOODIES STORY' }}</span>
+        <h2 class="sg-h2">{{ section.settings.heading | default: 'Paper can spark something wonderful' }}</h2>
+        <p>{{ section.settings.story_para_1 | default: 'What started in a tiny Mumbai studio in 2013 is now a workshop of 40 makers, designers and storytellers — all obsessed with the humble sheet of paper.' }}</p>
+        <p>{{ section.settings.story_para_2 | default: 'Every kit you receive has been folded, scored and packed by hand. We work with recycled paper, water-based inks and minimal plastic because the planet is part of the family too.' }}</p>
         {% if section.settings.link_url != blank %}
-          <a href="{{ section.settings.link_url }}" class="sg-link-arrow">{{ section.settings.link_text }}</a>
+          <a href="{{ section.settings.link_url }}" class="sg-link-arrow">{{ section.settings.link_text | default: 'Read the full story →' }}</a>
+        {% else %}
+          <a href="/pages/about" class="sg-link-arrow">Read the full story →</a>
         {% endif %}
       </div>
     </div>
