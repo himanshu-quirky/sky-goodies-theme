@@ -1,119 +1,162 @@
+{{ 'sg-theme.css' | asset_url | stylesheet_tag }}
+
 {%- style -%}
-  .sg-announcement {
+  .sg-announce-{{ section.id }} {
     background: {{ section.settings.bg_color }};
     color: {{ section.settings.text_color }};
-    text-align: center;
-    padding: 10px 16px;
-    font-size: 13px;
-    letter-spacing: 0.04em;
+    padding: {{ section.settings.vertical_padding }}px var(--sg-gutter);
+    font-weight: 700;
+    font-size: {{ section.settings.font_size }}px;
+    letter-spacing: 0.02em;
     position: relative;
-    min-height: 38px;
+    overflow: hidden;
+  }
+  .sg-announce-{{ section.id }} .sg-announce-track {
     display: flex;
     align-items: center;
     justify-content: center;
-    font-family: 'DM Sans', -apple-system, sans-serif;
+    min-height: 26px;
+    gap: 16px;
   }
-  .sg-announcement__msg {
-    opacity: 0;
-    transition: opacity 0.6s ease;
-    position: absolute;
-    left: 50%;
-    transform: translateX(-50%);
-    width: 90%;
-    pointer-events: none;
+  .sg-announce-{{ section.id }} .sg-announce-msg {
+    display: none;
+    align-items: center;
+    gap: 8px;
+    transition: opacity .4s ease;
+    text-align: center;
   }
-  .sg-announcement__msg.is-active {
-    opacity: 1;
-    position: relative;
-    left: auto;
-    transform: none;
-    pointer-events: auto;
+  .sg-announce-{{ section.id }} .sg-announce-msg.is-active {
+    display: inline-flex;
   }
-  .sg-announcement__msg a {
+  .sg-announce-{{ section.id }} .sg-announce-arrow {
+    width: 26px;
+    height: 26px;
     color: inherit;
-    text-decoration: underline;
+    opacity: 0.7;
+    font-size: 16px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: 700;
+    transition: opacity .2s;
+    background: none;
+    border: none;
+    cursor: pointer;
   }
+  .sg-announce-{{ section.id }} .sg-announce-arrow:hover { opacity: 1; }
 {%- endstyle -%}
 
-<div class="sg-announcement" id="sg-announcement-{{ section.id }}" {{ section.shopify_attributes }}>
-  {%- if section.blocks.size > 0 -%}
+<div class="sg-root sg-announce-{{ section.id }}" {{ section.shopify_attributes }}>
+  <div class="sg-announce-track">
+    {%- if section.blocks.size > 1 -%}
+      <button class="sg-announce-arrow" data-dir="prev" aria-label="Previous">‹</button>
+    {%- endif -%}
     {%- for block in section.blocks -%}
-      <span class="sg-announcement__msg {% if forloop.first %}is-active{% endif %}" {{ block.shopify_attributes }}>
-        {{ block.settings.message }}
+      <span class="sg-announce-msg{% if forloop.first %} is-active{% endif %}" data-msg="{{ forloop.index0 }}" {{ block.shopify_attributes }}>
+        {{ block.settings.text }}
       </span>
     {%- endfor -%}
-  {%- else -%}
-    <span class="sg-announcement__msg is-active">Free shipping on orders above Rs.1,000</span>
-  {%- endif -%}
+    {%- if section.blocks.size > 1 -%}
+      <button class="sg-announce-arrow" data-dir="next" aria-label="Next">›</button>
+    {%- endif -%}
+  </div>
 </div>
 
-{%- if section.blocks.size > 1 -%}
-  <script>
-    (function () {
-      var root = document.getElementById('sg-announcement-{{ section.id }}');
-      if (!root) return;
-      var msgs = root.querySelectorAll('.sg-announcement__msg');
-      if (msgs.length < 2) return;
-      var idx = 0;
-      setInterval(function () {
-        msgs[idx].classList.remove('is-active');
-        idx = (idx + 1) % msgs.length;
-        msgs[idx].classList.add('is-active');
-      }, {{ section.settings.rotate_ms | default: 7000 }});
-    })();
-  </script>
+{%- if section.blocks.size > 1 and section.settings.autoplay -%}
+<script>
+(function() {
+  var root = document.querySelector('.sg-announce-{{ section.id }}');
+  if (!root) return;
+  var msgs = root.querySelectorAll('.sg-announce-msg');
+  var i = 0;
+  function show(n) {
+    i = (n + msgs.length) % msgs.length;
+    msgs.forEach(function(m, idx) { m.classList.toggle('is-active', idx === i); });
+  }
+  root.querySelector('[data-dir="next"]').addEventListener('click', function() { show(i + 1); });
+  root.querySelector('[data-dir="prev"]').addEventListener('click', function() { show(i - 1); });
+  setInterval(function() { show(i + 1); }, {{ section.settings.speed | default: 4500 }});
+})();
+</script>
 {%- endif -%}
 
 {% schema %}
 {
-  "name": "SG Announcement",
+  "name": "SG — Announcement Bar",
+  "tag": "section",
+  "class": "section-sg-announcement",
   "settings": [
     {
       "type": "color",
       "id": "bg_color",
-      "label": "Background Color",
-      "default": "#3D3833"
+      "label": "Background",
+      "default": "#F2EADB"
     },
     {
       "type": "color",
       "id": "text_color",
-      "label": "Text Color",
-      "default": "#FAF6F0"
+      "label": "Text",
+      "default": "#D26939"
     },
     {
       "type": "range",
-      "id": "rotate_ms",
-      "min": 3000,
-      "max": 15000,
+      "id": "vertical_padding",
+      "label": "Vertical padding (px)",
+      "min": 6,
+      "max": 20,
+      "step": 1,
+      "default": 10
+    },
+    {
+      "type": "range",
+      "id": "font_size",
+      "label": "Font size (px)",
+      "min": 11,
+      "max": 16,
+      "step": 1,
+      "default": 13
+    },
+    {
+      "type": "header",
+      "content": "Autoplay"
+    },
+    {
+      "type": "checkbox",
+      "id": "autoplay",
+      "label": "Auto-rotate messages",
+      "default": true
+    },
+    {
+      "type": "range",
+      "id": "speed",
+      "label": "Rotation speed (ms)",
+      "min": 2000,
+      "max": 10000,
       "step": 500,
-      "unit": "ms",
-      "label": "Rotation speed",
-      "default": 7000
+      "default": 4500
     }
   ],
-  "max_blocks": 6,
   "blocks": [
     {
       "type": "message",
       "name": "Message",
       "settings": [
         {
-          "type": "text",
-          "id": "message",
+          "type": "richtext",
+          "id": "text",
           "label": "Message",
-          "default": "Free shipping over Rs.1,000"
+          "default": "<p>Free Shipping over <strong>₹1,000</strong> · Easy Returns</p>"
         }
       ]
     }
   ],
   "presets": [
     {
-      "name": "SG Announcement",
+      "name": "SG — Announcement Bar",
       "blocks": [
-        { "type": "message", "settings": { "message": "Free shipping over Rs.1,000 (because paper should never be held hostage)" } },
-        { "type": "message", "settings": { "message": "Handcrafted by 40 makers in Mumbai - since 2013" } },
-        { "type": "message", "settings": { "message": "Loved by 50,000+ makers across India" } },
-        { "type": "message", "settings": { "message": "New: 2026 calendars have landed" } }
+        { "type": "message", "settings": { "text": "<p>Free Shipping over <strong>₹1,000</strong> · Easy Returns</p>" } },
+        { "type": "message", "settings": { "text": "<p>Save ₹50 on <strong>Prepaid Orders</strong> · Code PREPAID50</p>" } },
+        { "type": "message", "settings": { "text": "<p><strong>COD</strong> available across India · Ships in 24 hrs</p>" } }
       ]
     }
   ]

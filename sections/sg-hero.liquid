@@ -2,338 +2,386 @@
 
 {%- style -%}
   .sg-hero-{{ section.id }} {
-    padding-top: {{ section.settings.padding_top | times: 0.5 | round: 0 }}px;
-    padding-bottom: {{ section.settings.padding_bottom | times: 0.5 | round: 0 }}px;
+    background: {{ section.settings.section_bg }};
   }
-  @media screen and (min-width: 750px) {
-    .sg-hero-{{ section.id }} {
-      padding-top: {{ section.settings.padding_top }}px;
-      padding-bottom: {{ section.settings.padding_bottom }}px;
+  .sg-hero-{{ section.id }} .sg-hero-section {
+    min-height: {{ section.settings.mobile_height }}px;
+  }
+  @media (min-width: 900px) {
+    .sg-hero-{{ section.id }} .sg-hero-section {
+      min-height: {{ section.settings.desktop_height }}px;
     }
   }
 {%- endstyle -%}
 
-<section
-  class="sg-section sg-hero-slideshow sg-hero-{{ section.id }}"
-  data-sg-hero="{{ section.id }}"
-  data-autoplay="{{ section.settings.autoplay }}"
-  data-autoplay-speed="{{ section.settings.autoplay_speed }}"
-  {{ section.shopify_attributes }}
->
-  <div class="sg-hero__track" id="sg-hero-track-{{ section.id }}">
-    {%- if section.blocks.size == 0 -%}
-      <div class="sg-hero-slide sg-hero-slide--auto is-active" data-index="0">
-        <a class="sg-hero-slide__link" href="/collections/all" aria-label="Shop the collection"></a>
-        <div class="sg-hero-slide__content">
-          <div class="sg-hero-slide__blob" aria-hidden="true">
-            <svg viewBox="0 0 600 700" preserveAspectRatio="none" xmlns="http://www.w3.org/2000/svg">
-              <path fill="#C8E616" d="M-20,120 C120,60 300,20 440,80 C560,130 620,260 580,400 C540,540 430,660 300,680 C160,700 30,620 -10,480 C-50,340 -100,200 -20,120 Z"/>
-            </svg>
-          </div>
-          <div class="sg-hero-slide__inner">
-            <span class="sg-hero-slide__eyebrow">Handcrafted paper kits</span>
-            <h2 class="sg-hero-slide__heading">Simple paper. <em>Real joy.</em></h2>
-            <p class="sg-hero-slide__sub">Pre-cut, pre-scored, ready to make — 50,000+ happy makers can't be wrong.</p>
-            <span class="sg-hero-slide__cta">
-              Explore the collection
-              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
-            </span>
-          </div>
-        </div>
-        <div class="sg-hero-slide__media">
-          <img src="https://cdn.shopify.com/s/files/1/0428/5530/1271/collections/Sky-Goodies-Birthday-Party-Decor-Daisy-Birthday-01.jpg?v=1741610348" alt="Sky Goodies paper craft" loading="eager" referrerpolicy="no-referrer">
-        </div>
-      </div>
-    {%- endif -%}
-    {%- for block in section.blocks -%}
-      {%- assign is_first = forloop.first -%}
-      {%- assign size_class = 'sg-hero-slide--' | append: block.settings.image_size -%}
-      <div
-        class="sg-hero-slide {{ size_class }}{% if is_first %} is-active{% endif %}"
-        data-index="{{ forloop.index0 }}"
-        {{ block.shopify_attributes }}
-      >
-        {%- if block.settings.button_link != blank -%}
-          <a class="sg-hero-slide__link" href="{{ block.settings.button_link }}" aria-label="{{ block.settings.heading | escape }}"></a>
-        {%- endif -%}
-
-        <div class="sg-hero-slide__content">
-          <div class="sg-hero-slide__blob" aria-hidden="true">
-            <svg viewBox="0 0 600 700" preserveAspectRatio="none" xmlns="http://www.w3.org/2000/svg">
-              <path fill="{{ block.settings.blob_color }}" d="M-20,120 C120,60 300,20 440,80 C560,130 620,260 580,400 C540,540 430,660 300,680 C160,700 30,620 -10,480 C-50,340 -100,200 -20,120 Z"/>
-            </svg>
-          </div>
-          <div class="sg-hero-slide__inner">
-            {%- if block.settings.eyebrow != blank -%}
-              <span class="sg-hero-slide__eyebrow">{{ block.settings.eyebrow }}</span>
+<div class="sg-root sg-hero-wrapper sg-hero-{{ section.id }}" data-sg-hero="{{ section.id }}" {{ section.shopify_attributes }}>
+  <section class="sg-hero-section" aria-roledescription="carousel">
+    <div class="sg-hero-slides" data-slides>
+      {%- for block in section.blocks -%}
+        {%- assign theme_bg = block.settings.slide_bg | default: '#D26939' -%}
+        {%- assign slide_img = block.settings.image -%}
+        <div class="sg-hero-slide{% if forloop.first %} is-active first{% endif %}"
+             data-slide="{{ forloop.index0 }}"
+             style="background: {{ theme_bg }};"
+             {{ block.shopify_attributes }}>
+          <div class="sg-hero-content">
+            {%- if block.settings.tag != blank -%}
+              <span class="sg-hero-tag" style="background: {{ block.settings.tag_bg }}; color: {{ block.settings.tag_color }};">{{ block.settings.tag }}</span>
             {%- endif -%}
             {%- if block.settings.heading != blank -%}
-              <h2 class="sg-hero-slide__heading">{{ block.settings.heading }}</h2>
+              <h1 class="sg-hero-title">{{ block.settings.heading }}</h1>
             {%- endif -%}
             {%- if block.settings.subheading != blank -%}
-              <p class="sg-hero-slide__sub">{{ block.settings.subheading }}</p>
+              <p class="sg-hero-sub">{{ block.settings.subheading }}</p>
             {%- endif -%}
-            {%- if block.settings.button_label != blank -%}
-              <span class="sg-hero-slide__cta">
-                {{ block.settings.button_label }}
-                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
-                  <line x1="5" y1="12" x2="19" y2="12"/>
-                  <polyline points="12 5 19 12 12 19"/>
-                </svg>
-              </span>
-            {%- endif -%}
+            <div class="sg-hero-ctas">
+              {%- if block.settings.cta1_text != blank -%}
+                <a href="{{ block.settings.cta1_link | default: '#' }}" class="sg-pill sg-pill--lime sg-pill--lg">{{ block.settings.cta1_text }}</a>
+              {%- endif -%}
+              {%- if block.settings.cta2_text != blank -%}
+                <a href="{{ block.settings.cta2_link | default: '#' }}" class="sg-pill sg-pill--white sg-pill--lg">{{ block.settings.cta2_text }}</a>
+              {%- endif -%}
+            </div>
+          </div>
+          <div class="sg-hero-image"
+               {% if slide_img %}style="background-image: url('{{ slide_img | image_url: width: 1400 }}');"{% endif %}>
           </div>
         </div>
-
-        <div class="sg-hero-slide__media">
-          {%- if block.settings.image != blank -%}
-            <picture>
-              {%- if block.settings.image_mobile != blank -%}
-                <source
-                  media="(max-width: 749px)"
-                  srcset="{{ block.settings.image_mobile | image_url: width: 750 }} 750w, {{ block.settings.image_mobile | image_url: width: 1100 }} 1100w"
-                  sizes="100vw"
-                >
-              {%- endif -%}
-              <img
-                src="{{ block.settings.image | image_url: width: 1600 }}"
-                srcset="{{ block.settings.image | image_url: width: 800 }} 800w, {{ block.settings.image | image_url: width: 1200 }} 1200w, {{ block.settings.image | image_url: width: 1600 }} 1600w, {{ block.settings.image | image_url: width: 2000 }} 2000w"
-                sizes="(min-width: 750px) 50vw, 100vw"
-                alt="{{ block.settings.image.alt | default: block.settings.heading | escape }}"
-                width="{{ block.settings.image.width }}"
-                height="{{ block.settings.image.height }}"
-                loading="{% if is_first %}eager{% else %}lazy{% endif %}"
-                {% if is_first %}fetchpriority="high"{% endif %}
-              >
-            </picture>
-          {%- elsif block.settings.image_mobile != blank -%}
-            <picture>
-              <img src="{{ block.settings.image_mobile | image_url: width: 1200 }}" alt="{{ block.settings.heading | escape }}" loading="lazy">
-            </picture>
-          {%- else -%}
-            <div class="sg-placeholder" style="min-height: 400px;">
-              {{ 'lifestyle-1' | placeholder_svg_tag: 'sg-placeholder-svg' }}
-            </div>
-          {%- endif -%}
-        </div>
-      </div>
-    {%- endfor -%}
-  </div>
-
-  {%- if section.settings.show_arrows and section.blocks.size > 1 -%}
-    <div class="sg-hero__arrows">
-      <button type="button" class="sg-hero__arrow" data-sg-hero-prev aria-label="Previous slide">
-        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="15 18 9 12 15 6"/></svg>
-      </button>
-      <button type="button" class="sg-hero__arrow" data-sg-hero-next aria-label="Next slide">
-        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="9 18 15 12 9 6"/></svg>
-      </button>
-    </div>
-  {%- endif -%}
-
-  {%- if section.settings.show_dots and section.blocks.size > 1 -%}
-    <div class="sg-hero__dots">
-      {%- for block in section.blocks -%}
-        <button
-          type="button"
-          class="sg-hero__dot{% if forloop.first %} is-active{% endif %}"
-          data-sg-hero-dot="{{ forloop.index0 }}"
-          aria-label="Slide {{ forloop.index }}"
-        ></button>
       {%- endfor -%}
     </div>
-  {%- endif -%}
-</section>
+
+    {%- if section.blocks.size > 1 -%}
+      <div class="sg-hero-controls">
+        <button class="sg-hero-arrow" data-dir="prev" aria-label="Previous slide">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="15 18 9 12 15 6"/></svg>
+        </button>
+        <div class="sg-hero-dots" role="tablist">
+          {%- for block in section.blocks -%}
+            <button class="sg-hero-dot{% if forloop.first %} active{% endif %}" data-dot="{{ forloop.index0 }}" aria-label="Slide {{ forloop.index }}"></button>
+          {%- endfor -%}
+        </div>
+        <button class="sg-hero-arrow" data-dir="next" aria-label="Next slide">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="9 18 15 12 9 6"/></svg>
+        </button>
+      </div>
+    {%- endif -%}
+
+    <div class="sg-hero-wave" aria-hidden="true" style="background: {{ section.settings.wave_color | default: '#FAF6F0' }};"></div>
+  </section>
+</div>
+
+<style>
+.sg-hero-wrapper { position: relative; overflow: hidden; }
+.sg-hero-section { position: relative; }
+.sg-hero-slides { position: relative; }
+.sg-hero-slide {
+  position: absolute;
+  inset: 0;
+  display: grid;
+  grid-template-columns: 1fr;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity .8s var(--sg-ease);
+}
+.sg-hero-slide.first { position: relative; inset: auto; }
+.sg-hero-slide.is-active { opacity: 1; pointer-events: auto; position: relative; inset: auto; }
+.sg-hero-slide.first:not(.is-active) { position: absolute; inset: 0; opacity: 0; }
+@media (min-width: 900px) { .sg-hero-slide { grid-template-columns: 1fr 1fr; } }
+
+.sg-hero-content {
+  padding: 48px var(--sg-gutter) 120px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  color: #fff;
+  position: relative;
+  z-index: 2;
+  max-width: 720px;
+}
+@media (min-width: 900px) { .sg-hero-content { padding: 80px 40px 80px 60px; } }
+
+.sg-hero-tag {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 10px 18px;
+  border-radius: 999px;
+  font-weight: 800;
+  font-size: 14px;
+  letter-spacing: 0.04em;
+  margin-bottom: 20px;
+  border: 2px solid var(--sg-ink);
+  box-shadow: 4px 4px 0 var(--sg-ink);
+  align-self: flex-start;
+  text-transform: uppercase;
+}
+.sg-hero-title {
+  font-family: var(--sg-display);
+  font-weight: 900;
+  font-size: clamp(48px, 9vw, 120px);
+  line-height: 0.88;
+  color: #fff;
+  margin: 0 0 20px;
+  letter-spacing: -0.04em;
+}
+.sg-hero-title em {
+  font-style: italic;
+  font-weight: 400;
+  color: var(--sg-cream);
+}
+.sg-hero-sub {
+  font-size: 17px;
+  color: rgba(255,255,255,.88);
+  max-width: 440px;
+  margin: 0 0 32px;
+  font-weight: 500;
+  line-height: 1.5;
+}
+.sg-hero-ctas { display: flex; gap: 12px; flex-wrap: wrap; }
+
+.sg-hero-image {
+  position: relative;
+  min-height: 320px;
+  background-size: cover;
+  background-position: center;
+}
+@media (min-width: 900px) { .sg-hero-image { min-height: inherit; } }
+
+.sg-hero-controls {
+  position: absolute;
+  bottom: 28px; left: 50%;
+  transform: translateX(-50%);
+  z-index: 5;
+  display: flex;
+  align-items: center;
+  gap: 14px;
+}
+.sg-hero-arrow {
+  width: 44px; height: 44px;
+  border-radius: 50%;
+  background: var(--sg-white);
+  border: 2px solid var(--sg-ink);
+  color: var(--sg-ink);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all .15s;
+}
+.sg-hero-arrow:hover { transform: translateY(-2px); box-shadow: 0 4px 0 var(--sg-ink); }
+.sg-hero-arrow svg { width: 18px; height: 18px; }
+.sg-hero-dots { display: flex; gap: 6px; }
+.sg-hero-dot {
+  width: 10px; height: 10px;
+  border-radius: 50%;
+  background: rgba(255,255,255,.5);
+  border: 2px solid var(--sg-ink);
+  transition: all .2s;
+  cursor: pointer;
+}
+.sg-hero-dot.active { background: var(--sg-lime); width: 28px; border-radius: 999px; }
+
+.sg-hero-wave {
+  position: absolute;
+  bottom: -1px; left: 0; right: 0;
+  z-index: 3;
+  height: 80px;
+  clip-path: ellipse(70% 100% at 50% 100%);
+}
+@media (min-width: 768px) {
+  .sg-hero-wave { height: 110px; clip-path: ellipse(100% 100% at 50% 100%); }
+}
+</style>
 
 <script>
-  (function () {
-    var root = document.querySelector('[data-sg-hero="{{ section.id }}"]');
-    if (!root) return;
-    var slides = root.querySelectorAll('.sg-hero-slide');
-    if (slides.length < 2) return;
-    var dots = root.querySelectorAll('[data-sg-hero-dot]');
-    var prev = root.querySelector('[data-sg-hero-prev]');
-    var next = root.querySelector('[data-sg-hero-next]');
-    var autoplay = root.getAttribute('data-autoplay') === 'true';
-    var speed = (parseInt(root.getAttribute('data-autoplay-speed'), 10) || 5) * 1000;
-    var i = 0;
-    var timer;
-
-    function go(n) {
-      slides[i].classList.remove('is-active');
-      if (dots[i]) dots[i].classList.remove('is-active');
-      i = (n + slides.length) % slides.length;
-      slides[i].classList.add('is-active');
-      if (dots[i]) dots[i].classList.add('is-active');
-    }
-    function reset() {
-      if (!autoplay) return;
-      clearInterval(timer);
-      timer = setInterval(function () { go(i + 1); }, speed);
-    }
-    if (prev) prev.addEventListener('click', function () { go(i - 1); reset(); });
-    if (next) next.addEventListener('click', function () { go(i + 1); reset(); });
-    dots.forEach(function (d) {
-      d.addEventListener('click', function () {
-        go(parseInt(d.getAttribute('data-sg-hero-dot'), 10));
-        reset();
-      });
-    });
+(function() {
+  var root = document.querySelector('.sg-hero-{{ section.id }}');
+  if (!root) return;
+  var slides = root.querySelectorAll('.sg-hero-slide');
+  var dots = root.querySelectorAll('.sg-hero-dot');
+  var idx = 0;
+  var timer;
+  function go(n) {
+    idx = (n + slides.length) % slides.length;
+    slides.forEach(function(s, i) { s.classList.toggle('is-active', i === idx); });
+    dots.forEach(function(d, i) { d.classList.toggle('active', i === idx); });
     reset();
-  })();
+  }
+  function next() { go(idx + 1); }
+  function prev() { go(idx - 1); }
+  function reset() { clearInterval(timer); {% if section.settings.autoplay %}timer = setInterval(next, {{ section.settings.autoplay_speed | default: 6000 }});{% endif %} }
+  root.querySelectorAll('[data-dir="next"]').forEach(function(b) { b.addEventListener('click', next); });
+  root.querySelectorAll('[data-dir="prev"]').forEach(function(b) { b.addEventListener('click', prev); });
+  dots.forEach(function(d) { d.addEventListener('click', function() { go(parseInt(d.dataset.dot, 10)); }); });
+  reset();
+  root.addEventListener('mouseenter', function() { clearInterval(timer); });
+  root.addEventListener('mouseleave', reset);
+})();
 </script>
 
 {% schema %}
 {
-  "name": "SG Hero Slideshow",
-  "class": "sg-hero-section",
+  "name": "SG — Hero Slideshow",
+  "tag": "section",
+  "class": "section-sg-hero",
   "settings": [
+    {
+      "type": "header",
+      "content": "Layout"
+    },
+    {
+      "type": "color",
+      "id": "section_bg",
+      "label": "Fallback background",
+      "default": "#FAF6F0"
+    },
+    {
+      "type": "color",
+      "id": "wave_color",
+      "label": "Wave color (should match the section that follows)",
+      "default": "#FAF6F0"
+    },
+    {
+      "type": "number",
+      "id": "mobile_height",
+      "label": "Mobile minimum height (px)",
+      "default": 600
+    },
+    {
+      "type": "number",
+      "id": "desktop_height",
+      "label": "Desktop minimum height (px)",
+      "default": 700
+    },
+    {
+      "type": "header",
+      "content": "Autoplay"
+    },
     {
       "type": "checkbox",
       "id": "autoplay",
-      "label": "Autoplay",
+      "label": "Auto-advance slides",
       "default": true
     },
     {
       "type": "range",
       "id": "autoplay_speed",
-      "min": 3,
-      "max": 10,
-      "step": 1,
-      "unit": "s",
-      "label": "Autoplay speed",
-      "default": 5
-    },
-    {
-      "type": "checkbox",
-      "id": "show_arrows",
-      "label": "Show arrows",
-      "default": true
-    },
-    {
-      "type": "checkbox",
-      "id": "show_dots",
-      "label": "Show dots",
-      "default": true
-    },
-    {
-      "type": "range",
-      "id": "padding_top",
-      "min": 0,
-      "max": 100,
-      "step": 4,
-      "unit": "px",
-      "label": "Padding top",
-      "default": 0
-    },
-    {
-      "type": "range",
-      "id": "padding_bottom",
-      "min": 0,
-      "max": 100,
-      "step": 4,
-      "unit": "px",
-      "label": "Padding bottom",
-      "default": 40
+      "label": "Auto-advance interval (ms)",
+      "min": 3000,
+      "max": 10000,
+      "step": 500,
+      "default": 6000
     }
   ],
   "blocks": [
     {
       "type": "slide",
       "name": "Slide",
-      "limit": 5,
       "settings": [
         {
-          "type": "image_picker",
-          "id": "image",
-          "label": "Image (desktop)"
-        },
-        {
-          "type": "image_picker",
-          "id": "image_mobile",
-          "label": "Image (mobile)",
-          "info": "Used on screens narrower than 750px."
-        },
-        {
-          "type": "select",
-          "id": "image_size",
-          "label": "Slide size",
-          "options": [
-            { "value": "auto", "label": "Auto" },
-            { "value": "small", "label": "Small" },
-            { "value": "medium", "label": "Medium" },
-            { "value": "large", "label": "Large" }
-          ],
-          "default": "medium"
-        },
-        {
           "type": "text",
-          "id": "eyebrow",
-          "label": "Eyebrow",
-          "default": "Fresh off the press"
+          "id": "tag",
+          "label": "Tag / badge text",
+          "default": "⚡ Selling Fast"
+        },
+        {
+          "type": "color",
+          "id": "tag_bg",
+          "label": "Tag background",
+          "default": "#E8845A"
+        },
+        {
+          "type": "color",
+          "id": "tag_color",
+          "label": "Tag text color",
+          "default": "#FFFFFF"
         },
         {
           "type": "text",
           "id": "heading",
-          "label": "Heading",
-          "default": "Turn the page, turn a new leaf"
+          "label": "Headline (use <em>word</em> to italicise)",
+          "default": "Gifting<br>made<br><em>joyful.</em>"
         },
         {
           "type": "textarea",
           "id": "subheading",
           "label": "Subheading",
-          "default": "Our new collection has landed — desk-side joy, one tear-off sheet at a time."
-        },
-        {
-          "type": "text",
-          "id": "button_label",
-          "label": "Button label",
-          "default": "Shop now"
-        },
-        {
-          "type": "url",
-          "id": "button_link",
-          "label": "Slide link",
-          "info": "Used for both the CTA button and the whole slide click area."
+          "default": "Handcrafted paper kits for birthdays, housewarmings & everyday wonder."
         },
         {
           "type": "color",
-          "id": "blob_color",
-          "label": "Blob color",
-          "default": "#C8E616"
+          "id": "slide_bg",
+          "label": "Slide background color",
+          "default": "#D26939"
+        },
+        {
+          "type": "image_picker",
+          "id": "image",
+          "label": "Slide image (right side)"
+        },
+        {
+          "type": "text",
+          "id": "cta1_text",
+          "label": "Primary CTA text",
+          "default": "Shop Now"
+        },
+        {
+          "type": "url",
+          "id": "cta1_link",
+          "label": "Primary CTA link"
+        },
+        {
+          "type": "text",
+          "id": "cta2_text",
+          "label": "Secondary CTA text",
+          "default": "Bestsellers"
+        },
+        {
+          "type": "url",
+          "id": "cta2_link",
+          "label": "Secondary CTA link"
         }
       ]
     }
   ],
   "presets": [
     {
-      "name": "Hero slideshow",
+      "name": "SG — Hero Slideshow",
       "blocks": [
         {
           "type": "slide",
           "settings": {
-            "eyebrow": "Fresh off the press",
-            "heading": "Turn the page, turn a new leaf",
-            "subheading": "Our 2026 calendar collection has landed — desk-side joy, one tear-off sheet at a time.",
-            "button_label": "Shop calendars"
+            "tag": "⚡ Selling Fast",
+            "heading": "Gifting<br>made<br><em>joyful.</em>",
+            "subheading": "Handcrafted paper kits for birthdays, housewarmings & everyday wonder.",
+            "slide_bg": "#D26939",
+            "cta1_text": "Shop Now",
+            "cta2_text": "Bestsellers"
           }
         },
         {
           "type": "slide",
           "settings": {
-            "eyebrow": "Glow season",
-            "heading": "Tiny lights, enormous feelings",
-            "subheading": "Paper lanterns, string lights, and every cozy corner you've ever dreamed of.",
-            "button_label": "Shop fairy lights"
+            "tag": "★ Bestsellers",
+            "tag_bg": "#F5CF8A",
+            "tag_color": "#1E1B18",
+            "heading": "Paper,<br>but make it<br><em>magical.</em>",
+            "subheading": "Lamps that glow, birds that flutter, idols that mean something.",
+            "slide_bg": "#C17753",
+            "cta1_text": "See lamps",
+            "cta2_text": "All décor"
           }
         },
         {
           "type": "slide",
           "settings": {
-            "eyebrow": "Screen-free sundays",
-            "heading": "Keep little hands beautifully busy",
-            "subheading": "Craft kits designed by parents, loved by kids aged four to fourteen.",
-            "button_label": "Shop kids kits"
+            "tag": "🌿 For Little Hands",
+            "tag_bg": "#C8E616",
+            "tag_color": "#1E1B18",
+            "heading": "Screen-free<br>summer<br><em>unlocked.</em>",
+            "subheading": "Endangered animal BOX SETs, mini pets, and more.",
+            "slide_bg": "#A27C5C",
+            "cta1_text": "Shop kids",
+            "cta2_text": "Gift ideas"
           }
         }
       ]

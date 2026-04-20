@@ -1,0 +1,155 @@
+{{ 'sg-theme.css' | asset_url | stylesheet_tag }}
+
+{%- style -%}
+  .sg-certs-{{ section.id }} {
+    background: {{ section.settings.bg_color | default: '#D9E4C1' }};
+    padding: 80px 0;
+    position: relative;
+    overflow: hidden;
+    color: {{ section.settings.text_color | default: '#243C26' }};
+  }
+  .sg-certs-{{ section.id }}::before,
+  .sg-certs-{{ section.id }}::after {
+    content: '';
+    position: absolute;
+    left: 0; right: 0;
+    height: 80px;
+    background: {{ section.settings.wave_color | default: '#FAF6F0' }};
+  }
+  .sg-certs-{{ section.id }}::before { top: -1px; clip-path: ellipse(70% 100% at 50% 0%); }
+  .sg-certs-{{ section.id }}::after { bottom: -1px; clip-path: ellipse(70% 100% at 50% 100%); }
+  @media (min-width: 768px) {
+    .sg-certs-{{ section.id }}::before { height: 110px; clip-path: ellipse(100% 100% at 50% 0%); }
+    .sg-certs-{{ section.id }}::after { height: 110px; clip-path: ellipse(100% 100% at 50% 100%); }
+  }
+  .sg-certs-{{ section.id }} .sg-wrap { position: relative; z-index: 2; }
+  .sg-certs-{{ section.id }} h2,
+  .sg-certs-{{ section.id }} h4 { color: {{ section.settings.text_color | default: '#243C26' }}; }
+  .sg-certs-{{ section.id }} p { color: {{ section.settings.text_color | default: '#243C26' }}; opacity: 0.85; }
+  .sg-certs-{{ section.id }} .sg-cert-stamp { border-color: {{ section.settings.text_color | default: '#243C26' }}; background: {{ section.settings.stamp_bg | default: '#E8F0D8' }}; }
+  .sg-certs-{{ section.id }} .sg-cert-stamp::before { border-color: {{ section.settings.text_color | default: '#243C26' }}; }
+  .sg-certs-{{ section.id }} .sg-cert-stamp svg { stroke: {{ section.settings.text_color | default: '#243C26' }}; }
+{%- endstyle -%}
+
+<section class="sg-root sg-certs-{{ section.id }}" {{ section.shopify_attributes }}>
+  <div class="sg-wrap">
+    <div style="text-align:center; margin-bottom: 40px;">
+      <h2 style="font-family: var(--sg-display); font-weight: 900; font-size: clamp(36px, 5vw, 60px); margin: 0 0 8px;">{{ section.settings.heading | default: 'Safe. Eco. Ours.' }}</h2>
+      <p style="font-weight: 600; font-size: 17px;">{{ section.settings.subheading | default: 'Zero plastic. Zero mass-production. Just paper, care & craft.' }}</p>
+    </div>
+
+    <div class="sg-certs-row">
+      {%- for block in section.blocks -%}
+        <div class="sg-cert" {{ block.shopify_attributes }}>
+          <div class="sg-cert-stamp">
+            {%- case block.settings.icon -%}
+              {%- when 'hand' -%}
+                <svg viewBox="0 0 24 24" fill="none" stroke-width="1.5"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg>
+              {%- when 'leaf' -%}
+                <svg viewBox="0 0 24 24" fill="none" stroke-width="1.5"><path d="M9 11H5a2 2 0 0 0-2 2v7h6v-5"/><path d="M19 11h-4V6a2 2 0 0 1 2-2h0a2 2 0 0 1 2 2v5z"/></svg>
+              {%- when 'tree' -%}
+                <svg viewBox="0 0 24 24" fill="none" stroke-width="1.5"><path d="M3 6c3 0 5-2 9-2s6 2 9 2v7c-3 0-5 2-9 2s-6-2-9-2z"/><line x1="12" y1="22" x2="12" y2="15"/></svg>
+              {%- when 'shield' -%}
+                <svg viewBox="0 0 24 24" fill="none" stroke-width="1.5"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
+              {%- when 'made-in' -%}
+                <svg viewBox="0 0 24 24" fill="none" stroke-width="1.5"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg>
+              {%- else -%}
+                <svg viewBox="0 0 24 24" fill="none" stroke-width="1.5"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg>
+            {%- endcase -%}
+          </div>
+          <h4 style="font-family: var(--sg-display); font-weight: 900; font-size: 20px; margin: 0 0 6px;">{{ block.settings.title }}</h4>
+          {%- if block.settings.subtitle != blank -%}
+            <div style="font-size:13px; font-weight:600; opacity: 0.7;">{{ block.settings.subtitle }}</div>
+          {%- endif -%}
+        </div>
+      {%- endfor -%}
+    </div>
+  </div>
+</section>
+
+<style>
+.sg-certs-row {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 24px;
+}
+@media (min-width: 600px) { .sg-certs-row { grid-template-columns: repeat({{ section.blocks.size | default: 3 }}, 1fr); } }
+.sg-cert {
+  text-align: center;
+  padding: 0 24px;
+  position: relative;
+}
+@media (min-width: 600px) {
+  .sg-cert:not(:last-child)::after {
+    content: '';
+    position: absolute;
+    right: -10px; top: 40px; bottom: 40px;
+    width: 2px;
+    background: rgba(36,60,38,.2);
+  }
+}
+.sg-cert-stamp {
+  width: 120px;
+  height: 120px;
+  margin: 0 auto 16px;
+  border-radius: 50%;
+  border: 3px solid #243C26;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+}
+.sg-cert-stamp::before {
+  content: '';
+  position: absolute;
+  inset: 6px;
+  border-radius: 50%;
+  border: 2px dashed #243C26;
+  opacity: 0.6;
+}
+.sg-cert-stamp svg { width: 46px; height: 46px; }
+</style>
+
+{% schema %}
+{
+  "name": "SG — Certifications",
+  "tag": "section",
+  "class": "section-sg-certifications",
+  "settings": [
+    { "type": "text", "id": "heading", "label": "Heading", "default": "Safe. Eco. Ours." },
+    { "type": "text", "id": "subheading", "label": "Subheading", "default": "Zero plastic. Zero mass-production. Just paper, care & craft." },
+    { "type": "color", "id": "bg_color", "label": "Section background", "default": "#D9E4C1" },
+    { "type": "color", "id": "text_color", "label": "Text / stroke color", "default": "#243C26" },
+    { "type": "color", "id": "stamp_bg", "label": "Stamp background", "default": "#E8F0D8" },
+    { "type": "color", "id": "wave_color", "label": "Wave color", "default": "#FAF6F0" }
+  ],
+  "max_blocks": 6,
+  "blocks": [
+    {
+      "type": "cert",
+      "name": "Certification",
+      "settings": [
+        { "type": "select", "id": "icon", "label": "Icon", "options": [
+          { "value": "hand", "label": "Made by Hand (heart)" },
+          { "value": "leaf", "label": "Eco / Leaf" },
+          { "value": "tree", "label": "Tree / FSC" },
+          { "value": "shield", "label": "Safety / Shield" },
+          { "value": "made-in", "label": "Made in India (home)" }
+        ], "default": "hand" },
+        { "type": "text", "id": "title", "label": "Title", "default": "Made by Hand" },
+        { "type": "text", "id": "subtitle", "label": "Subtitle", "default": "In our Mumbai studio" }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "SG — Certifications",
+      "blocks": [
+        { "type": "cert", "settings": { "icon": "hand", "title": "Made by Hand", "subtitle": "In our Mumbai studio" } },
+        { "type": "cert", "settings": { "icon": "tree", "title": "FSC-certified Paper", "subtitle": "Sustainably sourced" } },
+        { "type": "cert", "settings": { "icon": "leaf", "title": "100% Biodegradable", "subtitle": "Kraft packaging too" } }
+      ]
+    }
+  ]
+}
+{% endschema %}

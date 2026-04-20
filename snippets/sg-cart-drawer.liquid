@@ -1,120 +1,377 @@
-<div class="sg-cart-overlay" id="sgCartOverlay" data-sg-cart-toggle></div>
-<aside class="sg-cart-drawer" id="sgCartDrawer" aria-hidden="true">
-  <header class="sg-cart-header">
-    <h2 class="sg-cart-title">Your cart ({{ cart.item_count }})</h2>
-    <button class="sg-cart-close" data-sg-cart-toggle aria-label="Close cart">×</button>
-  </header>
+{% comment %}
+  SG — Cart Drawer (basil-style)
+  Include once in layout/theme.liquid via: {% render 'sg-cart-drawer' %}
+  Opens when any element with [data-sg-cart-open] or [data-sg-atc] is clicked.
+{% endcomment %}
 
-  {% assign threshold = 100000 %}
-  {% assign progress_pct = cart.total_price | times: 100 | divided_by: threshold %}
-  {% if progress_pct > 100 %}{% assign progress_pct = 100 %}{% endif %}
-  <div class="sg-cart-progress-wrap">
-    {% if cart.total_price < threshold %}
-      {% assign remaining = threshold | minus: cart.total_price | divided_by: 100 %}
-      <p class="sg-cart-progress-text">You're <strong>Rs.{{ remaining }}</strong> away from free shipping!</p>
-    {% else %}
-      <p class="sg-cart-progress-text">Congratulations! You've unlocked free shipping.</p>
-    {% endif %}
-    <div class="sg-cart-progress-track">
-      <div class="sg-cart-progress-fill" style="width:{{ progress_pct }}%"></div>
+{{ 'sg-theme.css' | asset_url | stylesheet_tag }}
+
+<div class="sg-drawer-back" id="sg-drawer-back" aria-hidden="true"></div>
+<aside class="sg-cart-drawer sg-root" id="sg-cart-drawer" role="dialog" aria-label="Shopping cart" aria-hidden="true">
+  <div class="sg-cart-head">
+    <div>
+      <h3>Your Cart</h3>
+      <div class="sg-cart-count"><span data-sg-cart-count-text>{{ cart.item_count }}</span> items · packed with love</div>
     </div>
+    <button class="sg-cart-close" data-sg-cart-close aria-label="Close cart">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+    </button>
   </div>
 
-  <div class="sg-cart-items">
-    {% if cart.item_count > 0 %}
-      {% for item in cart.items %}
-        <div class="sg-cart-item" data-line-key="{{ item.key }}">
-          <a href="{{ item.url }}" class="sg-cart-item-img">
-            {% if item.image %}<img src="{{ item.image | image_url: width: 120 }}" alt="" referrerpolicy="no-referrer">{% endif %}
-          </a>
-          <div class="sg-cart-item-info">
-            <a href="{{ item.url }}" class="sg-cart-item-title">{{ item.product.title }}</a>
-            {% unless item.variant.title contains 'Default' %}<p class="sg-cart-item-variant">{{ item.variant.title }}</p>{% endunless %}
-            <div class="sg-cart-item-bottom">
-              <div class="sg-qty-selector" data-line-key="{{ item.key }}">
-                <button data-qty-action="decrease" aria-label="Decrease">−</button>
-                <span>{{ item.quantity }}</span>
-                <button data-qty-action="increase" aria-label="Increase">+</button>
-              </div>
-              <span class="sg-cart-item-price">{{ item.final_line_price | money }}</span>
+  {%- assign free_ship_min = 1000 -%}
+  {%- assign cart_total = cart.total_price | divided_by: 100 -%}
+  {%- assign remaining = free_ship_min | minus: cart_total -%}
+  {%- if remaining < 0 -%}{%- assign remaining = 0 -%}{%- endif -%}
+  {%- assign fill_pct = cart_total | times: 100 | divided_by: free_ship_min -%}
+  {%- if fill_pct > 100 -%}{%- assign fill_pct = 100 -%}{%- endif -%}
+
+  <div class="sg-ship-bar">
+    <div class="sg-ship-txt">
+      {%- if remaining > 0 -%}
+        🚚 You're <strong>₹{{ remaining }} away</strong> from free shipping
+      {%- else -%}
+        🎉 You've unlocked <strong>free shipping!</strong>
+      {%- endif -%}
+    </div>
+    <div class="sg-ship-track"><div class="sg-ship-fill" style="width: {{ fill_pct }}%;"></div></div>
+  </div>
+
+  <div class="sg-cart-body">
+    <div class="sg-cart-items">
+      {%- if cart.item_count > 0 -%}
+        {%- for item in cart.items -%}
+          <div class="sg-cart-item" data-sg-item-key="{{ item.key }}">
+            <div class="sg-cart-item-img">
+              {%- if item.image -%}
+                <img src="{{ item.image | image_url: width: 160 }}" alt="{{ item.product.title | escape }}" />
+              {%- endif -%}
             </div>
-            <button class="sg-cart-item-remove" data-line-key="{{ item.key }}">Remove</button>
+            <div class="sg-cart-item-info">
+              <h4>{{ item.product.title }}</h4>
+              {%- if item.variant.title != 'Default Title' -%}
+                <div class="sg-cart-item-var">{{ item.variant.title }}</div>
+              {%- endif -%}
+              <div class="sg-cart-item-qty">
+                <button data-sg-qty-minus>−</button>
+                <span>{{ item.quantity }}</span>
+                <button data-sg-qty-plus>+</button>
+              </div>
+            </div>
+            <div class="sg-cart-item-right">
+              <div class="sg-cart-item-price">₹{{ item.final_line_price | divided_by: 100 }}</div>
+              <button class="sg-cart-item-rm" data-sg-remove>Remove</button>
+            </div>
           </div>
+        {%- endfor -%}
+      {%- else -%}
+        <div class="sg-cart-empty">
+          <p>Your cart is empty.</p>
+          <a href="{{ routes.all_products_collection_url }}" class="sg-pill sg-pill--orange sg-pill--lg">Start shopping →</a>
         </div>
-      {% endfor %}
-    {% else %}
-      <p class="sg-cart-empty">Your cart is empty.</p>
-    {% endif %}
+      {%- endif -%}
+    </div>
+
+    {%- if cart.item_count > 0 -%}
+      <div class="sg-prepaid-note">
+        <span class="sg-pi">₹</span>
+        <div>
+          <strong>Save ₹50 on prepaid orders</strong>
+          <small>Automatically applied with UPI / Card</small>
+        </div>
+      </div>
+    {%- endif -%}
   </div>
 
-  {% assign upsell_collection = collections.featured | default: collections.all %}
-  {% if upsell_collection.products.size > 0 and cart.item_count > 0 %}
-    <div class="sg-cart-upsell">
-      <p class="sg-cart-upsell-title">You may also like</p>
-      <div class="sg-cart-upsell-scroll">
-        {% for product in upsell_collection.products limit: 3 %}
-          <div class="sg-cart-upsell-card">
-            <img src="{{ product.featured_image | image_url: width: 200 }}" alt="" referrerpolicy="no-referrer">
-            <p class="sg-cart-upsell-name">{{ product.title }}</p>
-            <p class="sg-cart-upsell-price">{{ product.price | money }}</p>
-            <form action="/cart/add" method="post">
-              <input type="hidden" name="id" value="{{ product.variants.first.id }}">
-              <button type="submit" class="sg-cart-upsell-add">Add</button>
-            </form>
-          </div>
-        {% endfor %}
+  {%- if cart.item_count > 0 -%}
+    <div class="sg-cart-foot">
+      <div class="sg-cart-total-row"><span>Subtotal</span><span>₹{{ cart.total_price | divided_by: 100 }}</span></div>
+      <div class="sg-cart-total-row"><span>Shipping</span><span>Calculated at checkout</span></div>
+      <div class="sg-cart-total-row sg-cart-final">
+        <span>Total</span>
+        <span>₹{{ cart.total_price | divided_by: 100 }}</span>
       </div>
+      <a href="{{ routes.cart_url }}/checkout" class="sg-checkout-btn">
+        Secure Checkout
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><rect x="3" y="11" width="18" height="11" rx="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg>
+      </a>
     </div>
-  {% endif %}
-
-  {% if cart.item_count > 0 %}
-    <footer class="sg-cart-footer">
-      <div class="sg-cart-subtotal">
-        <span>Subtotal</span>
-        <strong>{{ cart.total_price | money }}</strong>
-      </div>
-      <p class="sg-cart-tax-note">Taxes included. Shipping calculated at checkout.</p>
-      <a href="/checkout" class="sg-cart-checkout-btn">Checkout — {{ cart.total_price | money }}</a>
-    </footer>
-  {% endif %}
+  {%- endif -%}
 </aside>
+
+<style>
+.sg-drawer-back {
+  position: fixed;
+  inset: 0;
+  background: rgba(30,27,24,.5);
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity .3s;
+  z-index: 1090;
+}
+.sg-drawer-back.sg-open { opacity: 1; pointer-events: auto; }
+.sg-cart-drawer {
+  position: fixed;
+  top: 0; right: 0; bottom: 0;
+  width: 100%;
+  max-width: 440px;
+  background: var(--sg-cream);
+  transform: translateX(100%);
+  transition: transform .4s var(--sg-ease-out);
+  z-index: 1100;
+  display: flex;
+  flex-direction: column;
+  border-left: 2px solid var(--sg-ink);
+}
+.sg-cart-drawer.sg-open { transform: translateX(0); }
+
+.sg-cart-head {
+  padding: 20px 24px;
+  border-bottom: 2px solid var(--sg-ink);
+  background: var(--sg-cream-light);
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+.sg-cart-head h3 {
+  font-family: var(--sg-display);
+  font-weight: 900;
+  font-size: 24px;
+  color: var(--sg-forest);
+  margin: 0;
+}
+.sg-cart-count { font-size: 12px; font-weight: 700; color: var(--sg-muted); margin-top: 2px; }
+.sg-cart-close {
+  width: 40px; height: 40px;
+  background: var(--sg-white);
+  border: 2px solid var(--sg-ink);
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all .15s;
+  cursor: pointer;
+}
+.sg-cart-close:hover { background: var(--sg-orange); color: #fff; }
+.sg-cart-close svg { width: 16px; height: 16px; }
+
+.sg-ship-bar {
+  padding: 14px 24px;
+  background: var(--sg-butter);
+  border-bottom: 2px solid var(--sg-ink);
+}
+.sg-ship-txt { font-size: 13px; font-weight: 700; color: var(--sg-ink); margin-bottom: 8px; }
+.sg-ship-txt strong { color: var(--sg-orange-dk); }
+.sg-ship-track {
+  height: 10px;
+  background: var(--sg-white);
+  border: 2px solid var(--sg-ink);
+  border-radius: 999px;
+  overflow: hidden;
+}
+.sg-ship-fill {
+  height: 100%;
+  background: var(--sg-lime);
+  border-right: 2px solid var(--sg-ink);
+  transition: width .4s;
+}
+
+.sg-cart-body { flex: 1; overflow-y: auto; }
+.sg-cart-items { padding: 0 24px; }
+.sg-cart-item {
+  display: grid;
+  grid-template-columns: 80px 1fr auto;
+  gap: 14px;
+  padding: 18px 0;
+  border-bottom: 1px solid rgba(30,27,24,.1);
+  align-items: start;
+}
+.sg-cart-item-img {
+  width: 80px; height: 80px;
+  background: var(--sg-butter);
+  border: 2px solid var(--sg-ink);
+  border-radius: 14px;
+  overflow: hidden;
+}
+.sg-cart-item-img img { width: 100%; height: 100%; object-fit: cover; }
+.sg-cart-item-info h4 { font-family: var(--sg-display); font-weight: 900; font-size: 15px; color: var(--sg-forest); line-height: 1.2; margin: 0 0 4px; }
+.sg-cart-item-var { font-size: 11px; color: var(--sg-muted); font-weight: 600; margin-bottom: 8px; }
+.sg-cart-item-qty {
+  display: inline-flex;
+  align-items: center;
+  background: var(--sg-white);
+  border: 2px solid var(--sg-ink);
+  border-radius: 999px;
+}
+.sg-cart-item-qty button {
+  width: 26px; height: 28px;
+  font-weight: 800;
+  font-size: 14px;
+  color: var(--sg-ink);
+  background: none;
+  border: none;
+  cursor: pointer;
+}
+.sg-cart-item-qty span { padding: 0 10px; font-weight: 800; font-size: 13px; }
+.sg-cart-item-right { text-align: right; display: flex; flex-direction: column; gap: 4px; align-items: end; }
+.sg-cart-item-price { font-family: var(--sg-display); font-weight: 900; font-size: 16px; color: var(--sg-price-red); }
+.sg-cart-item-rm { font-size: 10px; font-weight: 700; color: var(--sg-muted); text-decoration: underline; background: none; border: none; cursor: pointer; }
+
+.sg-cart-empty { padding: 40px 24px; text-align: center; }
+.sg-cart-empty p { color: var(--sg-muted); margin: 0 0 20px; font-weight: 600; }
+
+.sg-prepaid-note {
+  margin: 14px 24px 0;
+  padding: 12px 14px;
+  background: var(--sg-lime);
+  border: 2px solid var(--sg-ink);
+  border-radius: 14px;
+  font-size: 12.5px;
+  font-weight: 700;
+  color: var(--sg-ink);
+  display: flex;
+  gap: 10px;
+  align-items: center;
+}
+.sg-prepaid-note .sg-pi {
+  width: 30px; height: 30px;
+  background: var(--sg-ink);
+  color: var(--sg-lime);
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-family: var(--sg-display);
+  font-weight: 900;
+  font-size: 14px;
+  flex-shrink: 0;
+}
+.sg-prepaid-note strong { display: block; color: var(--sg-forest); }
+.sg-prepaid-note small { color: var(--sg-ink); opacity: 0.7; font-weight: 600; font-size: 11px; }
+
+.sg-cart-foot {
+  padding: 20px 24px;
+  background: var(--sg-cream-light);
+  border-top: 2px solid var(--sg-ink);
+}
+.sg-cart-total-row {
+  display: flex;
+  justify-content: space-between;
+  font-size: 13px;
+  font-weight: 600;
+  color: var(--sg-ink);
+  margin-bottom: 6px;
+}
+.sg-cart-total-row.sg-cart-final {
+  font-family: var(--sg-display);
+  font-weight: 900;
+  font-size: 22px;
+  color: var(--sg-forest);
+  margin: 12px 0 14px;
+  padding-top: 12px;
+  border-top: 2px dashed rgba(30,27,24,.2);
+}
+.sg-checkout-btn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  width: 100%;
+  padding: 18px;
+  background: var(--sg-lime);
+  color: var(--sg-ink);
+  border: 2px solid var(--sg-ink);
+  border-radius: 999px;
+  font-weight: 900;
+  font-size: 16px;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  text-decoration: none;
+  transition: all .15s;
+  font-family: var(--sg-sans);
+}
+.sg-checkout-btn:hover { background: #d5f52a; transform: translateY(-2px); box-shadow: 0 4px 0 var(--sg-ink); color: var(--sg-ink); }
+.sg-checkout-btn svg { width: 16px; height: 16px; }
+</style>
 
 <script>
 (function() {
-  var overlay = document.getElementById('sgCartOverlay');
-  var drawer = document.getElementById('sgCartDrawer');
-  function toggleCart(open) {
-    var isOpen = open === undefined ? !drawer.classList.contains('open') : open;
-    drawer.classList.toggle('open', isOpen);
-    overlay.classList.toggle('open', isOpen);
-    drawer.setAttribute('aria-hidden', !isOpen);
-    document.body.style.overflow = isOpen ? 'hidden' : '';
+  if (window.__sgCartDrawerInit) return;
+  window.__sgCartDrawerInit = true;
+  var drawer = document.getElementById('sg-cart-drawer');
+  var back = document.getElementById('sg-drawer-back');
+  if (!drawer || !back) return;
+
+  function open() {
+    drawer.classList.add('sg-open');
+    back.classList.add('sg-open');
+    drawer.setAttribute('aria-hidden', 'false');
+    document.body.style.overflow = 'hidden';
   }
+  function close() {
+    drawer.classList.remove('sg-open');
+    back.classList.remove('sg-open');
+    drawer.setAttribute('aria-hidden', 'true');
+    document.body.style.overflow = '';
+  }
+
   document.addEventListener('click', function(e) {
-    if (e.target.closest('[data-sg-cart-toggle]')) { e.preventDefault(); toggleCart(); }
+    var opener = e.target.closest('[data-sg-cart-open]');
+    if (opener) { e.preventDefault(); open(); return; }
+    var closer = e.target.closest('[data-sg-cart-close]');
+    if (closer) { e.preventDefault(); close(); return; }
+    if (e.target === back) close();
+
+    var atc = e.target.closest('[data-sg-atc]');
+    if (atc) {
+      var variantId = atc.getAttribute('data-variant-id');
+      if (!variantId) { open(); return; }
+      e.preventDefault();
+      var originalText = atc.textContent;
+      atc.textContent = 'Adding…';
+      atc.disabled = true;
+      fetch('/cart/add.js', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json', 'Accept': 'application/json' },
+        body: JSON.stringify({ id: variantId, quantity: 1 })
+      })
+      .then(function(r) { return r.json(); })
+      .then(function() { return fetch('/cart.js').then(function(r) { return r.json(); }); })
+      .then(function(cart) {
+        document.querySelectorAll('[data-sg-cart-count]').forEach(function(el) { el.textContent = cart.item_count; });
+        document.querySelectorAll('[data-sg-cart-count-text]').forEach(function(el) { el.textContent = cart.item_count; });
+        atc.textContent = 'Added ✓';
+        setTimeout(function() {
+          atc.textContent = originalText;
+          atc.disabled = false;
+          open();
+          window.location.reload();
+        }, 500);
+      })
+      .catch(function() {
+        atc.textContent = originalText;
+        atc.disabled = false;
+      });
+    }
   });
-  document.addEventListener('keydown', function(e) { if (e.key === 'Escape') toggleCart(false); });
+
+  document.addEventListener('keydown', function(e) { if (e.key === 'Escape') close(); });
 
   drawer.addEventListener('click', function(e) {
-    var qtyBtn = e.target.closest('[data-qty-action]');
-    var removeBtn = e.target.closest('.sg-cart-item-remove');
-    if (qtyBtn) {
-      var line = qtyBtn.closest('[data-line-key]');
-      var key = line.dataset.lineKey;
-      var current = parseInt(line.querySelector('.sg-qty-selector span').textContent, 10);
-      var next = qtyBtn.dataset.qtyAction === 'increase' ? current + 1 : Math.max(0, current - 1);
-      updateLine(key, next);
-    }
-    if (removeBtn) {
-      updateLine(removeBtn.dataset.lineKey, 0);
-    }
-  });
-  function updateLine(key, qty) {
+    var item = e.target.closest('[data-sg-item-key]');
+    if (!item) return;
+    var key = item.dataset.sgItemKey;
+    var qtyEl = item.querySelector('.sg-cart-item-qty span');
+    var qty = parseInt(qtyEl ? qtyEl.textContent : '1', 10);
+    var newQty = qty;
+    if (e.target.closest('[data-sg-qty-plus]')) newQty = qty + 1;
+    else if (e.target.closest('[data-sg-qty-minus]')) newQty = Math.max(0, qty - 1);
+    else if (e.target.closest('[data-sg-remove]')) newQty = 0;
+    else return;
     fetch('/cart/change.js', {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ id: key, quantity: qty })
-    }).then(function() { location.reload(); });
-  }
+      body: JSON.stringify({ id: key, quantity: newQty })
+    }).then(function() { window.location.reload(); });
+  });
 })();
 </script>

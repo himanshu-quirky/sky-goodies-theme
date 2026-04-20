@@ -1,0 +1,1731 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width,initial-scale=1" />
+<meta name="referrer" content="no-referrer" />
+<title>Sky Goodies · CRO Dashboard · Apr 2026</title>
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;0,9..40,600;0,9..40,700;1,9..40,400&family=DM+Serif+Display:ital@0;1&display=swap" rel="stylesheet" />
+<style>
+/* =========================================================================
+   SKY GOODIES — CRO DASHBOARD (share-ready single-file)
+   Before / After / Roadmap / Projected Impact
+   ========================================================================= */
+:root {
+  --orange:       #E8845A;
+  --orange-dk:    #D26939;
+  --orange-soft:  #F5A67A;
+  --peach:        #FCEEE6;
+  --cream:        #FAF6F0;
+  --cream-2:      #F4ECE0;
+  --warm-white:   #FDFCFA;
+  --brown:        #3D3833;
+  --brown-ink:    #1E1B18;
+  --muted:        #7A7168;
+  --line:         #EDE8E2;
+  --line-strong:  #D9D1C6;
+  --lime:         #C8E616;
+  --forest:       #3E5C4B;
+  --berry:        #A04866;
+  --gold:         #D4A853;
+  --success:      #3E8E6B;
+  --warning:      #D4A853;
+  --error:        #C75450;
+  --sans: 'DM Sans', -apple-system, BlinkMacSystemFont, sans-serif;
+  --serif: 'DM Serif Display', Georgia, serif;
+  --container: 1280px;
+  --ease: cubic-bezier(.22,.61,.36,1);
+}
+
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+html { -webkit-font-smoothing: antialiased; -moz-osx-font-smoothing: grayscale; scroll-behavior: smooth; }
+body {
+  font-family: var(--sans);
+  color: var(--brown);
+  background: var(--cream);
+  font-size: 15px;
+  line-height: 1.55;
+}
+img, svg { max-width: 100%; display: block; }
+a { text-decoration: none; color: inherit; }
+h1, h2, h3, h4 { font-family: var(--serif); font-weight: 400; line-height: 1.1; letter-spacing: -0.01em; color: var(--brown-ink); }
+.wrap { max-width: var(--container); margin: 0 auto; padding: 0 24px; }
+@media (min-width: 900px) { .wrap { padding: 0 40px; } }
+
+/* ---------- HEADER ---------- */
+.top {
+  background: var(--brown-ink);
+  color: #fff;
+  padding: 20px 0;
+  position: sticky;
+  top: 0;
+  z-index: 10;
+}
+.top-inner {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 16px;
+}
+.top-brand { display: flex; align-items: center; gap: 16px; }
+.top-brand img { height: 34px; border-radius: 6px; }
+.top-brand-text small { display: block; font-size: 11px; letter-spacing: 0.2em; text-transform: uppercase; color: rgba(255,255,255,.5); margin-bottom: 2px; }
+.top-brand-text strong { font-family: var(--serif); font-size: 20px; color: #fff; font-weight: 400; }
+.top-meta { font-size: 12px; color: rgba(255,255,255,.6); text-align: right; }
+.top-meta strong { color: #fff; font-weight: 500; }
+
+/* ---------- HERO ---------- */
+.hero-dash {
+  background: linear-gradient(180deg, var(--brown-ink) 0%, #2A2520 100%);
+  color: #fff;
+  padding: 80px 0 120px;
+  text-align: center;
+  position: relative;
+  overflow: hidden;
+}
+.hero-dash::before, .hero-dash::after {
+  content: '';
+  position: absolute;
+  width: 360px;
+  height: 360px;
+  border-radius: 50%;
+  filter: blur(80px);
+  opacity: 0.3;
+}
+.hero-dash::before { background: var(--orange); top: -100px; left: -100px; }
+.hero-dash::after { background: var(--berry); bottom: -150px; right: -100px; }
+.hero-dash > * { position: relative; z-index: 2; }
+.hero-kicker {
+  display: inline-block;
+  padding: 6px 14px;
+  background: rgba(255,255,255,.1);
+  border: 1px solid rgba(255,255,255,.2);
+  border-radius: 999px;
+  font-size: 11px;
+  font-weight: 600;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  margin-bottom: 24px;
+  color: rgba(255,255,255,.85);
+}
+.hero-dash h1 {
+  font-size: clamp(36px, 6vw, 72px);
+  color: #fff;
+  max-width: 900px;
+  margin: 0 auto 18px;
+  letter-spacing: -0.02em;
+}
+.hero-dash h1 em { font-style: italic; color: var(--orange-soft); }
+.hero-dash p {
+  font-size: 17px;
+  color: rgba(255,255,255,.75);
+  max-width: 620px;
+  margin: 0 auto;
+}
+.hero-dash-stats {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 16px;
+  max-width: 860px;
+  margin: 48px auto 0;
+}
+@media (min-width: 768px) { .hero-dash-stats { grid-template-columns: repeat(4, 1fr); gap: 18px; } }
+.dash-stat {
+  padding: 20px;
+  background: rgba(255,255,255,.06);
+  border: 1px solid rgba(255,255,255,.1);
+  border-radius: 16px;
+  text-align: left;
+  backdrop-filter: blur(8px);
+}
+.dash-stat small {
+  font-size: 10.5px;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: rgba(255,255,255,.55);
+  display: block;
+  margin-bottom: 8px;
+  font-weight: 600;
+}
+.dash-stat strong {
+  font-family: var(--serif);
+  font-size: 32px;
+  color: #fff;
+  font-weight: 400;
+  display: block;
+  line-height: 1;
+  margin-bottom: 4px;
+}
+.dash-stat .hint { font-size: 11.5px; color: rgba(255,255,255,.55); }
+.dash-stat.highlight strong { color: var(--orange-soft); }
+.dash-stat.target { background: linear-gradient(135deg, rgba(232,132,90,.25), rgba(232,132,90,.08)); border-color: rgba(232,132,90,.4); }
+.dash-stat.target strong { color: #FFB896; }
+
+/* ---------- SECTION SCAFFOLD ---------- */
+.section {
+  padding: 64px 0;
+  position: relative;
+}
+.section.alt { background: var(--warm-white); }
+.section.dark { background: var(--brown-ink); color: rgba(255,255,255,.85); }
+.section.dark h2, .section.dark h3 { color: #fff; }
+.section-top { text-align: center; margin-bottom: 48px; }
+.section-top .kicker {
+  display: inline-block;
+  padding: 6px 14px;
+  background: var(--peach);
+  color: var(--orange-dk);
+  border-radius: 999px;
+  font-size: 11px;
+  font-weight: 600;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  margin-bottom: 14px;
+}
+.section.dark .section-top .kicker { background: rgba(255,255,255,.1); color: rgba(255,255,255,.85); }
+.section-top h2 {
+  font-size: clamp(32px, 4.5vw, 52px);
+  margin-bottom: 12px;
+}
+.section-top p {
+  font-size: 16.5px;
+  color: var(--muted);
+  max-width: 640px;
+  margin: 0 auto;
+}
+.section.dark .section-top p { color: rgba(255,255,255,.65); }
+
+/* ---------- KPI CARDS ---------- */
+.kpi-grid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 16px;
+  margin-bottom: 24px;
+}
+@media (min-width: 600px) { .kpi-grid { grid-template-columns: repeat(2, 1fr); } }
+@media (min-width: 1024px) { .kpi-grid { grid-template-columns: repeat(4, 1fr); } }
+
+.kpi {
+  padding: 26px;
+  background: var(--warm-white);
+  border: 1px solid var(--line);
+  border-radius: 20px;
+  position: relative;
+  overflow: hidden;
+}
+.kpi-label {
+  font-size: 11px;
+  font-weight: 600;
+  color: var(--muted);
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  margin-bottom: 10px;
+}
+.kpi-value {
+  font-family: var(--serif);
+  font-size: 44px;
+  line-height: 1;
+  color: var(--brown-ink);
+  margin-bottom: 6px;
+}
+.kpi-value small { font-size: 18px; color: var(--muted); }
+.kpi-hint {
+  font-size: 12.5px;
+  color: var(--muted);
+}
+.kpi-delta {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  font-size: 12px;
+  font-weight: 600;
+  padding: 3px 8px;
+  border-radius: 999px;
+  margin-top: 10px;
+}
+.kpi-delta.down { background: rgba(199,84,80,.12); color: var(--error); }
+.kpi-delta.up { background: rgba(62,142,107,.12); color: var(--success); }
+.kpi-delta.watch { background: rgba(212,168,83,.14); color: #B5861F; }
+.kpi-dot {
+  position: absolute;
+  top: 22px; right: 22px;
+  width: 8px; height: 8px;
+  border-radius: 50%;
+}
+.kpi-dot.red { background: var(--error); box-shadow: 0 0 0 4px rgba(199,84,80,.18); }
+.kpi-dot.amber { background: var(--warning); box-shadow: 0 0 0 4px rgba(212,168,83,.2); }
+.kpi-dot.green { background: var(--success); box-shadow: 0 0 0 4px rgba(62,142,107,.18); }
+
+.kpi.accent { background: linear-gradient(135deg, var(--brown-ink), #2a241f); color: #fff; border-color: var(--brown-ink); }
+.kpi.accent .kpi-label { color: rgba(255,255,255,.55); }
+.kpi.accent .kpi-value { color: #fff; }
+.kpi.accent .kpi-hint { color: rgba(255,255,255,.6); }
+
+/* ---------- FUNNEL VIZ ---------- */
+.funnel-wrap {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 32px;
+  margin-top: 24px;
+}
+@media (min-width: 900px) { .funnel-wrap { grid-template-columns: 1fr 1fr; gap: 40px; } }
+.funnel-card {
+  padding: 32px;
+  border-radius: 24px;
+  background: var(--warm-white);
+  border: 1px solid var(--line);
+}
+.funnel-card.after {
+  background: linear-gradient(180deg, #F8EFE5 0%, var(--warm-white) 100%);
+  border-color: var(--orange-soft);
+}
+.funnel-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: end;
+  margin-bottom: 24px;
+  padding-bottom: 18px;
+  border-bottom: 1px solid var(--line);
+}
+.funnel-header h3 { font-family: var(--serif); font-size: 26px; }
+.funnel-chip {
+  padding: 4px 10px;
+  border-radius: 999px;
+  font-size: 11px;
+  font-weight: 600;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+}
+.funnel-chip.now { background: rgba(199,84,80,.12); color: var(--error); }
+.funnel-chip.goal { background: rgba(62,142,107,.14); color: var(--success); }
+
+.funnel-step {
+  display: grid;
+  grid-template-columns: 130px 1fr auto;
+  align-items: center;
+  gap: 14px;
+  padding: 12px 0;
+  border-bottom: 1px dashed var(--line);
+}
+.funnel-step:last-child { border-bottom: none; }
+.funnel-step-label { font-size: 12.5px; font-weight: 600; color: var(--brown); }
+.funnel-step-label small { display: block; color: var(--muted); font-weight: 400; margin-top: 2px; font-size: 11px; }
+.funnel-bar {
+  height: 38px;
+  border-radius: 10px;
+  background: var(--cream-2);
+  position: relative;
+  overflow: hidden;
+}
+.funnel-bar-fill {
+  position: absolute;
+  left: 0; top: 0; bottom: 0;
+  background: linear-gradient(90deg, var(--brown), var(--brown-ink));
+  border-radius: 10px;
+  transition: width 1.2s var(--ease);
+  display: flex;
+  align-items: center;
+  padding-left: 14px;
+  color: #fff;
+  font-weight: 600;
+  font-size: 12.5px;
+}
+.funnel-card.after .funnel-bar-fill {
+  background: linear-gradient(90deg, var(--orange), var(--orange-dk));
+}
+.funnel-step-value {
+  font-family: var(--serif);
+  font-size: 22px;
+  color: var(--brown-ink);
+  min-width: 72px;
+  text-align: right;
+}
+.funnel-step-value small {
+  display: block;
+  font-family: var(--sans);
+  font-size: 11px;
+  color: var(--muted);
+  font-weight: 500;
+  margin-top: 2px;
+}
+.funnel-leak {
+  margin-top: 24px;
+  padding: 14px 18px;
+  background: rgba(199,84,80,.08);
+  border-left: 3px solid var(--error);
+  border-radius: 0 12px 12px 0;
+  font-size: 13px;
+  color: var(--brown);
+}
+.funnel-leak strong { color: var(--error); }
+.funnel-card.after .funnel-leak {
+  background: rgba(62,142,107,.08);
+  border-left-color: var(--success);
+}
+.funnel-card.after .funnel-leak strong { color: var(--success); }
+
+/* ---------- FINDING CARDS ---------- */
+.findings-grid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 20px;
+}
+@media (min-width: 768px) { .findings-grid { grid-template-columns: repeat(3, 1fr); } }
+.finding {
+  background: var(--warm-white);
+  border: 1px solid var(--line);
+  border-radius: 22px;
+  padding: 28px;
+  position: relative;
+  display: flex;
+  flex-direction: column;
+}
+.finding-num {
+  position: absolute;
+  top: 20px; right: 20px;
+  font-family: var(--serif);
+  font-size: 48px;
+  color: var(--line-strong);
+  line-height: 1;
+}
+.finding-severity {
+  display: inline-block;
+  padding: 4px 10px;
+  font-size: 10.5px;
+  font-weight: 700;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  border-radius: 999px;
+  margin-bottom: 16px;
+}
+.finding-severity.critical { background: rgba(199,84,80,.12); color: var(--error); }
+.finding-severity.high { background: rgba(212,168,83,.14); color: #B5861F; }
+.finding-severity.medium { background: rgba(122,113,104,.14); color: var(--muted); }
+.finding h3 {
+  font-family: var(--serif);
+  font-size: 22px;
+  line-height: 1.2;
+  margin-bottom: 12px;
+  padding-right: 40px;
+}
+.finding-body {
+  color: var(--brown);
+  font-size: 13.5px;
+  line-height: 1.55;
+  margin-bottom: 20px;
+  flex: 1;
+}
+.finding-fix {
+  padding: 12px 14px;
+  background: var(--cream);
+  border-radius: 12px;
+  font-size: 12.5px;
+  display: flex;
+  gap: 10px;
+  align-items: start;
+}
+.finding-fix svg { width: 18px; height: 18px; color: var(--orange); flex-shrink: 0; margin-top: 2px; stroke-width: 2; fill: none; stroke: currentColor; }
+.finding-fix strong { color: var(--brown-ink); display: block; margin-bottom: 2px; }
+
+/* ---------- CHARTS ---------- */
+.chart-grid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 24px;
+}
+@media (min-width: 900px) { .chart-grid { grid-template-columns: 1.4fr 1fr; } }
+.chart-card {
+  background: var(--warm-white);
+  border: 1px solid var(--line);
+  border-radius: 22px;
+  padding: 32px;
+}
+.chart-head { margin-bottom: 24px; }
+.chart-head h3 { font-size: 22px; margin-bottom: 4px; }
+.chart-head small { font-size: 12.5px; color: var(--muted); }
+
+/* Horizontal bar chart */
+.hbar-row {
+  display: grid;
+  grid-template-columns: 160px 1fr auto;
+  align-items: center;
+  gap: 14px;
+  padding: 10px 0;
+  border-bottom: 1px dashed var(--line);
+  font-size: 13px;
+}
+.hbar-row:last-child { border-bottom: none; }
+.hbar-label { color: var(--brown); font-weight: 500; font-size: 13px; }
+.hbar-label .tag { font-size: 10px; padding: 1px 6px; background: rgba(199,84,80,.12); color: var(--error); border-radius: 4px; margin-left: 6px; font-weight: 700; letter-spacing: 0.04em; text-transform: uppercase; }
+.hbar-track {
+  height: 14px;
+  background: var(--cream-2);
+  border-radius: 999px;
+  overflow: hidden;
+  position: relative;
+}
+.hbar-fill {
+  height: 100%;
+  background: linear-gradient(90deg, var(--orange-soft), var(--orange));
+  border-radius: 999px;
+  transition: width 1.2s var(--ease);
+}
+.hbar-fill.muted { background: var(--line-strong); }
+.hbar-fill.good { background: linear-gradient(90deg, var(--success), #2e7255); }
+.hbar-fill.bot { background: repeating-linear-gradient(45deg, var(--error), var(--error) 6px, #e16c68 6px, #e16c68 12px); }
+.hbar-value {
+  font-family: var(--serif);
+  font-size: 16px;
+  color: var(--brown-ink);
+  min-width: 72px;
+  text-align: right;
+}
+.hbar-value small { display: block; font-family: var(--sans); font-size: 11px; color: var(--muted); font-weight: 500; }
+
+/* Donut */
+.donut-wrap {
+  display: flex;
+  align-items: center;
+  gap: 24px;
+  flex-wrap: wrap;
+}
+.donut {
+  width: 180px;
+  height: 180px;
+  position: relative;
+  flex-shrink: 0;
+}
+.donut svg { transform: rotate(-90deg); }
+.donut-center {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+}
+.donut-center strong { font-family: var(--serif); font-size: 32px; color: var(--brown-ink); line-height: 1; }
+.donut-center small { font-size: 11px; color: var(--muted); letter-spacing: 0.1em; text-transform: uppercase; font-weight: 600; margin-top: 4px; }
+.donut-legend { flex: 1; min-width: 200px; display: flex; flex-direction: column; gap: 12px; }
+.donut-legend-item { display: flex; align-items: center; gap: 10px; font-size: 13.5px; }
+.donut-legend-item .sw { width: 12px; height: 12px; border-radius: 4px; flex-shrink: 0; }
+.donut-legend-item strong { font-weight: 600; color: var(--brown-ink); }
+.donut-legend-item small { color: var(--muted); margin-left: auto; font-weight: 500; }
+
+/* ---------- WHAT'S WORKING ---------- */
+.working-grid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 16px;
+}
+@media (min-width: 768px) { .working-grid { grid-template-columns: repeat(3, 1fr); } }
+.working {
+  padding: 24px;
+  background: linear-gradient(135deg, rgba(62,142,107,.08), transparent);
+  border: 1px solid rgba(62,142,107,.2);
+  border-radius: 18px;
+}
+.working-ico {
+  width: 44px;
+  height: 44px;
+  border-radius: 12px;
+  background: var(--success);
+  color: #fff;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: 16px;
+}
+.working-ico svg { width: 22px; height: 22px; stroke: currentColor; stroke-width: 2; fill: none; }
+.working h4 { font-family: var(--serif); font-size: 20px; color: var(--brown-ink); margin-bottom: 8px; }
+.working p { font-size: 13.5px; color: var(--brown); line-height: 1.5; }
+.working .metric { font-family: var(--serif); color: var(--success); font-size: 18px; margin-top: 10px; display: block; }
+
+/* ---------- ROADMAP TIMELINE ---------- */
+.roadmap {
+  position: relative;
+  margin-top: 40px;
+}
+.roadmap-track {
+  position: absolute;
+  left: 20px; top: 0; bottom: 0;
+  width: 2px;
+  background: linear-gradient(180deg, var(--orange), var(--orange-dk), var(--brown-ink));
+}
+@media (min-width: 900px) {
+  .roadmap-track { left: 50%; transform: translateX(-1px); }
+}
+.rm-phase {
+  position: relative;
+  padding-left: 56px;
+  margin-bottom: 40px;
+}
+@media (min-width: 900px) {
+  .rm-phase {
+    padding-left: 0;
+    width: 50%;
+    padding-right: 40px;
+  }
+  .rm-phase:nth-child(even) { margin-left: 50%; padding-right: 0; padding-left: 40px; }
+}
+.rm-marker {
+  position: absolute;
+  left: 10px; top: 6px;
+  width: 24px; height: 24px;
+  border-radius: 50%;
+  background: var(--orange);
+  border: 4px solid var(--cream);
+  box-shadow: 0 0 0 2px var(--orange);
+}
+.rm-phase:nth-child(2) .rm-marker { background: var(--orange-dk); box-shadow: 0 0 0 2px var(--orange-dk); }
+.rm-phase:nth-child(3) .rm-marker { background: var(--berry); box-shadow: 0 0 0 2px var(--berry); }
+.rm-phase:nth-child(4) .rm-marker { background: var(--brown-ink); box-shadow: 0 0 0 2px var(--brown-ink); }
+@media (min-width: 900px) {
+  .rm-marker { left: auto; right: -12px; top: 20px; }
+  .rm-phase:nth-child(even) .rm-marker { left: -12px; right: auto; }
+}
+.rm-card {
+  background: var(--warm-white);
+  border: 1px solid var(--line);
+  border-radius: 18px;
+  padding: 24px;
+  position: relative;
+}
+.rm-card-head {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  margin-bottom: 16px;
+  padding-bottom: 12px;
+  border-bottom: 1px solid var(--line);
+}
+.rm-range {
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--orange);
+}
+.rm-card h3 { font-family: var(--serif); font-size: 22px; margin-top: 4px; }
+.rm-items {
+  list-style: none;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+.rm-items li {
+  display: flex;
+  gap: 10px;
+  font-size: 13.5px;
+  color: var(--brown);
+  line-height: 1.45;
+}
+.rm-items svg {
+  width: 16px; height: 16px;
+  color: var(--orange);
+  flex-shrink: 0;
+  margin-top: 3px;
+  stroke-width: 2.5;
+  fill: none;
+  stroke: currentColor;
+}
+.rm-target {
+  margin-top: 16px;
+  padding: 12px 14px;
+  background: var(--peach);
+  border-radius: 12px;
+  font-size: 12.5px;
+  color: var(--brown-ink);
+  display: flex;
+  gap: 10px;
+  align-items: center;
+}
+.rm-target strong { font-family: var(--serif); font-size: 16px; display: block; color: var(--orange-dk); line-height: 1; margin-bottom: 2px; }
+
+/* ---------- IMPACT ---------- */
+.impact-grid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 20px;
+}
+@media (min-width: 768px) { .impact-grid { grid-template-columns: repeat(3, 1fr); } }
+.impact-card {
+  padding: 36px 32px;
+  background: linear-gradient(135deg, rgba(255,255,255,.08), rgba(255,255,255,.02));
+  border: 1px solid rgba(255,255,255,.12);
+  border-radius: 24px;
+  position: relative;
+  overflow: hidden;
+}
+.impact-card::before {
+  content: '';
+  position: absolute;
+  top: -80px; right: -80px;
+  width: 200px; height: 200px;
+  background: var(--orange);
+  border-radius: 50%;
+  filter: blur(60px);
+  opacity: 0.15;
+}
+.impact-card > * { position: relative; z-index: 2; }
+.impact-label {
+  font-size: 11px;
+  font-weight: 600;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: rgba(255,255,255,.55);
+  margin-bottom: 14px;
+}
+.impact-now {
+  font-size: 14px;
+  color: rgba(255,255,255,.5);
+  text-decoration: line-through;
+  margin-bottom: 4px;
+}
+.impact-value {
+  font-family: var(--serif);
+  font-size: 52px;
+  color: #fff;
+  line-height: 1;
+  margin-bottom: 8px;
+}
+.impact-value small { font-size: 20px; color: rgba(255,255,255,.6); }
+.impact-change {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 4px 10px;
+  background: rgba(62,142,107,.22);
+  color: #87D1A7;
+  border-radius: 999px;
+  font-size: 12px;
+  font-weight: 600;
+}
+.impact-foot {
+  margin-top: 20px;
+  font-size: 12.5px;
+  color: rgba(255,255,255,.55);
+  line-height: 1.5;
+}
+
+/* ---------- TOOLING ---------- */
+.tools-grid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 14px;
+}
+@media (min-width: 600px) { .tools-grid { grid-template-columns: repeat(2, 1fr); } }
+@media (min-width: 1024px) { .tools-grid { grid-template-columns: repeat(3, 1fr); } }
+.tool {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  padding: 16px 20px;
+  background: var(--warm-white);
+  border: 1px solid var(--line);
+  border-radius: 14px;
+  transition: all .2s;
+}
+.tool:hover { border-color: var(--orange-soft); transform: translateY(-2px); }
+.tool-logo {
+  width: 42px; height: 42px;
+  border-radius: 10px;
+  display: flex; align-items: center; justify-content: center;
+  font-family: var(--serif);
+  font-weight: 700;
+  font-size: 18px;
+  color: #fff;
+  flex-shrink: 0;
+}
+.tool-info { flex: 1; min-width: 0; }
+.tool-name { font-weight: 600; color: var(--brown-ink); font-size: 14px; }
+.tool-use { font-size: 11.5px; color: var(--muted); }
+.tool-price {
+  font-size: 12px;
+  font-weight: 600;
+  color: var(--success);
+  padding: 3px 8px;
+  background: rgba(62,142,107,.1);
+  border-radius: 6px;
+  flex-shrink: 0;
+}
+.tool-price.paid { color: var(--brown-ink); background: var(--cream-2); }
+
+/* ---------- CTA STRIP ---------- */
+.cta-strip {
+  margin: 64px 0 0;
+  padding: 48px 32px;
+  background: var(--brown-ink);
+  color: #fff;
+  border-radius: 32px;
+  text-align: center;
+  position: relative;
+  overflow: hidden;
+}
+.cta-strip::before, .cta-strip::after {
+  content: '';
+  position: absolute;
+  width: 300px; height: 300px;
+  border-radius: 50%;
+  filter: blur(70px);
+  opacity: 0.22;
+}
+.cta-strip::before { background: var(--orange); top: -80px; right: -80px; }
+.cta-strip::after { background: var(--lime); bottom: -100px; left: -100px; opacity: 0.12; }
+.cta-strip > * { position: relative; z-index: 2; }
+.cta-strip h3 { color: #fff; font-size: clamp(26px, 3.6vw, 40px); margin-bottom: 12px; max-width: 640px; margin-left: auto; margin-right: auto; }
+.cta-strip p { color: rgba(255,255,255,.7); max-width: 560px; margin: 0 auto 28px; font-size: 15px; }
+.cta-strip-stats {
+  display: flex;
+  justify-content: center;
+  gap: 28px;
+  flex-wrap: wrap;
+  margin-bottom: 32px;
+}
+.cta-strip-stat strong { font-family: var(--serif); font-size: 32px; color: var(--orange-soft); display: block; line-height: 1; margin-bottom: 4px; }
+.cta-strip-stat small { font-size: 11px; color: rgba(255,255,255,.55); letter-spacing: 0.1em; text-transform: uppercase; font-weight: 600; }
+.cta-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  padding: 16px 30px;
+  background: var(--orange);
+  color: #fff;
+  border-radius: 999px;
+  font-weight: 600;
+  font-size: 15px;
+  border: none;
+  cursor: pointer;
+  transition: all .2s;
+}
+.cta-btn:hover { background: #fff; color: var(--brown-ink); }
+
+/* ---------- THIS WEEK CHECKLIST ---------- */
+.checklist-card {
+  background: var(--warm-white);
+  border: 1px solid var(--line);
+  border-radius: 24px;
+  padding: 36px;
+}
+.checklist-card h3 { font-family: var(--serif); font-size: 26px; margin-bottom: 8px; }
+.checklist-card > p { font-size: 14px; color: var(--muted); margin-bottom: 24px; }
+.checklist {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 10px;
+}
+@media (min-width: 768px) { .checklist { grid-template-columns: 1fr 1fr; gap: 12px; } }
+.ch-item {
+  display: flex;
+  gap: 12px;
+  align-items: start;
+  padding: 14px 16px;
+  background: var(--cream);
+  border-radius: 12px;
+  transition: background .15s;
+}
+.ch-item:hover { background: var(--peach); }
+.ch-num {
+  width: 26px; height: 26px;
+  background: var(--brown-ink);
+  color: #fff;
+  border-radius: 50%;
+  display: flex; align-items: center; justify-content: center;
+  font-size: 11px;
+  font-weight: 700;
+  flex-shrink: 0;
+  font-family: var(--sans);
+}
+.ch-body { flex: 1; font-size: 13.5px; }
+.ch-body strong { color: var(--brown-ink); display: block; margin-bottom: 2px; }
+.ch-time { font-size: 11px; color: var(--muted); }
+
+/* ---------- FOOTER ---------- */
+.foot {
+  background: var(--brown-ink);
+  color: rgba(255,255,255,.55);
+  padding: 32px 0;
+  text-align: center;
+  font-size: 12.5px;
+  margin-top: 48px;
+}
+.foot strong { color: #fff; font-weight: 500; }
+
+/* ---------- PRINT / SHARE ---------- */
+@media print {
+  .top { position: static; }
+  .section { padding: 32px 0; break-inside: avoid; }
+  .hero-dash { padding: 40px 0 60px; }
+  .kpi, .funnel-card, .finding, .chart-card, .working, .rm-card, .impact-card, .tool, .checklist-card, .cta-strip {
+    break-inside: avoid;
+  }
+  body { background: #fff; }
+}
+
+/* ---------- REVEAL ---------- */
+.reveal { opacity: 0; transform: translateY(16px); transition: all .7s var(--ease); }
+.reveal.in { opacity: 1; transform: translateY(0); }
+
+</style>
+</head>
+<body>
+
+<!-- ================================ TOP BAR ================================ -->
+<div class="top">
+  <div class="wrap top-inner">
+    <div class="top-brand">
+      <img src="https://in.skygoodies.co/cdn/shop/files/logo_hd_300x.jpg?v=1741613405" alt="Sky Goodies" referrerpolicy="no-referrer" />
+      <div class="top-brand-text">
+        <small>CRO Performance Dashboard</small>
+        <strong>Sky Goodies · Conversion Optimization Plan</strong>
+      </div>
+    </div>
+    <div class="top-meta">
+      <strong>Apr 2026</strong> · Data window Jan 20 – Apr 20, 2026<br>
+      Prepared for founders &amp; team
+    </div>
+  </div>
+</div>
+
+<!-- ================================ HERO ================================ -->
+<section class="hero-dash">
+  <span class="hero-kicker">Q2 2026 · Revenue Recovery Plan</span>
+  <h1>From <em>0.89%</em> to <em>1.8%</em><br>conversion in 90 days.</h1>
+  <p>A data-backed plan to double Sky Goodies' conversion rate by fixing funnel leaks, not buying more traffic. Based on real 90-day analytics pulled from Shopify admin.</p>
+
+  <div class="hero-dash-stats">
+    <div class="dash-stat">
+      <small>Today's CR</small>
+      <strong>0.89%</strong>
+      <div class="hint">below benchmark (1.5–2.5%)</div>
+    </div>
+    <div class="dash-stat target">
+      <small>90-day target</small>
+      <strong>1.8%</strong>
+      <div class="hint">+2.0× current</div>
+    </div>
+    <div class="dash-stat highlight">
+      <small>Projected revenue uplift</small>
+      <strong>+₹85K</strong>
+      <div class="hint">over next 90 days, same traffic</div>
+    </div>
+    <div class="dash-stat">
+      <small>New ad spend needed</small>
+      <strong>₹0</strong>
+      <div class="hint">zero, funnel-first</div>
+    </div>
+  </div>
+</section>
+
+<!-- ================================ TODAY'S SNAPSHOT ================================ -->
+<section class="section">
+  <div class="wrap">
+    <div class="section-top">
+      <span class="kicker">The Starting Line</span>
+      <h2>Where Sky Goodies stands today</h2>
+      <p>90 days of real data from Shopify admin. Benchmarks are average Indian D2C performance for comparable categories.</p>
+    </div>
+
+    <div class="kpi-grid">
+      <div class="kpi">
+        <span class="kpi-dot red"></span>
+        <div class="kpi-label">Conversion rate</div>
+        <div class="kpi-value">0.89<small>%</small></div>
+        <div class="kpi-hint">India D2C benchmark: 1.5–2.5%</div>
+        <span class="kpi-delta down">↓ 50%+ below average</span>
+      </div>
+      <div class="kpi">
+        <span class="kpi-dot red"></span>
+        <div class="kpi-label">Add-to-cart rate</div>
+        <div class="kpi-value">3.46<small>%</small></div>
+        <div class="kpi-hint">Benchmark: 6–10%</div>
+        <span class="kpi-delta down">↓ biggest funnel leak</span>
+      </div>
+      <div class="kpi">
+        <span class="kpi-dot amber"></span>
+        <div class="kpi-label">Checkout completion</div>
+        <div class="kpi-value">40<small>%</small></div>
+        <div class="kpi-hint">Benchmark: 60–70%</div>
+        <span class="kpi-delta down">↓ 6 of 10 abandon</span>
+      </div>
+      <div class="kpi accent">
+        <span class="kpi-dot green"></span>
+        <div class="kpi-label">Returning customer rate</div>
+        <div class="kpi-value">36.58<small>%</small></div>
+        <div class="kpi-hint">Benchmark: 20–30%</div>
+        <span class="kpi-delta up">↑ Brand is loved</span>
+      </div>
+    </div>
+
+    <div class="kpi-grid">
+      <div class="kpi">
+        <div class="kpi-label">Sessions (90d)</div>
+        <div class="kpi-value">9,004</div>
+        <div class="kpi-hint">~100 / day · ~22% are bots</div>
+      </div>
+      <div class="kpi">
+        <div class="kpi-label">Orders (90d)</div>
+        <div class="kpi-value">84</div>
+        <div class="kpi-hint">~0.9 orders per day</div>
+      </div>
+      <div class="kpi">
+        <div class="kpi-label">Gross sales (90d)</div>
+        <div class="kpi-value">₹1.18<small>L</small></div>
+        <div class="kpi-hint">Net ₹99.3K after discounts + returns</div>
+      </div>
+      <div class="kpi">
+        <div class="kpi-label">Average order value</div>
+        <div class="kpi-value">₹1,185</div>
+        <div class="kpi-hint">Healthy · above ₹1K free-ship threshold</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ================================ THE FUNNEL — BEFORE / AFTER ================================ -->
+<section class="section alt">
+  <div class="wrap">
+    <div class="section-top">
+      <span class="kicker">The Funnel · Where revenue leaks</span>
+      <h2>Same 9,004 visitors. Different outcome.</h2>
+      <p>Left: what happened over the last 90 days. Right: what happens when we fix the two biggest leaks — PDP drop-off and checkout abandonment.</p>
+    </div>
+
+    <div class="funnel-wrap">
+
+      <!-- BEFORE -->
+      <div class="funnel-card">
+        <div class="funnel-header">
+          <h3>Today</h3>
+          <span class="funnel-chip now">Current · 90d actual</span>
+        </div>
+
+        <div class="funnel-step">
+          <div class="funnel-step-label">Sessions<small>landed on site</small></div>
+          <div class="funnel-bar"><div class="funnel-bar-fill" style="width: 100%;">9,004</div></div>
+          <div class="funnel-step-value">100%<small>9,004</small></div>
+        </div>
+        <div class="funnel-step">
+          <div class="funnel-step-label">Added to cart<small>viewed PDP, added item</small></div>
+          <div class="funnel-bar"><div class="funnel-bar-fill" style="width: 3.5%;">312</div></div>
+          <div class="funnel-step-value">3.5%<small>312</small></div>
+        </div>
+        <div class="funnel-step">
+          <div class="funnel-step-label">Reached checkout<small>opened payment page</small></div>
+          <div class="funnel-bar"><div class="funnel-bar-fill" style="width: 2.2%;">202</div></div>
+          <div class="funnel-step-value">2.2%<small>202</small></div>
+        </div>
+        <div class="funnel-step">
+          <div class="funnel-step-label">Purchased<small>completed order</small></div>
+          <div class="funnel-bar"><div class="funnel-bar-fill" style="width: 0.9%;">81</div></div>
+          <div class="funnel-step-value">0.9%<small>81</small></div>
+        </div>
+
+        <div class="funnel-leak">
+          <strong>Leak #1:</strong> 97% of sessions never reach the cart. <strong>Leak #2:</strong> 60% of people at checkout abandon before paying.
+        </div>
+      </div>
+
+      <!-- AFTER -->
+      <div class="funnel-card after">
+        <div class="funnel-header">
+          <h3>90-Day Target</h3>
+          <span class="funnel-chip goal">Goal · same traffic</span>
+        </div>
+
+        <div class="funnel-step">
+          <div class="funnel-step-label">Sessions<small>after bot filter</small></div>
+          <div class="funnel-bar"><div class="funnel-bar-fill" style="width: 100%;">9,004</div></div>
+          <div class="funnel-step-value">100%<small>9,004</small></div>
+        </div>
+        <div class="funnel-step">
+          <div class="funnel-step-label">Added to cart<small>+ PDP improvements</small></div>
+          <div class="funnel-bar"><div class="funnel-bar-fill" style="width: 6%;">540</div></div>
+          <div class="funnel-step-value">6.0%<small>540</small></div>
+        </div>
+        <div class="funnel-step">
+          <div class="funnel-step-label">Reached checkout<small>+ ETA + COD badge</small></div>
+          <div class="funnel-bar"><div class="funnel-bar-fill" style="width: 4%;">360</div></div>
+          <div class="funnel-step-value">4.0%<small>360</small></div>
+        </div>
+        <div class="funnel-step">
+          <div class="funnel-step-label">Purchased<small>+ Shop Pay + guest checkout</small></div>
+          <div class="funnel-bar"><div class="funnel-bar-fill" style="width: 1.8%;">162</div></div>
+          <div class="funnel-step-value">1.8%<small>162</small></div>
+        </div>
+
+        <div class="funnel-leak">
+          <strong>Projected impact:</strong> +81 orders over 90 days → roughly +₹85K net revenue · zero new ad spend.
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- ================================ 3 CRITICAL FINDINGS ================================ -->
+<section class="section">
+  <div class="wrap">
+    <div class="section-top">
+      <span class="kicker">What we found digging into the data</span>
+      <h2>Three things the team doesn't know yet</h2>
+      <p>These jumped out immediately from the Shopify admin. Each is a quick fix with outsized impact.</p>
+    </div>
+
+    <div class="findings-grid">
+
+      <div class="finding">
+        <span class="finding-num">01</span>
+        <span class="finding-severity critical">Critical</span>
+        <h3>~22% of sessions are bot traffic</h3>
+        <div class="finding-body">
+          Data-center IPs from Ashburn (629 sessions), Council Bluffs (584), and unattributed China (696) together = ~1,900 sessions. Your real CR on human traffic is already <strong>1.14%</strong>, not 0.89%. This also corrupts every metric and A/B test result.
+        </div>
+        <div class="finding-fix">
+          <svg viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg>
+          <div><strong>Fix (15 min)</strong>Filter Ashburn + Council Bluffs in GA4. Add Cloudflare bot protection.</div>
+        </div>
+      </div>
+
+      <div class="finding">
+        <span class="finding-num">02</span>
+        <span class="finding-severity critical">Critical</span>
+        <h3>Stale 2025-calendars page is #2 landing page</h3>
+        <div class="finding-body">
+          <code style="background:var(--cream); padding:2px 6px; border-radius:4px; font-size:12px;">/collections/2025-calendars</code> pulled <strong>462 sessions</strong> in Q1 2026. Visitors arrive, see last year's sold-out stock, and leave. Same for <code style="background:var(--cream); padding:2px 6px; border-radius:4px; font-size:12px;">/collections/diwali-collection</code> (109 sessions in April).
+        </div>
+        <div class="finding-fix">
+          <svg viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg>
+          <div><strong>Fix (30 min)</strong>301-redirect to evergreen collections. Google re-crawls in 2–4 weeks.</div>
+        </div>
+      </div>
+
+      <div class="finding">
+        <span class="finding-num">03</span>
+        <span class="finding-severity high">High</span>
+        <h3>All 5 hero calendars are 100% sold out</h3>
+        <div class="finding-body">
+          Typewriter, Toaster, Sewing, Postcard, and Wall calendars all at full sell-through. The theme still features calendars prominently, but April buyers can't convert on them. This is an <strong>inventory + merchandising</strong> problem, not a design one.
+        </div>
+        <div class="finding-fix">
+          <svg viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg>
+          <div><strong>Fix (2 hrs)</strong>Foreground in-stock gifting + home décor until August. Start 2027 calendar waitlist.</div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- ================================ WHAT'S WORKING ================================ -->
+<section class="section alt">
+  <div class="wrap">
+    <div class="section-top">
+      <span class="kicker">Don't break these</span>
+      <h2>What's already working</h2>
+      <p>These are the moats. Every change below builds <em>on</em> them, not over them.</p>
+    </div>
+
+    <div class="working-grid">
+      <div class="working">
+        <div class="working-ico"><svg viewBox="0 0 24 24"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg></div>
+        <h4>Customers come back</h4>
+        <p>36.58% returning customer rate — well above the 20–30% Indian D2C benchmark. Your product genuinely delivers.</p>
+        <span class="metric">+6–15 pts above industry</span>
+      </div>
+      <div class="working">
+        <div class="working-ico"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg></div>
+        <h4>Organic Google is #1 revenue</h4>
+        <p>₹41.3K from Google Search in 90 days — more than Direct, Instagram, or any paid channel. SEO is earning its keep.</p>
+        <span class="metric">42% of attributed revenue</span>
+      </div>
+      <div class="working">
+        <div class="working-ico"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><polyline points="16 12 12 8 8 12"/><line x1="12" y1="16" x2="12" y2="8"/></svg></div>
+        <h4>AOV is above threshold</h4>
+        <p>₹1,185 average order value — customers self-bundle past the ₹1,000 free-shipping line. Room to push higher with upsells.</p>
+        <span class="metric">₹185 above free-ship</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ================================ CHARTS ROW 1: DEVICE + GEO ================================ -->
+<section class="section">
+  <div class="wrap">
+    <div class="section-top">
+      <span class="kicker">Who's visiting</span>
+      <h2>Device &amp; geographic breakdown</h2>
+      <p>Unusual for Indian D2C — most brands are 70%+ mobile. Sky Goodies skews desktop, which points to an older / professional / corporate-gifting audience.</p>
+    </div>
+
+    <div class="chart-grid">
+
+      <!-- Top landing pages bar chart -->
+      <div class="chart-card">
+        <div class="chart-head">
+          <h3>Top 10 landing pages · 90-day sessions</h3>
+          <small>Where organic + direct traffic arrives. The stale 2025-calendars page is your #2 gateway.</small>
+        </div>
+
+        <div class="hbar-row">
+          <div class="hbar-label">Homepage</div>
+          <div class="hbar-track"><div class="hbar-fill good" style="width: 100%;"></div></div>
+          <div class="hbar-value">2,402<small>27% of traffic</small></div>
+        </div>
+        <div class="hbar-row">
+          <div class="hbar-label">/collections/2025-calendars <span class="tag">Stale</span></div>
+          <div class="hbar-track"><div class="hbar-fill" style="width: 19.2%; background: var(--error);"></div></div>
+          <div class="hbar-value">462</div>
+        </div>
+        <div class="hbar-row">
+          <div class="hbar-label">/collections/home-decor-lighting</div>
+          <div class="hbar-track"><div class="hbar-fill good" style="width: 11.8%;"></div></div>
+          <div class="hbar-value">283</div>
+        </div>
+        <div class="hbar-row">
+          <div class="hbar-label">blog/joy-of-miniature-books</div>
+          <div class="hbar-track"><div class="hbar-fill good" style="width: 10.1%;"></div></div>
+          <div class="hbar-value">243</div>
+        </div>
+        <div class="hbar-row">
+          <div class="hbar-label">/collections/quirky-gifts-for-adults</div>
+          <div class="hbar-track"><div class="hbar-fill good" style="width: 8.3%;"></div></div>
+          <div class="hbar-value">200</div>
+        </div>
+        <div class="hbar-row">
+          <div class="hbar-label">/collections/gift-boxes-envelopes</div>
+          <div class="hbar-track"><div class="hbar-fill good" style="width: 5.9%;"></div></div>
+          <div class="hbar-value">141</div>
+        </div>
+        <div class="hbar-row">
+          <div class="hbar-label">/collections/diy-papercraft-kits</div>
+          <div class="hbar-track"><div class="hbar-fill good" style="width: 5.5%;"></div></div>
+          <div class="hbar-value">133</div>
+        </div>
+        <div class="hbar-row">
+          <div class="hbar-label">/products/set-of-10-hot-air-balloon</div>
+          <div class="hbar-track"><div class="hbar-fill good" style="width: 4.7%;"></div></div>
+          <div class="hbar-value">112</div>
+        </div>
+        <div class="hbar-row">
+          <div class="hbar-label">/collections/diwali-collection <span class="tag">Off-Season</span></div>
+          <div class="hbar-track"><div class="hbar-fill" style="width: 4.5%; background: var(--error);"></div></div>
+          <div class="hbar-value">109</div>
+        </div>
+        <div class="hbar-row">
+          <div class="hbar-label">/collections/matchbook-notebooks</div>
+          <div class="hbar-track"><div class="hbar-fill good" style="width: 4.4%;"></div></div>
+          <div class="hbar-value">106</div>
+        </div>
+      </div>
+
+      <!-- Device donut -->
+      <div class="chart-card">
+        <div class="chart-head">
+          <h3>Device split</h3>
+          <small>9,004 sessions over 90 days</small>
+        </div>
+
+        <div class="donut-wrap">
+          <div class="donut">
+            <svg width="180" height="180" viewBox="0 0 180 180">
+              <circle cx="90" cy="90" r="70" fill="none" stroke="var(--line)" stroke-width="24" />
+              <!-- Desktop 52% -->
+              <circle cx="90" cy="90" r="70" fill="none" stroke="var(--orange)" stroke-width="24"
+                stroke-dasharray="228.7 439.8" stroke-linecap="butt" />
+              <!-- Mobile 46% starts at 52% -->
+              <circle cx="90" cy="90" r="70" fill="none" stroke="var(--brown-ink)" stroke-width="24"
+                stroke-dasharray="202.3 439.8" stroke-dashoffset="-228.7" stroke-linecap="butt" />
+              <!-- Tablet <1% -->
+              <circle cx="90" cy="90" r="70" fill="none" stroke="var(--gold)" stroke-width="24"
+                stroke-dasharray="4.4 439.8" stroke-dashoffset="-431" stroke-linecap="butt" />
+            </svg>
+            <div class="donut-center">
+              <strong>9K</strong>
+              <small>Sessions</small>
+            </div>
+          </div>
+          <div class="donut-legend">
+            <div class="donut-legend-item"><span class="sw" style="background:var(--orange);"></span><strong>Desktop</strong><small>4,700 · 52%</small></div>
+            <div class="donut-legend-item"><span class="sw" style="background:var(--brown-ink);"></span><strong>Mobile</strong><small>4,100 · 46%</small></div>
+            <div class="donut-legend-item"><span class="sw" style="background:var(--gold);"></span><strong>Tablet</strong><small>45 · &lt;1%</small></div>
+          </div>
+        </div>
+
+        <div style="margin-top: 24px; padding: 14px 16px; background: var(--peach); border-radius: 12px; font-size: 12.5px; color: var(--brown-ink);">
+          <strong style="display:block; margin-bottom:2px;">Insight</strong>
+          <span style="color:var(--muted);">Most Indian D2C brands are 70%+ mobile. Your desktop skew points to corporate/office gifting buyers — a segment to lean into.</span>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- ================================ CHARTS ROW 2: CHANNEL + TOP PRODUCTS ================================ -->
+<section class="section alt">
+  <div class="wrap">
+
+    <div class="chart-grid">
+
+      <!-- Channel revenue -->
+      <div class="chart-card">
+        <div class="chart-head">
+          <h3>Revenue by channel · ₹1.17L over 90 days</h3>
+          <small>Organic search is the #1 revenue engine. Paid spend is effectively zero.</small>
+        </div>
+        <div class="hbar-row">
+          <div class="hbar-label">Google · Organic</div>
+          <div class="hbar-track"><div class="hbar-fill good" style="width: 100%;"></div></div>
+          <div class="hbar-value">₹41.3K<small>35% of revenue</small></div>
+        </div>
+        <div class="hbar-row">
+          <div class="hbar-label">Direct · Unattributed</div>
+          <div class="hbar-track"><div class="hbar-fill" style="width: 39.7%;"></div></div>
+          <div class="hbar-value">₹16.5K</div>
+        </div>
+        <div class="hbar-row">
+          <div class="hbar-label">Instagram</div>
+          <div class="hbar-track"><div class="hbar-fill" style="width: 16.5%;"></div></div>
+          <div class="hbar-value">₹6.8K</div>
+        </div>
+        <div class="hbar-row">
+          <div class="hbar-label">Startupworld (partner)</div>
+          <div class="hbar-track"><div class="hbar-fill" style="width: 12.1%;"></div></div>
+          <div class="hbar-value">₹5.0K</div>
+        </div>
+        <div class="hbar-row">
+          <div class="hbar-label">Brave browser</div>
+          <div class="hbar-track"><div class="hbar-fill muted" style="width: 3.4%;"></div></div>
+          <div class="hbar-value">₹1.4K</div>
+        </div>
+        <div class="hbar-row">
+          <div class="hbar-label">Bing</div>
+          <div class="hbar-track"><div class="hbar-fill muted" style="width: 0.5%;"></div></div>
+          <div class="hbar-value">₹0</div>
+        </div>
+
+        <div style="margin-top: 20px; padding: 14px 16px; background: var(--peach); border-radius: 12px; font-size: 12.5px; color: var(--brown-ink);">
+          <strong style="display:block; margin-bottom:2px;">Insight</strong>
+          <span style="color:var(--muted);">Instagram should be earning 2–3× more. A small retargeting budget (₹500/day) on warm traffic could 5× this channel.</span>
+        </div>
+      </div>
+
+      <!-- Top products -->
+      <div class="chart-card">
+        <div class="chart-head">
+          <h3>Top 5 products by revenue</h3>
+          <small>The Endangered Animals BOX SET is the single highest-revenue SKU.</small>
+        </div>
+        <div class="hbar-row">
+          <div class="hbar-label">BOX SET of 12 Endangered Animals</div>
+          <div class="hbar-track"><div class="hbar-fill" style="width: 100%;"></div></div>
+          <div class="hbar-value">₹17.8K</div>
+        </div>
+        <div class="hbar-row">
+          <div class="hbar-label">Paper Mini Hot Air Balloon Fairy Lights</div>
+          <div class="hbar-track"><div class="hbar-fill" style="width: 45.5%;"></div></div>
+          <div class="hbar-value">₹8.1K</div>
+        </div>
+        <div class="hbar-row">
+          <div class="hbar-label">Turquoise Mini Grand Piano Calendar <span class="tag" style="background:rgba(212,168,83,.18); color:#B5861F;">Sold out</span></div>
+          <div class="hbar-track"><div class="hbar-fill muted" style="width: 36.5%;"></div></div>
+          <div class="hbar-value">₹6.5K</div>
+        </div>
+        <div class="hbar-row">
+          <div class="hbar-label">Colourful Typewriter Desk Calendar <span class="tag" style="background:rgba(212,168,83,.18); color:#B5861F;">Sold out</span></div>
+          <div class="hbar-track"><div class="hbar-fill muted" style="width: 29.8%;"></div></div>
+          <div class="hbar-value">₹5.3K</div>
+        </div>
+        <div class="hbar-row">
+          <div class="hbar-label">Big Blue Hot Air Balloon Paper Lamp</div>
+          <div class="hbar-track"><div class="hbar-fill" style="width: 28.7%;"></div></div>
+          <div class="hbar-value">₹5.1K</div>
+        </div>
+
+        <div style="margin-top: 20px; padding: 14px 16px; background: var(--peach); border-radius: 12px; font-size: 12.5px; color: var(--brown-ink);">
+          <strong style="display:block; margin-bottom:2px;">Insight</strong>
+          <span style="color:var(--muted);">Restock: 2/5 top revenue products are sold out. Ensure bestsellers like Endangered Animals + Hot Air Balloons never stock out.</span>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- ================================ 90-DAY ROADMAP ================================ -->
+<section class="section">
+  <div class="wrap">
+    <div class="section-top">
+      <span class="kicker">The plan, on a timeline</span>
+      <h2>The 90-day roadmap</h2>
+      <p>Four phases. Each has measurable targets. Designed around actual traffic (no A/B testing nonsense at 9K sessions).</p>
+    </div>
+
+    <div class="roadmap">
+      <div class="roadmap-track"></div>
+
+      <div class="rm-phase">
+        <div class="rm-marker"></div>
+        <div class="rm-card">
+          <div class="rm-card-head">
+            <div>
+              <span class="rm-range">Week 1–2</span>
+              <h3>Diagnose</h3>
+            </div>
+          </div>
+          <ul class="rm-items">
+            <li><svg viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg>Install Microsoft Clarity + GA4 ecommerce tracking</li>
+            <li><svg viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg>Watch 30 session recordings (PDP + checkout)</li>
+            <li><svg viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg>Read 100 support tickets, tag by theme</li>
+            <li><svg viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg>Launch post-purchase survey ("What almost stopped you?")</li>
+            <li><svg viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg>Build weekly KPI dashboard (this one!)</li>
+            <li><svg viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg>Filter bot traffic (Ashburn + Council Bluffs) from GA4</li>
+          </ul>
+          <div class="rm-target">
+            <div><strong>Week-2 checkpoint</strong>Top 10 friction moments documented · Clean analytics baseline</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="rm-phase">
+        <div class="rm-marker"></div>
+        <div class="rm-card">
+          <div class="rm-card-head">
+            <div>
+              <span class="rm-range">Week 3–4</span>
+              <h3>Quick wins</h3>
+            </div>
+          </div>
+          <ul class="rm-items">
+            <li><svg viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg>301-redirect /2025-calendars · hide Diwali collection</li>
+            <li><svg viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg>Add pincode + COD checker on every PDP</li>
+            <li><svg viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg>Enable Shop Pay + UPI intent at checkout</li>
+            <li><svg viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg>Confirm guest checkout is ON</li>
+            <li><svg viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg>Free-shipping progress bar in cart drawer</li>
+            <li><svg viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg>Trust row + social proof on every PDP</li>
+            <li><svg viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg>Sticky mobile ATC · Compress hero images to WebP</li>
+            <li><svg viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg>Install post-purchase upsell (ReConvert)</li>
+          </ul>
+          <div class="rm-target">
+            <div><strong>Day 30 checkpoint</strong>CR ≥ 1.2% · ATC ≥ 4.5% · +20–30% revenue</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="rm-phase">
+        <div class="rm-marker"></div>
+        <div class="rm-card">
+          <div class="rm-card-head">
+            <div>
+              <span class="rm-range">Week 5–8</span>
+              <h3>Content + Structural</h3>
+            </div>
+          </div>
+          <ul class="rm-items">
+            <li><svg viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg>"Shop by Occasion" megamenu (Birthdays, Housewarming, Weddings, Kids)</li>
+            <li><svg viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg>Rewrite top 10 PDP copy · benefit-first + objection handling</li>
+            <li><svg viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg>3 new gift-guide blogs (expand the miniature-books hit)</li>
+            <li><svg viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg>"Why Sky Goodies" page · founder story + FSC + reviews</li>
+            <li><svg viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg>WhatsApp abandoned cart + order updates (Interakt/Wati)</li>
+            <li><svg viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg>Launch 3 new bundles (Home Décor Starter, Kids' Birthday, Housewarming Trio)</li>
+          </ul>
+          <div class="rm-target">
+            <div><strong>Day 60 checkpoint</strong>CR ≥ 1.5% · AOV ≥ ₹1,250 · Returning ≥ 40%</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="rm-phase">
+        <div class="rm-marker"></div>
+        <div class="rm-card">
+          <div class="rm-card-head">
+            <div>
+              <span class="rm-range">Week 9–12</span>
+              <h3>Retention + Paid</h3>
+            </div>
+          </div>
+          <ul class="rm-items">
+            <li><svg viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg>Klaviyo flows: Welcome, Browse abandon, Cart, Post-purchase, Win-back</li>
+            <li><svg viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg>SMS flow for COD confirmation (reduces RTO 20–40%)</li>
+            <li><svg viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg>Small Meta/Google retargeting test (₹500/day · 30 days)</li>
+            <li><svg viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg>Launch referral program ("Give ₹100, get ₹100")</li>
+            <li><svg viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg>2027 calendar waitlist (open by August)</li>
+          </ul>
+          <div class="rm-target">
+            <div><strong>Day 90 checkpoint</strong>CR ≥ 1.8% · +₹85K incremental revenue · Sustainable CRO rhythm</div>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- ================================ PROJECTED IMPACT ================================ -->
+<section class="section dark">
+  <div class="wrap">
+    <div class="section-top">
+      <span class="kicker">The number at the bottom</span>
+      <h2>What the plan adds up to</h2>
+      <p>Assuming current traffic stays flat (9K sessions / 90 days). Every assumption below is conservative vs. published Shopify case studies.</p>
+    </div>
+
+    <div class="impact-grid">
+      <div class="impact-card">
+        <div class="impact-label">Conversion rate</div>
+        <div class="impact-now">0.89% today</div>
+        <div class="impact-value">1.8<small>%</small></div>
+        <span class="impact-change">↑ 2.0× current</span>
+        <div class="impact-foot">Driven by PDP improvements (ATC 3.5% → 6%) and checkout fixes (40% → 60% completion).</div>
+      </div>
+      <div class="impact-card">
+        <div class="impact-label">90-day orders</div>
+        <div class="impact-now">84 today</div>
+        <div class="impact-value">162</div>
+        <span class="impact-change">↑ +78 orders</span>
+        <div class="impact-foot">Roughly one extra order per day. Compounds across the quarter via returning customers.</div>
+      </div>
+      <div class="impact-card">
+        <div class="impact-label">Net revenue uplift</div>
+        <div class="impact-now">₹99K net today</div>
+        <div class="impact-value">+₹85<small>K</small></div>
+        <span class="impact-change">↑ Same traffic</span>
+        <div class="impact-foot">Zero new ad spend. Funnel fixes pay for themselves within the quarter; retention compounds beyond.</div>
+      </div>
+    </div>
+
+    <div style="margin-top: 48px; padding: 32px; background: rgba(255,255,255,.05); border: 1px solid rgba(255,255,255,.1); border-radius: 20px; text-align: center;">
+      <div style="font-size: 12px; letter-spacing: 0.14em; text-transform: uppercase; color: rgba(255,255,255,.5); margin-bottom: 10px; font-weight: 600;">Annualized impact at sustained 1.8% CR</div>
+      <div style="font-family: var(--serif); font-size: 64px; color: var(--orange-soft); line-height: 1; margin-bottom: 8px;">+₹3.4 L</div>
+      <div style="color: rgba(255,255,255,.7); font-size: 14px;">in incremental revenue per year — with zero new acquisition spend.</div>
+    </div>
+  </div>
+</section>
+
+<!-- ================================ TOOL STACK ================================ -->
+<section class="section">
+  <div class="wrap">
+    <div class="section-top">
+      <span class="kicker">What to install</span>
+      <h2>The recommended tool stack</h2>
+      <p>Start with the free tools. Layer paid ones only as revenue scales. Target stack cost: ₹4–8K/month by day 90.</p>
+    </div>
+
+    <div class="tools-grid">
+      <div class="tool">
+        <div class="tool-logo" style="background: linear-gradient(135deg, #2896F0, #0078D4);">MC</div>
+        <div class="tool-info">
+          <div class="tool-name">Microsoft Clarity</div>
+          <div class="tool-use">Heatmaps + session replays + rage clicks</div>
+        </div>
+        <div class="tool-price">FREE</div>
+      </div>
+      <div class="tool">
+        <div class="tool-logo" style="background: linear-gradient(135deg, #F9AB00, #E37400);">GA</div>
+        <div class="tool-info">
+          <div class="tool-name">Google Analytics 4</div>
+          <div class="tool-use">Funnel, device split, attribution</div>
+        </div>
+        <div class="tool-price">FREE</div>
+      </div>
+      <div class="tool">
+        <div class="tool-logo" style="background: linear-gradient(135deg, #4285F4, #34A853);">PS</div>
+        <div class="tool-info">
+          <div class="tool-name">PageSpeed Insights</div>
+          <div class="tool-use">Core Web Vitals · speed audits</div>
+        </div>
+        <div class="tool-price">FREE</div>
+      </div>
+      <div class="tool">
+        <div class="tool-logo" style="background: linear-gradient(135deg, #F78D01, #D35D03);">JM</div>
+        <div class="tool-info">
+          <div class="tool-name">Judge.me</div>
+          <div class="tool-use">Reviews with photos, UGC widgets</div>
+        </div>
+        <div class="tool-price">₹500/mo</div>
+      </div>
+      <div class="tool">
+        <div class="tool-logo" style="background: linear-gradient(135deg, #FF6B6B, #E63946);">RC</div>
+        <div class="tool-info">
+          <div class="tool-name">ReConvert</div>
+          <div class="tool-use">Post-purchase upsell (AOV +10–20%)</div>
+        </div>
+        <div class="tool-price paid">₹2,000/mo</div>
+      </div>
+      <div class="tool">
+        <div class="tool-logo" style="background: linear-gradient(135deg, #25D366, #128C7E);">WA</div>
+        <div class="tool-info">
+          <div class="tool-name">Interakt / Wati</div>
+          <div class="tool-use">WhatsApp abandoned cart · order updates</div>
+        </div>
+        <div class="tool-price paid">₹1,500/mo</div>
+      </div>
+      <div class="tool">
+        <div class="tool-logo" style="background: linear-gradient(135deg, #FF6E59, #D84315);">GK</div>
+        <div class="tool-info">
+          <div class="tool-name">GoKwik / Shiprocket</div>
+          <div class="tool-use">COD-to-prepaid · fewer RTOs</div>
+        </div>
+        <div class="tool-price paid">Revenue share</div>
+      </div>
+      <div class="tool">
+        <div class="tool-logo" style="background: linear-gradient(135deg, #1E8FE5, #0F68B4);">KL</div>
+        <div class="tool-info">
+          <div class="tool-name">Klaviyo</div>
+          <div class="tool-use">Email flows · retention muscle</div>
+        </div>
+        <div class="tool-price paid">₹2,500/mo</div>
+      </div>
+      <div class="tool">
+        <div class="tool-logo" style="background: linear-gradient(135deg, #5D42FF, #4426E5);">SP</div>
+        <div class="tool-info">
+          <div class="tool-name">Shop Pay (Shopify)</div>
+          <div class="tool-use">One-tap checkout — biggest CR lever</div>
+        </div>
+        <div class="tool-price">INCLUDED</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ================================ THIS WEEK CHECKLIST ================================ -->
+<section class="section alt">
+  <div class="wrap">
+    <div class="section-top">
+      <span class="kicker">Start Monday</span>
+      <h2>The 8-hour checklist</h2>
+      <p>Before anyone touches the theme, these 10 items. Expected 30-day CR lift from this list alone: <strong>0.89% → 1.2–1.4%</strong>.</p>
+    </div>
+
+    <div class="checklist-card">
+      <div class="checklist">
+        <div class="ch-item">
+          <span class="ch-num">1</span>
+          <div class="ch-body">
+            <strong>Install Microsoft Clarity</strong>
+            Free, unlimited recordings + heatmaps + rage-click detection.
+            <div class="ch-time">⏱ 30 min</div>
+          </div>
+        </div>
+        <div class="ch-item">
+          <span class="ch-num">2</span>
+          <div class="ch-body">
+            <strong>Filter Ashburn + Council Bluffs from GA4</strong>
+            Removes ~22% bot traffic from every future metric.
+            <div class="ch-time">⏱ 15 min</div>
+          </div>
+        </div>
+        <div class="ch-item">
+          <span class="ch-num">3</span>
+          <div class="ch-body">
+            <strong>301-redirect /collections/2025-calendars → /calendars</strong>
+            Stops burning 462+ sessions/quarter on a stale page.
+            <div class="ch-time">⏱ 30 min</div>
+          </div>
+        </div>
+        <div class="ch-item">
+          <span class="ch-num">4</span>
+          <div class="ch-body">
+            <strong>Hide Diwali collection from nav &amp; footer until September</strong>
+            Off-season surface area that confuses April shoppers.
+            <div class="ch-time">⏱ 15 min</div>
+          </div>
+        </div>
+        <div class="ch-item">
+          <span class="ch-num">5</span>
+          <div class="ch-body">
+            <strong>Watch 20 session recordings on PDP + checkout</strong>
+            Costs nothing. Surfaces 30–50% of the audit's findings for free.
+            <div class="ch-time">⏱ 2 hrs</div>
+          </div>
+        </div>
+        <div class="ch-item">
+          <span class="ch-num">6</span>
+          <div class="ch-body">
+            <strong>Read last 100 support tickets, tag by theme</strong>
+            Cheapest voice-of-customer research you'll ever do.
+            <div class="ch-time">⏱ 2 hrs</div>
+          </div>
+        </div>
+        <div class="ch-item">
+          <span class="ch-num">7</span>
+          <div class="ch-body">
+            <strong>Enable Shop Pay + UPI intent at checkout</strong>
+            Single biggest mobile CR lever Shopify offers. Free to activate.
+            <div class="ch-time">⏱ 1 hr</div>
+          </div>
+        </div>
+        <div class="ch-item">
+          <span class="ch-num">8</span>
+          <div class="ch-body">
+            <strong>Confirm guest checkout is ON</strong>
+            Forcing account creation kills 24% of carts. Quick check.
+            <div class="ch-time">⏱ 5 min</div>
+          </div>
+        </div>
+        <div class="ch-item">
+          <span class="ch-num">9</span>
+          <div class="ch-body">
+            <strong>Install Judge.me · import existing reviews</strong>
+            Reviews with photos lift ATC 10–20% on average.
+            <div class="ch-time">⏱ 1 hr</div>
+          </div>
+        </div>
+        <div class="ch-item">
+          <span class="ch-num">10</span>
+          <div class="ch-body">
+            <strong>Set up 3-question post-purchase survey</strong>
+            "What almost stopped you from buying?" · send to next 50 orders.
+            <div class="ch-time">⏱ 30 min</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ================================ CTA STRIP ================================ -->
+<section class="section">
+  <div class="wrap">
+    <div class="cta-strip">
+      <h3>A 2× conversion rate is a single quarter away.</h3>
+      <p>Not by spending more on ads. Not by redesigning everything. By fixing the two leaks that account for 80% of the revenue lost today.</p>
+      <div class="cta-strip-stats">
+        <div class="cta-strip-stat"><strong>2.0×</strong><small>Conversion rate</small></div>
+        <div class="cta-strip-stat"><strong>+₹85K</strong><small>90-day revenue</small></div>
+        <div class="cta-strip-stat"><strong>+₹3.4L</strong><small>Annualized</small></div>
+        <div class="cta-strip-stat"><strong>₹0</strong><small>New ad spend</small></div>
+      </div>
+      <button class="cta-btn" onclick="window.print()">
+        Print this dashboard
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="6 9 6 2 18 2 18 9"/><path d="M6 18H4a2 2 0 0 1-2-2v-5a2 2 0 0 1 2-2h16a2 2 0 0 1 2 2v5a2 2 0 0 1-2 2h-2"/><rect x="6" y="14" width="12" height="8"/></svg>
+      </button>
+    </div>
+  </div>
+</section>
+
+<!-- ================================ FOOTER ================================ -->
+<footer class="foot">
+  <div class="wrap">
+    <div><strong>Sky Goodies · CRO Dashboard · April 2026</strong></div>
+    <div style="margin-top: 6px;">Data window: Jan 20 – Apr 20, 2026 · Source: Shopify Admin Analytics · Benchmarks: Indian D2C industry averages</div>
+    <div style="margin-top: 14px; opacity: .6;">Built alongside the Horizon theme revamp. Re-run in 30 days to measure progress.</div>
+  </div>
+</footer>
+
+<script>
+  /* Reveal on scroll */
+  const io = new IntersectionObserver((entries) => {
+    entries.forEach(e => { if (e.isIntersecting) e.target.classList.add('in'); });
+  }, { threshold: 0.1 });
+  document.querySelectorAll('.kpi, .funnel-card, .finding, .chart-card, .working, .rm-phase, .impact-card, .tool, .checklist-card, .cta-strip')
+    .forEach(el => { el.classList.add('reveal'); io.observe(el); });
+</script>
+
+</body>
+</html>

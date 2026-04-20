@@ -1,0 +1,204 @@
+{{ 'sg-theme.css' | asset_url | stylesheet_tag }}
+
+{%- style -%}
+  .sg-ig-{{ section.id }} {
+    background: {{ section.settings.bg_color | default: '#FAF6F0' }};
+    padding: 80px 0;
+    position: relative;
+    overflow: hidden;
+  }
+  .sg-ig-{{ section.id }}::before {
+    content: '';
+    position: absolute;
+    top: -1px; left: 0; right: 0;
+    height: 80px;
+    background: {{ section.settings.wave_color | default: '#FCEEE6' }};
+    clip-path: ellipse(70% 100% at 50% 0%);
+  }
+  @media (min-width: 768px) {
+    .sg-ig-{{ section.id }}::before { height: 110px; clip-path: ellipse(100% 100% at 50% 0%); }
+  }
+  .sg-ig-{{ section.id }} .sg-wrap { position: relative; z-index: 2; }
+{%- endstyle -%}
+
+<section class="sg-root sg-ig-{{ section.id }}" {{ section.shopify_attributes }}>
+  <div class="sg-wrap">
+    <div class="sg-section-head" style="margin-bottom: 28px;">
+      <h2>{{ section.settings.heading | default: 'Spotted in the Wild' }}</h2>
+      <p class="sub">{{ section.settings.subheading | default: 'Tag @skygoodies to be featured.' }}</p>
+    </div>
+
+    <div class="sg-ig-follow">
+      <a href="{{ section.settings.ig_url | default: 'https://instagram.com/skygoodies.co' }}" target="_blank" rel="noopener" class="sg-ig-handle">
+        <span class="sg-ig-ring">
+          <span class="sg-ig-ring-inner">
+            {%- if section.settings.avatar -%}
+              <img src="{{ section.settings.avatar | image_url: width: 80 }}" alt="" />
+            {%- endif -%}
+          </span>
+        </span>
+        {{ section.settings.handle | default: '@skygoodies.co' }}
+      </a>
+      <a href="{{ section.settings.ig_url | default: 'https://instagram.com/skygoodies.co' }}" target="_blank" rel="noopener" class="sg-pill sg-pill--dark sg-pill--lg">Follow on Instagram →</a>
+    </div>
+
+    <!-- Insta Feed app slot: if Insta Feed is installed, drop in its embed here -->
+    <div class="sg-ig-grid" data-sg-ig-feed>
+      {%- for block in section.blocks -%}
+        <a class="sg-ig-tile"
+           href="{{ block.settings.link | default: section.settings.ig_url }}"
+           target="_blank"
+           rel="noopener"
+           {% if block.settings.image %}style="background-image: url('{{ block.settings.image | image_url: width: 600 }}');"{% endif %}
+           {{ block.shopify_attributes }}>
+          <svg class="sg-ig-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="2" width="20" height="20" rx="5"/><path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"/><line x1="17.5" y1="6.5" x2="17.51" y2="6.5"/></svg>
+          <div class="sg-ig-meta">
+            <svg viewBox="0 0 24 24"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg>
+            <span>{{ block.settings.likes | default: '1.2K' }}</span>
+          </div>
+        </a>
+      {%- endfor -%}
+    </div>
+  </div>
+</section>
+
+<style>
+.sg-ig-follow {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 32px;
+  flex-wrap: wrap;
+  gap: 16px;
+}
+.sg-ig-handle {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  padding: 8px 16px 8px 8px;
+  background: var(--sg-white);
+  border: 2px solid var(--sg-ink);
+  border-radius: 999px;
+  font-weight: 700;
+  font-size: 14px;
+  color: var(--sg-ink);
+  transition: all .15s;
+}
+.sg-ig-handle:hover { transform: translateY(-2px); box-shadow: 0 4px 0 var(--sg-ink); color: var(--sg-orange); }
+.sg-ig-ring {
+  width: 32px; height: 32px;
+  border-radius: 50%;
+  background: conic-gradient(from 0deg, #FEDA75, #FA7E1E, #D62976, #962FBF, #4F5BD5, #FEDA75);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 2px;
+}
+.sg-ig-ring-inner {
+  width: 100%; height: 100%;
+  border-radius: 50%;
+  background: var(--sg-white);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.sg-ig-ring-inner img { width: 26px; height: 26px; border-radius: 50%; object-fit: cover; }
+
+.sg-ig-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 8px;
+}
+@media (min-width: 600px) { .sg-ig-grid { grid-template-columns: repeat(3, 1fr); gap: 10px; } }
+@media (min-width: 900px) { .sg-ig-grid { grid-template-columns: repeat(6, 1fr); gap: 12px; } }
+.sg-ig-tile {
+  position: relative;
+  aspect-ratio: 1;
+  border-radius: 14px;
+  overflow: hidden;
+  background-size: cover;
+  background-position: center;
+  border: 2px solid var(--sg-ink);
+  transition: all .15s;
+  cursor: pointer;
+  display: block;
+}
+.sg-ig-tile:hover { transform: translateY(-2px); box-shadow: 0 4px 0 var(--sg-ink); }
+.sg-ig-tile::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: rgba(30, 27, 24, 0);
+  transition: background .2s;
+  pointer-events: none;
+}
+.sg-ig-tile:hover::after { background: rgba(30, 27, 24, .55); }
+.sg-ig-meta {
+  position: absolute;
+  inset: auto 0 0 0;
+  padding: 12px;
+  z-index: 2;
+  opacity: 0;
+  transition: opacity .2s;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-weight: 700;
+  font-size: 12px;
+  color: #fff;
+}
+.sg-ig-tile:hover .sg-ig-meta { opacity: 1; }
+.sg-ig-meta svg { width: 16px; height: 16px; fill: #fff; }
+.sg-ig-icon {
+  position: absolute;
+  top: 10px; right: 10px;
+  z-index: 2;
+  width: 26px; height: 26px;
+  color: #fff;
+  opacity: 0.95;
+  filter: drop-shadow(0 2px 4px rgba(0,0,0,.3));
+}
+</style>
+
+{% schema %}
+{
+  "name": "SG — Instagram Feed",
+  "tag": "section",
+  "class": "section-sg-instagram-feed",
+  "settings": [
+    { "type": "text", "id": "heading", "label": "Heading", "default": "Spotted in the Wild" },
+    { "type": "text", "id": "subheading", "label": "Subheading", "default": "Tag @skygoodies to be featured." },
+    { "type": "image_picker", "id": "avatar", "label": "Handle avatar (square)" },
+    { "type": "text", "id": "handle", "label": "Handle label", "default": "@skygoodies.co" },
+    { "type": "url", "id": "ig_url", "label": "Instagram URL" },
+    { "type": "color", "id": "bg_color", "label": "Section background", "default": "#FAF6F0" },
+    { "type": "color", "id": "wave_color", "label": "Wave color", "default": "#FCEEE6" },
+    { "type": "paragraph", "content": "If the Insta Feed app is installed, it will replace the tiles below with live content." }
+  ],
+  "max_blocks": 12,
+  "blocks": [
+    {
+      "type": "post",
+      "name": "Instagram post (fallback)",
+      "settings": [
+        { "type": "image_picker", "id": "image", "label": "Image" },
+        { "type": "text", "id": "likes", "label": "Likes label", "default": "1.2K" },
+        { "type": "url", "id": "link", "label": "Post URL" }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "SG — Instagram Feed",
+      "blocks": [
+        { "type": "post", "settings": { "likes": "2.1K" } },
+        { "type": "post", "settings": { "likes": "1.4K" } },
+        { "type": "post", "settings": { "likes": "3.2K" } },
+        { "type": "post", "settings": { "likes": "892" } },
+        { "type": "post", "settings": { "likes": "1.9K" } },
+        { "type": "post", "settings": { "likes": "724" } }
+      ]
+    }
+  ]
+}
+{% endschema %}
