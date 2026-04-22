@@ -2313,8 +2313,8 @@
         "type": "text",
         "id": "sg_free_ship_away_text",
         "label": "Away-from-threshold text",
-        "info": "Use {{amount}} where the remaining amount should appear.",
-        "default": "You're ₹{{amount}} away from free shipping"
+        "info": "Use [amount] where the remaining amount should appear (e.g. 'You are ₹[amount] away from free shipping').",
+        "default": "You are ₹[amount] away from free shipping"
       },
       {
         "type": "text",

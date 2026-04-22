@@ -14,33 +14,27 @@
 {%- if remaining < 0 -%}{%- assign remaining = 0 -%}{%- endif -%}
 {%- assign fill_pct = cart_total_rupees | times: 100 | divided_by: ship_threshold -%}
 {%- if fill_pct > 100 -%}{%- assign fill_pct = 100 -%}{%- endif -%}
-{%- assign away_text = settings.sg_free_ship_away_text | default: "You're ₹{{amount}} away from free shipping" | replace: '{{amount}}', remaining -%}
-{%- assign unlocked_text = settings.sg_free_ship_unlocked_text | default: "You've unlocked free shipping!" -%}
+{%- assign away_template_raw = settings.sg_free_ship_away_text -%}
+{%- if away_template_raw == blank -%}
+  {%- assign away_template_raw = 'You are ₹[amount] away from free shipping' -%}
+{%- endif -%}
+{%- assign away_text = away_template_raw | replace: '{{amount}}', remaining | replace: '[amount]', remaining -%}
+{%- assign unlocked_text = settings.sg_free_ship_unlocked_text -%}
+{%- if unlocked_text == blank -%}{%- assign unlocked_text = 'You have unlocked free shipping!' -%}{%- endif -%}
 
-{%- comment -%} Resolve upsell products {%- endcomment -%}
-{%- assign upsell_products = '' | split: '' -%}
-{%- if settings.sg_upsell_product_1 != blank -%}
-  {%- assign p = all_products[settings.sg_upsell_product_1] -%}
-  {%- if p != blank -%}{%- assign upsell_products = upsell_products | push: p -%}{%- endif -%}
-{%- endif -%}
-{%- if settings.sg_upsell_product_2 != blank -%}
-  {%- assign p = all_products[settings.sg_upsell_product_2] -%}
-  {%- if p != blank -%}{%- assign upsell_products = upsell_products | push: p -%}{%- endif -%}
-{%- endif -%}
-{%- if settings.sg_upsell_product_3 != blank -%}
-  {%- assign p = all_products[settings.sg_upsell_product_3] -%}
-  {%- if p != blank -%}{%- assign upsell_products = upsell_products | push: p -%}{%- endif -%}
-{%- endif -%}
-{%- if settings.sg_upsell_product_4 != blank -%}
-  {%- assign p = all_products[settings.sg_upsell_product_4] -%}
-  {%- if p != blank -%}{%- assign upsell_products = upsell_products | push: p -%}{%- endif -%}
-{%- endif -%}
-{%- if upsell_products.size == 0 and settings.sg_upsell_fallback_collection != blank -%}
-  {%- assign fallback = collections[settings.sg_upsell_fallback_collection] -%}
-  {%- for p in fallback.products limit: 4 -%}
-    {%- assign upsell_products = upsell_products | push: p -%}
-  {%- endfor -%}
-{%- endif -%}
+{%- comment -%} Resolve upsell products (no push filter in Liquid — use direct renders below) {%- endcomment -%}
+{%- assign u1 = all_products[settings.sg_upsell_product_1] -%}
+{%- assign u2 = all_products[settings.sg_upsell_product_2] -%}
+{%- assign u3 = all_products[settings.sg_upsell_product_3] -%}
+{%- assign u4 = all_products[settings.sg_upsell_product_4] -%}
+{%- assign upsell_count = 0 -%}
+{%- if u1 != blank and u1 != empty -%}{%- assign upsell_count = upsell_count | plus: 1 -%}{%- endif -%}
+{%- if u2 != blank and u2 != empty -%}{%- assign upsell_count = upsell_count | plus: 1 -%}{%- endif -%}
+{%- if u3 != blank and u3 != empty -%}{%- assign upsell_count = upsell_count | plus: 1 -%}{%- endif -%}
+{%- if u4 != blank and u4 != empty -%}{%- assign upsell_count = upsell_count | plus: 1 -%}{%- endif -%}
+{%- assign fallback_coll = collections[settings.sg_upsell_fallback_collection] -%}
+{%- assign use_fallback = false -%}
+{%- if upsell_count == 0 and fallback_coll.products.size > 0 -%}{%- assign use_fallback = true -%}{%- endif -%}
 
 <div class="sg-drawer-back" id="sg-drawer-back" aria-hidden="true"></div>
 <aside class="sg-cart-drawer sg-root" id="sg-cart-drawer" role="dialog" aria-label="Shopping cart" aria-hidden="true">
@@ -105,22 +99,20 @@
       {%- endif -%}
     </div>
 
-    {%- if settings.sg_upsell_enabled and upsell_products.size > 0 -%}
+    {%- if settings.sg_upsell_enabled and upsell_count > 0 or use_fallback -%}
       <div class="sg-upsell">
         <div class="sg-upsell-lbl">✦ {{ settings.sg_upsell_heading | default: 'Complete the set' }}</div>
         <div class="sg-upsell-row">
-          {%- for p in upsell_products -%}
-            <div class="sg-ucard">
-              <a href="{{ p.url }}" class="sg-ucard-img">
-                {%- if p.featured_image -%}<img src="{{ p.featured_image | image_url: width: 120 }}" alt="{{ p.title | escape }}"/>{%- endif -%}
-              </a>
-              <div class="sg-ucard-info">
-                <h5>{{ p.title | truncate: 28 }}</h5>
-                <span class="sg-ucard-p">₹{{ p.price | money_without_currency | remove: '.00' | remove: ',' }}</span>
-              </div>
-              <button class="sg-ucard-add" data-sg-atc data-variant-id="{{ p.selected_or_first_available_variant.id }}" aria-label="Add {{ p.title | escape }}">+</button>
-            </div>
-          {%- endfor -%}
+          {%- if use_fallback -%}
+            {%- for p in fallback_coll.products limit: 4 -%}
+              {% render 'sg-cart-upsell-card', p: p %}
+            {%- endfor -%}
+          {%- else -%}
+            {%- if u1 != blank %}{% render 'sg-cart-upsell-card', p: u1 %}{% endif -%}
+            {%- if u2 != blank %}{% render 'sg-cart-upsell-card', p: u2 %}{% endif -%}
+            {%- if u3 != blank %}{% render 'sg-cart-upsell-card', p: u3 %}{% endif -%}
+            {%- if u4 != blank %}{% render 'sg-cart-upsell-card', p: u4 %}{% endif -%}
+          {%- endif -%}
         </div>
       </div>
     {%- endif -%}
@@ -427,8 +419,8 @@
   if (!drawer || !back) return;
 
   var SHIP_THRESHOLD = {{ ship_threshold }};
-  var AWAY_TEMPLATE = {{ settings.sg_free_ship_away_text | default: "You're ₹{{amount}} away from free shipping" | json }};
-  var UNLOCKED_TEXT = {{ settings.sg_free_ship_unlocked_text | default: "You've unlocked free shipping!" | json }};
+  var AWAY_TEMPLATE = {{ away_template_raw | json }};
+  var UNLOCKED_TEXT = {{ unlocked_text | json }};
 
   function openDrawer() {
     drawer.classList.add('sg-open');
@@ -454,7 +446,8 @@
     if (fillEl) fillEl.style.width = fill + '%';
     if (textEl) {
       if (remaining > 0) {
-        textEl.textContent = AWAY_TEMPLATE.replace('{{amount}}', remaining);
+        var txt = AWAY_TEMPLATE.replace('{{amount}}', remaining).replace('[amount]', remaining);
+        textEl.textContent = txt;
       } else {
         textEl.innerHTML = '<strong>' + UNLOCKED_TEXT + '</strong>';
       }

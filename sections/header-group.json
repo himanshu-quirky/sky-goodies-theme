@@ -1,13 +1,43 @@
-/*
- * ------------------------------------------------------------
- * Sky Goodies: default Horizon header disabled.
- * The sg-header-mega section is rendered from each template's JSON
- * (index.json, collection.json, product.json, etc.) instead.
- * ------------------------------------------------------------
- */
 {
   "type": "header",
   "name": "Header",
-  "sections": {},
-  "order": []
+  "sections": {
+    "sg_announcement": {
+      "type": "sg-announcement",
+      "blocks": {
+        "link-1": { "type": "link", "settings": { "label": "Track Order" } },
+        "link-2": { "type": "link", "settings": { "label": "Log in" } },
+        "link-3": { "type": "link", "settings": { "label": "WhatsApp" } }
+      },
+      "block_order": ["link-1", "link-2", "link-3"],
+      "settings": {
+        "show_icon": true,
+        "icon": "✿",
+        "message": "Shopping for Mom?",
+        "link_text": "Order by May 8 for Mother's Day delivery",
+        "bg_color": "#FCEEE6",
+        "text_color": "#D26939",
+        "border_color": "#F8DCCA",
+        "vertical_padding": 9,
+        "font_size": 12
+      }
+    },
+    "sg_header": {
+      "type": "sg-header-mega",
+      "blocks": {
+        "feat-1": { "type": "mega_feature", "settings": { "menu_label": "Paper Kits", "tag": "bestseller", "title": "Endangered Animals BOX SET" } },
+        "feat-2": { "type": "mega_feature", "settings": { "menu_label": "Paper Kits", "tag": "just in", "title": "Paper Fairy Lights" } },
+        "feat-3": { "type": "mega_feature", "settings": { "menu_label": "Home Décor", "tag": "trending", "title": "Hot Air Balloon Lights" } },
+        "feat-4": { "type": "mega_feature", "settings": { "menu_label": "Gifts", "tag": "new guide", "title": "Birthday Gift Edit" } }
+      },
+      "block_order": ["feat-1", "feat-2", "feat-3", "feat-4"],
+      "settings": {
+        "menu": "main-menu",
+        "bg_color": "#FFFFFF",
+        "sticky": true,
+        "show_wishlist": true
+      }
+    }
+  },
+  "order": ["sg_announcement", "sg_header"]
 }

@@ -1,0 +1,16 @@
+{%- comment -%}
+  Single upsell card for the cart drawer.
+  Params: p (product)
+{%- endcomment -%}
+<div class="sg-ucard">
+  <a href="{{ p.url }}" class="sg-ucard-img">
+    {%- if p.featured_image -%}
+      <img src="{{ p.featured_image | image_url: width: 120 }}" alt="{{ p.title | escape }}"/>
+    {%- endif -%}
+  </a>
+  <div class="sg-ucard-info">
+    <h5>{{ p.title | truncate: 28 }}</h5>
+    <span class="sg-ucard-p">₹{{ p.price | money_without_currency | remove: '.00' | remove: ',' }}</span>
+  </div>
+  <button class="sg-ucard-add" data-sg-atc data-variant-id="{{ p.selected_or_first_available_variant.id }}" aria-label="Add {{ p.title | escape }}">+</button>
+</div>
