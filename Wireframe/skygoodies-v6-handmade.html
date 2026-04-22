@@ -1,0 +1,2033 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width,initial-scale=1" />
+<meta name="referrer" content="no-referrer" />
+<title>Sky Goodies — v6 Handmade (D2C)</title>
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Dancing+Script:wght@400;500;600&family=Fraunces:ital,opsz,wght@0,9..144,400;0,9..144,500;0,9..144,600;0,9..144,700;1,9..144,400;1,9..144,500;1,9..144,600&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet" />
+<style>
+/* =========================================================================
+   SKY GOODIES — v6 "Handmade" — D2C
+   Borrowed from Rifle Paper Co. (aesthetic), Lovepop (CRO mechanics),
+   Papier (polish), KiwiCo (age filters + warmth).
+   ========================================================================= */
+
+:root {
+  /* Palette — warm, earthy, Rifle-inspired but with Sky Goodies orange */
+  --paper:        #F5EFE3;
+  --paper-2:      #EEE5D2;
+  --paper-soft:   #FAF6EC;
+  --ivory:        #FFFDF8;
+  --cream:        #FAF6F0;
+
+  --rose:         #D89089;
+  --rose-soft:    #F0C8C2;
+  --rose-deep:    #B55C53;
+  --sage:         #6E7A5A;
+  --sage-soft:    #A4B085;
+  --sage-wash:    #D9E2C3;
+  --pine:         #3A4829;
+  --pine-deep:    #2A3420;
+  --mustard:      #C89B48;
+  --butter:       #F0D288;
+
+  --orange:       #E8845A;
+  --orange-dk:    #D26939;
+  --orange-soft:  #F5A67A;
+  --orange-wash:  #FBE3D3;
+  --terra:        #B84D3C;
+
+  --ink:          #1A1614;
+  --ink-2:        #2E2A26;
+  --brown:        #3D3833;
+  --muted:        #7A7168;
+  --line:         #E5DCC5;
+  --line-2:       #D4C7A9;
+
+  --gold:         #C89B48;
+
+  --display: 'Fraunces', Georgia, serif;
+  --script: 'Dancing Script', 'Fraunces', serif;
+  --sans: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+
+  --container: 1440px;
+  --gutter: 20px;
+
+  --r-sm: 8px;
+  --r-md: 14px;
+  --r-lg: 20px;
+  --r-pill: 999px;
+
+  --ease: cubic-bezier(.22,.61,.36,1);
+  --shadow-sm: 0 2px 8px rgba(26,22,20,.05);
+  --shadow: 0 12px 32px -10px rgba(26,22,20,.14);
+  --shadow-lg: 0 24px 56px -14px rgba(26,22,20,.2);
+}
+@media (min-width: 768px) { :root { --gutter: 32px; } }
+@media (min-width: 1200px) { :root { --gutter: 48px; } }
+
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+html { -webkit-font-smoothing: antialiased; -moz-osx-font-smoothing: grayscale; scroll-behavior: smooth; overflow-x: hidden; }
+body {
+  font-family: var(--sans);
+  color: var(--ink);
+  background: var(--paper);
+  font-weight: 400;
+  font-size: 15px;
+  line-height: 1.55;
+  letter-spacing: -0.003em;
+}
+img, svg { max-width: 100%; display: block; }
+button, input, select, textarea { font: inherit; color: inherit; }
+button { cursor: pointer; border: none; background: none; }
+a { color: inherit; text-decoration: none; }
+h1, h2, h3, h4 { font-family: var(--display); font-weight: 500; color: var(--ink); line-height: 1; letter-spacing: -0.02em; }
+::selection { background: rgba(232,132,90,.25); }
+
+.wrap { max-width: var(--container); margin: 0 auto; padding: 0 var(--gutter); }
+.section { padding: 64px 0; }
+@media (min-width: 900px) { .section { padding: 96px 0; } }
+
+/* --- dev switcher --- */
+.page-switch {
+  position: fixed; left: 50%; bottom: 20px;
+  transform: translateX(-50%); z-index: 90;
+  background: var(--ink); color: #fff;
+  border-radius: var(--r-pill); padding: 5px;
+  display: flex; gap: 3px;
+  font-size: 12px; font-weight: 500;
+  box-shadow: var(--shadow);
+}
+.page-switch button {
+  padding: 8px 16px; border-radius: var(--r-pill);
+  color: rgba(255,255,255,.65); transition: all .2s;
+}
+.page-switch button.active { background: var(--orange); color: #fff; }
+
+/* ==================== UTILITY BAR (Rifle-inspired) ==================== */
+.utility {
+  background: var(--rose);
+  color: #fff;
+  padding: 10px 16px;
+  font-size: 12px;
+  font-weight: 500;
+  letter-spacing: 0.01em;
+}
+.utility-in {
+  max-width: var(--container);
+  margin: 0 auto;
+  padding: 0 var(--gutter);
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 20px;
+  flex-wrap: wrap;
+}
+.utility-left { display: flex; gap: 14px; align-items: center; }
+.utility-left a { text-decoration: underline; text-underline-offset: 3px; }
+.utility-left a:hover { opacity: 0.85; }
+.utility-right { display: flex; gap: 18px; align-items: center; font-size: 11.5px; }
+.utility-right a:hover { text-decoration: underline; }
+
+/* ==================== HEADER ==================== */
+.hdr {
+  background: var(--paper);
+  position: sticky; top: 0; z-index: 80;
+  border-bottom: 1px solid var(--line);
+}
+.hdr-top {
+  max-width: var(--container);
+  margin: 0 auto;
+  padding: 18px var(--gutter);
+  display: grid;
+  grid-template-columns: 1fr auto 1fr;
+  align-items: center;
+  gap: 20px;
+}
+.hdr-left {
+  display: none;
+  gap: 24px;
+  align-items: center;
+}
+@media (min-width: 900px) { .hdr-left { display: flex; } }
+.hdr-left a {
+  font-size: 12px;
+  font-weight: 500;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--brown);
+  transition: color .15s;
+}
+.hdr-left a:hover { color: var(--orange-dk); }
+.hdr-search {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 12px;
+  font-weight: 600;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--brown);
+  transition: color .15s;
+}
+.hdr-search svg { width: 16px; height: 16px; stroke: currentColor; stroke-width: 1.7; fill: none; }
+.hdr-search:hover { color: var(--orange-dk); }
+
+.hdr-logo { justify-self: center; }
+.hdr-logo img { height: 64px; width: auto; }
+@media (min-width: 768px) { .hdr-logo img { height: 78px; } }
+
+.hdr-right {
+  display: flex;
+  gap: 14px;
+  justify-self: end;
+  align-items: center;
+}
+.hdr-icon {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 40px; height: 40px;
+  border-radius: 50%;
+  color: var(--brown);
+  transition: all .15s;
+  position: relative;
+}
+.hdr-icon:hover { background: var(--orange-wash); color: var(--orange-dk); }
+.hdr-icon svg { width: 20px; height: 20px; stroke: currentColor; stroke-width: 1.7; fill: none; }
+.hdr-icon.heart svg { fill: var(--rose); stroke: var(--rose); }
+.hdr-icon .count {
+  position: absolute;
+  top: 4px; right: 3px;
+  width: 18px; height: 18px;
+  background: var(--orange);
+  color: #fff;
+  border-radius: 50%;
+  font-size: 10px;
+  font-weight: 700;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border: 2px solid var(--paper);
+  font-family: var(--sans);
+}
+
+/* Main nav */
+.hdr-nav {
+  border-top: 1px solid var(--line);
+  padding: 14px var(--gutter);
+}
+.hdr-nav-in {
+  max-width: var(--container);
+  margin: 0 auto;
+  display: none;
+  gap: 32px;
+  justify-content: center;
+  align-items: center;
+}
+@media (min-width: 1000px) { .hdr-nav-in { display: flex; } }
+.hdr-nav-in a {
+  font-size: 14px;
+  font-weight: 500;
+  color: var(--brown);
+  transition: color .15s;
+  letter-spacing: 0.005em;
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+}
+.hdr-nav-in a:hover { color: var(--orange-dk); }
+.hdr-nav-in a.special { color: var(--rose-deep); font-weight: 600; }
+.hdr-nav-in a.sale { color: var(--terra); }
+.hdr-nav-in a svg { width: 10px; height: 10px; opacity: 0.5; stroke: currentColor; stroke-width: 2; fill: none; }
+
+/* ==================== HERO (Rifle split-panel style) ==================== */
+.hero {
+  background: var(--paper);
+  padding: 0;
+}
+.hero-in {
+  max-width: var(--container);
+  margin: 0 auto;
+  padding: 20px var(--gutter);
+}
+.hero-grid {
+  display: grid;
+  grid-template-columns: 1fr;
+  aspect-ratio: 16/10;
+  min-height: 480px;
+  border-radius: var(--r-lg);
+  overflow: hidden;
+  position: relative;
+}
+@media (min-width: 900px) {
+  .hero-grid { grid-template-columns: 1fr 1fr; aspect-ratio: auto; min-height: 620px; }
+}
+
+.hero-left {
+  background: var(--sage);
+  color: var(--paper-soft);
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  padding: 40px 32px;
+  text-align: center;
+  position: relative;
+  /* paper texture */
+  background-image:
+    radial-gradient(circle at 10% 20%, rgba(255,253,248,0.06), transparent 40%),
+    radial-gradient(circle at 80% 70%, rgba(255,253,248,0.04), transparent 40%);
+}
+.hero-eyebrow {
+  font-family: var(--sans);
+  font-size: 11px;
+  font-weight: 600;
+  letter-spacing: 0.24em;
+  text-transform: uppercase;
+  color: var(--paper-soft);
+  opacity: 0.8;
+  margin-bottom: 24px;
+}
+.hero-title-decor {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin-bottom: 4px;
+}
+.hero-title-decor svg { width: 22px; height: 22px; fill: var(--butter); }
+.hero-title {
+  font-family: var(--display);
+  font-style: italic;
+  font-weight: 400;
+  font-size: clamp(40px, 6vw, 84px);
+  color: var(--paper-soft);
+  line-height: 0.95;
+  letter-spacing: -0.015em;
+  margin-bottom: 18px;
+}
+.hero-title .script {
+  font-family: var(--script);
+  font-weight: 500;
+  font-style: normal;
+  font-size: clamp(56px, 8vw, 120px);
+  display: block;
+  color: var(--butter);
+  margin: -10px 0;
+  line-height: 0.9;
+  transform: rotate(-2deg);
+}
+.hero-sub {
+  font-family: var(--sans);
+  font-size: 15px;
+  font-weight: 400;
+  color: var(--paper-soft);
+  opacity: 0.9;
+  max-width: 360px;
+  line-height: 1.55;
+  margin-bottom: 28px;
+}
+.hero-cta {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  padding: 14px 0;
+  font-family: var(--sans);
+  font-size: 12px;
+  font-weight: 600;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: var(--paper-soft);
+  border-bottom: 1.5px solid var(--paper-soft);
+  padding-bottom: 6px;
+  transition: all .2s;
+}
+.hero-cta:hover { color: var(--butter); border-color: var(--butter); gap: 14px; }
+
+.hero-right {
+  background-image: url('https://in.skygoodies.co/cdn/shop/products/3000-Sky-Goodies-Flowers-Butterflies-Combo-5_1024x1024.jpg?v=1742907941');
+  background-size: cover;
+  background-position: center;
+  min-height: 320px;
+  position: relative;
+}
+
+/* Circular "new" stamp (Papier-style) */
+.hero-stamp {
+  position: absolute;
+  bottom: 24px; left: 24px;
+  width: 110px; height: 110px;
+  border-radius: 50%;
+  background: var(--ivory);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  font-family: var(--display);
+  font-style: italic;
+  font-size: 11px;
+  color: var(--ink);
+  line-height: 1.15;
+  letter-spacing: 0.02em;
+  box-shadow: var(--shadow);
+  transform: rotate(-6deg);
+  border: 1px solid var(--line-2);
+}
+.hero-stamp strong {
+  display: block;
+  font-style: normal;
+  font-weight: 500;
+  font-size: 18px;
+  color: var(--orange-dk);
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  margin: 3px 0 1px;
+  font-family: var(--display);
+}
+@media (min-width: 768px) { .hero-stamp { width: 130px; height: 130px; bottom: 32px; left: 32px; } }
+
+/* Small 10% off floater (Rifle-style) */
+.offer-float {
+  position: fixed;
+  bottom: 24px; left: 24px;
+  width: 62px; height: 62px;
+  border-radius: 50%;
+  background: var(--rose);
+  color: var(--ivory);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  font-family: var(--sans);
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+  line-height: 1.1;
+  z-index: 60;
+  box-shadow: var(--shadow-lg);
+  transition: transform .2s;
+  cursor: pointer;
+}
+.offer-float:hover { transform: scale(1.08); }
+.offer-float strong { display: block; font-size: 14px; margin-bottom: 1px; }
+
+/* ==================== OCCASION CIRCLES (Lovepop-style) ==================== */
+.occasions { padding: 48px 0 24px; }
+@media (min-width: 768px) { .occasions { padding: 64px 0 40px; } }
+.occ-head {
+  text-align: center;
+  margin-bottom: 32px;
+}
+.occ-head h2 {
+  font-family: var(--display);
+  font-style: italic;
+  font-weight: 400;
+  font-size: clamp(24px, 3vw, 34px);
+  color: var(--ink);
+  letter-spacing: -0.01em;
+}
+.occ-head h2 em { font-weight: 500; color: var(--terra); }
+
+.occ-scroll {
+  display: flex;
+  gap: 16px;
+  overflow-x: auto;
+  scrollbar-width: none;
+  padding: 0 var(--gutter) 12px;
+  max-width: var(--container);
+  margin: 0 auto;
+  scroll-snap-type: x mandatory;
+}
+.occ-scroll::-webkit-scrollbar { display: none; }
+@media (min-width: 1000px) { .occ-scroll { gap: 24px; justify-content: center; overflow-x: visible; } }
+
+.occ-item {
+  flex: 0 0 auto;
+  text-align: center;
+  transition: transform .2s;
+  scroll-snap-align: center;
+}
+.occ-item:hover { transform: translateY(-4px); }
+.occ-circle {
+  width: 112px;
+  height: 112px;
+  border-radius: 50%;
+  background-size: cover;
+  background-position: center;
+  background-color: var(--paper-2);
+  margin-bottom: 10px;
+  border: 3px solid var(--paper-2);
+  transition: border-color .2s;
+  overflow: hidden;
+}
+.occ-item:hover .occ-circle { border-color: var(--orange-soft); }
+@media (min-width: 768px) { .occ-circle { width: 132px; height: 132px; } }
+.occ-label {
+  font-family: var(--display);
+  font-style: italic;
+  font-weight: 400;
+  font-size: 17px;
+  color: var(--ink);
+  line-height: 1.15;
+  letter-spacing: -0.01em;
+  max-width: 132px;
+  margin: 0 auto;
+}
+
+/* ==================== LOOKBOOK (Rifle 2-col style) ==================== */
+.lookbook { padding: 24px 0 72px; }
+@media (min-width: 900px) { .lookbook { padding: 40px 0 96px; } }
+
+.lookbook-grid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 4px;
+  max-width: var(--container);
+  margin: 0 auto;
+  padding: 0 var(--gutter);
+}
+@media (min-width: 768px) { .lookbook-grid { grid-template-columns: 1fr 1fr; } }
+
+.lookbook-tile {
+  aspect-ratio: 1;
+  min-height: 360px;
+  background-size: cover;
+  background-position: center;
+  position: relative;
+  overflow: hidden;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  padding: 40px;
+  transition: transform .3s var(--ease);
+}
+.lookbook-tile:hover { transform: scale(1.005); }
+
+.lookbook-tile.photo {
+  background-image: url('https://in.skygoodies.co/cdn/shop/products/10-amazon-sky-goodies-set-of-6-animals-01_e82618ad-16c6-4c78-95ca-40379abb7c83_1024x1024.jpg?v=1738933059');
+}
+.lookbook-tile.panel {
+  background: var(--rose-soft);
+  color: var(--ink);
+  flex-direction: column;
+  background-image: radial-gradient(circle at 30% 20%, rgba(26,22,20,0.04), transparent 40%);
+}
+.lookbook-panel-mark {
+  width: 42px; height: 42px;
+  margin-bottom: 16px;
+  color: var(--rose-deep);
+}
+.lookbook-panel-mark svg { width: 100%; height: 100%; fill: currentColor; }
+.lookbook-panel h3 {
+  font-family: var(--display);
+  font-style: italic;
+  font-weight: 400;
+  font-size: clamp(26px, 3.2vw, 42px);
+  color: var(--ink);
+  line-height: 1.15;
+  max-width: 360px;
+  margin-bottom: 24px;
+}
+.lookbook-panel a {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 12px;
+  font-weight: 600;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: var(--ink);
+  border-bottom: 1.5px solid var(--ink);
+  padding-bottom: 4px;
+  transition: all .2s;
+}
+.lookbook-panel a:hover { gap: 12px; color: var(--rose-deep); border-color: var(--rose-deep); }
+
+/* ==================== BESTSELLERS ==================== */
+.bestsellers { padding: 64px 0; background: var(--paper); }
+@media (min-width: 900px) { .bestsellers { padding: 96px 0; } }
+
+.best-head {
+  display: flex;
+  align-items: end;
+  justify-content: space-between;
+  margin-bottom: 40px;
+  flex-wrap: wrap;
+  gap: 20px;
+  max-width: var(--container);
+  margin-left: auto;
+  margin-right: auto;
+  padding: 0 var(--gutter);
+}
+.best-head .eyebrow {
+  font-family: var(--sans);
+  font-size: 11px;
+  font-weight: 600;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: var(--muted);
+  margin-bottom: 10px;
+  display: block;
+}
+.best-head h2 {
+  font-family: var(--display);
+  font-style: italic;
+  font-weight: 400;
+  font-size: clamp(36px, 4.5vw, 60px);
+  color: var(--ink);
+  line-height: 1;
+  letter-spacing: -0.025em;
+}
+.best-head h2 em { font-weight: 500; color: var(--terra); }
+.best-nav {
+  display: flex; gap: 10px;
+}
+.best-nav button {
+  width: 44px; height: 44px;
+  border: 1px solid var(--line-2);
+  background: var(--ivory);
+  border-radius: 50%;
+  color: var(--ink);
+  transition: all .15s;
+  display: flex; align-items: center; justify-content: center;
+}
+.best-nav button:hover { background: var(--ink); color: #fff; border-color: var(--ink); }
+.best-nav svg { width: 14px; height: 14px; stroke: currentColor; stroke-width: 2; fill: none; }
+
+.prod-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 16px 12px;
+  max-width: var(--container);
+  margin: 0 auto;
+  padding: 0 var(--gutter);
+}
+@media (min-width: 700px) { .prod-grid { grid-template-columns: repeat(3, 1fr); gap: 32px 20px; } }
+@media (min-width: 1100px) { .prod-grid { grid-template-columns: repeat(4, 1fr); gap: 40px 28px; } }
+
+.prod {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+}
+.prod-img {
+  position: relative;
+  aspect-ratio: 1;
+  border-radius: var(--r-md);
+  overflow: hidden;
+  background: var(--paper-2);
+  margin-bottom: 16px;
+  transition: box-shadow .3s;
+}
+.prod:hover .prod-img { box-shadow: var(--shadow); }
+.prod-img img { width: 100%; height: 100%; object-fit: cover; transition: transform .6s var(--ease); }
+.prod:hover .prod-img img { transform: scale(1.04); }
+
+.prod-badges {
+  position: absolute; top: 10px; left: 10px;
+  display: flex; flex-direction: column; gap: 6px;
+  z-index: 2;
+}
+.prod-badge {
+  padding: 4px 10px;
+  font-size: 10px; font-weight: 700;
+  letter-spacing: 0.1em; text-transform: uppercase;
+  border-radius: var(--r-pill);
+  background: var(--ink);
+  color: #fff;
+}
+.prod-badge.best { background: var(--rose-deep); color: #fff; }
+.prod-badge.save { background: var(--orange); color: #fff; }
+.prod-badge.new { background: var(--sage); color: #fff; }
+.prod-badge.low { background: var(--terra); color: #fff; }
+
+.prod-heart {
+  position: absolute; top: 10px; right: 10px;
+  width: 34px; height: 34px;
+  border-radius: 50%;
+  background: rgba(255,253,248,.92);
+  color: var(--brown);
+  display: flex; align-items: center; justify-content: center;
+  transition: all .15s;
+  z-index: 2;
+  backdrop-filter: blur(4px);
+}
+.prod-heart:hover { color: var(--rose-deep); }
+.prod-heart svg { width: 16px; height: 16px; stroke: currentColor; stroke-width: 1.6; fill: none; }
+.prod-heart.active svg { fill: var(--rose-deep); stroke: var(--rose-deep); }
+
+.prod-quick {
+  position: absolute;
+  left: 12px; right: 12px; bottom: 12px;
+  padding: 12px;
+  background: var(--ink);
+  color: #fff;
+  border-radius: var(--r-pill);
+  font-size: 12px;
+  font-weight: 600;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+  opacity: 0;
+  transform: translateY(6px);
+  transition: all .25s var(--ease);
+  z-index: 2;
+}
+.prod:hover .prod-quick { opacity: 1; transform: translateY(0); }
+.prod-quick:hover { background: var(--orange); }
+@media (max-width: 768px) { .prod-quick { opacity: 1; transform: none; } }
+
+.prod-info { padding: 0 2px; }
+.prod-rating {
+  display: flex; align-items: center; gap: 6px;
+  font-size: 11.5px;
+  color: var(--muted);
+  margin-bottom: 4px;
+}
+.prod-rating .stars { color: var(--gold); letter-spacing: 0.5px; font-size: 12.5px; }
+.prod-rating strong { color: var(--ink); font-weight: 600; }
+.prod-title {
+  font-family: var(--display);
+  font-weight: 500;
+  font-size: 16px;
+  color: var(--ink);
+  line-height: 1.2;
+  letter-spacing: -0.01em;
+  margin-bottom: 4px;
+}
+.prod-variants {
+  font-size: 11.5px;
+  color: var(--muted);
+  margin-bottom: 8px;
+}
+.prod-price-row {
+  display: flex; align-items: baseline; gap: 8px;
+  flex-wrap: wrap;
+}
+.prod-price {
+  font-family: var(--sans);
+  font-weight: 600; font-size: 15.5px;
+  color: var(--ink);
+}
+.prod-mrp {
+  font-weight: 400; font-size: 13px;
+  color: var(--muted); text-decoration: line-through;
+}
+.prod-off {
+  font-weight: 600; font-size: 11.5px;
+  color: var(--terra);
+}
+
+.best-view-all {
+  text-align: center;
+  margin-top: 40px;
+}
+.btn-primary {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 16px 36px;
+  background: var(--ink);
+  color: #fff;
+  border-radius: var(--r-pill);
+  font-size: 13px;
+  font-weight: 600;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  transition: all .2s var(--ease);
+}
+.btn-primary:hover { background: var(--orange); transform: translateY(-1px); box-shadow: var(--shadow); }
+.btn-primary svg { width: 14px; height: 14px; stroke: currentColor; stroke-width: 2; fill: none; transition: transform .2s; }
+.btn-primary:hover svg { transform: translateX(3px); }
+
+/* ==================== STORY / MAKERS ==================== */
+.story {
+  background: var(--pine);
+  color: var(--paper-soft);
+  padding: 72px 0;
+  overflow: hidden;
+}
+@media (min-width: 900px) { .story { padding: 120px 0; } }
+
+.story-grid {
+  max-width: var(--container);
+  margin: 0 auto;
+  padding: 0 var(--gutter);
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 48px;
+  align-items: center;
+}
+@media (min-width: 900px) { .story-grid { grid-template-columns: 1fr 1fr; gap: 80px; } }
+
+.story-img {
+  aspect-ratio: 4/5;
+  border-radius: var(--r-md);
+  overflow: hidden;
+  background-image: url('https://in.skygoodies.co/cdn/shop/products/3000-Sky_Goodies_DIY_gramophone-colourful_4864398f-f3c6-4b24-93e6-255dad4f1b42_1024x1024.jpg?v=1700714795');
+  background-size: cover;
+  background-position: center;
+  position: relative;
+  box-shadow: var(--shadow-lg);
+}
+.story-img::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(180deg, transparent 60%, rgba(26,22,20,.15));
+}
+.story-sticker {
+  position: absolute;
+  top: 20px; right: 20px;
+  background: var(--butter);
+  color: var(--ink);
+  padding: 8px 16px;
+  border-radius: var(--r-pill);
+  font-size: 11px;
+  font-weight: 600;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  box-shadow: var(--shadow-sm);
+}
+
+.story-text .eyebrow {
+  font-family: var(--sans);
+  font-size: 11px;
+  font-weight: 600;
+  letter-spacing: 0.24em;
+  text-transform: uppercase;
+  color: var(--butter);
+  margin-bottom: 20px;
+  display: block;
+}
+.story-text h2 {
+  font-family: var(--display);
+  font-weight: 400;
+  font-style: italic;
+  font-size: clamp(36px, 5vw, 72px);
+  color: var(--paper-soft);
+  line-height: 1;
+  letter-spacing: -0.025em;
+  margin-bottom: 24px;
+}
+.story-text h2 em {
+  font-style: normal;
+  font-weight: 500;
+  color: var(--butter);
+}
+.story-text p {
+  font-family: var(--sans);
+  font-size: 16px;
+  color: var(--paper-soft);
+  opacity: 0.85;
+  line-height: 1.7;
+  margin-bottom: 16px;
+  max-width: 520px;
+}
+
+.story-stats {
+  display: flex;
+  gap: 32px;
+  margin: 32px 0 28px;
+  padding: 24px 0;
+  border-top: 1px solid rgba(255,253,248,.15);
+  border-bottom: 1px solid rgba(255,253,248,.15);
+  flex-wrap: wrap;
+}
+.story-stat strong {
+  display: block;
+  font-family: var(--display);
+  font-style: italic;
+  font-weight: 500;
+  font-size: 34px;
+  color: var(--butter);
+  line-height: 1;
+  margin-bottom: 4px;
+}
+.story-stat span {
+  font-size: 11.5px;
+  color: var(--paper-soft);
+  opacity: 0.7;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  font-weight: 500;
+}
+
+.story-cta {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 14px 28px;
+  background: var(--butter);
+  color: var(--pine);
+  border-radius: var(--r-pill);
+  font-size: 13px;
+  font-weight: 600;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  transition: all .2s;
+}
+.story-cta:hover { background: var(--paper-soft); transform: translateY(-1px); }
+.story-cta svg { width: 12px; height: 12px; stroke: currentColor; stroke-width: 2.5; fill: none; transition: transform .2s; }
+.story-cta:hover svg { transform: translateX(3px); }
+
+/* ==================== PRESS STRIP ==================== */
+.press {
+  padding: 40px 0;
+  background: var(--paper-soft);
+  text-align: center;
+  border-bottom: 1px solid var(--line);
+}
+.press .label {
+  font-family: var(--sans);
+  font-size: 11px;
+  font-weight: 600;
+  letter-spacing: 0.24em;
+  text-transform: uppercase;
+  color: var(--muted);
+  margin-bottom: 20px;
+  display: block;
+}
+.press-logos {
+  max-width: var(--container);
+  margin: 0 auto;
+  padding: 0 var(--gutter);
+  display: flex;
+  gap: 48px;
+  align-items: center;
+  justify-content: center;
+  flex-wrap: wrap;
+}
+.press-logos span {
+  font-family: var(--display);
+  font-weight: 400;
+  font-size: 22px;
+  color: var(--brown);
+  opacity: 0.55;
+  transition: opacity .2s;
+  letter-spacing: 0.01em;
+}
+.press-logos span:hover { opacity: 1; }
+.press-logos span.italic { font-style: italic; font-weight: 500; }
+.press-logos span.sans {
+  font-family: var(--sans);
+  font-size: 13px;
+  font-weight: 600;
+  letter-spacing: 0.24em;
+  text-transform: uppercase;
+}
+
+/* ==================== REVIEWS ==================== */
+.reviews {
+  padding: 72px 0;
+  background: var(--paper);
+}
+@media (min-width: 900px) { .reviews { padding: 112px 0; } }
+
+.reviews-head {
+  max-width: var(--container);
+  margin: 0 auto 40px;
+  padding: 0 var(--gutter);
+  text-align: center;
+}
+.reviews-rating {
+  display: inline-flex;
+  align-items: baseline;
+  gap: 14px;
+  background: var(--ivory);
+  padding: 16px 32px;
+  border-radius: var(--r-pill);
+  box-shadow: var(--shadow-sm);
+  margin-bottom: 24px;
+  border: 1px solid var(--line);
+}
+.reviews-rating .big {
+  font-family: var(--display);
+  font-style: italic;
+  font-weight: 500;
+  font-size: 38px;
+  color: var(--ink);
+  line-height: 1;
+}
+.reviews-rating .stars {
+  color: var(--gold);
+  font-size: 18px;
+  letter-spacing: 2px;
+  line-height: 1;
+  display: block;
+  margin-bottom: 4px;
+}
+.reviews-rating small {
+  font-size: 12.5px;
+  color: var(--muted);
+  font-weight: 500;
+}
+.reviews-head h2 {
+  font-family: var(--display);
+  font-style: italic;
+  font-weight: 400;
+  font-size: clamp(32px, 4vw, 52px);
+  color: var(--ink);
+  letter-spacing: -0.02em;
+  line-height: 1.05;
+}
+.reviews-head h2 em { font-style: normal; font-weight: 500; color: var(--terra); }
+
+.reviews-grid {
+  max-width: var(--container);
+  margin: 0 auto;
+  padding: 0 var(--gutter);
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 16px;
+}
+@media (min-width: 768px) { .reviews-grid { grid-template-columns: repeat(3, 1fr); gap: 24px; } }
+
+.review {
+  background: var(--ivory);
+  padding: 28px;
+  border-radius: var(--r-md);
+  border: 1px solid var(--line);
+  transition: transform .25s, box-shadow .25s;
+}
+.review:hover { transform: translateY(-3px); box-shadow: var(--shadow); }
+.review .stars { color: var(--gold); letter-spacing: 2px; font-size: 15px; margin-bottom: 14px; }
+.review h4 {
+  font-family: var(--display);
+  font-style: italic;
+  font-weight: 500;
+  font-size: 17px;
+  color: var(--ink);
+  margin-bottom: 10px;
+  line-height: 1.25;
+}
+.review p {
+  font-size: 14px;
+  color: var(--brown);
+  line-height: 1.6;
+  margin-bottom: 20px;
+}
+.review-by {
+  display: flex; align-items: center; gap: 10px;
+  font-size: 13px; color: var(--brown);
+  padding-top: 16px;
+  border-top: 1px solid var(--line);
+}
+.review-by .avt {
+  width: 30px; height: 30px;
+  background: var(--orange-wash);
+  color: var(--orange-dk);
+  border-radius: 50%;
+  display: flex; align-items: center; justify-content: center;
+  font-weight: 700; font-size: 13px;
+}
+.review-by strong { color: var(--ink); font-weight: 600; }
+.review-by .verified {
+  display: inline-flex; align-items: center; gap: 4px;
+  margin-left: auto;
+  font-size: 11px;
+  color: #3E8E6B;
+  font-weight: 600;
+}
+.review-by .verified svg { width: 11px; height: 11px; stroke: currentColor; stroke-width: 2.5; fill: none; }
+
+/* ==================== BUNDLE ==================== */
+.bundle {
+  padding: 56px var(--gutter);
+}
+@media (min-width: 900px) { .bundle { padding: 80px var(--gutter); } }
+
+.bundle-card {
+  max-width: var(--container);
+  margin: 0 auto;
+  background: var(--paper-2);
+  border-radius: var(--r-lg);
+  overflow: hidden;
+  display: grid;
+  grid-template-columns: 1fr;
+}
+@media (min-width: 900px) { .bundle-card { grid-template-columns: 1fr 1.1fr; } }
+
+.bundle-text {
+  padding: 40px 32px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+@media (min-width: 900px) { .bundle-text { padding: 64px; } }
+.bundle-tag {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 5px 12px;
+  background: var(--orange);
+  color: #fff;
+  border-radius: var(--r-pill);
+  font-size: 11px;
+  font-weight: 600;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  margin-bottom: 18px;
+  align-self: flex-start;
+}
+.bundle-text h2 {
+  font-family: var(--display);
+  font-style: italic;
+  font-weight: 400;
+  font-size: clamp(30px, 4vw, 50px);
+  color: var(--ink);
+  line-height: 1.05;
+  letter-spacing: -0.02em;
+  margin-bottom: 14px;
+}
+.bundle-text h2 em { font-style: normal; font-weight: 500; color: var(--terra); }
+.bundle-text p {
+  color: var(--brown);
+  font-size: 15px;
+  line-height: 1.6;
+  max-width: 420px;
+  margin-bottom: 28px;
+}
+
+.bundle-items {
+  display: flex;
+  gap: 10px;
+  margin-bottom: 24px;
+  flex-wrap: wrap;
+  align-items: center;
+}
+.bundle-item {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 8px 14px 8px 8px;
+  background: var(--ivory);
+  border-radius: var(--r-pill);
+  font-size: 12px;
+  font-weight: 500;
+  color: var(--ink);
+  border: 1px solid var(--line);
+}
+.bundle-item img {
+  width: 32px; height: 32px;
+  border-radius: 50%;
+  object-fit: cover;
+  background: var(--paper);
+}
+.bundle-plus { color: var(--muted); font-size: 14px; font-weight: 600; }
+
+.bundle-price {
+  display: flex; align-items: baseline; gap: 12px;
+  flex-wrap: wrap;
+  margin-bottom: 24px;
+}
+.bundle-price .new {
+  font-family: var(--display);
+  font-weight: 500;
+  font-size: 32px;
+  color: var(--ink);
+  line-height: 1;
+}
+.bundle-price .old {
+  font-size: 17px;
+  color: var(--muted);
+  text-decoration: line-through;
+}
+.bundle-price .saves {
+  padding: 4px 10px;
+  background: var(--orange-wash);
+  color: var(--orange-dk);
+  border-radius: var(--r-pill);
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+}
+
+.bundle-cta {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 16px 32px;
+  background: var(--orange);
+  color: #fff;
+  border-radius: var(--r-pill);
+  font-size: 13px;
+  font-weight: 600;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  transition: all .2s;
+  align-self: flex-start;
+}
+.bundle-cta:hover { background: var(--orange-dk); transform: translateY(-1px); box-shadow: var(--shadow); }
+.bundle-cta svg { width: 12px; height: 12px; stroke: currentColor; stroke-width: 2.5; fill: none; transition: transform .2s; }
+.bundle-cta:hover svg { transform: translateX(3px); }
+
+.bundle-img {
+  background-image: url('https://in.skygoodies.co/cdn/shop/files/Sky-Goodies-Birthday-Party-Decor-Sunflower-01_18ac2d44-57e3-41b8-8afd-2688d2a201ee_1024x1024.jpg?v=1754226891');
+  background-size: cover;
+  background-position: center;
+  min-height: 320px;
+}
+@media (min-width: 900px) { .bundle-img { min-height: auto; } }
+
+/* ==================== TRUST BAR (editorial) ==================== */
+.trust-editorial {
+  padding: 48px 0;
+  background: var(--paper-soft);
+  border-top: 1px solid var(--line);
+  border-bottom: 1px solid var(--line);
+}
+.trust-grid {
+  max-width: var(--container);
+  margin: 0 auto;
+  padding: 0 var(--gutter);
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 24px;
+}
+@media (min-width: 768px) { .trust-grid { grid-template-columns: repeat(4, 1fr); } }
+.trust-item {
+  text-align: center;
+  padding: 0 16px;
+  position: relative;
+}
+@media (min-width: 768px) {
+  .trust-item:not(:last-child)::after {
+    content: '';
+    position: absolute;
+    right: 0; top: 20%; bottom: 20%;
+    width: 1px;
+    background: var(--line);
+  }
+}
+.trust-icon {
+  width: 44px; height: 44px;
+  margin: 0 auto 12px;
+  color: var(--terra);
+}
+.trust-icon svg { width: 100%; height: 100%; stroke: currentColor; stroke-width: 1.5; fill: none; }
+.trust-item h4 {
+  font-family: var(--display);
+  font-style: italic;
+  font-weight: 500;
+  font-size: 17px;
+  color: var(--ink);
+  margin-bottom: 4px;
+  letter-spacing: -0.01em;
+}
+.trust-item p {
+  font-size: 12.5px;
+  color: var(--muted);
+  font-weight: 500;
+}
+
+/* ==================== INSTAGRAM ==================== */
+.insta { padding: 72px 0 48px; }
+@media (min-width: 900px) { .insta { padding: 112px 0 72px; } }
+
+.insta-head {
+  text-align: center;
+  margin-bottom: 36px;
+}
+.insta-head .eyebrow {
+  font-family: var(--sans);
+  font-size: 11px;
+  font-weight: 600;
+  letter-spacing: 0.24em;
+  text-transform: uppercase;
+  color: var(--muted);
+  margin-bottom: 14px;
+  display: block;
+}
+.insta-head h2 {
+  font-family: var(--display);
+  font-style: italic;
+  font-weight: 400;
+  font-size: clamp(28px, 3.6vw, 44px);
+  color: var(--ink);
+  letter-spacing: -0.02em;
+  line-height: 1.05;
+  margin-bottom: 16px;
+}
+.insta-head h2 em { font-style: normal; font-weight: 500; color: var(--terra); }
+.insta-head .handle {
+  font-size: 14px;
+  color: var(--brown);
+  font-weight: 500;
+}
+.insta-head .handle a { color: var(--rose-deep); font-weight: 600; }
+
+.insta-grid {
+  max-width: var(--container);
+  margin: 0 auto;
+  padding: 0 var(--gutter);
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 4px;
+}
+@media (min-width: 600px) { .insta-grid { grid-template-columns: repeat(3, 1fr); gap: 6px; } }
+@media (min-width: 900px) { .insta-grid { grid-template-columns: repeat(6, 1fr); gap: 8px; } }
+.insta-tile {
+  aspect-ratio: 1;
+  border-radius: var(--r-sm);
+  overflow: hidden;
+  background-size: cover;
+  background-position: center;
+  position: relative;
+  transition: transform .25s;
+  cursor: pointer;
+}
+.insta-tile:hover { transform: translateY(-2px); }
+.insta-tile::after {
+  content: '';
+  position: absolute; inset: 0;
+  background: rgba(26,22,20,0);
+  transition: background .2s;
+}
+.insta-tile:hover::after { background: rgba(26,22,20,.4); }
+.insta-tile svg {
+  position: absolute;
+  top: 10px; right: 10px;
+  width: 18px; height: 18px;
+  color: #fff;
+  opacity: 0;
+  transition: opacity .2s;
+  fill: none; stroke: currentColor; stroke-width: 2;
+  z-index: 2;
+}
+.insta-tile:hover svg { opacity: 1; }
+
+/* ==================== NEWSLETTER (Rifle-inspired illustrated) ==================== */
+.nws {
+  padding: 72px var(--gutter);
+  background: var(--rose-soft);
+  text-align: center;
+  position: relative;
+  overflow: hidden;
+}
+@media (min-width: 900px) { .nws { padding: 112px var(--gutter); } }
+.nws-in {
+  max-width: 520px;
+  margin: 0 auto;
+  position: relative;
+  z-index: 2;
+}
+.nws-flower {
+  display: inline-block;
+  font-size: 36px;
+  margin-bottom: 14px;
+  color: var(--gold);
+}
+.nws-tag {
+  font-family: var(--sans);
+  font-size: 11px;
+  font-weight: 600;
+  letter-spacing: 0.24em;
+  text-transform: uppercase;
+  color: var(--rose-deep);
+  margin-bottom: 14px;
+  display: block;
+}
+.nws-in h2 {
+  font-family: var(--display);
+  font-weight: 400;
+  font-style: italic;
+  font-size: clamp(34px, 4.5vw, 54px);
+  color: var(--ink);
+  letter-spacing: -0.02em;
+  line-height: 1.02;
+  margin-bottom: 14px;
+}
+.nws-in h2 em { font-style: normal; font-weight: 500; color: var(--rose-deep); }
+.nws-in p {
+  color: var(--brown);
+  font-size: 15px;
+  max-width: 420px;
+  margin: 0 auto 28px;
+  line-height: 1.6;
+}
+.nws-form {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  max-width: 340px;
+  margin: 0 auto 14px;
+}
+.nws-form input {
+  padding: 14px 20px;
+  background: var(--ivory);
+  border: 1px solid var(--line);
+  border-radius: var(--r-sm);
+  font-size: 14px;
+  color: var(--ink);
+  outline: none;
+  text-align: center;
+  letter-spacing: 0.02em;
+}
+.nws-form input::placeholder { color: var(--muted); }
+.nws-form button {
+  padding: 14px;
+  background: var(--rose-deep);
+  color: #fff;
+  border-radius: var(--r-sm);
+  font-size: 13px;
+  font-weight: 700;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  transition: background .15s;
+  font-family: var(--sans);
+}
+.nws-form button:hover { background: var(--ink); }
+.nws-perks {
+  font-size: 11px;
+  color: var(--muted);
+  letter-spacing: 0.04em;
+}
+
+/* decorative flowers */
+.nws-deco {
+  position: absolute;
+  font-size: 28px;
+  opacity: 0.4;
+  z-index: 1;
+}
+.nws-deco-1 { top: 30px; left: 8%; transform: rotate(-20deg); }
+.nws-deco-2 { bottom: 40px; right: 10%; transform: rotate(15deg); font-size: 40px; }
+.nws-deco-3 { top: 60%; left: 12%; font-size: 24px; transform: rotate(25deg); }
+.nws-deco-4 { top: 20%; right: 20%; font-size: 20px; transform: rotate(-10deg); }
+
+/* ==================== FOOTER ==================== */
+.ft {
+  background: var(--ink);
+  color: rgba(245,239,227,.75);
+  padding: 72px 0 32px;
+}
+.ft-in {
+  max-width: var(--container);
+  margin: 0 auto;
+  padding: 0 var(--gutter);
+}
+.ft-top {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 40px;
+  margin-bottom: 48px;
+  padding-bottom: 48px;
+  border-bottom: 1px solid rgba(245,239,227,.15);
+}
+@media (min-width: 768px) { .ft-top { grid-template-columns: 2fr 1fr 1fr 1fr; gap: 56px; } }
+.ft-brand img {
+  height: 70px;
+  margin-bottom: 18px;
+  filter: brightness(0) invert(1);
+}
+.ft-brand .tag {
+  font-family: var(--display);
+  font-style: italic;
+  font-weight: 400;
+  font-size: 19px;
+  color: var(--butter);
+  margin-bottom: 18px;
+}
+.ft-brand p {
+  font-size: 13.5px;
+  color: rgba(245,239,227,.65);
+  line-height: 1.6;
+  max-width: 320px;
+  margin-bottom: 22px;
+}
+.ft-socials { display: flex; gap: 10px; }
+.ft-socials a {
+  width: 36px; height: 36px;
+  border-radius: 50%;
+  background: rgba(245,239,227,.08);
+  color: var(--paper-soft);
+  display: flex; align-items: center; justify-content: center;
+  transition: all .2s;
+}
+.ft-socials a:hover { background: var(--rose); color: #fff; }
+.ft-socials svg { width: 15px; height: 15px; fill: currentColor; }
+.ft-col h5 {
+  font-family: var(--sans);
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: var(--butter);
+  margin-bottom: 18px;
+}
+.ft-col ul { list-style: none; display: flex; flex-direction: column; gap: 10px; }
+.ft-col a { font-size: 14px; color: rgba(245,239,227,.7); transition: color .15s; }
+.ft-col a:hover { color: var(--butter); }
+.ft-col .wa {
+  display: inline-flex; align-items: center; gap: 6px;
+  padding: 9px 16px;
+  background: #25D366; color: #fff;
+  border-radius: var(--r-pill);
+  font-size: 12px; font-weight: 600;
+  margin-top: 10px;
+  transition: transform .15s;
+}
+.ft-col .wa:hover { transform: translateY(-1px); color: #fff; }
+.ft-col .wa svg { width: 13px; height: 13px; fill: currentColor; }
+
+.ft-bot {
+  display: flex; justify-content: space-between;
+  align-items: center; gap: 16px;
+  flex-wrap: wrap;
+  font-size: 12px;
+  color: rgba(245,239,227,.5);
+}
+.ft-pay { display: flex; gap: 6px; }
+.ft-pay span {
+  padding: 3px 9px;
+  background: rgba(245,239,227,.08);
+  border-radius: 4px;
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  color: rgba(245,239,227,.6);
+}
+
+</style>
+</head>
+<body>
+
+<!-- ==================== UTILITY BAR ==================== -->
+<div class="utility">
+  <div class="utility-in">
+    <div class="utility-left">
+      <span>Shopping for Mom? <a href="#">Order by May 8 for Mother's Day delivery</a></span>
+    </div>
+    <div class="utility-right">
+      <a href="#">Log in</a>
+      <span>•</span>
+      <a href="#">Track Your Order</a>
+      <span>•</span>
+      <a href="#">WhatsApp Us</a>
+    </div>
+  </div>
+</div>
+
+<!-- ==================== HEADER ==================== -->
+<header class="hdr">
+  <div class="hdr-top">
+    <div class="hdr-left">
+      <a href="#" class="hdr-search"><svg viewBox="0 0 24 24"><circle cx="11" cy="11" r="7"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>Search</a>
+      <a href="#">About Sky Goodies</a>
+    </div>
+    <a href="#" class="hdr-logo"><img src="https://in.skygoodies.co/cdn/shop/files/logo_hd_300x.jpg?v=1741613405" alt="Sky Goodies" referrerpolicy="no-referrer"/></a>
+    <div class="hdr-right">
+      <a href="#" class="hdr-icon" aria-label="Account"><svg viewBox="0 0 24 24"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg></a>
+      <a href="#" class="hdr-icon heart" aria-label="Favorites"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg></a>
+      <a href="#" class="hdr-icon" aria-label="Cart">
+        <svg viewBox="0 0 24 24"><path d="M6 2 3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4z"/><line x1="3" y1="6" x2="21" y2="6"/><path d="M16 10a4 4 0 0 1-8 0"/></svg>
+        <span class="count">3</span>
+      </a>
+    </div>
+  </div>
+  <nav class="hdr-nav">
+    <div class="hdr-nav-in">
+      <a href="#" class="special">Mother's Day 🌷</a>
+      <a href="#">New Arrivals</a>
+      <a href="#">Best Sellers</a>
+      <a href="#">Paper Kits <svg viewBox="0 0 24 24"><polyline points="6 9 12 15 18 9"/></svg></a>
+      <a href="#">Home Décor <svg viewBox="0 0 24 24"><polyline points="6 9 12 15 18 9"/></svg></a>
+      <a href="#">Pooja</a>
+      <a href="#">Calendars</a>
+      <a href="#">Gifts <svg viewBox="0 0 24 24"><polyline points="6 9 12 15 18 9"/></svg></a>
+      <a href="#" class="sale">Sale</a>
+    </div>
+  </nav>
+</header>
+
+<!-- ==================== HERO ==================== -->
+<section class="hero">
+  <div class="hero-in">
+    <div class="hero-grid">
+      <div class="hero-left">
+        <span class="hero-eyebrow">— handcrafted in Mumbai —</span>
+        <div class="hero-title-decor">
+          <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 2 L14 9 L22 9 L15.5 14 L18 22 L12 17 L6 22 L8.5 14 L2 9 L10 9 Z"/></svg>
+          <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 2 L14 9 L22 9 L15.5 14 L18 22 L12 17 L6 22 L8.5 14 L2 9 L10 9 Z"/></svg>
+        </div>
+        <h1 class="hero-title">The Mother's Day<br><span class="script">Gift Guide</span></h1>
+        <p class="hero-sub">Handcrafted paper kits for the mom who has everything — and the one who just wants a slow afternoon back.</p>
+        <a href="#" class="hero-cta">Shop Now &nbsp;→</a>
+      </div>
+      <div class="hero-right">
+        <div class="hero-stamp">
+          New<strong>2026</strong>Collection
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ==================== OCCASION CIRCLES ==================== -->
+<section class="occasions">
+  <div class="occ-head">
+    <h2>Shop by <em>occasion</em></h2>
+  </div>
+  <div class="occ-scroll">
+    <a class="occ-item" href="#">
+      <div class="occ-circle" style="background-image: url('https://in.skygoodies.co/cdn/shop/files/Sky-Goodies-Birthday-Party-Decor-Sunflower-01_18ac2d44-57e3-41b8-8afd-2688d2a201ee_1024x1024.jpg?v=1754226891');"></div>
+      <div class="occ-label">Birthdays</div>
+    </a>
+    <a class="occ-item" href="#">
+      <div class="occ-circle" style="background-image: url('https://in.skygoodies.co/cdn/shop/products/3000-Sky-Goodies-Flowers-Butterflies-Combo-5_1024x1024.jpg?v=1742907941');"></div>
+      <div class="occ-label">Housewarming</div>
+    </a>
+    <a class="occ-item" href="#">
+      <div class="occ-circle" style="background-image: url('https://in.skygoodies.co/cdn/shop/files/Sky-Goodies-DIY-Paper-Craft-Krishna-01_1024x1024.jpg?v=1717137982');"></div>
+      <div class="occ-label">Pooja</div>
+    </a>
+    <a class="occ-item" href="#">
+      <div class="occ-circle" style="background-image: url('https://in.skygoodies.co/cdn/shop/products/10-amazon-sky-goodies-set-of-6-animals-01_e82618ad-16c6-4c78-95ca-40379abb7c83_1024x1024.jpg?v=1738933059');"></div>
+      <div class="occ-label">Kids' Gifts</div>
+    </a>
+    <a class="occ-item" href="#">
+      <div class="occ-circle" style="background-image: url('https://in.skygoodies.co/cdn/shop/products/3000-Sky_Goodies_DIY_gramophone-colourful_4864398f-f3c6-4b24-93e6-255dad4f1b42_1024x1024.jpg?v=1700714795');"></div>
+      <div class="occ-label">Anniversaries</div>
+    </a>
+    <a class="occ-item" href="#">
+      <div class="occ-circle" style="background-image: url('https://in.skygoodies.co/cdn/shop/files/calendars_1024x1024.webp?v=1723030434');"></div>
+      <div class="occ-label">Return Gifts</div>
+    </a>
+    <a class="occ-item" href="#">
+      <div class="occ-circle" style="background-image: url('https://in.skygoodies.co/cdn/shop/files/Sky-Goodies-DIY-Paper-Christmas-Tree-17_cc57db58-6e00-4c78-9474-3f6324d1d0ce_1024x1024.jpg?v=1762074365');"></div>
+      <div class="occ-label">Festive</div>
+    </a>
+    <a class="occ-item" href="#">
+      <div class="occ-circle" style="background-image: url('https://in.skygoodies.co/cdn/shop/files/notebooks_1024x1024.webp?v=1723030454');"></div>
+      <div class="occ-label">Corporate</div>
+    </a>
+  </div>
+</section>
+
+<!-- ==================== LOOKBOOK ==================== -->
+<section class="lookbook">
+  <div class="lookbook-grid">
+    <a href="#" class="lookbook-tile photo"></a>
+    <a href="#" class="lookbook-tile panel">
+      <span class="lookbook-panel-mark">
+        <svg viewBox="0 0 24 24"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87L18.18 22 12 18.77 5.82 22 7 14.14l-5-4.87 6.91-1.01z"/></svg>
+      </span>
+      <h3>Paper kits for <em>little hands</em> and curious minds.</h3>
+      <a href="#">Shop kids' kits</a>
+    </a>
+  </div>
+</section>
+
+<!-- ==================== BESTSELLERS ==================== -->
+<section class="bestsellers">
+  <div class="best-head">
+    <div>
+      <span class="eyebrow">— Rated 4.9 by 12,400+ makers —</span>
+      <h2>Our <em>bestsellers.</em></h2>
+    </div>
+    <div class="best-nav">
+      <button aria-label="Previous"><svg viewBox="0 0 24 24"><polyline points="15 18 9 12 15 6"/></svg></button>
+      <button aria-label="Next"><svg viewBox="0 0 24 24"><polyline points="9 18 15 12 9 6"/></svg></button>
+    </div>
+  </div>
+
+  <div class="prod-grid">
+
+    <article class="prod">
+      <div class="prod-img">
+        <div class="prod-badges">
+          <span class="prod-badge best">★ Bestseller</span>
+          <span class="prod-badge save">Save ₹300</span>
+        </div>
+        <button class="prod-heart"><svg viewBox="0 0 24 24"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg></button>
+        <img src="https://in.skygoodies.co/cdn/shop/products/10-amazon-sky-goodies-set-of-6-animals-01_e82618ad-16c6-4c78-95ca-40379abb7c83_1024x1024.jpg?v=1738933059" alt=""/>
+        <button class="prod-quick">Quick Add</button>
+      </div>
+      <div class="prod-info">
+        <div class="prod-rating"><span class="stars">★★★★★</span><strong>4.9</strong> · 284 reviews</div>
+        <h3 class="prod-title">BOX SET of 12 Endangered Animals</h3>
+        <div class="prod-variants">12 species · ages 7+</div>
+        <div class="prod-price-row"><span class="prod-price">₹999</span><span class="prod-mrp">₹1,299</span><span class="prod-off">-23%</span></div>
+      </div>
+    </article>
+
+    <article class="prod">
+      <div class="prod-img">
+        <div class="prod-badges">
+          <span class="prod-badge save">Save ₹500</span>
+        </div>
+        <button class="prod-heart"><svg viewBox="0 0 24 24"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg></button>
+        <img src="https://in.skygoodies.co/cdn/shop/products/3000-Sky-Goodies-Flowers-Butterflies-Combo-5_1024x1024.jpg?v=1742907941" alt=""/>
+        <button class="prod-quick">Quick Add</button>
+      </div>
+      <div class="prod-info">
+        <div class="prod-rating"><span class="stars">★★★★★</span><strong>4.8</strong> · 156 reviews</div>
+        <h3 class="prod-title">Paper Mini Hot Air Balloon Fairy Lights</h3>
+        <div class="prod-variants">24 balloons · 3 sizes</div>
+        <div class="prod-price-row"><span class="prod-price">₹999</span><span class="prod-mrp">₹1,499</span><span class="prod-off">-33%</span></div>
+      </div>
+    </article>
+
+    <article class="prod">
+      <div class="prod-img">
+        <div class="prod-badges">
+          <span class="prod-badge new">Just In</span>
+        </div>
+        <button class="prod-heart"><svg viewBox="0 0 24 24"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg></button>
+        <img src="https://in.skygoodies.co/cdn/shop/files/Sky-Goodies-DIY-Paper-Craft-Krishna-01_1024x1024.jpg?v=1717137982" alt=""/>
+        <button class="prod-quick">Quick Add</button>
+      </div>
+      <div class="prod-info">
+        <div class="prod-rating"><span class="stars">★★★★★</span><strong>5.0</strong> · 127 reviews</div>
+        <h3 class="prod-title">Big Ganesha DIY Paper Craft Kit</h3>
+        <div class="prod-variants">13" · 2 colorways</div>
+        <div class="prod-price-row"><span class="prod-price">₹899</span></div>
+      </div>
+    </article>
+
+    <article class="prod">
+      <div class="prod-img">
+        <div class="prod-badges">
+          <span class="prod-badge save">Save ₹300</span>
+          <span class="prod-badge low">Only 6 left</span>
+        </div>
+        <button class="prod-heart"><svg viewBox="0 0 24 24"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg></button>
+        <img src="https://in.skygoodies.co/cdn/shop/products/3000-Sky_Goodies_DIY_gramophone-colourful_4864398f-f3c6-4b24-93e6-255dad4f1b42_1024x1024.jpg?v=1700714795" alt=""/>
+        <button class="prod-quick">Quick Add</button>
+      </div>
+      <div class="prod-info">
+        <div class="prod-rating"><span class="stars">★★★★★</span><strong>4.9</strong> · 195 reviews</div>
+        <h3 class="prod-title">Colourful Gramophone DIY Kit</h3>
+        <div class="prod-variants">3 colorways</div>
+        <div class="prod-price-row"><span class="prod-price">₹699</span><span class="prod-mrp">₹999</span><span class="prod-off">-30%</span></div>
+      </div>
+    </article>
+
+    <article class="prod">
+      <div class="prod-img">
+        <div class="prod-badges">
+          <span class="prod-badge best">★ Bestseller</span>
+        </div>
+        <button class="prod-heart"><svg viewBox="0 0 24 24"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg></button>
+        <img src="https://in.skygoodies.co/cdn/shop/files/calendars_1024x1024.webp?v=1723030434" alt=""/>
+        <button class="prod-quick">Quick Add</button>
+      </div>
+      <div class="prod-info">
+        <div class="prod-rating"><span class="stars">★★★★★</span><strong>4.9</strong> · 412 reviews</div>
+        <h3 class="prod-title">Mini Typewriter Desk Calendar</h3>
+        <div class="prod-variants">2026 · 3 colorways</div>
+        <div class="prod-price-row"><span class="prod-price">₹599</span></div>
+      </div>
+    </article>
+
+    <article class="prod">
+      <div class="prod-img">
+        <div class="prod-badges">
+          <span class="prod-badge save">Save ₹200</span>
+        </div>
+        <button class="prod-heart"><svg viewBox="0 0 24 24"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg></button>
+        <img src="https://in.skygoodies.co/cdn/shop/files/Sky-Goodies-Birthday-Party-Decor-Sunflower-01_18ac2d44-57e3-41b8-8afd-2688d2a201ee_1024x1024.jpg?v=1754226891" alt=""/>
+        <button class="prod-quick">Quick Add</button>
+      </div>
+      <div class="prod-info">
+        <div class="prod-rating"><span class="stars">★★★★★</span><strong>4.8</strong> · 215 reviews</div>
+        <h3 class="prod-title">Sunflower Party Decor Set</h3>
+        <div class="prod-variants">Includes bunting + confetti</div>
+        <div class="prod-price-row"><span class="prod-price">₹599</span><span class="prod-mrp">₹799</span><span class="prod-off">-25%</span></div>
+      </div>
+    </article>
+
+    <article class="prod">
+      <div class="prod-img">
+        <div class="prod-badges">
+          <span class="prod-badge new">Just In</span>
+        </div>
+        <button class="prod-heart"><svg viewBox="0 0 24 24"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg></button>
+        <img src="https://in.skygoodies.co/cdn/shop/files/notebooks_1024x1024.webp?v=1723030454" alt=""/>
+        <button class="prod-quick">Quick Add</button>
+      </div>
+      <div class="prod-info">
+        <div class="prod-rating"><span class="stars">★★★★★</span><strong>4.7</strong> · 98 reviews</div>
+        <h3 class="prod-title">Matchbook Notebook Set of 3</h3>
+        <div class="prod-variants">Mixed colors · pocket-size</div>
+        <div class="prod-price-row"><span class="prod-price">₹349</span></div>
+      </div>
+    </article>
+
+    <article class="prod">
+      <div class="prod-img">
+        <div class="prod-badges">
+          <span class="prod-badge save">Save ₹200</span>
+        </div>
+        <button class="prod-heart"><svg viewBox="0 0 24 24"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg></button>
+        <img src="https://in.skygoodies.co/cdn/shop/files/Sky-Goodies-DIY-Paper-Christmas-Tree-17_cc57db58-6e00-4c78-9474-3f6324d1d0ce_1024x1024.jpg?v=1762074365" alt=""/>
+        <button class="prod-quick">Quick Add</button>
+      </div>
+      <div class="prod-info">
+        <div class="prod-rating"><span class="stars">★★★★★</span><strong>4.7</strong> · 88 reviews</div>
+        <h3 class="prod-title">Paper Christmas Tree DIY</h3>
+        <div class="prod-variants">18" · reusable</div>
+        <div class="prod-price-row"><span class="prod-price">₹699</span><span class="prod-mrp">₹899</span><span class="prod-off">-22%</span></div>
+      </div>
+    </article>
+
+  </div>
+
+  <div class="best-view-all">
+    <a href="#" class="btn-primary">Shop All Bestsellers <svg viewBox="0 0 24 24"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg></a>
+  </div>
+</section>
+
+<!-- ==================== STORY ==================== -->
+<section class="story">
+  <div class="story-grid">
+    <div class="story-img">
+      <div class="story-sticker">★ Since 2013</div>
+    </div>
+    <div class="story-text">
+      <span class="eyebrow">— Makers behind the paper —</span>
+      <h2>Born on a dining table<br>in <em>Khar, Mumbai.</em></h2>
+      <p>Amit and Misha — both NID-trained designers — started Sky Goodies with a simple belief: paper has the power to pause a hurried day.</p>
+      <p>Twelve years on, every kit is still illustrated by hand, die-cut under one roof, and packed with care. Our paper lamps now light homes in Tokyo. Our calendars hang in Brooklyn kitchens. The joy remains the same.</p>
+      <div class="story-stats">
+        <div class="story-stat"><strong>12+</strong><span>Years of paper love</span></div>
+        <div class="story-stat"><strong>200+</strong><span>Original designs</span></div>
+        <div class="story-stat"><strong>50K+</strong><span>Happy crafters</span></div>
+      </div>
+      <a href="#" class="story-cta">Meet the Makers <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg></a>
+    </div>
+  </div>
+</section>
+
+<!-- ==================== PRESS ==================== -->
+<section class="press">
+  <span class="label">— As featured in —</span>
+  <div class="press-logos">
+    <span class="italic">Vogue</span>
+    <span class="sans">Elle Decor</span>
+    <span class="italic">Lonely Planet</span>
+    <span class="sans">The Hindu</span>
+    <span class="italic">Verve</span>
+    <span class="sans">Mid-Day</span>
+    <span class="italic">Architectural Digest</span>
+  </div>
+</section>
+
+<!-- ==================== REVIEWS ==================== -->
+<section class="reviews">
+  <div class="reviews-head">
+    <div class="reviews-rating">
+      <span class="big">4.9</span>
+      <div>
+        <div class="stars">★★★★★</div>
+        <small>12,400+ verified reviews</small>
+      </div>
+    </div>
+    <h2>Real words from<br>real <em>crafters.</em></h2>
+  </div>
+  <div class="reviews-grid">
+    <article class="review">
+      <div class="stars">★★★★★</div>
+      <h4>Has made my kitchen feel like a café.</h4>
+      <p>I've had the wall calendar up for three months and each month I look forward to flipping the page. The paper is thick, the print is rich. Better than any calendar I've paid twice as much for.</p>
+      <div class="review-by">
+        <span class="avt">S</span>
+        <strong>Sanjana P.</strong>
+        <span>· Pune</span>
+        <span class="verified"><svg viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg>Verified</span>
+      </div>
+    </article>
+    <article class="review">
+      <div class="stars">★★★★★</div>
+      <h4>Bought five for my team. Legends.</h4>
+      <p>Birthday gift for my entire design team. Everyone texted me the next day asking where I got it. Packaging was so thoughtful — felt like unboxing something from Japan.</p>
+      <div class="review-by">
+        <span class="avt">R</span>
+        <strong>Rahul D.</strong>
+        <span>· Bengaluru</span>
+        <span class="verified"><svg viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg>Verified</span>
+      </div>
+    </article>
+    <article class="review">
+      <div class="stars">★★★★★</div>
+      <h4>My 7-year-old finished it in one afternoon.</h4>
+      <p>Clean paper, crisp illustrations, and assembly was intuitive for my daughter. The red panda is now on her study desk. I keep reordering.</p>
+      <div class="review-by">
+        <span class="avt">P</span>
+        <strong>Priya K.</strong>
+        <span>· Mumbai</span>
+        <span class="verified"><svg viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg>Verified</span>
+      </div>
+    </article>
+  </div>
+</section>
+
+<!-- ==================== BUNDLE ==================== -->
+<section class="bundle">
+  <div class="bundle-card">
+    <div class="bundle-text">
+      <span class="bundle-tag">★ Best Value Bundle</span>
+      <h2>Gift three, <em>save ₹500.</em></h2>
+      <p>Our three most-loved kits in one gift-ready box. Perfect for housewarmings, birthdays, or the evening that needs slowing down.</p>
+      <div class="bundle-items">
+        <span class="bundle-item"><img src="https://in.skygoodies.co/cdn/shop/products/10-amazon-sky-goodies-set-of-6-animals-01_e82618ad-16c6-4c78-95ca-40379abb7c83_1024x1024.jpg?v=1738933059" alt=""/>Endangered Animals</span>
+        <span class="bundle-plus">+</span>
+        <span class="bundle-item"><img src="https://in.skygoodies.co/cdn/shop/products/3000-Sky-Goodies-Flowers-Butterflies-Combo-5_1024x1024.jpg?v=1742907941" alt=""/>Fairy Lights</span>
+        <span class="bundle-plus">+</span>
+        <span class="bundle-item"><img src="https://in.skygoodies.co/cdn/shop/files/notebooks_1024x1024.webp?v=1723030454" alt=""/>Notebook Set</span>
+      </div>
+      <div class="bundle-price">
+        <span class="new">₹1,847</span>
+        <span class="old">₹2,347</span>
+        <span class="saves">Save ₹500</span>
+      </div>
+      <a href="#" class="bundle-cta">Add Bundle to Cart <svg viewBox="0 0 24 24"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg></a>
+    </div>
+    <div class="bundle-img"></div>
+  </div>
+</section>
+
+<!-- ==================== TRUST ==================== -->
+<section class="trust-editorial">
+  <div class="trust-grid">
+    <div class="trust-item">
+      <div class="trust-icon"><svg viewBox="0 0 24 24"><rect x="1" y="3" width="15" height="13"/><polygon points="16 8 20 8 23 11 23 16 16 16 16 8"/><circle cx="5.5" cy="18.5" r="2.5"/><circle cx="18.5" cy="18.5" r="2.5"/></svg></div>
+      <h4>Free Shipping</h4>
+      <p>On orders above ₹1,000</p>
+    </div>
+    <div class="trust-item">
+      <div class="trust-icon"><svg viewBox="0 0 24 24"><rect x="1" y="4" width="22" height="16" rx="2"/><line x1="1" y1="10" x2="23" y2="10"/></svg></div>
+      <h4>COD Available</h4>
+      <p>Across India</p>
+    </div>
+    <div class="trust-item">
+      <div class="trust-icon"><svg viewBox="0 0 24 24"><path d="M1 4v6h6"/><path d="M3.51 15a9 9 0 1 0 2.13-9.36L1 10"/></svg></div>
+      <h4>Easy Returns</h4>
+      <p>7-day hassle-free</p>
+    </div>
+    <div class="trust-item">
+      <div class="trust-icon"><svg viewBox="0 0 24 24"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg></div>
+      <h4>Handmade in Mumbai</h4>
+      <p>By NID-trained artists</p>
+    </div>
+  </div>
+</section>
+
+<!-- ==================== INSTAGRAM ==================== -->
+<section class="insta">
+  <div class="insta-head">
+    <span class="eyebrow">— In the wild —</span>
+    <h2>Tag us and you might make<br>it to our <em>Instagram.</em></h2>
+    <div class="handle">Follow <a href="#">@skygoodies.co</a> · 87K+ crafters</div>
+  </div>
+  <div class="insta-grid">
+    <a class="insta-tile" href="#" style="background-image: url('https://in.skygoodies.co/cdn/shop/products/10-amazon-sky-goodies-set-of-6-animals-01_e82618ad-16c6-4c78-95ca-40379abb7c83_1024x1024.jpg?v=1738933059');"><svg viewBox="0 0 24 24"><rect x="2" y="2" width="20" height="20" rx="5"/><circle cx="12" cy="12" r="4"/><line x1="17.5" y1="6.5" x2="17.51" y2="6.5"/></svg></a>
+    <a class="insta-tile" href="#" style="background-image: url('https://in.skygoodies.co/cdn/shop/products/3000-Sky_Goodies_DIY_gramophone-colourful_4864398f-f3c6-4b24-93e6-255dad4f1b42_1024x1024.jpg?v=1700714795');"><svg viewBox="0 0 24 24"><rect x="2" y="2" width="20" height="20" rx="5"/><circle cx="12" cy="12" r="4"/><line x1="17.5" y1="6.5" x2="17.51" y2="6.5"/></svg></a>
+    <a class="insta-tile" href="#" style="background-image: url('https://in.skygoodies.co/cdn/shop/files/Sky-Goodies-Birthday-Party-Decor-Sunflower-01_18ac2d44-57e3-41b8-8afd-2688d2a201ee_1024x1024.jpg?v=1754226891');"><svg viewBox="0 0 24 24"><rect x="2" y="2" width="20" height="20" rx="5"/><circle cx="12" cy="12" r="4"/><line x1="17.5" y1="6.5" x2="17.51" y2="6.5"/></svg></a>
+    <a class="insta-tile" href="#" style="background-image: url('https://in.skygoodies.co/cdn/shop/products/3000-Sky-Goodies-Flowers-Butterflies-Combo-5_1024x1024.jpg?v=1742907941');"><svg viewBox="0 0 24 24"><rect x="2" y="2" width="20" height="20" rx="5"/><circle cx="12" cy="12" r="4"/><line x1="17.5" y1="6.5" x2="17.51" y2="6.5"/></svg></a>
+    <a class="insta-tile" href="#" style="background-image: url('https://in.skygoodies.co/cdn/shop/files/Sky-Goodies-DIY-Paper-Craft-Krishna-01_1024x1024.jpg?v=1717137982');"><svg viewBox="0 0 24 24"><rect x="2" y="2" width="20" height="20" rx="5"/><circle cx="12" cy="12" r="4"/><line x1="17.5" y1="6.5" x2="17.51" y2="6.5"/></svg></a>
+    <a class="insta-tile" href="#" style="background-image: url('https://in.skygoodies.co/cdn/shop/files/Sky-Goodies-DIY-Paper-Christmas-Tree-17_cc57db58-6e00-4c78-9474-3f6324d1d0ce_1024x1024.jpg?v=1762074365');"><svg viewBox="0 0 24 24"><rect x="2" y="2" width="20" height="20" rx="5"/><circle cx="12" cy="12" r="4"/><line x1="17.5" y1="6.5" x2="17.51" y2="6.5"/></svg></a>
+  </div>
+</section>
+
+<!-- ==================== NEWSLETTER ==================== -->
+<section class="nws">
+  <span class="nws-deco nws-deco-1">✿</span>
+  <span class="nws-deco nws-deco-2">❀</span>
+  <span class="nws-deco nws-deco-3">✿</span>
+  <span class="nws-deco nws-deco-4">❀</span>
+  <div class="nws-in">
+    <div class="nws-flower">🌸</div>
+    <span class="nws-tag">— Something's blooming —</span>
+    <h2>Enjoy <em>10% off.</em></h2>
+    <p>Be the first to know about new collections and sales. Plus, get 10% off your first order.</p>
+    <form class="nws-form" onsubmit="event.preventDefault(); alert('Welcome! Check your email.');">
+      <input type="email" placeholder="Email address" required/>
+      <button type="submit">Yes Please</button>
+    </form>
+    <span class="nws-perks">No spam · Unsubscribe anytime</span>
+  </div>
+</section>
+
+<!-- ==================== FOOTER ==================== -->
+<footer class="ft">
+  <div class="ft-in">
+    <div class="ft-top">
+      <div class="ft-brand">
+        <img src="https://in.skygoodies.co/cdn/shop/files/logo_hd_300x.jpg?v=1741613405" alt="Sky Goodies" referrerpolicy="no-referrer"/>
+        <div class="tag">Simple joys in a complex world :)</div>
+        <p>Handcrafted paper kits, designed in our Khar, Mumbai studio by NID-trained artists. Since 2013.</p>
+        <div class="ft-socials">
+          <a href="#"><svg viewBox="0 0 24 24"><path d="M7 2C4.243 2 2 4.243 2 7v10c0 2.757 2.243 5 5 5h10c2.757 0 5-2.243 5-5V7c0-2.757-2.243-5-5-5H7zm10 2c1.654 0 3 1.346 3 3v10c0 1.654-1.346 3-3 3H7c-1.654 0-3-1.346-3-3V7c0-1.654 1.346-3 3-3h10zm-5 3a5 5 0 1 0 0 10 5 5 0 0 0 0-10zm0 2a3 3 0 1 1 0 6 3 3 0 0 1 0-6zm4.5-.5a1 1 0 1 0 0 2 1 1 0 0 0 0-2z"/></svg></a>
+          <a href="#"><svg viewBox="0 0 24 24"><path d="M21.58 7.2c-.2-1.1-1.1-2-2.2-2.2C17.4 4.5 12 4.5 12 4.5s-5.4 0-7.4.5c-1.1.2-2 1.1-2.2 2.2C2 9.2 2 12 2 12s0 2.8.4 4.8c.2 1.1 1.1 2 2.2 2.2 2 .5 7.4.5 7.4.5s5.4 0 7.4-.5c1.1-.2 2-1.1 2.2-2.2.4-2 .4-4.8.4-4.8s0-2.8-.4-4.8zM10 15.5V8.5l6 3.5-6 3.5z"/></svg></a>
+          <a href="#"><svg viewBox="0 0 24 24"><path d="M12 0C5.4 0 0 5.4 0 12c0 5 3.1 9.3 7.6 11.1-.1-.9-.2-2.4 0-3.4.2-.9 1.4-5.6 1.4-5.6s-.4-.7-.4-1.8c0-1.7 1-2.9 2.2-2.9 1 0 1.5.8 1.5 1.7 0 1-.7 2.6-1 4-.3 1.2.6 2.1 1.8 2.1 2.1 0 3.7-2.2 3.7-5.4 0-2.8-2-4.8-4.9-4.8-3.4 0-5.3 2.5-5.3 5.1 0 1 .4 2.1.9 2.7.1.1.1.2.1.3-.1.4-.3 1.2-.3 1.4 0 .2-.2.3-.4.2-1.3-.6-2.2-2.6-2.2-4.2 0-3.4 2.5-6.5 7.1-6.5 3.7 0 6.6 2.7 6.6 6.2 0 3.7-2.3 6.7-5.6 6.7-1.1 0-2.1-.6-2.5-1.2 0 0-.5 2.1-.7 2.6-.2.9-.9 2-1.3 2.7 1 .3 2 .4 3.1.4 6.6 0 12-5.4 12-12S18.6 0 12 0z"/></svg></a>
+        </div>
+      </div>
+      <div class="ft-col">
+        <h5>Shop</h5>
+        <ul>
+          <li><a href="#">All Paper Kits</a></li>
+          <li><a href="#">Home Décor</a></li>
+          <li><a href="#">Pooja</a></li>
+          <li><a href="#">Calendars</a></li>
+          <li><a href="#">Notebooks</a></li>
+          <li><a href="#">Gifts</a></li>
+        </ul>
+      </div>
+      <div class="ft-col">
+        <h5>Help</h5>
+        <ul>
+          <li><a href="#">Shipping &amp; Delivery</a></li>
+          <li><a href="#">Returns &amp; Exchanges</a></li>
+          <li><a href="#">Track Order</a></li>
+          <li><a href="#">FAQ</a></li>
+          <li><a href="#">Contact</a></li>
+        </ul>
+        <a href="https://wa.me/919768888688" class="wa">
+          <svg viewBox="0 0 24 24"><path d="M17.5 14.4c-.3-.1-1.7-.8-2-.9-.3-.1-.4-.1-.6.1-.2.3-.7.9-.8 1-.2.2-.3.2-.6.1-.3-.1-1.2-.5-2.3-1.4-.9-.8-1.4-1.7-1.6-2-.2-.3 0-.4.1-.6.1-.1.3-.3.4-.5.1-.2.2-.3.3-.5.1-.2 0-.4 0-.5-.1-.1-.6-1.4-.8-2-.2-.5-.4-.4-.6-.4h-.5c-.2 0-.5.1-.7.3-.3.3-1 .9-1 2.3 0 1.4 1 2.7 1.2 2.9.1.2 2 3 4.8 4.2.7.3 1.2.5 1.6.6.7.2 1.3.2 1.8.1.5-.1 1.7-.7 1.9-1.3.2-.7.2-1.2.2-1.3-.1-.1-.3-.2-.6-.3z"/><path d="M20.5 3.5A11.5 11.5 0 0 0 2.8 18.2L2 22l3.9-1C7.5 21.7 9 22 10.5 22h.1c6.3 0 11.5-5.2 11.5-11.5 0-3-1.2-5.9-3.3-8zm-8 17c-1.4 0-2.7-.4-3.8-1l-.3-.2-2.8.7.8-2.7-.2-.3A9.5 9.5 0 0 1 4.5 12c0-5.2 4.3-9.5 9.5-9.5 2.5 0 4.9 1 6.7 2.8A9.5 9.5 0 0 1 22 12c0 5.2-4.3 9.5-9.5 9.5z"/></svg>
+          WhatsApp
+        </a>
+      </div>
+      <div class="ft-col">
+        <h5>Sky Goodies</h5>
+        <ul>
+          <li><a href="#">Our Story</a></li>
+          <li><a href="#">Free Craft Ideas</a></li>
+          <li><a href="#">YouTube Tutorials</a></li>
+          <li><a href="#">Wholesale &amp; Bulk</a></li>
+          <li><a href="#">Press</a></li>
+          <li><a href="#">Careers</a></li>
+        </ul>
+      </div>
+    </div>
+    <div class="ft-bot">
+      <div>© 2026 Sky Goodies Products Pvt Ltd · Handcrafted in Mumbai 🇮🇳</div>
+      <div class="ft-pay">
+        <span>UPI</span><span>VISA</span><span>MC</span><span>RUPAY</span><span>GPAY</span><span>COD</span>
+      </div>
+    </div>
+  </div>
+</footer>
+
+<!-- 10% off floater (Rifle-style sticky offer) -->
+<a class="offer-float" href="#"><strong>10%</strong>OFF</a>
+
+<!-- dev label -->
+<div class="page-switch">
+  <button class="active">v6 · Handmade</button>
+</div>
+
+</body>
+</html>

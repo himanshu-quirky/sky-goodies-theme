@@ -1,90 +1,102 @@
-<style>
-  .sg-press-section { padding: 32px 20px; overflow: hidden; }
-  .sg-press-eyebrow { text-align: center; font-size: 12px; letter-spacing: 0.12em; color: #7A7168; text-transform: uppercase; margin-bottom: 20px; }
-  .sg-press-marquee { overflow: hidden; mask-image: linear-gradient(90deg, transparent, #000 10%, #000 90%, transparent); -webkit-mask-image: linear-gradient(90deg, transparent, #000 10%, #000 90%, transparent); }
-  .sg-press-track { display: inline-flex; gap: 48px; animation: sg-marquee 40s linear infinite; white-space: nowrap; align-items: center; }
-  @keyframes sg-marquee { from { transform: translateX(0); } to { transform: translateX(-50%); } }
-  .sg-press-item { font-family: 'DM Serif Display', serif; font-size: 20px; color: #3D3833; letter-spacing: 0.08em; text-transform: uppercase; opacity: 0.6; }
-  .sg-press-item img { max-height: 40px; width: auto; display: block; }
-</style>
+{{ 'sg-theme.css' | asset_url | stylesheet_tag }}
 
-<section class="sg-press-section" style="background:{{ section.settings.background_color }};" {{ section.shopify_attributes }}>
-  {% if section.settings.eyebrow != blank %}
-    <p class="sg-press-eyebrow">{{ section.settings.eyebrow }}</p>
-  {% endif %}
-  <div class="sg-press-marquee">
-    <div class="sg-press-track" style="animation-duration:{{ section.settings.scroll_speed | default: 40 }}s;">
-      {% if section.blocks.size == 0 %}
-        {%- assign fb_logos = 'NAT GEO,HOT WHEELS,CRED,BARBIE,DISCOVERY,UNESCO,TATA,NCPEDP' | split: ',' -%}
-        {% for loop_i in (1..2) %}
-          {% for logo in fb_logos %}
-            <div class="sg-press-item">{{ logo }}</div>
-          {% endfor %}
-        {% endfor %}
-      {% else %}
-        {% for loop_i in (1..2) %}
-          {% for block in section.blocks %}
-            <div class="sg-press-item" {{ block.shopify_attributes }}>
-              {% if block.settings.logo_image != blank %}
-                <img src="{{ block.settings.logo_image | image_url: width: 240 }}" alt="{{ block.settings.logo_text | escape }}" loading="lazy" referrerpolicy="no-referrer">
-              {% else %}
-                {{ block.settings.logo_text | default: 'BRAND' }}
-              {% endif %}
-            </div>
-          {% endfor %}
-        {% endfor %}
-      {% endif %}
-    </div>
+{%- style -%}
+  .sg-press-{{ section.id }} {
+    padding: {{ section.settings.padding | default: 32 }}px 0;
+    background: {{ section.settings.bg_color | default: '#FAF6EC' }};
+    text-align: center;
+    border-top: 1px solid var(--sg-line);
+    border-bottom: 1px solid var(--sg-line);
+  }
+{%- endstyle -%}
+
+<section class="sg-root sg-press-{{ section.id }}" {{ section.shopify_attributes }}>
+  {%- if section.settings.label != blank -%}
+    <span class="sg-press-label">— {{ section.settings.label }} —</span>
+  {%- endif -%}
+  <div class="sg-press-logos">
+    {%- for block in section.blocks -%}
+      <span class="{{ block.settings.style }}" {{ block.shopify_attributes }}>{{ block.settings.name }}</span>
+    {%- endfor -%}
   </div>
 </section>
 
+<style>
+.sg-press-label {
+  font-family: var(--sg-sans);
+  font-size: 11px;
+  font-weight: 600;
+  letter-spacing: 0.24em;
+  text-transform: uppercase;
+  color: var(--sg-muted);
+  margin-bottom: 18px;
+  display: block;
+}
+.sg-press-logos {
+  max-width: var(--sg-container);
+  margin: 0 auto;
+  padding: 0 var(--sg-gutter);
+  display: flex;
+  gap: 42px;
+  align-items: center;
+  justify-content: center;
+  flex-wrap: wrap;
+}
+.sg-press-logos span {
+  font-family: var(--sg-display);
+  font-weight: 400;
+  font-size: 20px;
+  color: var(--sg-brown);
+  opacity: 0.55;
+  transition: opacity .2s;
+  letter-spacing: 0.01em;
+}
+.sg-press-logos span:hover { opacity: 1; }
+.sg-press-logos span.italic { font-style: italic; font-weight: 500; }
+.sg-press-logos span.sans {
+  font-family: var(--sg-sans);
+  font-size: 12px;
+  font-weight: 600;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+}
+</style>
+
 {% schema %}
 {
-  "name": "SG Press Logos",
+  "name": "SG — Press Logos",
   "tag": "section",
-  "class": "sg-section-wrapper",
+  "class": "section-sg-press-logos",
   "settings": [
-    { "type": "text", "id": "eyebrow", "label": "Eyebrow text", "default": "The good company we keep" },
-    { "type": "range", "id": "padding_top", "min": 0, "max": 100, "step": 4, "unit": "px", "label": "Padding top", "default": 32 },
-    { "type": "range", "id": "padding_bottom", "min": 0, "max": 100, "step": 4, "unit": "px", "label": "Padding bottom", "default": 32 },
-    { "type": "color", "id": "background_color", "label": "Background color", "default": "#FDFCFA" },
-    { "type": "range", "id": "scroll_speed", "min": 20, "max": 60, "step": 5, "unit": "s", "label": "Scroll speed (seconds per loop)", "default": 40 }
+    { "type": "text", "id": "label", "label": "Eyebrow label", "default": "As featured in" },
+    { "type": "color", "id": "bg_color", "label": "Background", "default": "#FAF6EC" },
+    { "type": "range", "id": "padding", "label": "Vertical padding", "min": 16, "max": 120, "step": 4, "default": 32 }
   ],
+  "max_blocks": 12,
   "blocks": [
     {
       "type": "logo",
-      "name": "Logo",
-      "limit": 12,
+      "name": "Publication",
       "settings": [
-        { "type": "image_picker", "id": "logo_image", "label": "Logo image (optional)" },
-        { "type": "text", "id": "logo_text", "label": "Logo text (fallback)", "default": "NAT GEO" },
-        {
-          "type": "select",
-          "id": "logo_weight",
-          "label": "Text style",
-          "options": [
-            { "value": "regular", "label": "Regular" },
-            { "value": "bold", "label": "Bold" },
-            { "value": "italic", "label": "Italic" },
-            { "value": "serif", "label": "Serif" }
-          ],
-          "default": "regular"
-        }
+        { "type": "text", "id": "name", "label": "Name", "default": "Vogue" },
+        { "type": "select", "id": "style", "label": "Style", "options": [
+          { "value": "italic", "label": "Italic serif" },
+          { "value": "sans", "label": "All caps sans" }
+        ], "default": "italic" }
       ]
     }
   ],
   "presets": [
     {
-      "name": "SG Press Logos",
+      "name": "SG — Press Logos",
       "blocks": [
-        { "type": "logo", "settings": { "logo_text": "NAT GEO" } },
-        { "type": "logo", "settings": { "logo_text": "HOT WHEELS" } },
-        { "type": "logo", "settings": { "logo_text": "CRED" } },
-        { "type": "logo", "settings": { "logo_text": "BARBIE" } },
-        { "type": "logo", "settings": { "logo_text": "DISCOVERY" } },
-        { "type": "logo", "settings": { "logo_text": "UNESCO" } },
-        { "type": "logo", "settings": { "logo_text": "TATA" } },
-        { "type": "logo", "settings": { "logo_text": "NCPEDP" } }
+        { "type": "logo", "settings": { "name": "Vogue", "style": "italic" } },
+        { "type": "logo", "settings": { "name": "Elle Decor", "style": "sans" } },
+        { "type": "logo", "settings": { "name": "Lonely Planet", "style": "italic" } },
+        { "type": "logo", "settings": { "name": "The Hindu", "style": "sans" } },
+        { "type": "logo", "settings": { "name": "Verve", "style": "italic" } },
+        { "type": "logo", "settings": { "name": "Mid-Day", "style": "sans" } },
+        { "type": "logo", "settings": { "name": "Architectural Digest", "style": "italic" } }
       ]
     }
   ]

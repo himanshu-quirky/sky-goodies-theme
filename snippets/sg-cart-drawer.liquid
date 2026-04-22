@@ -1,82 +1,136 @@
 {% comment %}
-  SG — Cart Drawer (basil-style)
-  Include once in layout/theme.liquid via: {% render 'sg-cart-drawer' %}
+  SG — Cart Drawer (v7)
+  Include once in layout/theme.liquid: {% render 'sg-cart-drawer' %}
   Opens when any element with [data-sg-cart-open] or [data-sg-atc] is clicked.
+  Progress bar + upsells + prepaid note all configurable from Theme Settings.
 {% endcomment %}
 
 {{ 'sg-theme.css' | asset_url | stylesheet_tag }}
+
+{%- assign ship_threshold = settings.sg_free_ship_threshold | default: 1000 -%}
+{%- assign ship_enabled = settings.sg_free_ship_enabled -%}
+{%- assign cart_total_rupees = cart.total_price | divided_by: 100 -%}
+{%- assign remaining = ship_threshold | minus: cart_total_rupees -%}
+{%- if remaining < 0 -%}{%- assign remaining = 0 -%}{%- endif -%}
+{%- assign fill_pct = cart_total_rupees | times: 100 | divided_by: ship_threshold -%}
+{%- if fill_pct > 100 -%}{%- assign fill_pct = 100 -%}{%- endif -%}
+{%- assign away_text = settings.sg_free_ship_away_text | default: "You're ₹{{amount}} away from free shipping" | replace: '{{amount}}', remaining -%}
+{%- assign unlocked_text = settings.sg_free_ship_unlocked_text | default: "You've unlocked free shipping!" -%}
+
+{%- comment -%} Resolve upsell products {%- endcomment -%}
+{%- assign upsell_products = '' | split: '' -%}
+{%- if settings.sg_upsell_product_1 != blank -%}
+  {%- assign p = all_products[settings.sg_upsell_product_1] -%}
+  {%- if p != blank -%}{%- assign upsell_products = upsell_products | push: p -%}{%- endif -%}
+{%- endif -%}
+{%- if settings.sg_upsell_product_2 != blank -%}
+  {%- assign p = all_products[settings.sg_upsell_product_2] -%}
+  {%- if p != blank -%}{%- assign upsell_products = upsell_products | push: p -%}{%- endif -%}
+{%- endif -%}
+{%- if settings.sg_upsell_product_3 != blank -%}
+  {%- assign p = all_products[settings.sg_upsell_product_3] -%}
+  {%- if p != blank -%}{%- assign upsell_products = upsell_products | push: p -%}{%- endif -%}
+{%- endif -%}
+{%- if settings.sg_upsell_product_4 != blank -%}
+  {%- assign p = all_products[settings.sg_upsell_product_4] -%}
+  {%- if p != blank -%}{%- assign upsell_products = upsell_products | push: p -%}{%- endif -%}
+{%- endif -%}
+{%- if upsell_products.size == 0 and settings.sg_upsell_fallback_collection != blank -%}
+  {%- assign fallback = collections[settings.sg_upsell_fallback_collection] -%}
+  {%- for p in fallback.products limit: 4 -%}
+    {%- assign upsell_products = upsell_products | push: p -%}
+  {%- endfor -%}
+{%- endif -%}
 
 <div class="sg-drawer-back" id="sg-drawer-back" aria-hidden="true"></div>
 <aside class="sg-cart-drawer sg-root" id="sg-cart-drawer" role="dialog" aria-label="Shopping cart" aria-hidden="true">
   <div class="sg-cart-head">
     <div>
       <h3>Your Cart</h3>
-      <div class="sg-cart-count"><span data-sg-cart-count-text>{{ cart.item_count }}</span> items · packed with love</div>
+      <div class="cc"><span data-sg-cart-count-text>{{ cart.item_count }}</span> items · packed with love</div>
     </div>
     <button class="sg-cart-close" data-sg-cart-close aria-label="Close cart">
       <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
     </button>
   </div>
 
-  {%- assign free_ship_min = 1000 -%}
-  {%- assign cart_total = cart.total_price | divided_by: 100 -%}
-  {%- assign remaining = free_ship_min | minus: cart_total -%}
-  {%- if remaining < 0 -%}{%- assign remaining = 0 -%}{%- endif -%}
-  {%- assign fill_pct = cart_total | times: 100 | divided_by: free_ship_min -%}
-  {%- if fill_pct > 100 -%}{%- assign fill_pct = 100 -%}{%- endif -%}
-
-  <div class="sg-ship-bar">
-    <div class="sg-ship-txt">
-      {%- if remaining > 0 -%}
-        🚚 You're <strong>₹{{ remaining }} away</strong> from free shipping
-      {%- else -%}
-        🎉 You've unlocked <strong>free shipping!</strong>
-      {%- endif -%}
+  {%- if ship_enabled -%}
+    <div class="sg-ship-bar" style="background: {{ settings.sg_free_ship_section_bg | default: '#FCEEE6' }};">
+      <div class="sg-ship-txt">
+        {%- if remaining > 0 -%}
+          🚚 <span data-sg-ship-text>{{ away_text }}</span>
+        {%- else -%}
+          🎉 <span data-sg-ship-text><strong>{{ unlocked_text }}</strong></span>
+        {%- endif -%}
+      </div>
+      <div class="sg-ship-track" style="background: {{ settings.sg_free_ship_bar_bg | default: '#FFFDF8' }};">
+        <div class="sg-ship-fill" data-sg-ship-fill
+             style="width: {{ fill_pct }}%; background: {{ settings.sg_free_ship_bar_color | default: '#E8845A' }};"></div>
+      </div>
     </div>
-    <div class="sg-ship-track"><div class="sg-ship-fill" style="width: {{ fill_pct }}%;"></div></div>
-  </div>
+  {%- endif -%}
 
   <div class="sg-cart-body">
-    <div class="sg-cart-items">
+    <div class="sg-cart-items" data-sg-cart-items>
       {%- if cart.item_count > 0 -%}
         {%- for item in cart.items -%}
-          <div class="sg-cart-item" data-sg-item-key="{{ item.key }}">
-            <div class="sg-cart-item-img">
+          <div class="sg-citem" data-sg-item-key="{{ item.key }}">
+            <div class="sg-citem-img">
               {%- if item.image -%}
-                <img src="{{ item.image | image_url: width: 160 }}" alt="{{ item.product.title | escape }}" />
+                <img src="{{ item.image | image_url: width: 160 }}" alt="{{ item.product.title | escape }}"/>
               {%- endif -%}
             </div>
-            <div class="sg-cart-item-info">
+            <div class="sg-citem-info">
               <h4>{{ item.product.title }}</h4>
               {%- if item.variant.title != 'Default Title' -%}
-                <div class="sg-cart-item-var">{{ item.variant.title }}</div>
+                <div class="sg-citem-var">{{ item.variant.title }}</div>
               {%- endif -%}
-              <div class="sg-cart-item-qty">
+              <div class="sg-citem-qty">
                 <button data-sg-qty-minus>−</button>
                 <span>{{ item.quantity }}</span>
                 <button data-sg-qty-plus>+</button>
               </div>
             </div>
-            <div class="sg-cart-item-right">
-              <div class="sg-cart-item-price">₹{{ item.final_line_price | divided_by: 100 }}</div>
-              <button class="sg-cart-item-rm" data-sg-remove>Remove</button>
+            <div class="sg-citem-right">
+              <div class="sg-citem-price">₹{{ item.final_line_price | divided_by: 100 }}</div>
+              <button class="sg-citem-rm" data-sg-remove>Remove</button>
             </div>
           </div>
         {%- endfor -%}
       {%- else -%}
         <div class="sg-cart-empty">
           <p>Your cart is empty.</p>
-          <a href="{{ routes.all_products_collection_url }}" class="sg-pill sg-pill--orange sg-pill--lg">Start shopping →</a>
+          <a href="{{ routes.all_products_collection_url }}" class="sg-btn-primary">Start shopping →</a>
         </div>
       {%- endif -%}
     </div>
 
-    {%- if cart.item_count > 0 -%}
-      <div class="sg-prepaid-note">
-        <span class="sg-pi">₹</span>
+    {%- if settings.sg_upsell_enabled and upsell_products.size > 0 -%}
+      <div class="sg-upsell">
+        <div class="sg-upsell-lbl">✦ {{ settings.sg_upsell_heading | default: 'Complete the set' }}</div>
+        <div class="sg-upsell-row">
+          {%- for p in upsell_products -%}
+            <div class="sg-ucard">
+              <a href="{{ p.url }}" class="sg-ucard-img">
+                {%- if p.featured_image -%}<img src="{{ p.featured_image | image_url: width: 120 }}" alt="{{ p.title | escape }}"/>{%- endif -%}
+              </a>
+              <div class="sg-ucard-info">
+                <h5>{{ p.title | truncate: 28 }}</h5>
+                <span class="sg-ucard-p">₹{{ p.price | money_without_currency | remove: '.00' | remove: ',' }}</span>
+              </div>
+              <button class="sg-ucard-add" data-sg-atc data-variant-id="{{ p.selected_or_first_available_variant.id }}" aria-label="Add {{ p.title | escape }}">+</button>
+            </div>
+          {%- endfor -%}
+        </div>
+      </div>
+    {%- endif -%}
+
+    {%- if settings.sg_prepaid_enabled and cart.item_count > 0 -%}
+      <div class="sg-prepaid">
+        <span class="sg-prepaid-ico">₹</span>
         <div>
-          <strong>Save ₹50 on prepaid orders</strong>
-          <small>Automatically applied with UPI / Card</small>
+          <strong>{{ settings.sg_prepaid_heading | default: 'Save ₹50 on prepaid orders' }}</strong>
+          <span>{{ settings.sg_prepaid_subtext | default: 'Automatically applied with UPI / Card' }}</span>
         </div>
       </div>
     {%- endif -%}
@@ -84,14 +138,14 @@
 
   {%- if cart.item_count > 0 -%}
     <div class="sg-cart-foot">
-      <div class="sg-cart-total-row"><span>Subtotal</span><span>₹{{ cart.total_price | divided_by: 100 }}</span></div>
-      <div class="sg-cart-total-row"><span>Shipping</span><span>Calculated at checkout</span></div>
-      <div class="sg-cart-total-row sg-cart-final">
+      <div class="sg-cart-total-row"><span>Subtotal</span><span data-sg-subtotal>₹{{ cart.total_price | divided_by: 100 }}</span></div>
+      <div class="sg-cart-total-row"><span>Shipping</span><span>{% if remaining > 0 %}Calculated at checkout{% else %}Free{% endif %}</span></div>
+      <div class="sg-cart-total-row grand">
         <span>Total</span>
-        <span>₹{{ cart.total_price | divided_by: 100 }}</span>
+        <span data-sg-total>₹{{ cart.total_price | divided_by: 100 }}</span>
       </div>
-      <a href="{{ routes.cart_url }}/checkout" class="sg-checkout-btn">
-        Secure Checkout
+      <a href="{{ routes.cart_url }}/checkout" class="sg-cart-checkout">
+        {{ settings.sg_checkout_label | default: 'Secure Checkout' }}
         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><rect x="3" y="11" width="18" height="11" rx="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg>
       </a>
     </div>
@@ -102,11 +156,12 @@
 .sg-drawer-back {
   position: fixed;
   inset: 0;
-  background: rgba(30,27,24,.5);
+  background: rgba(26,22,20,.55);
   opacity: 0;
   pointer-events: none;
   transition: opacity .3s;
   z-index: 1090;
+  backdrop-filter: blur(2px);
 }
 .sg-drawer-back.sg-open { opacity: 1; pointer-events: auto; }
 .sg-cart-drawer {
@@ -114,220 +169,325 @@
   top: 0; right: 0; bottom: 0;
   width: 100%;
   max-width: 440px;
-  background: var(--sg-cream);
+  background: var(--sg-paper);
   transform: translateX(100%);
   transition: transform .4s var(--sg-ease-out);
   z-index: 1100;
   display: flex;
   flex-direction: column;
-  border-left: 2px solid var(--sg-ink);
+  box-shadow: -16px 0 48px -12px rgba(26,22,20,.2);
 }
 .sg-cart-drawer.sg-open { transform: translateX(0); }
-
 .sg-cart-head {
   padding: 20px 24px;
-  border-bottom: 2px solid var(--sg-ink);
-  background: var(--sg-cream-light);
+  border-bottom: 1px solid var(--sg-line);
+  background: var(--sg-ivory);
   display: flex;
   justify-content: space-between;
   align-items: center;
 }
 .sg-cart-head h3 {
   font-family: var(--sg-display);
-  font-weight: 900;
-  font-size: 24px;
-  color: var(--sg-forest);
+  font-style: italic;
+  font-weight: 500;
+  font-size: 22px;
+  color: var(--sg-ink);
   margin: 0;
 }
-.sg-cart-count { font-size: 12px; font-weight: 700; color: var(--sg-muted); margin-top: 2px; }
+.sg-cart-head .cc { font-size: 12px; color: var(--sg-muted); margin-top: 2px; }
 .sg-cart-close {
-  width: 40px; height: 40px;
-  background: var(--sg-white);
-  border: 2px solid var(--sg-ink);
+  width: 38px; height: 38px;
   border-radius: 50%;
-  display: flex;
-  align-items: center;
-  justify-content: center;
+  background: var(--sg-paper);
+  border: 1px solid var(--sg-line-2);
+  color: var(--sg-ink);
+  display: flex; align-items: center; justify-content: center;
   transition: all .15s;
   cursor: pointer;
 }
-.sg-cart-close:hover { background: var(--sg-orange); color: #fff; }
+.sg-cart-close:hover { background: var(--sg-ink); color: #fff; }
 .sg-cart-close svg { width: 16px; height: 16px; }
 
 .sg-ship-bar {
   padding: 14px 24px;
-  background: var(--sg-butter);
-  border-bottom: 2px solid var(--sg-ink);
+  border-bottom: 1px solid var(--sg-peach-deep);
 }
-.sg-ship-txt { font-size: 13px; font-weight: 700; color: var(--sg-ink); margin-bottom: 8px; }
+.sg-ship-txt { font-size: 13px; font-weight: 600; color: var(--sg-brown); margin-bottom: 8px; }
 .sg-ship-txt strong { color: var(--sg-orange-dk); }
 .sg-ship-track {
-  height: 10px;
-  background: var(--sg-white);
-  border: 2px solid var(--sg-ink);
+  height: 8px;
   border-radius: 999px;
   overflow: hidden;
+  position: relative;
+  border: 1px solid var(--sg-peach-deep);
 }
 .sg-ship-fill {
   height: 100%;
-  background: var(--sg-lime);
-  border-right: 2px solid var(--sg-ink);
+  border-radius: 999px;
+  position: relative;
   transition: width .4s;
 }
+.sg-ship-fill::after {
+  content: '';
+  position: absolute; inset: 0;
+  background: linear-gradient(90deg, transparent, rgba(255,255,255,.4), transparent);
+  animation: sgShine 2s infinite;
+}
+@keyframes sgShine { 0% { transform: translateX(-100%);} 100% { transform: translateX(100%);} }
 
 .sg-cart-body { flex: 1; overflow-y: auto; }
-.sg-cart-items { padding: 0 24px; }
-.sg-cart-item {
+.sg-cart-items { padding: 8px 24px; }
+.sg-citem {
   display: grid;
-  grid-template-columns: 80px 1fr auto;
+  grid-template-columns: 76px 1fr auto;
   gap: 14px;
-  padding: 18px 0;
-  border-bottom: 1px solid rgba(30,27,24,.1);
+  padding: 16px 0;
+  border-bottom: 1px solid var(--sg-line);
   align-items: start;
 }
-.sg-cart-item-img {
-  width: 80px; height: 80px;
-  background: var(--sg-butter);
-  border: 2px solid var(--sg-ink);
-  border-radius: 14px;
+.sg-citem:last-child { border-bottom: none; }
+.sg-citem-img {
+  width: 76px; height: 76px;
+  border-radius: var(--sg-r-sm);
   overflow: hidden;
+  background: var(--sg-paper-2);
 }
-.sg-cart-item-img img { width: 100%; height: 100%; object-fit: cover; }
-.sg-cart-item-info h4 { font-family: var(--sg-display); font-weight: 900; font-size: 15px; color: var(--sg-forest); line-height: 1.2; margin: 0 0 4px; }
-.sg-cart-item-var { font-size: 11px; color: var(--sg-muted); font-weight: 600; margin-bottom: 8px; }
-.sg-cart-item-qty {
-  display: inline-flex;
-  align-items: center;
-  background: var(--sg-white);
-  border: 2px solid var(--sg-ink);
-  border-radius: 999px;
-}
-.sg-cart-item-qty button {
-  width: 26px; height: 28px;
-  font-weight: 800;
+.sg-citem-img img { width: 100%; height: 100%; object-fit: cover; }
+.sg-citem-info h4 {
+  font-family: var(--sg-display);
+  font-style: italic;
+  font-weight: 500;
   font-size: 14px;
   color: var(--sg-ink);
-  background: none;
+  line-height: 1.25;
+  margin: 0 0 3px;
+}
+.sg-citem-var { font-size: 11px; color: var(--sg-muted); margin-bottom: 8px; }
+.sg-citem-qty {
+  display: inline-flex;
+  align-items: center;
+  border: 1px solid var(--sg-line-2);
+  border-radius: var(--sg-r-pill);
+  background: var(--sg-ivory);
+}
+.sg-citem-qty button { width: 26px; height: 28px; font-weight: 600; font-size: 13px; color: var(--sg-ink); background: none; border: none; cursor: pointer; }
+.sg-citem-qty button:hover { background: var(--sg-paper-2); }
+.sg-citem-qty span { padding: 0 10px; font-weight: 600; font-size: 12px; min-width: 26px; text-align: center; }
+.sg-citem-right { text-align: right; display: flex; flex-direction: column; gap: 4px; align-items: end; }
+.sg-citem-price {
+  font-family: var(--sg-sans);
+  font-weight: 700;
+  font-size: 14px;
+  color: var(--sg-ink);
+}
+.sg-citem-rm { font-size: 10.5px; color: var(--sg-muted); text-decoration: underline; background: none; border: none; cursor: pointer; }
+
+.sg-cart-empty { padding: 40px 24px; text-align: center; }
+.sg-cart-empty p { color: var(--sg-muted); margin: 0 0 20px; font-weight: 500; }
+
+.sg-upsell {
+  padding: 18px 24px;
+  background: var(--sg-ivory);
+  border-top: 1px solid var(--sg-line);
+  border-bottom: 1px solid var(--sg-line);
+}
+.sg-upsell-lbl {
+  font-size: 10.5px;
+  font-weight: 700;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: var(--sg-orange-dk);
+  margin-bottom: 10px;
+}
+.sg-upsell-row {
+  display: flex;
+  gap: 10px;
+  overflow-x: auto;
+  scrollbar-width: none;
+  margin: 0 -24px;
+  padding: 0 24px;
+}
+.sg-upsell-row::-webkit-scrollbar { display: none; }
+.sg-ucard {
+  flex: 0 0 210px;
+  background: var(--sg-paper-soft);
+  border: 1px solid var(--sg-line);
+  border-radius: var(--sg-r-sm);
+  padding: 10px;
+  display: flex;
+  gap: 10px;
+  align-items: center;
+}
+.sg-ucard-img {
+  width: 50px; height: 50px;
+  border-radius: 8px;
+  overflow: hidden;
+  background: var(--sg-paper-2);
+  flex-shrink: 0;
+  display: block;
+}
+.sg-ucard-img img { width: 100%; height: 100%; object-fit: cover; }
+.sg-ucard-info { flex: 1; min-width: 0; }
+.sg-ucard h5 {
+  font-family: var(--sg-display);
+  font-style: italic;
+  font-weight: 500;
+  font-size: 12px;
+  color: var(--sg-ink);
+  line-height: 1.2;
+  margin: 0 0 2px;
+}
+.sg-ucard-p { font-size: 11px; color: var(--sg-terra); font-weight: 700; }
+.sg-ucard-add {
+  width: 28px; height: 28px;
+  background: var(--sg-orange);
+  color: #fff;
+  border-radius: 50%;
+  display: flex; align-items: center; justify-content: center;
+  flex-shrink: 0;
+  font-weight: 700;
+  transition: background .15s;
   border: none;
   cursor: pointer;
 }
-.sg-cart-item-qty span { padding: 0 10px; font-weight: 800; font-size: 13px; }
-.sg-cart-item-right { text-align: right; display: flex; flex-direction: column; gap: 4px; align-items: end; }
-.sg-cart-item-price { font-family: var(--sg-display); font-weight: 900; font-size: 16px; color: var(--sg-price-red); }
-.sg-cart-item-rm { font-size: 10px; font-weight: 700; color: var(--sg-muted); text-decoration: underline; background: none; border: none; cursor: pointer; }
+.sg-ucard-add:hover { background: var(--sg-orange-dk); }
 
-.sg-cart-empty { padding: 40px 24px; text-align: center; }
-.sg-cart-empty p { color: var(--sg-muted); margin: 0 0 20px; font-weight: 600; }
-
-.sg-prepaid-note {
-  margin: 14px 24px 0;
+.sg-prepaid {
+  margin: 14px 24px;
   padding: 12px 14px;
-  background: var(--sg-lime);
-  border: 2px solid var(--sg-ink);
-  border-radius: 14px;
-  font-size: 12.5px;
-  font-weight: 700;
-  color: var(--sg-ink);
-  display: flex;
-  gap: 10px;
-  align-items: center;
+  background: var(--sg-mint-wash);
+  border: 1px dashed var(--sg-sage);
+  border-radius: var(--sg-r-sm);
+  font-size: 12px;
+  color: var(--sg-brown);
+  display: flex; gap: 10px; align-items: center;
 }
-.sg-prepaid-note .sg-pi {
-  width: 30px; height: 30px;
-  background: var(--sg-ink);
-  color: var(--sg-lime);
+.sg-prepaid-ico {
+  width: 28px; height: 28px;
+  background: var(--sg-sage);
+  color: #fff;
   border-radius: 50%;
-  display: flex;
-  align-items: center;
-  justify-content: center;
+  display: flex; align-items: center; justify-content: center;
   font-family: var(--sg-display);
-  font-weight: 900;
+  font-weight: 600;
   font-size: 14px;
   flex-shrink: 0;
 }
-.sg-prepaid-note strong { display: block; color: var(--sg-forest); }
-.sg-prepaid-note small { color: var(--sg-ink); opacity: 0.7; font-weight: 600; font-size: 11px; }
+.sg-prepaid strong { display: block; color: #3A4829; font-weight: 700; }
+.sg-prepaid span { color: var(--sg-brown); opacity: 0.7; font-size: 11px; }
 
 .sg-cart-foot {
   padding: 20px 24px;
-  background: var(--sg-cream-light);
-  border-top: 2px solid var(--sg-ink);
+  border-top: 1px solid var(--sg-line);
+  background: var(--sg-ivory);
 }
 .sg-cart-total-row {
-  display: flex;
-  justify-content: space-between;
+  display: flex; justify-content: space-between;
   font-size: 13px;
-  font-weight: 600;
-  color: var(--sg-ink);
+  color: var(--sg-brown);
   margin-bottom: 6px;
 }
-.sg-cart-total-row.sg-cart-final {
+.sg-cart-total-row.grand {
   font-family: var(--sg-display);
-  font-weight: 900;
+  font-style: italic;
+  font-weight: 500;
   font-size: 22px;
-  color: var(--sg-forest);
+  color: var(--sg-ink);
   margin: 12px 0 14px;
   padding-top: 12px;
-  border-top: 2px dashed rgba(30,27,24,.2);
+  border-top: 1px dashed var(--sg-line-2);
 }
-.sg-checkout-btn {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  gap: 10px;
+.sg-cart-checkout {
+  display: flex; align-items: center; justify-content: center; gap: 10px;
   width: 100%;
-  padding: 18px;
-  background: var(--sg-lime);
-  color: var(--sg-ink);
-  border: 2px solid var(--sg-ink);
-  border-radius: 999px;
-  font-weight: 900;
-  font-size: 16px;
-  letter-spacing: 0.04em;
+  padding: 16px;
+  background: var(--sg-orange);
+  color: #fff;
+  border-radius: var(--sg-r-pill);
+  font-size: 13px;
+  font-weight: 700;
+  letter-spacing: 0.14em;
   text-transform: uppercase;
-  text-decoration: none;
+  border: 2px solid var(--sg-ink);
   transition: all .15s;
+  text-decoration: none;
   font-family: var(--sg-sans);
 }
-.sg-checkout-btn:hover { background: #d5f52a; transform: translateY(-2px); box-shadow: 0 4px 0 var(--sg-ink); color: var(--sg-ink); }
-.sg-checkout-btn svg { width: 16px; height: 16px; }
+.sg-cart-checkout:hover { background: var(--sg-orange-dk); transform: translateY(-1px); box-shadow: 0 4px 0 var(--sg-ink); color: #fff; }
+.sg-cart-checkout svg { width: 14px; height: 14px; }
 </style>
 
 <script>
 (function() {
   if (window.__sgCartDrawerInit) return;
   window.__sgCartDrawerInit = true;
+
   var drawer = document.getElementById('sg-cart-drawer');
   var back = document.getElementById('sg-drawer-back');
   if (!drawer || !back) return;
 
-  function open() {
+  var SHIP_THRESHOLD = {{ ship_threshold }};
+  var AWAY_TEMPLATE = {{ settings.sg_free_ship_away_text | default: "You're ₹{{amount}} away from free shipping" | json }};
+  var UNLOCKED_TEXT = {{ settings.sg_free_ship_unlocked_text | default: "You've unlocked free shipping!" | json }};
+
+  function openDrawer() {
     drawer.classList.add('sg-open');
     back.classList.add('sg-open');
     drawer.setAttribute('aria-hidden', 'false');
     document.body.style.overflow = 'hidden';
   }
-  function close() {
+  function closeDrawer() {
     drawer.classList.remove('sg-open');
     back.classList.remove('sg-open');
     drawer.setAttribute('aria-hidden', 'true');
     document.body.style.overflow = '';
   }
+  window.sgOpenCart = openDrawer;
+  window.sgCloseCart = closeDrawer;
+
+  function updateShipBar(totalPaise) {
+    var totalRupees = Math.floor(totalPaise / 100);
+    var remaining = Math.max(0, SHIP_THRESHOLD - totalRupees);
+    var fill = Math.min(100, Math.floor((totalRupees * 100) / SHIP_THRESHOLD));
+    var fillEl = drawer.querySelector('[data-sg-ship-fill]');
+    var textEl = drawer.querySelector('[data-sg-ship-text]');
+    if (fillEl) fillEl.style.width = fill + '%';
+    if (textEl) {
+      if (remaining > 0) {
+        textEl.textContent = AWAY_TEMPLATE.replace('{{amount}}', remaining);
+      } else {
+        textEl.innerHTML = '<strong>' + UNLOCKED_TEXT + '</strong>';
+      }
+    }
+  }
+
+  function refreshCart() {
+    return fetch('/cart.js')
+      .then(function(r) { return r.json(); })
+      .then(function(cart) {
+        document.querySelectorAll('[data-sg-cart-count]').forEach(function(el) { el.textContent = cart.item_count; });
+        document.querySelectorAll('[data-sg-cart-count-text]').forEach(function(el) { el.textContent = cart.item_count; });
+        updateShipBar(cart.total_price);
+        return cart;
+      });
+  }
 
   document.addEventListener('click', function(e) {
     var opener = e.target.closest('[data-sg-cart-open]');
-    if (opener) { e.preventDefault(); open(); return; }
+    if (opener) { e.preventDefault(); openDrawer(); return; }
+
     var closer = e.target.closest('[data-sg-cart-close]');
-    if (closer) { e.preventDefault(); close(); return; }
-    if (e.target === back) close();
+    if (closer) { e.preventDefault(); closeDrawer(); return; }
+
+    if (e.target === back) closeDrawer();
 
     var atc = e.target.closest('[data-sg-atc]');
     if (atc) {
       var variantId = atc.getAttribute('data-variant-id');
-      if (!variantId) { open(); return; }
+      if (!variantId) { openDrawer(); return; }
       e.preventDefault();
       var originalText = atc.textContent;
-      atc.textContent = 'Adding…';
+      atc.textContent = atc.classList.contains('sg-ucard-add') ? '…' : 'Adding…';
       atc.disabled = true;
       fetch('/cart/add.js', {
         method: 'POST',
@@ -335,17 +495,15 @@
         body: JSON.stringify({ id: variantId, quantity: 1 })
       })
       .then(function(r) { return r.json(); })
-      .then(function() { return fetch('/cart.js').then(function(r) { return r.json(); }); })
-      .then(function(cart) {
-        document.querySelectorAll('[data-sg-cart-count]').forEach(function(el) { el.textContent = cart.item_count; });
-        document.querySelectorAll('[data-sg-cart-count-text]').forEach(function(el) { el.textContent = cart.item_count; });
-        atc.textContent = 'Added ✓';
+      .then(refreshCart)
+      .then(function() {
+        atc.textContent = atc.classList.contains('sg-ucard-add') ? '✓' : 'Added';
         setTimeout(function() {
           atc.textContent = originalText;
           atc.disabled = false;
-          open();
+          openDrawer();
           window.location.reload();
-        }, 500);
+        }, 400);
       })
       .catch(function() {
         atc.textContent = originalText;
@@ -354,13 +512,13 @@
     }
   });
 
-  document.addEventListener('keydown', function(e) { if (e.key === 'Escape') close(); });
+  document.addEventListener('keydown', function(e) { if (e.key === 'Escape') closeDrawer(); });
 
   drawer.addEventListener('click', function(e) {
     var item = e.target.closest('[data-sg-item-key]');
     if (!item) return;
     var key = item.dataset.sgItemKey;
-    var qtyEl = item.querySelector('.sg-cart-item-qty span');
+    var qtyEl = item.querySelector('.sg-citem-qty span');
     var qty = parseInt(qtyEl ? qtyEl.textContent : '1', 10);
     var newQty = qty;
     if (e.target.closest('[data-sg-qty-plus]')) newQty = qty + 1;

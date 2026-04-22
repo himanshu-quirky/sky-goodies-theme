@@ -3,251 +3,320 @@
     "sg_announcement": {
       "type": "sg-announcement",
       "blocks": {
-        "msg-1": { "type": "message", "settings": { "text": "<p>Free Shipping over <strong>₹1,000</strong> · Easy Returns</p>" } },
-        "msg-2": { "type": "message", "settings": { "text": "<p>Save ₹50 on <strong>Prepaid Orders</strong> · Code PREPAID50</p>" } },
-        "msg-3": { "type": "message", "settings": { "text": "<p><strong>COD</strong> available across India · Ships in 24 hrs</p>" } },
-        "msg-4": { "type": "message", "settings": { "text": "<p>🎂 Birthday &amp; wedding-gift kits ready to ship</p>" } }
+        "link-1": { "type": "link", "settings": { "label": "Track Order" } },
+        "link-2": { "type": "link", "settings": { "label": "Log in" } },
+        "link-3": { "type": "link", "settings": { "label": "WhatsApp" } }
       },
-      "block_order": ["msg-1", "msg-2", "msg-3", "msg-4"],
+      "block_order": ["link-1", "link-2", "link-3"],
       "settings": {
-        "bg_color": "#F2EADB",
+        "show_icon": true,
+        "icon": "✿",
+        "message": "Shopping for Mom?",
+        "link_text": "Order by May 8 for Mother's Day delivery",
+        "bg_color": "#FCEEE6",
         "text_color": "#D26939",
-        "autoplay": true,
-        "speed": 4500,
-        "vertical_padding": 10,
-        "font_size": 13
+        "border_color": "#F8DCCA",
+        "vertical_padding": 9,
+        "font_size": 12
+      }
+    },
+    "sg_header": {
+      "type": "sg-header-mega",
+      "blocks": {
+        "feat-1": {
+          "type": "mega_feature",
+          "settings": {
+            "menu_label": "Paper Kits",
+            "tag": "bestseller",
+            "title": "Endangered Animals BOX SET"
+          }
+        },
+        "feat-2": {
+          "type": "mega_feature",
+          "settings": {
+            "menu_label": "Paper Kits",
+            "tag": "just in",
+            "title": "Paper Fairy Lights"
+          }
+        },
+        "feat-3": {
+          "type": "mega_feature",
+          "settings": {
+            "menu_label": "Home Décor",
+            "tag": "trending",
+            "title": "Hot Air Balloon Lights"
+          }
+        },
+        "feat-4": {
+          "type": "mega_feature",
+          "settings": {
+            "menu_label": "Gifts",
+            "tag": "new guide",
+            "title": "Birthday Gift Edit"
+          }
+        }
+      },
+      "block_order": ["feat-1", "feat-2", "feat-3", "feat-4"],
+      "settings": {
+        "menu": "main-menu",
+        "bg_color": "#FFFFFF",
+        "sticky": true,
+        "show_wishlist": true
       }
     },
     "sg_hero": {
       "type": "sg-hero",
-      "blocks": {
-        "slide-1": {
-          "type": "slide",
-          "settings": {
-            "tag": "⚡ Selling Fast",
-            "tag_bg": "#E8845A",
-            "tag_color": "#FFFFFF",
-            "heading": "Gifting<br>made<br><em>joyful.</em>",
-            "subheading": "Handcrafted paper kits for birthdays, housewarmings & everyday wonder. Designed in Mumbai by NID-trained artists.",
-            "slide_bg": "#D26939",
-            "cta1_text": "Shop Now",
-            "cta1_link": "shopify://collections/all",
-            "cta2_text": "Bestsellers",
-            "cta2_link": "shopify://collections/featured"
-          }
-        },
-        "slide-2": {
-          "type": "slide",
-          "settings": {
-            "tag": "★ Bestsellers",
-            "tag_bg": "#F5CF8A",
-            "tag_color": "#1E1B18",
-            "heading": "Paper,<br>but make it<br><em>magical.</em>",
-            "subheading": "Lamps that glow, birds that flutter, idols that mean something. Every kit assembles without glue or mess.",
-            "slide_bg": "#C17753",
-            "cta1_text": "See lamps",
-            "cta2_text": "All décor"
-          }
-        },
-        "slide-3": {
-          "type": "slide",
-          "settings": {
-            "tag": "🌿 For Little Hands",
-            "tag_bg": "#C8E616",
-            "tag_color": "#1E1B18",
-            "heading": "Screen-free<br>summer<br><em>unlocked.</em>",
-            "subheading": "Endangered animal BOX SETs, mini pets, and more. Age-tested kits for 6-12 year olds, loved by parents.",
-            "slide_bg": "#A27C5C",
-            "cta1_text": "Shop kids",
-            "cta2_text": "Gift ideas"
-          }
-        }
-      },
-      "block_order": ["slide-1", "slide-2", "slide-3"],
       "settings": {
-        "section_bg": "#FAF6F0",
-        "wave_color": "#FAF6F0",
-        "mobile_height": 600,
-        "desktop_height": 700,
-        "autoplay": true,
-        "autoplay_speed": 6000
+        "eyebrow": "Handcrafted in Mumbai",
+        "show_deco": true,
+        "title_line_1": "The Mother's Day",
+        "title_script": "Gift Guide",
+        "sub": "Handcrafted paper kits for the mom who has everything — and the one who just wants a slow afternoon back.",
+        "cta_text": "Shop Now",
+        "stamp_top": "New",
+        "stamp_big": "2026",
+        "stamp_bottom": "Collection",
+        "bg_color": "#F5EFE3",
+        "left_bg": "#E8845A",
+        "left_text": "#FAF6EC",
+        "script_color": "#F0D288",
+        "deco_color": "#F0D288",
+        "mobile_height": 520,
+        "desktop_height": 620
       }
     },
-    "sg_featured_products": {
-      "type": "sg-featured-products",
-      "blocks": {
-        "tab-1": { "type": "tab", "settings": { "label": "Bestsellers" } },
-        "tab-2": { "type": "tab", "settings": { "label": "New Arrivals" } },
-        "tab-3": { "type": "tab", "settings": { "label": "Low Stock" } }
-      },
-      "block_order": ["tab-1", "tab-2", "tab-3"],
-      "settings": {
-        "heading": "Simple Joys, Sorted",
-        "subheading": "For grown-ups who miss making things.",
-        "products_to_show": 4,
-        "view_all_text": "View All 200+ Kits →",
-        "view_all_link": "shopify://collections/all",
-        "bg_color": "#FAF6F0"
-      }
-    },
-    "sg_categories": {
+    "sg_occasions": {
       "type": "sg-categories",
       "blocks": {
-        "tile-1": {
-          "type": "tile",
-          "settings": {
-            "badge": "6–12",
-            "label": "For Little Hands",
-            "card_bg": "#F5CF8A",
-            "label_bg": "#C8E616",
-            "label_color": "#1E1B18"
-          }
-        },
-        "tile-2": {
-          "type": "tile",
-          "settings": {
-            "badge": "13+",
-            "label": "For Grown-ups",
-            "card_bg": "#FCEEE6",
-            "label_bg": "#F5CF8A",
-            "label_color": "#1E1B18"
-          }
-        },
-        "tile-3": {
-          "type": "tile",
-          "settings": {
-            "badge": "BULK",
-            "label": "For Offices & Events",
-            "card_bg": "#F4BBA4",
-            "label_bg": "#E8845A",
-            "label_color": "#FFFFFF"
-          }
-        }
+        "occ-1": { "type": "occasion", "settings": { "label": "Birthdays" } },
+        "occ-2": { "type": "occasion", "settings": { "label": "Housewarming" } },
+        "occ-3": { "type": "occasion", "settings": { "label": "Pooja" } },
+        "occ-4": { "type": "occasion", "settings": { "label": "Kids' Gifts" } },
+        "occ-5": { "type": "occasion", "settings": { "label": "Anniversaries" } },
+        "occ-6": { "type": "occasion", "settings": { "label": "Return Gifts" } },
+        "occ-7": { "type": "occasion", "settings": { "label": "Festive" } },
+        "occ-8": { "type": "occasion", "settings": { "label": "Corporate" } }
       },
-      "block_order": ["tile-1", "tile-2", "tile-3"],
+      "block_order": ["occ-1", "occ-2", "occ-3", "occ-4", "occ-5", "occ-6", "occ-7", "occ-8"],
       "settings": {
-        "heading": "Made for everyone",
-        "subheading": "Sized, priced & styled for every kind of making.",
-        "bg_color": "#FCEEE6",
-        "wave_color": "#FAF6F0"
+        "eyebrow": "Find the right one",
+        "heading_plain": "Shop by",
+        "heading_em": "occasion",
+        "bg_color": "#F5EFE3"
       }
     },
-    "sg_edit_tiles": {
-      "type": "sg-edit-tiles",
+    "sg_fp_calendars": {
+      "type": "sg-featured-products",
+      "settings": {
+        "eyebrow": "2026 is already here",
+        "heading_plain": "The",
+        "heading_em": "Calendar Shop",
+        "products_to_show": 4,
+        "layout": "scroll",
+        "view_all_text": "Shop all calendars",
+        "bg_color": "#F5EFE3"
+      }
+    },
+    "sg_fp_pooja": {
+      "type": "sg-featured-products",
+      "settings": {
+        "eyebrow": "Eco-friendly, zero-plastic",
+        "heading_plain": "The",
+        "heading_em": "Pooja & Festivals Edit",
+        "products_to_show": 4,
+        "layout": "scroll",
+        "view_all_text": "Shop the edit",
+        "bg_color": "#FCEEE6"
+      }
+    },
+    "sg_bestsellers": {
+      "type": "sg-featured-products",
+      "settings": {
+        "eyebrow": "Rated 4.9 by 12,400+ makers",
+        "heading_plain": "Loved by",
+        "heading_em": "the crowd",
+        "products_to_show": 4,
+        "layout": "grid",
+        "show_view_all_button": true,
+        "view_all_text": "Shop All Bestsellers",
+        "bg_color": "#F5EFE3"
+      }
+    },
+    "sg_fp_gifts": {
+      "type": "sg-featured-products",
+      "settings": {
+        "eyebrow": "Small on price, big on joy",
+        "heading_plain": "Gifts",
+        "heading_em": "under ₹500",
+        "products_to_show": 4,
+        "layout": "scroll",
+        "view_all_text": "Shop all gifts",
+        "bg_color": "#EEF3E2"
+      }
+    },
+    "sg_shoppable": {
+      "type": "sg-shoppable-video",
       "blocks": {
-        "edit-1": { "type": "tile", "settings": { "label": "The Pooja Edit", "cta_color": "#E8845A" } },
-        "edit-2": { "type": "tile", "settings": { "label": "Birthday Party Drop", "cta_color": "#D26939" } },
-        "edit-3": { "type": "tile", "settings": { "label": "Home Décor Edit", "cta_color": "#3D3833" } },
-        "edit-4": { "type": "tile", "settings": { "label": "Animal Kingdom", "cta_color": "#C17753" } }
+        "vid-1": { "type": "video", "settings": { "caption": "Unboxing the 12-animal kit", "likes": "2.1K" } },
+        "vid-2": { "type": "video", "settings": { "caption": "A balcony makeover in 10 min", "likes": "1.4K" } },
+        "vid-3": { "type": "video", "settings": { "caption": "Eco-Ganesha · assembly film", "likes": "3.2K" } },
+        "vid-4": { "type": "video", "settings": { "caption": "Setting up a sunflower party", "likes": "892" } },
+        "vid-5": { "type": "video", "settings": { "caption": "From flat paper to tabletop", "likes": "1.9K" } }
       },
-      "block_order": ["edit-1", "edit-2", "edit-3", "edit-4"],
+      "block_order": ["vid-1", "vid-2", "vid-3", "vid-4", "vid-5"],
       "settings": {
-        "heading": "Shop by Edit",
-        "subheading": "Themed drops, curated by our studio.",
-        "bg_color": "#FAF6F0"
+        "eyebrow": "Watch & shop",
+        "heading_plain": "See them",
+        "heading_em": "in action",
+        "bg_color": "#F5EFE3"
       }
     },
-    "sg_certifications": {
-      "type": "sg-certifications",
+    "sg_story": {
+      "type": "sg-brand-story",
       "blocks": {
-        "cert-1": { "type": "cert", "settings": { "icon": "hand", "title": "Made by Hand", "subtitle": "In our Mumbai studio" } },
-        "cert-2": { "type": "cert", "settings": { "icon": "tree", "title": "FSC-certified Paper", "subtitle": "Sustainably sourced" } },
-        "cert-3": { "type": "cert", "settings": { "icon": "leaf", "title": "100% Biodegradable", "subtitle": "Kraft packaging too" } }
+        "stat-1": { "type": "stat", "settings": { "number": "12+", "label": "Years of paper love" } },
+        "stat-2": { "type": "stat", "settings": { "number": "200+", "label": "Original designs" } },
+        "stat-3": { "type": "stat", "settings": { "number": "50K+", "label": "Happy crafters" } }
       },
-      "block_order": ["cert-1", "cert-2", "cert-3"],
+      "block_order": ["stat-1", "stat-2", "stat-3"],
       "settings": {
-        "heading": "Safe. Eco. Ours.",
-        "subheading": "Zero plastic. Zero mass-production. Just paper, care & craft.",
-        "bg_color": "#D9E4C1",
-        "text_color": "#243C26",
-        "stamp_bg": "#E8F0D8",
-        "wave_color": "#FAF6F0"
+        "sticker_text": "★ Since 2013",
+        "eyebrow": "The makers",
+        "heading_line1": "Born on a dining table",
+        "heading_line2_plain": "in",
+        "heading_line2_em": "Khar, Mumbai.",
+        "body_1": "Amit and Misha — both NID-trained designers — started Sky Goodies with a simple belief: paper has the power to pause a hurried day.",
+        "body_2": "Twelve years on, our paper lamps light homes in Tokyo, our calendars hang in Brooklyn kitchens, and every kit is still illustrated by hand, die-cut under one roof, and packed with care.",
+        "cta_text": "Meet the Makers",
+        "bg_color": "#FCEEE6"
       }
     },
-    "sg_testimonials": {
+    "sg_press": {
+      "type": "sg-press-logos",
+      "blocks": {
+        "p-1": { "type": "logo", "settings": { "name": "Vogue", "style": "italic" } },
+        "p-2": { "type": "logo", "settings": { "name": "Elle Decor", "style": "sans" } },
+        "p-3": { "type": "logo", "settings": { "name": "Lonely Planet", "style": "italic" } },
+        "p-4": { "type": "logo", "settings": { "name": "The Hindu", "style": "sans" } },
+        "p-5": { "type": "logo", "settings": { "name": "Verve", "style": "italic" } },
+        "p-6": { "type": "logo", "settings": { "name": "Mid-Day", "style": "sans" } },
+        "p-7": { "type": "logo", "settings": { "name": "Architectural Digest", "style": "italic" } }
+      },
+      "block_order": ["p-1", "p-2", "p-3", "p-4", "p-5", "p-6", "p-7"],
+      "settings": {
+        "label": "As featured in",
+        "bg_color": "#FAF6EC"
+      }
+    },
+    "sg_reviews": {
       "type": "sg-testimonials",
       "blocks": {
-        "rev-1": {
+        "r-1": {
           "type": "review",
           "settings": {
-            "quote": "Three Ganesh Chaturthis later, it's our family tradition. Such a beautiful eco-alternative to plaster idols.",
-            "name": "Rashmi S.",
-            "location": "Pune",
-            "pill_color": "#F5CF8A"
+            "title": "Has made my kitchen feel like a café.",
+            "quote": "I've had the wall calendar up for three months and each month I look forward to flipping the page. Better than any calendar I've paid twice as much for.",
+            "name": "Sanjana P.",
+            "meta": "Pune · May 2026",
+            "verified": true
           }
         },
-        "rev-2": {
+        "r-2": {
           "type": "review",
           "settings": {
-            "quote": "Gifted the hot-air-balloon lamp kit at my sister's housewarming. Everyone asked for the brand. Packaging alone made the evening.",
-            "name": "Arjun M.",
-            "location": "Bengaluru",
-            "pill_color": "#F4BBA4"
+            "title": "Bought five for my team. Legends.",
+            "quote": "Birthday gift for my entire design team. Everyone texted me the next day asking where I got it. Packaging was so thoughtful — felt like unboxing something from Japan.",
+            "name": "Rahul D.",
+            "meta": "Bengaluru · Apr 2026",
+            "verified": true
           }
         },
-        "rev-3": {
+        "r-3": {
           "type": "review",
           "settings": {
-            "quote": "My seven-year-old built the Set of 6 animals with zero help. Hasn't stopped talking about it since.",
+            "title": "My 7-year-old finished it in one afternoon.",
+            "quote": "Clean paper, crisp illustrations, and assembly was intuitive for my daughter. The red panda is now on her study desk. I keep reordering.",
             "name": "Priya K.",
-            "location": "Mumbai",
-            "pill_color": "#C8E616"
+            "meta": "Mumbai · Apr 2026",
+            "verified": true
           }
         }
       },
-      "block_order": ["rev-1", "rev-2", "rev-3"],
+      "block_order": ["r-1", "r-2", "r-3"],
       "settings": {
-        "rating": "4.9 stars",
-        "rating_label": "Loved across India",
-        "heading": "50,000+ Happy Crafters",
-        "subheading": "Don't take our word for it. Hear theirs!",
-        "bg_color": "#FCEEE6",
-        "wave_color": "#D9E4C1"
+        "rating": "4.9",
+        "rating_subtext": "12,400+ verified reviews",
+        "heading_line1": "Real words from",
+        "heading_line2_em": "crafters.",
+        "bg_color": "#F5EFE3"
       }
     },
-    "sg_instagram_feed": {
+    "sg_trust": {
+      "type": "sg-trust-strip",
+      "blocks": {
+        "t-1": { "type": "item", "settings": { "icon": "ship", "title": "Free Shipping", "subtitle": "Orders above ₹1,000" } },
+        "t-2": { "type": "item", "settings": { "icon": "cod", "title": "COD Available", "subtitle": "Across India" } },
+        "t-3": { "type": "item", "settings": { "icon": "return", "title": "Easy Returns", "subtitle": "7-day hassle-free" } },
+        "t-4": { "type": "item", "settings": { "icon": "hand", "title": "Handmade in Mumbai", "subtitle": "By NID-trained artists" } }
+      },
+      "block_order": ["t-1", "t-2", "t-3", "t-4"],
+      "settings": { "bg_color": "#FAF6EC" }
+    },
+    "sg_instagram": {
       "type": "sg-instagram-feed",
       "blocks": {
-        "post-1": { "type": "post", "settings": { "likes": "2.1K" } },
-        "post-2": { "type": "post", "settings": { "likes": "1.4K" } },
-        "post-3": { "type": "post", "settings": { "likes": "3.2K" } },
-        "post-4": { "type": "post", "settings": { "likes": "892" } },
-        "post-5": { "type": "post", "settings": { "likes": "1.9K" } },
-        "post-6": { "type": "post", "settings": { "likes": "724" } }
+        "ig-1": { "type": "post" },
+        "ig-2": { "type": "post" },
+        "ig-3": { "type": "post" },
+        "ig-4": { "type": "post" },
+        "ig-5": { "type": "post" },
+        "ig-6": { "type": "post" }
       },
-      "block_order": ["post-1", "post-2", "post-3", "post-4", "post-5", "post-6"],
+      "block_order": ["ig-1", "ig-2", "ig-3", "ig-4", "ig-5", "ig-6"],
       "settings": {
-        "heading": "Spotted in the Wild",
-        "subheading": "Tag @skygoodies to be featured.",
+        "eyebrow": "In the wild",
+        "heading_line1": "Tag us and you might make",
+        "heading_line2_em": "Instagram.",
         "handle": "@skygoodies.co",
+        "follower_count": "87K+",
         "ig_url": "https://instagram.com/skygoodies.co",
-        "bg_color": "#FAF6F0",
-        "wave_color": "#FCEEE6"
+        "bg_color": "#F5EFE3"
       }
     },
-    "sg_newsletter": {
-      "type": "sg-newsletter",
+    "sg_footer": {
+      "type": "sg-footer",
+      "blocks": {
+        "col-1": { "type": "column", "settings": { "heading": "Shop" } },
+        "col-2": { "type": "column", "settings": { "heading": "Help", "whatsapp_url": "https://wa.me/919768888688" } },
+        "col-3": { "type": "column", "settings": { "heading": "Sky Goodies" } }
+      },
+      "block_order": ["col-1", "col-2", "col-3"],
       "settings": {
-        "heading": "Get 10% off your first order",
-        "subheading": "Join the crafting letter. Slow emails, pretty papers, early access to drops.",
-        "placeholder": "your@email.com",
-        "cta_text": "Get my code",
-        "bg_color": "#3D3833",
-        "text_color": "#FFFFFF",
-        "accent_color_1": "#E8845A",
-        "accent_color_2": "#C8E616"
+        "tagline": "Simple joys in a complex world :)",
+        "description": "Handcrafted paper kits, designed in our Khar, Mumbai studio by NID-trained artists. Since 2013.",
+        "copyright": "© 2026 Sky Goodies Products Pvt Ltd · Handcrafted in Mumbai 🇮🇳",
+        "bottom_right": "Free shipping over ₹1,000 · COD available",
+        "bg_color": "#4A3D2F",
+        "text_color": "#F5EFE3",
+        "accent_color": "#F0D288"
       }
     }
   },
   "order": [
     "sg_announcement",
+    "sg_header",
     "sg_hero",
-    "sg_featured_products",
-    "sg_categories",
-    "sg_edit_tiles",
-    "sg_certifications",
-    "sg_testimonials",
-    "sg_instagram_feed",
-    "sg_newsletter"
+    "sg_occasions",
+    "sg_fp_calendars",
+    "sg_fp_pooja",
+    "sg_bestsellers",
+    "sg_fp_gifts",
+    "sg_shoppable",
+    "sg_story",
+    "sg_press",
+    "sg_reviews",
+    "sg_trust",
+    "sg_instagram",
+    "sg_footer"
   ]
 }

@@ -1,40 +1,6 @@
 {
   "name": "Footer",
   "type": "footer",
-  "sections": {
-    "skygoodies_footer": {
-      "type": "skygoodies-footer",
-      "blocks": {
-        "menu_shop": {
-          "type": "menu",
-          "settings": {
-            "title": "Shop"
-          }
-        },
-        "menu_help": {
-          "type": "menu",
-          "settings": {
-            "title": "Help"
-          }
-        },
-        "menu_company": {
-          "type": "menu",
-          "settings": {
-            "title": "Company"
-          }
-        }
-      },
-      "block_order": [
-        "menu_shop",
-        "menu_help",
-        "menu_company"
-      ],
-      "settings": {
-        "text": "Simple joys in a complex world. Beautiful paper craft kits, playful decor, and feel-good gifts — all made in India with eco-friendly materials."
-      }
-    }
-  },
-  "order": [
-    "skygoodies_footer"
-  ]
+  "sections": {},
+  "order": []
 }

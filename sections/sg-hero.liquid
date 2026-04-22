@@ -1,391 +1,215 @@
 {{ 'sg-theme.css' | asset_url | stylesheet_tag }}
 
 {%- style -%}
-  .sg-hero-{{ section.id }} {
-    background: {{ section.settings.section_bg }};
+  .sg-hero-{{ section.id }} { background: {{ section.settings.bg_color | default: '#F5EFE3' }}; }
+  .sg-hero-{{ section.id }} .sg-hero-left {
+    background: {{ section.settings.left_bg | default: '#E8845A' }};
+    color: {{ section.settings.left_text | default: '#FAF6EC' }};
+    min-height: {{ section.settings.mobile_height | default: 520 }}px;
   }
-  .sg-hero-{{ section.id }} .sg-hero-section {
-    min-height: {{ section.settings.mobile_height }}px;
+  .sg-hero-{{ section.id }} .sg-hero-title,
+  .sg-hero-{{ section.id }} .sg-hero-eyebrow,
+  .sg-hero-{{ section.id }} .sg-hero-sub,
+  .sg-hero-{{ section.id }} .sg-hero-cta {
+    color: {{ section.settings.left_text | default: '#FAF6EC' }};
   }
+  .sg-hero-{{ section.id }} .sg-hero-cta { border-bottom-color: {{ section.settings.left_text | default: '#FAF6EC' }}; }
+  .sg-hero-{{ section.id }} .sg-hero-title .script { color: {{ section.settings.script_color | default: '#F0D288' }}; }
+  .sg-hero-{{ section.id }} .sg-hero-deco svg { fill: {{ section.settings.deco_color | default: '#F0D288' }}; }
   @media (min-width: 900px) {
-    .sg-hero-{{ section.id }} .sg-hero-section {
-      min-height: {{ section.settings.desktop_height }}px;
-    }
+    .sg-hero-{{ section.id }} .sg-hero-left { min-height: {{ section.settings.desktop_height | default: 620 }}px; }
   }
 {%- endstyle -%}
 
-<div class="sg-root sg-hero-wrapper sg-hero-{{ section.id }}" data-sg-hero="{{ section.id }}" {{ section.shopify_attributes }}>
-  <section class="sg-hero-section" aria-roledescription="carousel">
-    <div class="sg-hero-slides" data-slides>
-      {%- for block in section.blocks -%}
-        {%- assign theme_bg = block.settings.slide_bg | default: '#D26939' -%}
-        {%- assign slide_img = block.settings.image -%}
-        <div class="sg-hero-slide{% if forloop.first %} is-active first{% endif %}"
-             data-slide="{{ forloop.index0 }}"
-             style="background: {{ theme_bg }};"
-             {{ block.shopify_attributes }}>
-          <div class="sg-hero-content">
-            {%- if block.settings.tag != blank -%}
-              <span class="sg-hero-tag" style="background: {{ block.settings.tag_bg }}; color: {{ block.settings.tag_color }};">{{ block.settings.tag }}</span>
-            {%- endif -%}
-            {%- if block.settings.heading != blank -%}
-              <h1 class="sg-hero-title">{{ block.settings.heading }}</h1>
-            {%- endif -%}
-            {%- if block.settings.subheading != blank -%}
-              <p class="sg-hero-sub">{{ block.settings.subheading }}</p>
-            {%- endif -%}
-            <div class="sg-hero-ctas">
-              {%- if block.settings.cta1_text != blank -%}
-                <a href="{{ block.settings.cta1_link | default: '#' }}" class="sg-pill sg-pill--lime sg-pill--lg">{{ block.settings.cta1_text }}</a>
-              {%- endif -%}
-              {%- if block.settings.cta2_text != blank -%}
-                <a href="{{ block.settings.cta2_link | default: '#' }}" class="sg-pill sg-pill--white sg-pill--lg">{{ block.settings.cta2_text }}</a>
-              {%- endif -%}
-            </div>
-          </div>
-          <div class="sg-hero-image"
-               {% if slide_img %}style="background-image: url('{{ slide_img | image_url: width: 1400 }}');"{% endif %}>
-          </div>
+<section class="sg-root sg-hero-{{ section.id }}" {{ section.shopify_attributes }}>
+  <div class="sg-hero-grid">
+    <div class="sg-hero-left">
+      {%- if section.settings.eyebrow != blank -%}
+        <span class="sg-hero-eyebrow">— {{ section.settings.eyebrow }} —</span>
+      {%- endif -%}
+      {%- if section.settings.show_deco -%}
+        <div class="sg-hero-deco">
+          <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 2 L14 9 L22 9 L15.5 14 L18 22 L12 17 L6 22 L8.5 14 L2 9 L10 9 Z"/></svg>
+          <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 2 L14 9 L22 9 L15.5 14 L18 22 L12 17 L6 22 L8.5 14 L2 9 L10 9 Z"/></svg>
         </div>
-      {%- endfor -%}
+      {%- endif -%}
+      <h1 class="sg-hero-title">
+        {{ section.settings.title_line_1 }}
+        {%- if section.settings.title_script != blank -%}
+          <span class="script">{{ section.settings.title_script }}</span>
+        {%- endif -%}
+      </h1>
+      {%- if section.settings.sub != blank -%}
+        <p class="sg-hero-sub">{{ section.settings.sub }}</p>
+      {%- endif -%}
+      {%- if section.settings.cta_text != blank -%}
+        <a href="{{ section.settings.cta_link | default: '#' }}" class="sg-hero-cta">{{ section.settings.cta_text }}&nbsp;→</a>
+      {%- endif -%}
     </div>
-
-    {%- if section.blocks.size > 1 -%}
-      <div class="sg-hero-controls">
-        <button class="sg-hero-arrow" data-dir="prev" aria-label="Previous slide">
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="15 18 9 12 15 6"/></svg>
-        </button>
-        <div class="sg-hero-dots" role="tablist">
-          {%- for block in section.blocks -%}
-            <button class="sg-hero-dot{% if forloop.first %} active{% endif %}" data-dot="{{ forloop.index0 }}" aria-label="Slide {{ forloop.index }}"></button>
-          {%- endfor -%}
+    <div class="sg-hero-right"
+         {% if section.settings.image %}style="background-image: url('{{ section.settings.image | image_url: width: 1400 }}');"{% endif %}>
+      {%- if section.settings.stamp_bottom != blank or section.settings.stamp_big != blank -%}
+        <div class="sg-hero-stamp">
+          {{ section.settings.stamp_top | default: 'New' }}
+          <strong>{{ section.settings.stamp_big | default: '2026' }}</strong>
+          {{ section.settings.stamp_bottom | default: 'Collection' }}
         </div>
-        <button class="sg-hero-arrow" data-dir="next" aria-label="Next slide">
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="9 18 15 12 9 6"/></svg>
-        </button>
-      </div>
-    {%- endif -%}
-
-    <div class="sg-hero-wave" aria-hidden="true" style="background: {{ section.settings.wave_color | default: '#FAF6F0' }};"></div>
-  </section>
-</div>
+      {%- endif -%}
+    </div>
+  </div>
+</section>
 
 <style>
-.sg-hero-wrapper { position: relative; overflow: hidden; }
-.sg-hero-section { position: relative; }
-.sg-hero-slides { position: relative; }
-.sg-hero-slide {
-  position: absolute;
-  inset: 0;
+.sg-hero-grid {
   display: grid;
   grid-template-columns: 1fr;
-  opacity: 0;
-  pointer-events: none;
-  transition: opacity .8s var(--sg-ease);
+  min-height: 520px;
 }
-.sg-hero-slide.first { position: relative; inset: auto; }
-.sg-hero-slide.is-active { opacity: 1; pointer-events: auto; position: relative; inset: auto; }
-.sg-hero-slide.first:not(.is-active) { position: absolute; inset: 0; opacity: 0; }
-@media (min-width: 900px) { .sg-hero-slide { grid-template-columns: 1fr 1fr; } }
+@media (min-width: 900px) { .sg-hero-grid { grid-template-columns: 1fr 1fr; min-height: 620px; } }
 
-.sg-hero-content {
-  padding: 48px var(--sg-gutter) 120px;
+.sg-hero-left {
   display: flex;
   flex-direction: column;
   justify-content: center;
-  color: #fff;
-  position: relative;
-  z-index: 2;
-  max-width: 720px;
-}
-@media (min-width: 900px) { .sg-hero-content { padding: 80px 40px 80px 60px; } }
-
-.sg-hero-tag {
-  display: inline-flex;
   align-items: center;
-  gap: 6px;
-  padding: 10px 18px;
-  border-radius: 999px;
-  font-weight: 800;
-  font-size: 14px;
-  letter-spacing: 0.04em;
-  margin-bottom: 20px;
-  border: 2px solid var(--sg-ink);
-  box-shadow: 4px 4px 0 var(--sg-ink);
-  align-self: flex-start;
-  text-transform: uppercase;
+  padding: 60px 32px;
+  text-align: center;
+  position: relative;
+  background-image:
+    radial-gradient(circle at 15% 25%, rgba(255,253,248,0.08), transparent 40%),
+    radial-gradient(circle at 85% 75%, rgba(255,253,248,0.05), transparent 40%);
 }
+.sg-hero-eyebrow {
+  font-family: var(--sg-sans);
+  font-size: 11px;
+  font-weight: 600;
+  letter-spacing: 0.24em;
+  text-transform: uppercase;
+  opacity: 0.85;
+  margin-bottom: 24px;
+}
+.sg-hero-deco {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin-bottom: 4px;
+}
+.sg-hero-deco svg { width: 22px; height: 22px; }
 .sg-hero-title {
   font-family: var(--sg-display);
-  font-weight: 900;
-  font-size: clamp(48px, 9vw, 120px);
-  line-height: 0.88;
-  color: #fff;
-  margin: 0 0 20px;
-  letter-spacing: -0.04em;
-}
-.sg-hero-title em {
   font-style: italic;
   font-weight: 400;
-  color: var(--sg-cream);
+  font-size: clamp(42px, 6vw, 86px);
+  line-height: 0.96;
+  letter-spacing: -0.015em;
+  margin-bottom: 20px;
+  max-width: 540px;
+}
+.sg-hero-title .script {
+  font-family: var(--sg-script);
+  font-weight: 600;
+  font-style: normal;
+  font-size: clamp(58px, 8.2vw, 124px);
+  display: block;
+  margin: -6px 0 -4px;
+  line-height: 0.9;
+  transform: rotate(-2deg);
 }
 .sg-hero-sub {
-  font-size: 17px;
-  color: rgba(255,255,255,.88);
-  max-width: 440px;
-  margin: 0 0 32px;
-  font-weight: 500;
-  line-height: 1.5;
+  font-family: var(--sg-sans);
+  font-size: 15px;
+  opacity: 0.9;
+  max-width: 380px;
+  line-height: 1.55;
+  margin-bottom: 30px;
 }
-.sg-hero-ctas { display: flex; gap: 12px; flex-wrap: wrap; }
+.sg-hero-cta {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  padding: 14px 0;
+  font-size: 12px;
+  font-weight: 700;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  border-bottom: 1.5px solid currentColor;
+  padding-bottom: 6px;
+  transition: all .2s;
+}
+.sg-hero-cta:hover { gap: 14px; }
 
-.sg-hero-image {
-  position: relative;
-  min-height: 320px;
+.sg-hero-right {
   background-size: cover;
   background-position: center;
+  background-color: var(--sg-paper-2);
+  min-height: 340px;
+  position: relative;
 }
-@media (min-width: 900px) { .sg-hero-image { min-height: inherit; } }
-
-.sg-hero-controls {
+.sg-hero-stamp {
   position: absolute;
-  bottom: 28px; left: 50%;
-  transform: translateX(-50%);
-  z-index: 5;
-  display: flex;
-  align-items: center;
-  gap: 14px;
-}
-.sg-hero-arrow {
-  width: 44px; height: 44px;
+  bottom: 28px; left: 28px;
+  width: 120px; height: 120px;
   border-radius: 50%;
-  background: var(--sg-white);
-  border: 2px solid var(--sg-ink);
-  color: var(--sg-ink);
+  background: var(--sg-ivory);
   display: flex;
+  flex-direction: column;
   align-items: center;
   justify-content: center;
-  transition: all .15s;
+  text-align: center;
+  font-family: var(--sg-display);
+  font-style: italic;
+  font-size: 11px;
+  color: var(--sg-ink);
+  line-height: 1.15;
+  box-shadow: var(--sg-shadow);
+  transform: rotate(-6deg);
+  border: 1px solid var(--sg-line);
 }
-.sg-hero-arrow:hover { transform: translateY(-2px); box-shadow: 0 4px 0 var(--sg-ink); }
-.sg-hero-arrow svg { width: 18px; height: 18px; }
-.sg-hero-dots { display: flex; gap: 6px; }
-.sg-hero-dot {
-  width: 10px; height: 10px;
-  border-radius: 50%;
-  background: rgba(255,255,255,.5);
-  border: 2px solid var(--sg-ink);
-  transition: all .2s;
-  cursor: pointer;
+.sg-hero-stamp strong {
+  display: block;
+  font-style: normal;
+  font-weight: 500;
+  font-size: 17px;
+  color: var(--sg-orange-dk);
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  margin: 3px 0 1px;
+  font-family: var(--sg-display);
 }
-.sg-hero-dot.active { background: var(--sg-lime); width: 28px; border-radius: 999px; }
-
-.sg-hero-wave {
-  position: absolute;
-  bottom: -1px; left: 0; right: 0;
-  z-index: 3;
-  height: 80px;
-  clip-path: ellipse(70% 100% at 50% 100%);
-}
-@media (min-width: 768px) {
-  .sg-hero-wave { height: 110px; clip-path: ellipse(100% 100% at 50% 100%); }
-}
+@media (min-width: 768px) { .sg-hero-stamp { width: 140px; height: 140px; } }
 </style>
-
-<script>
-(function() {
-  var root = document.querySelector('.sg-hero-{{ section.id }}');
-  if (!root) return;
-  var slides = root.querySelectorAll('.sg-hero-slide');
-  var dots = root.querySelectorAll('.sg-hero-dot');
-  var idx = 0;
-  var timer;
-  function go(n) {
-    idx = (n + slides.length) % slides.length;
-    slides.forEach(function(s, i) { s.classList.toggle('is-active', i === idx); });
-    dots.forEach(function(d, i) { d.classList.toggle('active', i === idx); });
-    reset();
-  }
-  function next() { go(idx + 1); }
-  function prev() { go(idx - 1); }
-  function reset() { clearInterval(timer); {% if section.settings.autoplay %}timer = setInterval(next, {{ section.settings.autoplay_speed | default: 6000 }});{% endif %} }
-  root.querySelectorAll('[data-dir="next"]').forEach(function(b) { b.addEventListener('click', next); });
-  root.querySelectorAll('[data-dir="prev"]').forEach(function(b) { b.addEventListener('click', prev); });
-  dots.forEach(function(d) { d.addEventListener('click', function() { go(parseInt(d.dataset.dot, 10)); }); });
-  reset();
-  root.addEventListener('mouseenter', function() { clearInterval(timer); });
-  root.addEventListener('mouseleave', reset);
-})();
-</script>
 
 {% schema %}
 {
-  "name": "SG — Hero Slideshow",
+  "name": "SG — Hero (full-width)",
   "tag": "section",
   "class": "section-sg-hero",
   "settings": [
-    {
-      "type": "header",
-      "content": "Layout"
-    },
-    {
-      "type": "color",
-      "id": "section_bg",
-      "label": "Fallback background",
-      "default": "#FAF6F0"
-    },
-    {
-      "type": "color",
-      "id": "wave_color",
-      "label": "Wave color (should match the section that follows)",
-      "default": "#FAF6F0"
-    },
-    {
-      "type": "number",
-      "id": "mobile_height",
-      "label": "Mobile minimum height (px)",
-      "default": 600
-    },
-    {
-      "type": "number",
-      "id": "desktop_height",
-      "label": "Desktop minimum height (px)",
-      "default": 700
-    },
-    {
-      "type": "header",
-      "content": "Autoplay"
-    },
-    {
-      "type": "checkbox",
-      "id": "autoplay",
-      "label": "Auto-advance slides",
-      "default": true
-    },
-    {
-      "type": "range",
-      "id": "autoplay_speed",
-      "label": "Auto-advance interval (ms)",
-      "min": 3000,
-      "max": 10000,
-      "step": 500,
-      "default": 6000
-    }
-  ],
-  "blocks": [
-    {
-      "type": "slide",
-      "name": "Slide",
-      "settings": [
-        {
-          "type": "text",
-          "id": "tag",
-          "label": "Tag / badge text",
-          "default": "⚡ Selling Fast"
-        },
-        {
-          "type": "color",
-          "id": "tag_bg",
-          "label": "Tag background",
-          "default": "#E8845A"
-        },
-        {
-          "type": "color",
-          "id": "tag_color",
-          "label": "Tag text color",
-          "default": "#FFFFFF"
-        },
-        {
-          "type": "text",
-          "id": "heading",
-          "label": "Headline (use <em>word</em> to italicise)",
-          "default": "Gifting<br>made<br><em>joyful.</em>"
-        },
-        {
-          "type": "textarea",
-          "id": "subheading",
-          "label": "Subheading",
-          "default": "Handcrafted paper kits for birthdays, housewarmings & everyday wonder."
-        },
-        {
-          "type": "color",
-          "id": "slide_bg",
-          "label": "Slide background color",
-          "default": "#D26939"
-        },
-        {
-          "type": "image_picker",
-          "id": "image",
-          "label": "Slide image (right side)"
-        },
-        {
-          "type": "text",
-          "id": "cta1_text",
-          "label": "Primary CTA text",
-          "default": "Shop Now"
-        },
-        {
-          "type": "url",
-          "id": "cta1_link",
-          "label": "Primary CTA link"
-        },
-        {
-          "type": "text",
-          "id": "cta2_text",
-          "label": "Secondary CTA text",
-          "default": "Bestsellers"
-        },
-        {
-          "type": "url",
-          "id": "cta2_link",
-          "label": "Secondary CTA link"
-        }
-      ]
-    }
+    { "type": "header", "content": "Left panel — text" },
+    { "type": "text", "id": "eyebrow", "label": "Eyebrow", "default": "Handcrafted in Mumbai" },
+    { "type": "checkbox", "id": "show_deco", "label": "Show decorative stars", "default": true },
+    { "type": "text", "id": "title_line_1", "label": "Title (regular)", "default": "The Mother's Day" },
+    { "type": "text", "id": "title_script", "label": "Title (script second line)", "default": "Gift Guide" },
+    { "type": "textarea", "id": "sub", "label": "Subheading", "default": "Handcrafted paper kits for the mom who has everything — and the one who just wants a slow afternoon back." },
+    { "type": "text", "id": "cta_text", "label": "CTA text", "default": "Shop Now" },
+    { "type": "url", "id": "cta_link", "label": "CTA link" },
+    { "type": "header", "content": "Right panel — image" },
+    { "type": "image_picker", "id": "image", "label": "Hero image" },
+    { "type": "text", "id": "stamp_top", "label": "Stamp top text", "default": "New" },
+    { "type": "text", "id": "stamp_big", "label": "Stamp big (center)", "default": "2026" },
+    { "type": "text", "id": "stamp_bottom", "label": "Stamp bottom text", "default": "Collection" },
+    { "type": "header", "content": "Colors" },
+    { "type": "color", "id": "bg_color", "label": "Overall background", "default": "#F5EFE3" },
+    { "type": "color", "id": "left_bg", "label": "Left panel background", "default": "#E8845A" },
+    { "type": "color", "id": "left_text", "label": "Left panel text", "default": "#FAF6EC" },
+    { "type": "color", "id": "script_color", "label": "Script word color", "default": "#F0D288" },
+    { "type": "color", "id": "deco_color", "label": "Decorative stars color", "default": "#F0D288" },
+    { "type": "header", "content": "Sizing" },
+    { "type": "range", "id": "mobile_height", "label": "Mobile minimum height (px)", "min": 400, "max": 800, "step": 20, "default": 520 },
+    { "type": "range", "id": "desktop_height", "label": "Desktop minimum height (px)", "min": 400, "max": 900, "step": 20, "default": 620 }
   ],
   "presets": [
-    {
-      "name": "SG — Hero Slideshow",
-      "blocks": [
-        {
-          "type": "slide",
-          "settings": {
-            "tag": "⚡ Selling Fast",
-            "heading": "Gifting<br>made<br><em>joyful.</em>",
-            "subheading": "Handcrafted paper kits for birthdays, housewarmings & everyday wonder.",
-            "slide_bg": "#D26939",
-            "cta1_text": "Shop Now",
-            "cta2_text": "Bestsellers"
-          }
-        },
-        {
-          "type": "slide",
-          "settings": {
-            "tag": "★ Bestsellers",
-            "tag_bg": "#F5CF8A",
-            "tag_color": "#1E1B18",
-            "heading": "Paper,<br>but make it<br><em>magical.</em>",
-            "subheading": "Lamps that glow, birds that flutter, idols that mean something.",
-            "slide_bg": "#C17753",
-            "cta1_text": "See lamps",
-            "cta2_text": "All décor"
-          }
-        },
-        {
-          "type": "slide",
-          "settings": {
-            "tag": "🌿 For Little Hands",
-            "tag_bg": "#C8E616",
-            "tag_color": "#1E1B18",
-            "heading": "Screen-free<br>summer<br><em>unlocked.</em>",
-            "subheading": "Endangered animal BOX SETs, mini pets, and more.",
-            "slide_bg": "#A27C5C",
-            "cta1_text": "Shop kids",
-            "cta2_text": "Gift ideas"
-          }
-        }
-      ]
-    }
+    { "name": "SG — Hero (full-width)" }
   ]
 }
 {% endschema %}

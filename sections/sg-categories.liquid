@@ -2,144 +2,140 @@
 
 {%- style -%}
   .sg-occ-{{ section.id }} {
-    background: {{ section.settings.bg_color }};
-    padding: 80px 0;
-    position: relative;
-    overflow: hidden;
+    background: {{ section.settings.bg_color | default: '#F5EFE3' }};
+    padding: {{ section.settings.mobile_padding | default: 48 }}px 0 {{ section.settings.mobile_padding_bottom | default: 24 }}px;
   }
-  .sg-occ-{{ section.id }}::before,
-  .sg-occ-{{ section.id }}::after {
-    content: '';
-    position: absolute;
-    left: 0; right: 0;
-    height: 80px;
-    background: {{ section.settings.wave_color | default: '#FAF6F0' }};
-    z-index: 1;
+  @media (min-width: 900px) {
+    .sg-occ-{{ section.id }} {
+      padding: {{ section.settings.desktop_padding | default: 72 }}px 0 {{ section.settings.desktop_padding_bottom | default: 40 }}px;
+    }
   }
-  .sg-occ-{{ section.id }}::before { top: -1px; clip-path: ellipse(70% 100% at 50% 0%); }
-  .sg-occ-{{ section.id }}::after { bottom: -1px; clip-path: ellipse(70% 100% at 50% 100%); }
-  @media (min-width: 768px) {
-    .sg-occ-{{ section.id }}::before { height: 110px; clip-path: ellipse(100% 100% at 50% 0%); }
-    .sg-occ-{{ section.id }}::after { height: 110px; clip-path: ellipse(100% 100% at 50% 100%); }
-  }
-  .sg-occ-{{ section.id }} .sg-wrap { position: relative; z-index: 2; }
 {%- endstyle -%}
 
 <section class="sg-root sg-occ-{{ section.id }}" {{ section.shopify_attributes }}>
-  <div class="sg-wrap">
-    <div class="sg-section-head">
-      {%- if section.settings.eyebrow != blank -%}
-        <span class="sg-eyebrow">{{ section.settings.eyebrow }}</span>
-      {%- endif -%}
-      <h2>{{ section.settings.heading | default: 'Made for everyone' }}</h2>
-      {%- if section.settings.subheading != blank -%}
-        <p class="sub">{{ section.settings.subheading }}</p>
-      {%- endif -%}
-    </div>
+  <div class="sg-occ-head">
+    {%- if section.settings.eyebrow != blank -%}
+      <span class="eyebrow">— {{ section.settings.eyebrow }} —</span>
+    {%- endif -%}
+    <h2>{{ section.settings.heading_plain | default: 'Shop by' }} <em>{{ section.settings.heading_em | default: 'occasion' }}</em></h2>
+  </div>
 
-    <div class="sg-occ-grid">
-      {%- for block in section.blocks -%}
-        <a class="sg-occ-card"
-           href="{{ block.settings.link | default: '#' }}"
-           style="background: {{ block.settings.card_bg | default: '#F5CF8A' }};"
-           {{ block.shopify_attributes }}>
-          <div class="sg-occ-card-img"
-               {% if block.settings.image %}style="background-image: url('{{ block.settings.image | image_url: width: 800 }}');"{% endif %}>
-            {%- if block.settings.badge != blank -%}
-              <div class="sg-age-blob">{{ block.settings.badge }}</div>
-            {%- endif -%}
-          </div>
-          <div class="sg-occ-label" style="background: {{ block.settings.label_bg | default: '#C8E616' }}; color: {{ block.settings.label_color | default: '#1E1B18' }};">
-            {{ block.settings.label | default: 'Shop' }}
-          </div>
-        </a>
-      {%- endfor -%}
-    </div>
+  <div class="sg-occ-scroll">
+    {%- for block in section.blocks -%}
+      <a class="sg-occ-item" href="{{ block.settings.link | default: '#' }}" {{ block.shopify_attributes }}>
+        <div class="sg-occ-circle"
+             {% if block.settings.image %}style="background-image: url('{{ block.settings.image | image_url: width: 400 }}');"{% endif %}></div>
+        <div class="sg-occ-label">{{ block.settings.label | default: 'Category' }}</div>
+      </a>
+    {%- endfor -%}
   </div>
 </section>
 
 <style>
-.sg-occ-grid {
-  display: grid;
-  grid-template-columns: 1fr;
-  gap: 18px;
+.sg-occ-head { text-align: center; margin-bottom: 32px; }
+.sg-occ-head .eyebrow {
+  font-family: var(--sg-sans);
+  font-size: 11px;
+  font-weight: 600;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  color: var(--sg-muted);
+  margin-bottom: 10px;
+  display: block;
 }
-@media (min-width: 768px) { .sg-occ-grid { grid-template-columns: repeat({{ section.blocks.size | default: 3 }}, 1fr); gap: 22px; } }
-.sg-occ-card {
-  border: 2px solid var(--sg-ink);
-  border-radius: 26px;
-  overflow: hidden;
+.sg-occ-head h2 {
+  font-family: var(--sg-display);
+  font-style: italic;
+  font-weight: 400;
+  font-size: clamp(26px, 3vw, 36px);
+  color: var(--sg-ink);
+  letter-spacing: -0.015em;
+}
+.sg-occ-head h2 em { font-style: normal; font-weight: 500; color: var(--sg-orange-dk); }
+
+.sg-occ-scroll {
   display: flex;
-  flex-direction: column;
-  transition: transform .2s, box-shadow .2s;
-  color: inherit;
-  text-decoration: none;
+  gap: 18px;
+  overflow-x: auto;
+  scrollbar-width: none;
+  padding: 4px var(--sg-gutter) 12px;
+  max-width: var(--sg-container);
+  margin: 0 auto;
+  scroll-snap-type: x mandatory;
 }
-.sg-occ-card:hover { transform: translateY(-4px); box-shadow: 6px 6px 0 var(--sg-ink); }
-.sg-occ-card-img {
-  aspect-ratio: 4/5;
+.sg-occ-scroll::-webkit-scrollbar { display: none; }
+@media (min-width: 1100px) { .sg-occ-scroll { gap: 26px; justify-content: center; overflow-x: visible; } }
+.sg-occ-item {
+  flex: 0 0 auto;
+  text-align: center;
+  transition: transform .2s;
+  scroll-snap-align: center;
+}
+.sg-occ-item:hover { transform: translateY(-4px); }
+.sg-occ-circle {
+  width: 108px; height: 108px;
+  border-radius: 50%;
   background-size: cover;
   background-position: center;
-  position: relative;
+  background-color: var(--sg-peach);
+  margin-bottom: 10px;
+  border: 3px solid var(--sg-paper-soft);
+  transition: border-color .2s;
+  overflow: hidden;
 }
-.sg-age-blob {
-  position: absolute;
-  top: 20px; left: 20px;
-  background: var(--sg-white);
-  border: 2px solid var(--sg-ink);
-  padding: 14px 22px;
-  font-family: var(--sg-display);
-  font-weight: 900;
-  font-size: 28px;
-  color: var(--sg-forest);
-  border-radius: 999px 999px 999px 24px;
-  line-height: 1;
-}
+.sg-occ-item:hover .sg-occ-circle { border-color: var(--sg-orange-soft); }
+@media (min-width: 768px) { .sg-occ-circle { width: 128px; height: 128px; } }
 .sg-occ-label {
-  text-align: center;
-  padding: 18px;
   font-family: var(--sg-display);
-  font-weight: 900;
-  font-size: 26px;
-  border-top: 2px solid var(--sg-ink);
+  font-style: italic;
+  font-weight: 400;
+  font-size: 16px;
+  color: var(--sg-ink);
+  max-width: 128px;
+  margin: 0 auto;
+  line-height: 1.2;
 }
 </style>
 
 {% schema %}
 {
-  "name": "SG — Occasion Tiles",
+  "name": "SG — Occasion Circles",
   "tag": "section",
   "class": "section-sg-categories",
   "settings": [
-    { "type": "text", "id": "eyebrow", "label": "Eyebrow" },
-    { "type": "text", "id": "heading", "label": "Heading", "default": "Made for everyone" },
-    { "type": "text", "id": "subheading", "label": "Subheading", "default": "Sized, priced & styled for every kind of making." },
-    { "type": "color", "id": "bg_color", "label": "Section background", "default": "#FCEEE6" },
-    { "type": "color", "id": "wave_color", "label": "Wave color (match adjoining section)", "default": "#FAF6F0" }
+    { "type": "text", "id": "eyebrow", "label": "Eyebrow", "default": "Find the right one" },
+    { "type": "text", "id": "heading_plain", "label": "Heading (plain)", "default": "Shop by" },
+    { "type": "text", "id": "heading_em", "label": "Heading (italic accent)", "default": "occasion" },
+    { "type": "color", "id": "bg_color", "label": "Background", "default": "#F5EFE3" },
+    { "type": "range", "id": "mobile_padding", "label": "Mobile top padding", "min": 20, "max": 120, "step": 4, "default": 48 },
+    { "type": "range", "id": "mobile_padding_bottom", "label": "Mobile bottom padding", "min": 0, "max": 120, "step": 4, "default": 24 },
+    { "type": "range", "id": "desktop_padding", "label": "Desktop top padding", "min": 20, "max": 200, "step": 4, "default": 72 },
+    { "type": "range", "id": "desktop_padding_bottom", "label": "Desktop bottom padding", "min": 0, "max": 200, "step": 4, "default": 40 }
   ],
-  "max_blocks": 4,
+  "max_blocks": 12,
   "blocks": [
     {
-      "type": "tile",
-      "name": "Tile",
+      "type": "occasion",
+      "name": "Occasion",
       "settings": [
-        { "type": "image_picker", "id": "image", "label": "Image" },
-        { "type": "text", "id": "badge", "label": "Badge (age, category)", "default": "6–12" },
-        { "type": "text", "id": "label", "label": "Label", "default": "For Little Hands" },
-        { "type": "url", "id": "link", "label": "Link" },
-        { "type": "color", "id": "card_bg", "label": "Card background", "default": "#F5CF8A" },
-        { "type": "color", "id": "label_bg", "label": "Label background", "default": "#C8E616" },
-        { "type": "color", "id": "label_color", "label": "Label text color", "default": "#1E1B18" }
+        { "type": "image_picker", "id": "image", "label": "Image (round)" },
+        { "type": "text", "id": "label", "label": "Label", "default": "Birthdays" },
+        { "type": "url", "id": "link", "label": "Link" }
       ]
     }
   ],
   "presets": [
     {
-      "name": "SG — Occasion Tiles",
+      "name": "SG — Occasion Circles",
       "blocks": [
-        { "type": "tile", "settings": { "badge": "6–12", "label": "For Little Hands", "card_bg": "#F5CF8A", "label_bg": "#C8E616" } },
-        { "type": "tile", "settings": { "badge": "13+", "label": "For Grown-ups", "card_bg": "#FCEEE6", "label_bg": "#F5CF8A" } },
-        { "type": "tile", "settings": { "badge": "BULK", "label": "For Offices & Events", "card_bg": "#F4BBA4", "label_bg": "#E8845A", "label_color": "#FFFFFF" } }
+        { "type": "occasion", "settings": { "label": "Birthdays" } },
+        { "type": "occasion", "settings": { "label": "Housewarming" } },
+        { "type": "occasion", "settings": { "label": "Pooja" } },
+        { "type": "occasion", "settings": { "label": "Kids' Gifts" } },
+        { "type": "occasion", "settings": { "label": "Anniversaries" } },
+        { "type": "occasion", "settings": { "label": "Return Gifts" } },
+        { "type": "occasion", "settings": { "label": "Festive" } },
+        { "type": "occasion", "settings": { "label": "Corporate" } }
       ]
     }
   ]

@@ -1,84 +1,56 @@
 {{ 'sg-theme.css' | asset_url | stylesheet_tag }}
 
 {%- style -%}
-  .sg-announce-{{ section.id }} {
+  .sg-util-{{ section.id }} {
     background: {{ section.settings.bg_color }};
     color: {{ section.settings.text_color }};
-    padding: {{ section.settings.vertical_padding }}px var(--sg-gutter);
-    font-weight: 700;
+    padding: {{ section.settings.vertical_padding }}px 16px;
     font-size: {{ section.settings.font_size }}px;
-    letter-spacing: 0.02em;
-    position: relative;
-    overflow: hidden;
+    font-weight: 500;
+    letter-spacing: 0.01em;
+    border-bottom: 1px solid {{ section.settings.border_color | default: '#F8DCCA' }};
   }
-  .sg-announce-{{ section.id }} .sg-announce-track {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    min-height: 26px;
-    gap: 16px;
-  }
-  .sg-announce-{{ section.id }} .sg-announce-msg {
-    display: none;
-    align-items: center;
-    gap: 8px;
-    transition: opacity .4s ease;
-    text-align: center;
-  }
-  .sg-announce-{{ section.id }} .sg-announce-msg.is-active {
-    display: inline-flex;
-  }
-  .sg-announce-{{ section.id }} .sg-announce-arrow {
-    width: 26px;
-    height: 26px;
-    color: inherit;
-    opacity: 0.7;
-    font-size: 16px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    font-weight: 700;
-    transition: opacity .2s;
-    background: none;
-    border: none;
-    cursor: pointer;
-  }
-  .sg-announce-{{ section.id }} .sg-announce-arrow:hover { opacity: 1; }
+  .sg-util-{{ section.id }} a { text-decoration: underline; text-underline-offset: 3px; }
+  .sg-util-{{ section.id }} a:hover { opacity: 0.8; }
 {%- endstyle -%}
 
-<div class="sg-root sg-announce-{{ section.id }}" {{ section.shopify_attributes }}>
-  <div class="sg-announce-track">
-    {%- if section.blocks.size > 1 -%}
-      <button class="sg-announce-arrow" data-dir="prev" aria-label="Previous">‹</button>
-    {%- endif -%}
-    {%- for block in section.blocks -%}
-      <span class="sg-announce-msg{% if forloop.first %} is-active{% endif %}" data-msg="{{ forloop.index0 }}" {{ block.shopify_attributes }}>
-        {{ block.settings.text }}
+<div class="sg-root sg-util-{{ section.id }}" {{ section.shopify_attributes }}>
+  <div class="sg-util-in">
+    <div class="sg-util-left">
+      {%- if section.settings.show_icon -%}<span>{{ section.settings.icon | default: '✿' }}</span>{%- endif -%}
+      <span>
+        {{ section.settings.message }}
+        {%- if section.settings.link_text != blank and section.settings.link_url != blank -%}
+          <a href="{{ section.settings.link_url }}">{{ section.settings.link_text }}</a>
+        {%- endif -%}
       </span>
-    {%- endfor -%}
-    {%- if section.blocks.size > 1 -%}
-      <button class="sg-announce-arrow" data-dir="next" aria-label="Next">›</button>
-    {%- endif -%}
+    </div>
+    <div class="sg-util-right">
+      {%- for block in section.blocks -%}
+        <a href="{{ block.settings.link | default: '#' }}" {{ block.shopify_attributes }}>{{ block.settings.label }}</a>
+      {%- endfor -%}
+    </div>
   </div>
 </div>
 
-{%- if section.blocks.size > 1 and section.settings.autoplay -%}
-<script>
-(function() {
-  var root = document.querySelector('.sg-announce-{{ section.id }}');
-  if (!root) return;
-  var msgs = root.querySelectorAll('.sg-announce-msg');
-  var i = 0;
-  function show(n) {
-    i = (n + msgs.length) % msgs.length;
-    msgs.forEach(function(m, idx) { m.classList.toggle('is-active', idx === i); });
-  }
-  root.querySelector('[data-dir="next"]').addEventListener('click', function() { show(i + 1); });
-  root.querySelector('[data-dir="prev"]').addEventListener('click', function() { show(i - 1); });
-  setInterval(function() { show(i + 1); }, {{ section.settings.speed | default: 4500 }});
-})();
-</script>
-{%- endif -%}
+<style>
+.sg-util-in {
+  max-width: var(--sg-container);
+  margin: 0 auto;
+  padding: 0 var(--sg-gutter);
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 20px;
+  flex-wrap: wrap;
+}
+.sg-util-left { display: flex; gap: 10px; align-items: center; }
+.sg-util-right { display: flex; gap: 16px; font-size: 11.5px; }
+@media (max-width: 640px) {
+  .sg-util-in { justify-content: center; text-align: center; }
+  .sg-util-right { display: none; }
+}
+</style>
 
 {% schema %}
 {
@@ -86,77 +58,37 @@
   "tag": "section",
   "class": "section-sg-announcement",
   "settings": [
-    {
-      "type": "color",
-      "id": "bg_color",
-      "label": "Background",
-      "default": "#F2EADB"
-    },
-    {
-      "type": "color",
-      "id": "text_color",
-      "label": "Text",
-      "default": "#D26939"
-    },
-    {
-      "type": "range",
-      "id": "vertical_padding",
-      "label": "Vertical padding (px)",
-      "min": 6,
-      "max": 20,
-      "step": 1,
-      "default": 10
-    },
-    {
-      "type": "range",
-      "id": "font_size",
-      "label": "Font size (px)",
-      "min": 11,
-      "max": 16,
-      "step": 1,
-      "default": 13
-    },
-    {
-      "type": "header",
-      "content": "Autoplay"
-    },
-    {
-      "type": "checkbox",
-      "id": "autoplay",
-      "label": "Auto-rotate messages",
-      "default": true
-    },
-    {
-      "type": "range",
-      "id": "speed",
-      "label": "Rotation speed (ms)",
-      "min": 2000,
-      "max": 10000,
-      "step": 500,
-      "default": 4500
-    }
+    { "type": "header", "content": "Main message" },
+    { "type": "checkbox", "id": "show_icon", "label": "Show leading icon", "default": true },
+    { "type": "text", "id": "icon", "label": "Icon (emoji/glyph)", "default": "✿" },
+    { "type": "text", "id": "message", "label": "Message", "default": "Shopping for Mom?" },
+    { "type": "text", "id": "link_text", "label": "Linked text", "default": "Order by May 8 for Mother's Day delivery" },
+    { "type": "url", "id": "link_url", "label": "Link URL" },
+    { "type": "header", "content": "Appearance" },
+    { "type": "color", "id": "bg_color", "label": "Background", "default": "#FCEEE6" },
+    { "type": "color", "id": "text_color", "label": "Text", "default": "#D26939" },
+    { "type": "color", "id": "border_color", "label": "Border", "default": "#F8DCCA" },
+    { "type": "range", "id": "vertical_padding", "label": "Vertical padding (px)", "min": 6, "max": 20, "step": 1, "default": 9 },
+    { "type": "range", "id": "font_size", "label": "Font size (px)", "min": 11, "max": 15, "step": 1, "default": 12 }
   ],
   "blocks": [
     {
-      "type": "message",
-      "name": "Message",
+      "type": "link",
+      "name": "Right-side link",
       "settings": [
-        {
-          "type": "richtext",
-          "id": "text",
-          "label": "Message",
-          "default": "<p>Free Shipping over <strong>₹1,000</strong> · Easy Returns</p>"
-        }
+        { "type": "text", "id": "label", "label": "Label", "default": "Track Order" },
+        { "type": "url", "id": "link", "label": "Link" }
       ]
     }
   ],
+  "max_blocks": 4,
   "presets": [
     {
       "name": "SG — Announcement Bar",
       "blocks": [
-        { "type": "message", "settings": { "text": "<p>Free Shipping over <strong>₹1,000</strong> · Easy Returns</p>" } },
-        { "type": "message", "settings": { "text": "<p>Save ₹50 on <strong>Prepaid Orders</strong> · Code PREPAID50</p>" } },
-        { "type": "message", "settings": { "text": "<p><strong>COD</strong> available across India · Ships in 24 hrs</p>" } }
+        { "type": "link", "settings": { "label": "Track Order" } },
+        { "type": "link", "settings": { "label": "Log in" } },
+        { "type": "link", "settings": { "label": "WhatsApp" } }
       ]
     }
   ]

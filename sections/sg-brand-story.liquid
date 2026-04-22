@@ -1,116 +1,203 @@
-<style>
-  .sg-brand-story .sg-story-grid { display: grid; grid-template-columns: 1fr; gap: 32px; align-items: center; max-width: 1100px; margin: 0 auto; }
-  @media (min-width: 750px) { .sg-brand-story .sg-story-grid { grid-template-columns: 1fr 1fr; gap: 56px; } }
-  .sg-brand-story .sg-story-image { border-radius: 24px; overflow: hidden; aspect-ratio: 4/5; max-height: 520px; background: #FAF6F0; }
-  .sg-brand-story .sg-story-image img { width: 100%; height: 100%; object-fit: cover; display: block; }
-  .sg-brand-story .sg-story-content .sg-eyebrow { font-size: 12px; font-weight: 600; letter-spacing: 0.12em; color: #E8845A; text-transform: uppercase; }
-  .sg-brand-story .sg-story-content .sg-h2 { font-family: 'DM Serif Display', serif; font-weight: 400; font-size: clamp(28px, 4vw, 44px); color: #1E1B18; line-height: 1.15; margin: 8px 0 16px; }
-  .sg-brand-story .sg-story-content p { color: #3D3833; font-size: 15px; line-height: 1.7; margin-bottom: 14px; }
-  .sg-brand-story .sg-link-arrow { display: inline-block; margin-top: 8px; color: #E8845A; font-weight: 600; font-size: 14px; text-decoration: none; }
-  .sg-brand-story .sg-link-arrow:hover { text-decoration: underline; }
-</style>
-<section class="sg-section sg-brand-story" style="background:{{ section.settings.background_color | default: '#FAF6F0' }}; padding:{{ section.settings.padding_top | default: 40 }}px 20px {{ section.settings.padding_bottom | default: 40 }}px;">
-  <div class="sg-container">
-    <div class="sg-story-grid">
-      <div class="sg-story-image">
-        {% if section.settings.image != blank %}
-          <img src="{{ section.settings.image | image_url: width: 1200 }}" alt="" loading="lazy" referrerpolicy="no-referrer">
-        {% else %}
-          <img src="https://cdn.shopify.com/s/files/1/0428/5530/1271/collections/Sky-Goodies-DIY-Paper-Banana-Trees-06.jpg?v=1741609615" alt="" loading="lazy" referrerpolicy="no-referrer">
-        {% endif %}
-      </div>
-      <div class="sg-story-content">
-        <span class="sg-eyebrow">{{ section.settings.eyebrow | default: 'THE SKY GOODIES STORY' }}</span>
-        <h2 class="sg-h2">{{ section.settings.heading | default: 'Paper can spark something wonderful' }}</h2>
-        <p>{{ section.settings.story_para_1 | default: 'What started in a tiny Mumbai studio in 2013 is now a workshop of 40 makers, designers and storytellers — all obsessed with the humble sheet of paper.' }}</p>
-        <p>{{ section.settings.story_para_2 | default: 'Every kit you receive has been folded, scored and packed by hand. We work with recycled paper, water-based inks and minimal plastic because the planet is part of the family too.' }}</p>
-        {% if section.settings.link_url != blank %}
-          <a href="{{ section.settings.link_url }}" class="sg-link-arrow">{{ section.settings.link_text | default: 'Read the full story →' }}</a>
-        {% else %}
-          <a href="/pages/about" class="sg-link-arrow">Read the full story →</a>
-        {% endif %}
-      </div>
+{{ 'sg-theme.css' | asset_url | stylesheet_tag }}
+
+{%- style -%}
+  .sg-story-{{ section.id }} {
+    background: {{ section.settings.bg_color | default: '#FCEEE6' }};
+    padding: {{ section.settings.mobile_padding | default: 56 }}px 0;
+  }
+  @media (min-width: 900px) {
+    .sg-story-{{ section.id }} {
+      padding: {{ section.settings.desktop_padding | default: 72 }}px 0;
+    }
+  }
+{%- endstyle -%}
+
+<section class="sg-root sg-story-{{ section.id }}" {{ section.shopify_attributes }}>
+  <div class="sg-story-grid">
+    <div class="sg-story-img"
+         {% if section.settings.image %}style="background-image: url('{{ section.settings.image | image_url: width: 1000 }}');"{% endif %}>
+      {%- if section.settings.sticker_text != blank -%}
+        <div class="sg-story-sticker">{{ section.settings.sticker_text }}</div>
+      {%- endif -%}
+    </div>
+    <div class="sg-story-text">
+      {%- if section.settings.eyebrow != blank -%}
+        <span class="eyebrow">— {{ section.settings.eyebrow }} —</span>
+      {%- endif -%}
+      <h2>{{ section.settings.heading_line1 }}{%- if section.settings.heading_line2 != blank -%}<br>{{ section.settings.heading_line2_plain }} <em>{{ section.settings.heading_line2_em }}</em>{%- endif -%}</h2>
+      {%- if section.settings.body_1 != blank -%}<p>{{ section.settings.body_1 }}</p>{%- endif -%}
+      {%- if section.settings.body_2 != blank -%}<p>{{ section.settings.body_2 }}</p>{%- endif -%}
+
+      {%- if section.blocks.size > 0 -%}
+        <div class="sg-story-stats">
+          {%- for block in section.blocks -%}
+            <div class="sg-story-stat" {{ block.shopify_attributes }}>
+              <strong>{{ block.settings.number }}</strong>
+              <span>{{ block.settings.label }}</span>
+            </div>
+          {%- endfor -%}
+        </div>
+      {%- endif -%}
+
+      {%- if section.settings.cta_text != blank -%}
+        <a href="{{ section.settings.cta_link | default: '#' }}" class="sg-story-cta">
+          {{ section.settings.cta_text }}
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
+        </a>
+      {%- endif -%}
     </div>
   </div>
 </section>
 
+<style>
+.sg-story-grid {
+  max-width: var(--sg-container);
+  margin: 0 auto;
+  padding: 0 var(--sg-gutter);
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 36px;
+  align-items: center;
+}
+@media (min-width: 900px) { .sg-story-grid { grid-template-columns: 1fr 1.2fr; gap: 56px; } }
+.sg-story-img {
+  aspect-ratio: 5/4;
+  border-radius: var(--sg-r-md);
+  overflow: hidden;
+  background-size: cover;
+  background-position: center;
+  background-color: var(--sg-paper-2);
+  position: relative;
+  box-shadow: var(--sg-shadow);
+}
+.sg-story-sticker {
+  position: absolute;
+  top: 16px; left: 16px;
+  background: var(--sg-butter);
+  color: var(--sg-ink);
+  padding: 8px 16px;
+  border-radius: var(--sg-r-pill);
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+}
+.sg-story-text .eyebrow {
+  font-family: var(--sg-sans);
+  font-size: 11px;
+  font-weight: 600;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  color: var(--sg-orange-dk);
+  margin-bottom: 14px;
+  display: block;
+}
+.sg-story-text h2 {
+  font-family: var(--sg-display);
+  font-weight: 400;
+  font-style: italic;
+  font-size: clamp(28px, 3.8vw, 46px);
+  color: var(--sg-ink);
+  line-height: 1.02;
+  letter-spacing: -0.02em;
+  margin-bottom: 16px;
+}
+.sg-story-text h2 em { font-style: normal; font-weight: 500; color: var(--sg-terra); }
+.sg-story-text p {
+  font-size: 15px;
+  color: var(--sg-brown);
+  line-height: 1.65;
+  margin-bottom: 12px;
+  max-width: 500px;
+}
+.sg-story-stats {
+  display: flex;
+  gap: 32px;
+  margin: 22px 0 22px;
+  padding: 18px 0;
+  border-top: 1px solid var(--sg-peach-deep);
+  border-bottom: 1px solid var(--sg-peach-deep);
+  flex-wrap: wrap;
+}
+.sg-story-stat strong {
+  display: block;
+  font-family: var(--sg-display);
+  font-style: italic;
+  font-weight: 500;
+  font-size: 28px;
+  color: var(--sg-terra);
+  line-height: 1;
+  margin-bottom: 3px;
+}
+.sg-story-stat span {
+  font-size: 11px;
+  color: var(--sg-muted);
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  font-weight: 500;
+}
+.sg-story-cta {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 14px 28px;
+  background: var(--sg-ink);
+  color: #fff;
+  border-radius: var(--sg-r-pill);
+  font-size: 12px;
+  font-weight: 600;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  transition: all .2s;
+  text-decoration: none;
+}
+.sg-story-cta:hover { background: var(--sg-orange-dk); transform: translateY(-1px); color: #fff; }
+.sg-story-cta svg { width: 12px; height: 12px; transition: transform .2s; }
+.sg-story-cta:hover svg { transform: translateX(3px); }
+</style>
+
 {% schema %}
 {
-  "name": "SG Brand Story",
+  "name": "SG — Brand Story",
   "tag": "section",
-  "class": "sg-brand-story-section",
+  "class": "section-sg-brand-story",
   "settings": [
+    { "type": "header", "content": "Image" },
+    { "type": "image_picker", "id": "image", "label": "Image" },
+    { "type": "text", "id": "sticker_text", "label": "Image sticker text", "default": "★ Since 2013" },
+    { "type": "header", "content": "Content" },
+    { "type": "text", "id": "eyebrow", "label": "Eyebrow", "default": "The makers" },
+    { "type": "text", "id": "heading_line1", "label": "Heading line 1", "default": "Born on a dining table" },
+    { "type": "text", "id": "heading_line2_plain", "label": "Heading line 2 (plain)", "default": "in" },
+    { "type": "text", "id": "heading_line2_em", "label": "Heading line 2 (italic accent)", "default": "Khar, Mumbai." },
+    { "type": "textarea", "id": "body_1", "label": "Body paragraph 1", "default": "Amit and Misha — both NID-trained designers — started Sky Goodies with a simple belief: paper has the power to pause a hurried day." },
+    { "type": "textarea", "id": "body_2", "label": "Body paragraph 2", "default": "Twelve years on, our paper lamps light homes in Tokyo, our calendars hang in Brooklyn kitchens, and every kit is still illustrated by hand, die-cut under one roof, and packed with care." },
+    { "type": "text", "id": "cta_text", "label": "CTA text", "default": "Meet the Makers" },
+    { "type": "url", "id": "cta_link", "label": "CTA link" },
+    { "type": "header", "content": "Appearance" },
+    { "type": "color", "id": "bg_color", "label": "Background", "default": "#FCEEE6" },
+    { "type": "range", "id": "mobile_padding", "label": "Mobile padding (px)", "min": 20, "max": 120, "step": 4, "default": 56 },
+    { "type": "range", "id": "desktop_padding", "label": "Desktop padding (px)", "min": 20, "max": 200, "step": 4, "default": 72 }
+  ],
+  "max_blocks": 4,
+  "blocks": [
     {
-      "type": "text",
-      "id": "eyebrow",
-      "label": "Eyebrow",
-      "default": "THE SKY GOODIES STORY"
-    },
-    {
-      "type": "text",
-      "id": "heading",
-      "label": "Heading",
-      "default": "Paper can spark something wonderful"
-    },
-    {
-      "type": "textarea",
-      "id": "story_para_1",
-      "label": "Story paragraph 1",
-      "default": "What started in a tiny Mumbai studio in 2013 is now a workshop of 40 makers, designers and storytellers — all obsessed with the humble sheet of paper."
-    },
-    {
-      "type": "textarea",
-      "id": "story_para_2",
-      "label": "Story paragraph 2",
-      "default": "Every kit you receive has been folded, scored and packed by hand. We work with recycled paper, water-based inks and minimal plastic because the planet is part of the family too."
-    },
-    {
-      "type": "text",
-      "id": "link_text",
-      "label": "Link text",
-      "default": "Read the full story →"
-    },
-    {
-      "type": "url",
-      "id": "link_url",
-      "label": "Link URL",
-      "default": "/pages/about"
-    },
-    {
-      "type": "image_picker",
-      "id": "image",
-      "label": "Image"
-    },
-    {
-      "type": "range",
-      "id": "padding_top",
-      "label": "Padding top",
-      "min": 0,
-      "max": 100,
-      "step": 4,
-      "unit": "px",
-      "default": 40
-    },
-    {
-      "type": "range",
-      "id": "padding_bottom",
-      "label": "Padding bottom",
-      "min": 0,
-      "max": 100,
-      "step": 4,
-      "unit": "px",
-      "default": 40
-    },
-    {
-      "type": "color",
-      "id": "background_color",
-      "label": "Background color",
-      "default": "#FAF6F0"
+      "type": "stat",
+      "name": "Stat",
+      "settings": [
+        { "type": "text", "id": "number", "label": "Number", "default": "12+" },
+        { "type": "text", "id": "label", "label": "Label", "default": "Years of paper love" }
+      ]
     }
   ],
   "presets": [
     {
-      "name": "Brand story"
+      "name": "SG — Brand Story",
+      "blocks": [
+        { "type": "stat", "settings": { "number": "12+", "label": "Years of paper love" } },
+        { "type": "stat", "settings": { "number": "200+", "label": "Original designs" } },
+        { "type": "stat", "settings": { "number": "50K+", "label": "Happy crafters" } }
+      ]
     }
   ]
 }

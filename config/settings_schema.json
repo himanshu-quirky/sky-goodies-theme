@@ -2284,5 +2284,136 @@
         "default": "equal-width-buttons"
       }
     ]
+  },
+  {
+    "name": "Sky Goodies — Cart Drawer",
+    "settings": [
+      {
+        "type": "paragraph",
+        "content": "Settings for the Sky Goodies cart drawer. Progress bar, upsells, and prepaid discount all configurable here."
+      },
+      {
+        "type": "header",
+        "content": "Free shipping progress bar"
+      },
+      {
+        "type": "checkbox",
+        "id": "sg_free_ship_enabled",
+        "label": "Show free shipping progress bar",
+        "default": true
+      },
+      {
+        "type": "number",
+        "id": "sg_free_ship_threshold",
+        "label": "Free shipping threshold (₹)",
+        "info": "Amount in rupees customers need to spend to unlock free shipping.",
+        "default": 1000
+      },
+      {
+        "type": "text",
+        "id": "sg_free_ship_away_text",
+        "label": "Away-from-threshold text",
+        "info": "Use {{amount}} where the remaining amount should appear.",
+        "default": "You're ₹{{amount}} away from free shipping"
+      },
+      {
+        "type": "text",
+        "id": "sg_free_ship_unlocked_text",
+        "label": "Unlocked text",
+        "default": "You've unlocked free shipping!"
+      },
+      {
+        "type": "color",
+        "id": "sg_free_ship_bar_color",
+        "label": "Progress bar fill color",
+        "default": "#E8845A"
+      },
+      {
+        "type": "color",
+        "id": "sg_free_ship_bar_bg",
+        "label": "Progress bar track background",
+        "default": "#FFFDF8"
+      },
+      {
+        "type": "color",
+        "id": "sg_free_ship_section_bg",
+        "label": "Progress bar section background",
+        "default": "#FCEEE6"
+      },
+      {
+        "type": "header",
+        "content": "Cart drawer upsells"
+      },
+      {
+        "type": "checkbox",
+        "id": "sg_upsell_enabled",
+        "label": "Show 'Complete the set' upsells in cart drawer",
+        "default": true
+      },
+      {
+        "type": "text",
+        "id": "sg_upsell_heading",
+        "label": "Upsell heading",
+        "default": "Complete the set"
+      },
+      {
+        "type": "product",
+        "id": "sg_upsell_product_1",
+        "label": "Upsell product 1"
+      },
+      {
+        "type": "product",
+        "id": "sg_upsell_product_2",
+        "label": "Upsell product 2"
+      },
+      {
+        "type": "product",
+        "id": "sg_upsell_product_3",
+        "label": "Upsell product 3"
+      },
+      {
+        "type": "product",
+        "id": "sg_upsell_product_4",
+        "label": "Upsell product 4 (optional)"
+      },
+      {
+        "type": "collection",
+        "id": "sg_upsell_fallback_collection",
+        "label": "Fallback: pull upsell products from this collection",
+        "info": "Used if no individual products are set above."
+      },
+      {
+        "type": "header",
+        "content": "Prepaid discount note"
+      },
+      {
+        "type": "checkbox",
+        "id": "sg_prepaid_enabled",
+        "label": "Show prepaid discount note",
+        "default": true
+      },
+      {
+        "type": "text",
+        "id": "sg_prepaid_heading",
+        "label": "Prepaid note heading",
+        "default": "Save ₹50 on prepaid orders"
+      },
+      {
+        "type": "text",
+        "id": "sg_prepaid_subtext",
+        "label": "Prepaid subtext",
+        "default": "Automatically applied with UPI / Card"
+      },
+      {
+        "type": "header",
+        "content": "Checkout button"
+      },
+      {
+        "type": "text",
+        "id": "sg_checkout_label",
+        "label": "Checkout button label",
+        "default": "Secure Checkout"
+      }
+    ]
   }
 ]
