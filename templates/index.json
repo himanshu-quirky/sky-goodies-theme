@@ -2,87 +2,16 @@
   "sections": {
     "sg_hero": {
       "type": "sg-hero",
-      "settings": { "eyebrow": "Handcrafted in Mumbai", "title_line_1": "The Mother's Day", "title_script": "Gift Guide", "sub": "Handcrafted paper kits for the mom who has everything.", "cta_text": "Shop Now" }
-    },
-    "sg_occasions": {
-      "type": "sg-categories",
-      "blocks": {
-        "occ-1": { "type": "occasion", "settings": { "label": "Birthdays" } },
-        "occ-2": { "type": "occasion", "settings": { "label": "Housewarming" } },
-        "occ-3": { "type": "occasion", "settings": { "label": "Pooja" } }
-      },
-      "block_order": ["occ-1", "occ-2", "occ-3"],
-      "settings": { "heading_plain": "Shop by", "heading_em": "occasion" }
-    },
-    "sg_fp_calendars": {
-      "type": "sg-featured-products",
-      "settings": { "heading_plain": "The", "heading_em": "Calendar Shop", "products_to_show": 4, "layout": "scroll" }
-    },
-    "sg_fp_pooja": {
-      "type": "sg-featured-products",
-      "settings": { "heading_plain": "The", "heading_em": "Pooja Edit", "products_to_show": 4, "layout": "scroll" }
-    },
-    "sg_bestsellers": {
-      "type": "sg-featured-products",
-      "settings": { "heading_plain": "Loved by", "heading_em": "the crowd", "products_to_show": 4, "layout": "grid" }
-    },
-    "sg_fp_gifts": {
-      "type": "sg-featured-products",
-      "settings": { "heading_plain": "Gifts", "heading_em": "under ₹500", "products_to_show": 4, "layout": "scroll" }
+      "settings": { "title_line_1": "Bisect", "title_script": "+shoppable" }
     },
     "sg_shoppable": {
       "type": "sg-shoppable-video",
       "blocks": {
-        "vid-1": { "type": "video", "settings": { "caption": "Unboxing", "likes": "2.1K" } },
-        "vid-2": { "type": "video", "settings": { "caption": "Makeover", "likes": "1.4K" } }
+        "vid-1": { "type": "video", "settings": { "caption": "Unboxing", "likes": "2.1K" } }
       },
-      "block_order": ["vid-1", "vid-2"],
+      "block_order": ["vid-1"],
       "settings": { "heading_plain": "See them", "heading_em": "in action" }
-    },
-    "sg_story": {
-      "type": "sg-brand-story",
-      "blocks": {
-        "stat-1": { "type": "stat", "settings": { "number": "12+", "label": "Years" } },
-        "stat-2": { "type": "stat", "settings": { "number": "200+", "label": "Designs" } }
-      },
-      "block_order": ["stat-1", "stat-2"],
-      "settings": { "heading_line1": "Born on a dining table", "cta_text": "Meet the Makers" }
-    },
-    "sg_press": {
-      "type": "sg-press-logos",
-      "blocks": {
-        "p-1": { "type": "logo", "settings": { "name": "Vogue", "style": "italic" } },
-        "p-2": { "type": "logo", "settings": { "name": "Elle Decor", "style": "sans" } }
-      },
-      "block_order": ["p-1", "p-2"],
-      "settings": { "label": "As featured in" }
-    },
-    "sg_reviews": {
-      "type": "sg-testimonials",
-      "blocks": {
-        "r-1": { "type": "review", "settings": { "title": "Love it.", "quote": "Great product.", "name": "Sanjana P.", "verified": true } }
-      },
-      "block_order": ["r-1"],
-      "settings": { "rating": "4.9", "heading_line1": "Real words from", "heading_line2_em": "crafters." }
-    },
-    "sg_trust": {
-      "type": "sg-trust-strip",
-      "blocks": {
-        "t-1": { "type": "item", "settings": { "icon": "ship", "title": "Free Shipping", "subtitle": "Over ₹1,000" } },
-        "t-2": { "type": "item", "settings": { "icon": "cod", "title": "COD", "subtitle": "Across India" } }
-      },
-      "block_order": ["t-1", "t-2"],
-      "settings": {}
-    },
-    "sg_instagram": {
-      "type": "sg-instagram-feed",
-      "blocks": {
-        "ig-1": { "type": "post" },
-        "ig-2": { "type": "post" }
-      },
-      "block_order": ["ig-1", "ig-2"],
-      "settings": { "heading_line1": "Tag us", "heading_line2_em": "Instagram.", "handle": "@skygoodies.co" }
     }
   },
-  "order": ["sg_hero", "sg_occasions", "sg_fp_calendars", "sg_fp_pooja", "sg_bestsellers", "sg_fp_gifts", "sg_shoppable", "sg_story", "sg_press", "sg_reviews", "sg_trust", "sg_instagram"]
+  "order": ["sg_hero", "sg_shoppable"]
 }
