@@ -28,7 +28,7 @@
 
   <div class="sg-vid-scroll">
     {%- for block in section.blocks -%}
-      {%- assign product = all_products[block.settings.product] -%}
+      {%- assign product = block.settings.product -%}
       <div class="sg-vid-card" data-sg-video-url="{{ block.settings.video_url }}"
            {% if block.settings.thumbnail %}style="background-image: url('{{ block.settings.thumbnail | image_url: width: 600 }}');"{% elsif product.featured_image %}style="background-image: url('{{ product.featured_image | image_url: width: 600 }}');"{% endif %}
            {{ block.shopify_attributes }}>
