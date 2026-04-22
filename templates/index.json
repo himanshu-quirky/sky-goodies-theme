@@ -2,14 +2,34 @@
   "sections": {
     "sg_hero": {
       "type": "sg-hero",
-      "settings": {
-        "eyebrow": "Handcrafted in Mumbai",
-        "title_line_1": "Bisect test",
-        "title_script": "only",
-        "sub": "Testing which section crashes home.",
-        "cta_text": "Shop Now"
-      }
+      "settings": { "eyebrow": "Handcrafted in Mumbai", "title_line_1": "The Mother's Day", "title_script": "Gift Guide", "sub": "Handcrafted paper kits for the mom who has everything.", "cta_text": "Shop Now" }
+    },
+    "sg_occasions": {
+      "type": "sg-categories",
+      "blocks": {
+        "occ-1": { "type": "occasion", "settings": { "label": "Birthdays" } },
+        "occ-2": { "type": "occasion", "settings": { "label": "Housewarming" } },
+        "occ-3": { "type": "occasion", "settings": { "label": "Pooja" } }
+      },
+      "block_order": ["occ-1", "occ-2", "occ-3"],
+      "settings": { "heading_plain": "Shop by", "heading_em": "occasion" }
+    },
+    "sg_fp_calendars": {
+      "type": "sg-featured-products",
+      "settings": { "heading_plain": "The", "heading_em": "Calendar Shop", "products_to_show": 4, "layout": "scroll" }
+    },
+    "sg_fp_pooja": {
+      "type": "sg-featured-products",
+      "settings": { "heading_plain": "The", "heading_em": "Pooja Edit", "products_to_show": 4, "layout": "scroll" }
+    },
+    "sg_bestsellers": {
+      "type": "sg-featured-products",
+      "settings": { "heading_plain": "Loved by", "heading_em": "the crowd", "products_to_show": 4, "layout": "grid" }
+    },
+    "sg_fp_gifts": {
+      "type": "sg-featured-products",
+      "settings": { "heading_plain": "Gifts", "heading_em": "under ₹500", "products_to_show": 4, "layout": "scroll" }
     }
   },
-  "order": ["sg_hero"]
+  "order": ["sg_hero", "sg_occasions", "sg_fp_calendars", "sg_fp_pooja", "sg_bestsellers", "sg_fp_gifts"]
 }
