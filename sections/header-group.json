@@ -1,0 +1,32 @@
+/*
+ * ------------------------------------------------------------
+ * IMPORTANT: The contents of this file are auto-generated.
+ *
+ * This file may be updated by the Shopify admin theme editor
+ * or related systems. Please exercise caution as any changes
+ * made to this file may be overwritten.
+ * ------------------------------------------------------------
+ */
+{
+  "type": "header",
+  "name": "Header",
+  "sections": {
+    "sg_header": {
+      "type": "sg-header-mega",
+      "blocks": {
+        "feat-1": { "type": "mega_feature", "settings": { "menu_label": "Paper Kits", "tag": "bestseller", "title": "Endangered Animals BOX SET" } },
+        "feat-2": { "type": "mega_feature", "settings": { "menu_label": "Paper Kits", "tag": "just in", "title": "Paper Fairy Lights" } },
+        "feat-3": { "type": "mega_feature", "settings": { "menu_label": "Home Décor", "tag": "trending", "title": "Hot Air Balloon Lights" } },
+        "feat-4": { "type": "mega_feature", "settings": { "menu_label": "Gifts", "tag": "new guide", "title": "Birthday Gift Edit" } }
+      },
+      "block_order": ["feat-1", "feat-2", "feat-3", "feat-4"],
+      "settings": {
+        "menu": "main-menu",
+        "bg_color": "#FFFFFF",
+        "sticky": true,
+        "show_wishlist": true
+      }
+    }
+  },
+  "order": ["sg_header"]
+}
