@@ -14,19 +14,79 @@
     "sg_header": {
       "type": "sg-header-mega",
       "blocks": {
-        "feat-1": { "type": "mega_feature", "settings": { "menu_label": "Paper Kits", "tag": "bestseller", "title": "Endangered Animals BOX SET" } },
-        "feat-2": { "type": "mega_feature", "settings": { "menu_label": "Paper Kits", "tag": "just in", "title": "Paper Fairy Lights" } },
-        "feat-3": { "type": "mega_feature", "settings": { "menu_label": "Home Décor", "tag": "trending", "title": "Hot Air Balloon Lights" } },
-        "feat-4": { "type": "mega_feature", "settings": { "menu_label": "Gifts", "tag": "new guide", "title": "Birthday Gift Edit" } }
+        "mega_feature_XDN7cD": {
+          "type": "mega_feature",
+          "settings": {
+            "menu_label": "",
+            "tag": "bestseller",
+            "title": "Featured product",
+            "link": ""
+          }
+        },
+        "feat-1": {
+          "type": "mega_feature",
+          "settings": {
+            "menu_label": "Paper Kits",
+            "tag": "bestseller",
+            "title": "Endangered Animals BOX SET",
+            "link": ""
+          }
+        },
+        "feat-2": {
+          "type": "mega_feature",
+          "settings": {
+            "menu_label": "Paper Kits",
+            "tag": "just in",
+            "title": "Paper Fairy Lights",
+            "link": ""
+          }
+        },
+        "feat-3": {
+          "type": "mega_feature",
+          "settings": {
+            "menu_label": "Home Décor",
+            "tag": "trending",
+            "title": "Hot Air Balloon Lights",
+            "link": ""
+          }
+        },
+        "feat-4": {
+          "type": "mega_feature",
+          "settings": {
+            "menu_label": "Gifts",
+            "tag": "new guide",
+            "title": "Birthday Gift Edit",
+            "link": ""
+          }
+        }
       },
-      "block_order": ["feat-1", "feat-2", "feat-3", "feat-4"],
+      "block_order": [
+        "mega_feature_XDN7cD",
+        "feat-1",
+        "feat-2",
+        "feat-3",
+        "feat-4"
+      ],
       "settings": {
         "menu": "main-menu",
-        "bg_color": "#FFFFFF",
+        "bg_color": "#ffffff",
         "sticky": true,
         "show_wishlist": true
       }
+    },
+    "skygoodies_header_rdprRa": {
+      "type": "skygoodies-header",
+      "disabled": true,
+      "name": "Sky Header",
+      "settings": {
+        "bg_color": "#ffffff",
+        "logo_height": 48,
+        "menu": "new-menu"
+      }
     }
   },
-  "order": ["sg_header"]
+  "order": [
+    "sg_header",
+    "skygoodies_header_rdprRa"
+  ]
 }
