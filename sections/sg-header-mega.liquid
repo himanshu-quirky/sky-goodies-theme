@@ -1,6 +1,7 @@
 {{ 'sg-theme.css' | asset_url | stylesheet_tag }}
 
-{%- assign main_menu = linklists[section.settings.menu | default: 'main-menu'] -%}
+{%- assign menu_handle = section.settings.menu | default: 'main-menu' -%}
+{%- assign main_menu = linklists[menu_handle] -%}
 
 {%- style -%}
   .sg-hdr-{{ section.id }} {
@@ -68,7 +69,7 @@
                 {%- for child in link.links -%}
                   {%- if child.links.size > 0 -%}
                     {%- assign col_count = col_count | plus: 1 -%}
-                    {%- if col_count <= 2 -%}
+                    {%- if col_count <= 3 -%}
                       <div class="sg-mega-col">
                         <h5>{{ child.title }}</h5>
                         <ul>
@@ -315,7 +316,7 @@
 
 {% schema %}
 {
-  "name": "SG — Header with Mega Menu",
+  "name": "SG — Header (Mega Menu)",
   "tag": "header",
   "class": "section-sg-header-mega",
   "settings": [
@@ -340,7 +341,7 @@
   ],
   "presets": [
     {
-      "name": "SG — Header with Mega Menu"
+      "name": "SG — Header (Mega Menu)"
     }
   ]
 }

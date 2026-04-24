@@ -21,7 +21,7 @@
         <small>{{ section.settings.rating_subtext | default: '12,400+ verified reviews' }}</small>
       </div>
     </div>
-    <h2>{{ section.settings.heading_line1 }}{%- if section.settings.heading_line2_em != blank -%}<br>real <em>{{ section.settings.heading_line2_em }}</em>{%- endif -%}</h2>
+    <h2>{{ section.settings.heading_line1 }}{%- if section.settings.heading_line2_em != blank -%}<br><em>{{ section.settings.heading_line2_em }}</em>{%- endif -%}</h2>
   </div>
 
   <div class="sg-rev-grid">
@@ -176,7 +176,7 @@
 
 {% schema %}
 {
-  "name": "SG — Testimonials with Images",
+  "name": "SG — Testimonials",
   "tag": "section",
   "class": "section-sg-testimonials",
   "settings": [
@@ -210,7 +210,7 @@
   ],
   "presets": [
     {
-      "name": "SG — Testimonials with Images",
+      "name": "SG — Testimonials",
       "blocks": [
         { "type": "review", "settings": { "title": "Has made my kitchen feel like a café.", "name": "Sanjana P.", "meta": "Pune · May 2026" } },
         { "type": "review", "settings": { "title": "Bought five for my team. Legends.", "name": "Rahul D.", "meta": "Bengaluru · Apr 2026" } },
