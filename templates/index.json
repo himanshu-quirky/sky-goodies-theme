@@ -1,3 +1,12 @@
+/*
+ * ------------------------------------------------------------
+ * IMPORTANT: The contents of this file are auto-generated.
+ *
+ * This file may be updated by the Shopify admin theme editor
+ * or related systems. Please exercise caution as any changes
+ * made to this file may be overwritten.
+ * ------------------------------------------------------------
+ */
 {
   "sections": {
     "sg_hero": {
@@ -197,27 +206,6 @@
       },
       "block_order": ["t-1", "t-2", "t-3", "t-4"],
       "settings": { "bg_color": "#FAF6EC" }
-    },
-    "sg_instagram": {
-      "type": "sg-instagram-feed",
-      "blocks": {
-        "ig-1": { "type": "post" },
-        "ig-2": { "type": "post" },
-        "ig-3": { "type": "post" },
-        "ig-4": { "type": "post" },
-        "ig-5": { "type": "post" },
-        "ig-6": { "type": "post" }
-      },
-      "block_order": ["ig-1", "ig-2", "ig-3", "ig-4", "ig-5", "ig-6"],
-      "settings": {
-        "eyebrow": "In the wild",
-        "heading_line1": "Tag us and you might make",
-        "heading_line2_em": "Instagram.",
-        "handle": "@skygoodies.co",
-        "follower_count": "87K+",
-        "ig_url": "https://instagram.com/skygoodies.co",
-        "bg_color": "#F5EFE3"
-      }
     }
   },
   "order": [
@@ -231,7 +219,6 @@
     "sg_story",
     "sg_press",
     "sg_reviews",
-    "sg_trust",
-    "sg_instagram"
+    "sg_trust"
   ]
 }
