@@ -1,6 +1,6 @@
 {{ 'sg-theme.css' | asset_url | stylesheet_tag }}
 
-{%- assign collection = collections[section.settings.collection] -%}
+{%- assign collection = section.settings.collection -%}
 
 {%- style -%}
   .sg-fp-{{ section.id }} {
@@ -49,7 +49,7 @@
       <article class="sg-prod-card">
         <div class="sg-prod-img">
           <div class="sg-prod-badges">
-            {%- if forloop.first -%}<span class="sg-prod-badge best">★ Bestseller</span>{%- endif -%}
+            {%- if product.tags contains 'bestseller' or product.tags contains 'Bestseller' -%}<span class="sg-prod-badge best">★ Bestseller</span>{%- endif -%}
             {%- if savings > 0 -%}<span class="sg-prod-badge save">Save ₹{{ savings }}</span>{%- endif -%}
             {%- if product.tags contains 'new' or product.tags contains 'New' -%}<span class="sg-prod-badge new">Just In</span>{%- endif -%}
           </div>
