@@ -1624,6 +1624,7 @@
     },
     "sg_fp_gifts": {
       "type": "sg-featured-products",
+      "disabled": true,
       "settings": {
         "eyebrow": "Small on price, big on joy",
         "heading_plain": "Gifts",
