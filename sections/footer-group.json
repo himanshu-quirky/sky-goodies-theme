@@ -14,6 +14,26 @@
     "footer": {
       "type": "footer",
       "blocks": {
+        "logo_zpeLcL": {
+          "type": "logo",
+          "name": "t:names.logo",
+          "settings": {
+            "inverse": false,
+            "font": "heading",
+            "unit": "percent",
+            "percent_width": 50,
+            "pixel_height": 48,
+            "custom_mobile_size": false,
+            "unit_mobile": "percent",
+            "percent_width_mobile": 100,
+            "pixel_height_mobile": 120,
+            "padding-block-start": 0,
+            "padding-block-end": 0,
+            "padding-inline-start": 0,
+            "padding-inline-end": 0
+          },
+          "blocks": {}
+        },
         "group_FbMNAh": {
           "type": "group",
           "name": "Logo",
@@ -156,7 +176,7 @@
                 "heading_preset": "h5",
                 "link_preset": "paragraph",
                 "padding-block-start": 0,
-                "padding-block-end": 76,
+                "padding-block-end": 12,
                 "padding-inline-start": 0,
                 "padding-inline-end": 0
               },
@@ -226,7 +246,7 @@
             "placeholder": "",
             "padding-block-start": 0,
             "padding-block-end": 0,
-            "padding-inline-start": 0,
+            "padding-inline-start": 26,
             "padding-inline-end": 0
           },
           "blocks": {
@@ -290,6 +310,7 @@
         }
       },
       "block_order": [
+        "logo_zpeLcL",
         "group_FbMNAh",
         "group_MpJjxe",
         "group_3dhMLn"
