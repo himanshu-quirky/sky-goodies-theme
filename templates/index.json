@@ -36,6 +36,7 @@
       "blocks": {
         "occ-1": {
           "type": "occasion",
+          "name": "Birthdays",
           "settings": {
             "label": "Birthdays",
             "link": ""
@@ -43,6 +44,7 @@
         },
         "occ-2": {
           "type": "occasion",
+          "name": "Housewarming",
           "settings": {
             "label": "Housewarming",
             "link": ""
@@ -50,6 +52,7 @@
         },
         "occ-3": {
           "type": "occasion",
+          "name": "Pooja",
           "settings": {
             "label": "Pooja",
             "link": ""
@@ -57,6 +60,7 @@
         },
         "occ-4": {
           "type": "occasion",
+          "name": "Kids' Gifts",
           "settings": {
             "label": "Kids' Gifts",
             "link": ""
@@ -64,6 +68,7 @@
         },
         "occ-5": {
           "type": "occasion",
+          "name": "Anniversaries",
           "settings": {
             "label": "Anniversaries",
             "link": ""
@@ -71,6 +76,7 @@
         },
         "occ-6": {
           "type": "occasion",
+          "name": "Return Gifts",
           "settings": {
             "label": "Return Gifts",
             "link": ""
@@ -78,6 +84,7 @@
         },
         "occ-7": {
           "type": "occasion",
+          "name": "Festive",
           "settings": {
             "label": "Festive",
             "link": ""
@@ -85,6 +92,7 @@
         },
         "occ-8": {
           "type": "occasion",
+          "name": "Corporate",
           "settings": {
             "label": "Corporate",
             "link": ""
