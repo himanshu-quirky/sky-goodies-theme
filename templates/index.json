@@ -149,7 +149,7 @@
         "products_to_show": 4,
         "layout": "scroll",
         "view_all_text": "Shop the edit",
-        "view_all_link": "",
+        "view_all_link": "shopify://collections/ganpati-festival-eco-friendly-collection",
         "show_view_all_button": false,
         "bg_color": "#fceee6",
         "mobile_padding_top": 48,
