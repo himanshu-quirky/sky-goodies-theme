@@ -10,8 +10,9 @@
 {
   "current": {
     "logo": "shopify://shop_images/logo_hd.png",
-    "logo_height": 60,
+    "logo_height": 82,
     "logo_height_mobile": 49,
+    "favicon": "shopify://shop_images/favicon_sky_goodies_paper_craft_DIY.jpg",
     "type_body_font": "instrument_sans_n4",
     "type_subheading_font": "instrument_sans_n4",
     "type_heading_font": "josefin_sans_n4",
@@ -681,7 +682,7 @@
   },
   "platform_customizations": {
     "custom_css": [
-      ".sg-prod-sticky {display:none;}"
+      ".sg-prod-sticky {display: none;}"
     ]
   }
 }
