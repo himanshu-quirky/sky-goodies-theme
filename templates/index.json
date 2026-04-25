@@ -202,8 +202,9 @@
         "vid-1": {
           "type": "video",
           "settings": {
-            "video_url": "",
-            "product": "",
+            "thumbnail": "shopify://shop_images/Bluehotairballoon_Websitelisting_7.png",
+            "video_url": "https://cdn.shopify.com/videos/c/o/v/a9eb87a3600d48dd8d953f74f356acca.mp4",
+            "product": "be-good-this-year-postcard-desk-calendar-planner-2026",
             "product_label": "",
             "product_price": "",
             "likes": "2.1K",
