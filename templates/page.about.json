@@ -1131,6 +1131,7 @@
         "group_jYNEt9",
         "group_WJYEfy"
       ],
+      "disabled": true,
       "name": "t:names.multicolumn",
       "settings": {
         "content_direction": "row",
