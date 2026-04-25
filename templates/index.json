@@ -74,6 +74,7 @@
           "type": "occasion",
           "name": "Birthdays",
           "settings": {
+            "image": "shopify://shop_images/Sky-Goodies-BLUE-Birthday-paper-flower-bunting-07.jpg",
             "label": "Birthdays",
             "link": "shopify://collections/paper-party-decor"
           }
@@ -82,56 +83,63 @@
           "type": "occasion",
           "name": "Housewarming",
           "settings": {
+            "image": "shopify://shop_images/Sky-Goodies-Mini-Lantern-Fairy-Lights-Paper-Lamp-04.jpg",
             "label": "Housewarming",
-            "link": ""
+            "link": "shopify://collections/fairy-lights-and-lamps"
           }
         },
         "occ-3": {
           "type": "occasion",
           "name": "Pooja",
           "settings": {
+            "image": "shopify://shop_images/Sky-Goodies-DIY-Paper-Craft-Krishna-01.jpg",
             "label": "Pooja",
-            "link": ""
+            "link": "shopify://collections/ganpati-festival-eco-friendly-collection"
           }
         },
         "occ-4": {
           "type": "occasion",
           "name": "Kids' Gifts",
           "settings": {
+            "image": "shopify://shop_images/10-amazon-sky-goodies-set-of-6-animals-01_e82618ad-16c6-4c78-95ca-40379abb7c83.jpg",
             "label": "Kids' Gifts",
-            "link": ""
+            "link": "shopify://collections/thoughtful-gifts-for-kids"
           }
         },
         "occ-5": {
           "type": "occasion",
           "name": "Anniversaries",
           "settings": {
+            "image": "shopify://shop_images/3000-Sky_Goodies_DIY_gramophone-colourful_4864398f-f3c6-4b24-93e6-255dad4f1b42.jpg",
             "label": "Anniversaries",
-            "link": ""
+            "link": "shopify://collections/quirky-gifts-for-adults"
           }
         },
         "occ-6": {
           "type": "occasion",
           "name": "Return Gifts",
           "settings": {
+            "image": "shopify://shop_images/Sky_Goodies_BLUE_Bow_Gift_Box_02.jpg",
             "label": "Return Gifts",
-            "link": ""
+            "link": "shopify://collections/gift-boxes-envelopes"
           }
         },
         "occ-7": {
           "type": "occasion",
           "name": "Festive",
           "settings": {
+            "image": "shopify://shop_images/Diwali-flower-white-1.jpg",
             "label": "Festive",
-            "link": ""
+            "link": "shopify://collections/diwali-collection"
           }
         },
         "occ-8": {
           "type": "occasion",
           "name": "Corporate",
           "settings": {
+            "image": "shopify://shop_images/Sky-Goodies-Colourful-Typewriter-Calendar-2025-02.jpg",
             "label": "Corporate",
-            "link": ""
+            "link": "shopify://collections/2025-calendars"
           }
         }
       },
@@ -361,49 +369,56 @@
           "type": "logo",
           "settings": {
             "name": "Vogue",
-            "style": "italic"
+            "style": "italic",
+            "row": "1"
           }
         },
         "p-2": {
           "type": "logo",
           "settings": {
             "name": "Elle Decor",
-            "style": "sans"
+            "style": "sans",
+            "row": "1"
           }
         },
         "p-3": {
           "type": "logo",
           "settings": {
             "name": "Lonely Planet",
-            "style": "italic"
+            "style": "italic",
+            "row": "1"
           }
         },
         "p-4": {
           "type": "logo",
           "settings": {
             "name": "The Hindu",
-            "style": "sans"
+            "style": "sans",
+            "row": "1"
           }
         },
         "p-5": {
           "type": "logo",
           "settings": {
             "name": "Verve",
-            "style": "italic"
+            "style": "italic",
+            "row": "1"
           }
         },
         "p-6": {
           "type": "logo",
           "settings": {
             "name": "Mid-Day",
-            "style": "sans"
+            "style": "sans",
+            "row": "1"
           }
         },
         "p-7": {
           "type": "logo",
           "settings": {
             "name": "Architectural Digest",
-            "style": "italic"
+            "style": "italic",
+            "row": "1"
           }
         }
       },
