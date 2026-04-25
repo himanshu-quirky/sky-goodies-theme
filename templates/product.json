@@ -751,7 +751,7 @@
                 "background_color": "#00000026",
                 "corner_radius": 0,
                 "padding-block-start": 4,
-                "padding-block-end": 0,
+                "padding-block-end": 6,
                 "padding-inline-start": 0,
                 "padding-inline-end": 0
               },
@@ -804,7 +804,7 @@
                   "type": "add-to-cart",
                   "static": true,
                   "settings": {
-                    "style_class": "button-secondary"
+                    "style_class": "button"
                   },
                   "blocks": {}
                 },
