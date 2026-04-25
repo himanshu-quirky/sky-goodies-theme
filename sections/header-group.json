@@ -26,14 +26,28 @@
             "case": "none"
           },
           "blocks": {}
+        },
+        "announcement_iMtkX9": {
+          "type": "_announcement",
+          "settings": {
+            "text": "Shop our latest arrivals!",
+            "link": "",
+            "font": "var(--font-body--family)",
+            "font_size": "1rem",
+            "weight": "",
+            "letter_spacing": "normal",
+            "case": "none"
+          },
+          "blocks": {}
         }
       },
       "block_order": [
-        "announcement_1"
+        "announcement_1",
+        "announcement_iMtkX9"
       ],
       "name": "t:names.announcement_bar",
       "settings": {
-        "speed": 5,
+        "speed": 6,
         "section_width": "page-width",
         "color_scheme": "",
         "divider_width": 0,
