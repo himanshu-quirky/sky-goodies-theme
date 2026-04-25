@@ -1879,6 +1879,7 @@
         "r-2",
         "r-3"
       ],
+      "disabled": true,
       "settings": {
         "rating": "4.9",
         "rating_subtext": "12,400+ verified reviews",
