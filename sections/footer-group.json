@@ -144,8 +144,8 @@
               "type": "menu",
               "name": "t:names.menu",
               "settings": {
-                "menu": "footer",
-                "heading": "Menu",
+                "menu": "policies",
+                "heading": "Policies",
                 "menu_spacing": 12,
                 "show_as_accordion": true,
                 "accordion_icon": "caret",
