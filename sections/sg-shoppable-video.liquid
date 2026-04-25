@@ -45,7 +45,13 @@
           {%- assign has_video_url = true -%}
         {%- endif -%}
       {%- endif -%}
-      <div class="sg-vid-card{% if has_video_file or has_video_url %} sg-vid-card--has-video{% endif %}"
+      {%- assign card_link = '' -%}
+      {%- if product != blank -%}
+        {%- assign card_link = product.url -%}
+      {%- elsif block.settings.product_url != blank -%}
+        {%- assign card_link = block.settings.product_url -%}
+      {%- endif -%}
+      <{% if card_link != '' %}a href="{{ card_link }}"{% else %}div{% endif %} class="sg-vid-card{% if has_video_file or has_video_url %} sg-vid-card--has-video{% endif %}"
            {% if poster_url != '' %}style="background-image: url('{{ poster_url }}');"{% endif %}
            {{ block.shopify_attributes }}>
         {%- if has_video_file -%}
@@ -68,13 +74,13 @@
         {%- endif -%}
         <div class="sg-vid-info">
           {%- if product != blank -%}
-            <a href="{{ product.url }}" class="sg-vid-prod">
+            <div class="sg-vid-prod">
               {%- if product.featured_image -%}
                 <img src="{{ product.featured_image | image_url: width: 80 }}" alt="{{ product.title | escape }}"/>
               {%- endif -%}
               <span>{{ product.title | truncate: 20 }}</span>
               <span class="p">₹{{ product.price | money_without_currency | remove: '.00' | remove: ',' }}</span>
-            </a>
+            </div>
           {%- elsif block.settings.product_label != blank -%}
             <div class="sg-vid-prod">
               {%- if block.settings.thumbnail -%}
@@ -88,7 +94,7 @@
             <div class="sg-vid-title">{{ block.settings.caption }}</div>
           {%- endif -%}
         </div>
-      </div>
+      </{% if card_link != '' %}a{% else %}div{% endif %}>
     {%- endfor -%}
   </div>
 </section>
@@ -119,7 +125,11 @@
   background-color: var(--sg-paper-2);
   cursor: pointer;
   transition: transform .2s;
+  text-decoration: none;
+  color: inherit;
+  display: block;
 }
+a.sg-vid-card { color: inherit; }
 @media (min-width: 700px) { .sg-vid-card { flex: 0 0 28%; } }
 @media (min-width: 1100px) { .sg-vid-card { flex: 0 0 19%; } }
 .sg-vid-card:hover { transform: translateY(-3px); }
@@ -237,7 +247,8 @@
         { "type": "image_picker", "id": "thumbnail", "label": "Poster image (9:16 recommended)" },
         { "type": "video", "id": "video_file", "label": "Video file (Shopify upload — autoplays)" },
         { "type": "url", "id": "video_url", "label": "Or paste a direct .mp4 / .webm URL (autoplays). YouTube/Vimeo links are NOT supported here." },
-        { "type": "product", "id": "product", "label": "Tagged product" },
+        { "type": "product", "id": "product", "label": "Tagged product (entire card links to it)" },
+        { "type": "url", "id": "product_url", "label": "Or paste a custom link (used if no product selected)" },
         { "type": "text", "id": "product_label", "label": "Product label (if no product picked)" },
         { "type": "text", "id": "product_price", "label": "Product price override" },
         { "type": "text", "id": "likes", "label": "Like count label", "default": "1.2K" },

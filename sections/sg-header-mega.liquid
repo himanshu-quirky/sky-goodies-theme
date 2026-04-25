@@ -3,345 +3,645 @@
 {%- assign menu_handle = section.settings.menu | default: 'main-menu' -%}
 {%- assign main_menu = linklists[menu_handle] -%}
 
-{%- style -%}
-  .sg-hdr-{{ section.id }} {
-    background: {{ section.settings.bg_color | default: '#FFFFFF' }};
-    position: {% if section.settings.sticky %}sticky{% else %}relative{% endif %};
-    top: 0;
-    z-index: 80;
-    border-bottom: 1px solid var(--sg-line);
-  }
-{%- endstyle -%}
+<header class="sg-root sg-hdr-{{ section.id }}{% if section.settings.sticky %} is-sticky{% endif %}">
+  <div class="sg-hdr__inner">
 
-<header class="sg-root sg-hdr-{{ section.id }}" data-sg-header {{ section.shopify_attributes }}>
-  <div class="sg-hdr-top">
-    <div class="sg-hdr-left">
-      <a href="#" class="sg-hdr-search" data-sg-search-trigger><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7"><circle cx="11" cy="11" r="7"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>Search</a>
-    </div>
+    {%- comment -%} ===== TOP ROW ===== {%- endcomment -%}
+    <div class="sg-hdr__top">
 
-    <a href="{{ routes.root_url }}" class="sg-hdr-logo" aria-label="{{ shop.name }}">
-      {%- if section.settings.logo -%}
-        <img src="{{ section.settings.logo | image_url: width: 240 }}" alt="{{ shop.name | escape }}"/>
-      {%- else -%}
-        <span class="sg-hdr-wordmark">{{ shop.name }}</span>
-      {%- endif -%}
-    </a>
-
-    <div class="sg-hdr-right">
-      <a href="{{ routes.account_url }}" class="sg-hdr-icon" aria-label="Account"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg></a>
-      {%- if section.settings.show_wishlist -%}
-        <a href="#" class="sg-hdr-icon" aria-label="Wishlist" data-sg-wishlist><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg></a>
-      {%- endif -%}
-      <a href="#" class="sg-hdr-icon" aria-label="Cart" data-sg-cart-open>
-        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7"><path d="M6 2 3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4z"/><line x1="3" y1="6" x2="21" y2="6"/><path d="M16 10a4 4 0 0 1-8 0"/></svg>
-        <span class="sg-hdr-count" data-sg-cart-count>{{ cart.item_count }}</span>
-      </a>
-    </div>
-  </div>
-
-  {%- if main_menu.links.size > 0 or section.blocks.size > 0 -%}
-  <nav class="sg-hdr-nav">
-    <div class="sg-hdr-nav-in">
-      {%- for link in main_menu.links -%}
-        {%- assign has_children = false -%}
-        {%- if link.links.size > 0 -%}{%- assign has_children = true -%}{%- endif -%}
-
-        {%- assign matching_feature_block = null -%}
-        {%- for block in section.blocks -%}
-          {%- if block.type == 'mega_feature' and block.settings.menu_label == link.title -%}
-            {%- assign matching_feature_block = block -%}
-          {%- endif -%}
-        {%- endfor -%}
-
-        {%- assign item_class = 'sg-nav-item' -%}
-        {%- if link.title contains "Mother" or link.title contains 'Mom' -%}
-          {%- assign item_class = 'sg-nav-item sg-special' -%}
-        {%- elsif link.title contains 'Sale' -%}
-          {%- assign item_class = 'sg-nav-item sg-sale' -%}
+      {%- comment -%} LEFT: search {%- endcomment -%}
+      <div class="sg-hdr__left">
+        {%- if section.settings.show_search -%}
+          <form action="{{ routes.search_url }}" method="get" role="search" class="sg-search">
+            <button type="submit" class="sg-search__btn" aria-label="Search">
+              <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                <circle cx="11" cy="11" r="7"/>
+                <line x1="21" y1="21" x2="16.65" y2="16.65"/>
+              </svg>
+            </button>
+            <input type="search" name="q" class="sg-search__input" placeholder="Search…" aria-label="Search products">
+          </form>
         {%- endif -%}
 
-        <div class="{{ item_class }}">
-          <a href="{{ link.url }}">{{ link.title }}{% if has_children %} <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="6 9 12 15 18 9"/></svg>{% endif %}</a>
-          {%- if has_children -%}
-            <div class="sg-mega">
-              <div class="sg-mega-grid">
-                {%- assign col_count = 0 -%}
-                {%- for child in link.links -%}
-                  {%- if child.links.size > 0 -%}
-                    {%- assign col_count = col_count | plus: 1 -%}
-                    {%- if col_count <= 3 -%}
-                      <div class="sg-mega-col">
-                        <h5>{{ child.title }}</h5>
-                        <ul>
-                          {%- for sub in child.links -%}
-                            <li><a href="{{ sub.url }}">{{ sub.title }}</a></li>
-                          {%- endfor -%}
-                        </ul>
-                      </div>
-                    {%- endif -%}
-                  {%- endif -%}
-                {%- endfor -%}
+        <button type="button" class="sg-hdr__hamburger" aria-label="Open menu" aria-expanded="false" data-sg-nav-toggle>
+          <svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true">
+            <line x1="3" y1="6" x2="21" y2="6"/>
+            <line x1="3" y1="12" x2="21" y2="12"/>
+            <line x1="3" y1="18" x2="21" y2="18"/>
+          </svg>
+        </button>
+      </div>
 
-                {%- comment -%} If no sub-children exist, treat top-level children as a single column list {%- endcomment -%}
-                {%- if col_count == 0 -%}
-                  <div class="sg-mega-col">
-                    <h5>{{ link.title }}</h5>
-                    <ul>
-                      {%- for child in link.links -%}
-                        <li><a href="{{ child.url }}">{{ child.title }}</a></li>
-                      {%- endfor -%}
-                    </ul>
-                  </div>
-                {%- endif -%}
-
-                {%- comment -%} Render up to 2 mega feature cards for this menu link {%- endcomment -%}
-                {%- assign feat_count = 0 -%}
-                {%- for block in section.blocks -%}
-                  {%- if block.type == 'mega_feature' and block.settings.menu_label == link.title and feat_count < 2 -%}
-                    {%- assign feat_count = feat_count | plus: 1 -%}
-                    <a class="sg-mega-feat" href="{{ block.settings.link | default: '#' }}"
-                       {% if block.settings.image %}style="background-image: url('{{ block.settings.image | image_url: width: 600 }}');"{% endif %}>
-                      <small>{{ block.settings.tag | default: 'featured' }}</small>
-                      <h4>{{ block.settings.title }}</h4>
-                      <span class="go">Shop now →</span>
-                    </a>
-                  {%- endif -%}
-                {%- endfor -%}
-              </div>
-            </div>
+      {%- comment -%} CENTER: logo {%- endcomment -%}
+      <div class="sg-hdr__center">
+        <a href="{{ routes.root_url }}" class="sg-hdr__logo" aria-label="{{ shop.name | escape }}">
+          {%- if section.settings.logo != blank -%}
+            {{ section.settings.logo | image_url: width: 480 | image_tag: loading: 'eager', alt: shop.name, class: 'sg-hdr__logo-img' }}
+          {%- else -%}
+            <h2 class="sg-hdr__logo-text">{{ shop.name | escape }}</h2>
           {%- endif -%}
-        </div>
-      {%- endfor -%}
+        </a>
+      </div>
+
+      {%- comment -%} RIGHT: account + cart {%- endcomment -%}
+      <div class="sg-hdr__right">
+        {%- if section.settings.show_account -%}
+          <a href="{% if shop.customer_accounts_enabled %}{{ routes.account_url }}{% else %}{{ routes.account_login_url }}{% endif %}" class="sg-hdr__icon" aria-label="Account">
+            <svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+              <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/>
+              <circle cx="12" cy="7" r="4"/>
+            </svg>
+          </a>
+        {%- endif -%}
+
+        {%- if section.settings.show_cart -%}
+          <a href="{{ routes.cart_url }}" class="sg-hdr__icon sg-hdr__cart" aria-label="Cart" data-sg-cart-open>
+            <svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+              <circle cx="9" cy="21" r="1"/>
+              <circle cx="20" cy="21" r="1"/>
+              <path d="M1 1h4l2.68 13.39a2 2 0 0 0 2 1.61h9.72a2 2 0 0 0 2-1.61L23 6H6"/>
+            </svg>
+            <span class="sg-hdr__bubble{% if cart.item_count == 0 %} is-empty{% endif %}" aria-hidden="true">{{ cart.item_count }}</span>
+          </a>
+        {%- endif -%}
+      </div>
+
     </div>
-  </nav>
-  {%- endif -%}
+
+    {%- comment -%} ===== DIVIDER ===== {%- endcomment -%}
+    <div class="sg-hdr__divider" role="presentation"></div>
+
+    {%- comment -%} ===== BOTTOM ROW ===== {%- endcomment -%}
+    <nav class="sg-hdr__nav" aria-label="Primary">
+      <ul class="sg-nav">
+        {%- for link in main_menu.links -%}
+          {%- assign has_children = false -%}
+          {%- if link.links.size > 0 -%}{%- assign has_children = true -%}{%- endif -%}
+
+          {%- assign feat_count = 0 -%}
+          {%- for block in section.blocks -%}
+            {%- if block.type == 'mega_feature' and block.settings.menu_label == link.title -%}
+              {%- assign feat_count = feat_count | plus: 1 -%}
+            {%- endif -%}
+          {%- endfor -%}
+
+          {%- assign has_mega = false -%}
+          {%- if has_children or feat_count > 0 -%}{%- assign has_mega = true -%}{%- endif -%}
+
+          <li class="sg-nav__item{% if has_mega %} has-mega{% endif %}">
+            <a href="{{ link.url }}" class="sg-nav__link">
+              <span>{{ link.title | escape }}</span>
+              {%- if has_mega -%}
+                <svg class="sg-nav__chev" viewBox="0 0 24 24" width="12" height="12" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                  <polyline points="6 9 12 15 18 9"/>
+                </svg>
+              {%- endif -%}
+            </a>
+
+            {%- if has_mega -%}
+              <div class="sg-mega" role="region" aria-label="{{ link.title | escape }} menu">
+                <div class="sg-mega__grid">
+
+                  {%- comment -%} Cols 1 + 2: text columns from first 2 children {%- endcomment -%}
+                  {%- assign col_idx = 0 -%}
+                  {%- for child in link.links -%}
+                    {%- if col_idx < 2 -%}
+                      <div class="sg-mega__col">
+                        <h5 class="sg-mega__heading">{{ child.title | escape }}</h5>
+                        {%- if child.links.size > 0 -%}
+                          <ul class="sg-mega__list">
+                            {%- for grand in child.links -%}
+                              <li><a href="{{ grand.url }}">{{ grand.title | escape }}</a></li>
+                            {%- endfor -%}
+                          </ul>
+                        {%- else -%}
+                          <ul class="sg-mega__list">
+                            <li><a href="{{ child.url }}">View all</a></li>
+                          </ul>
+                        {%- endif -%}
+                      </div>
+                      {%- assign col_idx = col_idx | plus: 1 -%}
+                    {%- endif -%}
+                  {%- endfor -%}
+
+                  {%- comment -%} Fill empty text cols if fewer than 2 children {%- endcomment -%}
+                  {%- for i in (col_idx..1) -%}
+                    {%- if col_idx < 2 -%}
+                      <div class="sg-mega__col sg-mega__col--empty" aria-hidden="true"></div>
+                      {%- assign col_idx = col_idx | plus: 1 -%}
+                    {%- endif -%}
+                  {%- endfor -%}
+
+                  {%- comment -%} Cols 3 + 4: feature blocks (limit 2) {%- endcomment -%}
+                  {%- assign feat_idx = 0 -%}
+                  {%- for block in section.blocks -%}
+                    {%- if block.type == 'mega_feature' and block.settings.menu_label == link.title and feat_idx < 2 -%}
+                      <a class="sg-mega__feat"
+                         href="{{ block.settings.link | default: link.url }}"
+                         {{ block.shopify_attributes }}
+                         {%- if block.settings.image != blank %} style="background-image:url('{{ block.settings.image | image_url: width: 600 }}');"{% endif -%}
+                      >
+                        <div class="sg-mega__feat-overlay" aria-hidden="true"></div>
+                        <div class="sg-mega__feat-body">
+                          {%- if block.settings.tag != blank -%}
+                            <small class="sg-mega__feat-tag">{{ block.settings.tag | escape }}</small>
+                          {%- endif -%}
+                          {%- if block.settings.title != blank -%}
+                            <h4 class="sg-mega__feat-title">{{ block.settings.title | escape }}</h4>
+                          {%- endif -%}
+                          <span class="sg-mega__feat-go">Shop now →</span>
+                        </div>
+                      </a>
+                      {%- assign feat_idx = feat_idx | plus: 1 -%}
+                    {%- endif -%}
+                  {%- endfor -%}
+
+                </div>
+              </div>
+            {%- endif -%}
+          </li>
+        {%- endfor -%}
+      </ul>
+    </nav>
+
+  </div>
 </header>
 
 <style>
-.sg-hdr-top {
-  max-width: var(--sg-container);
-  margin: 0 auto;
-  padding: 18px var(--sg-gutter);
-  display: grid;
-  grid-template-columns: 1fr auto 1fr;
-  align-items: center;
-  gap: 20px;
-}
-.sg-hdr-left {
-  display: none;
-  gap: 20px;
-  align-items: center;
-}
-@media (min-width: 900px) { .sg-hdr-left { display: flex; } }
-.sg-hdr-search {
-  display: inline-flex;
-  align-items: center;
-  gap: 8px;
-  font-size: 12.5px;
-  font-weight: 600;
-  letter-spacing: 0.12em;
-  text-transform: uppercase;
-  color: var(--sg-brown);
-  transition: color .15s;
-}
-.sg-hdr-search svg { width: 17px; height: 17px; }
-.sg-hdr-search:hover { color: var(--sg-orange-dk); }
+  .sg-hdr-{{ section.id }} {
+    background: {{ section.settings.bg_color }};
+    color: {{ section.settings.text_color }};
+    font-family: var(--sg-sans, 'Inter', sans-serif);
+    position: relative;
+    z-index: 50;
+  }
+  .sg-hdr-{{ section.id }}.is-sticky {
+    position: sticky;
+    top: 0;
+  }
+  .sg-hdr-{{ section.id }} .sg-hdr__inner {
+    max-width: 1280px;
+    margin: 0 auto;
+    padding: 0 28px;
+  }
+  .sg-hdr-{{ section.id }} .sg-hdr__top {
+    display: grid;
+    grid-template-columns: 1fr auto 1fr;
+    align-items: center;
+    height: 64px;
+    gap: 16px;
+  }
+  .sg-hdr-{{ section.id }} .sg-hdr__left {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    justify-self: start;
+  }
+  .sg-hdr-{{ section.id }} .sg-hdr__center {
+    justify-self: center;
+  }
+  .sg-hdr-{{ section.id }} .sg-hdr__right {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    justify-self: end;
+    color: var(--sg-ink, #4A3D2F);
+  }
+  .sg-hdr-{{ section.id }} .sg-hdr__logo {
+    display: inline-flex;
+    align-items: center;
+    text-decoration: none;
+    color: inherit;
+  }
+  .sg-hdr-{{ section.id }} .sg-hdr__logo-img {
+    max-height: 36px;
+    width: auto;
+    display: block;
+  }
+  .sg-hdr-{{ section.id }} .sg-hdr__logo-text {
+    margin: 0;
+    font-family: var(--sg-display, 'Fraunces', serif);
+    font-style: italic;
+    font-weight: 500;
+    font-size: 22px;
+    color: var(--sg-ink, #4A3D2F);
+    letter-spacing: -0.01em;
+  }
+  .sg-hdr-{{ section.id }} .sg-search {
+    position: relative;
+    display: flex;
+    align-items: center;
+  }
+  .sg-hdr-{{ section.id }} .sg-search__input {
+    width: 250px;
+    height: 38px;
+    border-radius: var(--sg-r-pill, 100px);
+    border: 1px solid var(--sg-line, #ECE3D0);
+    background: #FBF7EE;
+    padding: 0 16px 0 40px;
+    font: inherit;
+    font-size: 13.5px;
+    color: var(--sg-ink, #4A3D2F);
+    outline: none;
+    transition: width .25s ease, box-shadow .25s ease, background .25s ease;
+  }
+  .sg-hdr-{{ section.id }} .sg-search__input:hover,
+  .sg-hdr-{{ section.id }} .sg-search__input:focus {
+    width: 320px;
+    background: #fff;
+    box-shadow: 0 0 0 3px rgba(194,86,43,.08);
+  }
+  .sg-hdr-{{ section.id }} .sg-search__btn {
+    position: absolute;
+    left: 12px;
+    top: 50%;
+    transform: translateY(-50%);
+    background: transparent;
+    border: 0;
+    padding: 0;
+    color: var(--sg-brown, #6F5840);
+    cursor: pointer;
+    display: inline-flex;
+  }
+  .sg-hdr-{{ section.id }} .sg-hdr__icon {
+    position: relative;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 38px;
+    height: 38px;
+    border-radius: 50%;
+    color: var(--sg-ink, #4A3D2F);
+    text-decoration: none;
+    transition: background .2s ease, color .2s ease;
+  }
+  .sg-hdr-{{ section.id }} .sg-hdr__icon:hover {
+    background: #FBF7EE;
+    color: var(--sg-terra, #C2562B);
+  }
+  .sg-hdr-{{ section.id }} .sg-hdr__bubble {
+    position: absolute;
+    top: 2px;
+    right: 0;
+    min-width: 18px;
+    height: 18px;
+    padding: 0 5px;
+    border-radius: 100px;
+    background: var(--sg-terra, #C2562B);
+    color: #fff;
+    font-size: 10.5px;
+    font-weight: 600;
+    line-height: 18px;
+    text-align: center;
+  }
+  .sg-hdr-{{ section.id }} .sg-hdr__bubble.is-empty {
+    display: none;
+  }
+  .sg-hdr-{{ section.id }} .sg-hdr__hamburger {
+    display: none;
+    background: transparent;
+    border: 0;
+    padding: 6px;
+    cursor: pointer;
+    color: var(--sg-ink, #4A3D2F);
+  }
+  .sg-hdr-{{ section.id }} .sg-hdr__divider {
+    height: 1px;
+    background: {{ section.settings.divider_color }};
+    width: 100%;
+  }
 
-.sg-hdr-logo { justify-self: center; }
-.sg-hdr-logo img { height: 62px; width: auto; max-width: 220px; }
-@media (min-width: 768px) { .sg-hdr-logo img { height: 76px; max-width: 260px; } }
-.sg-hdr-wordmark {
-  font-family: var(--sg-display);
-  font-style: italic;
-  font-weight: 500;
-  font-size: 32px;
-  color: var(--sg-orange-dk);
-}
+  /* ===== Bottom nav ===== */
+  .sg-hdr-{{ section.id }} .sg-hdr__nav {
+    display: flex;
+    justify-content: center;
+    padding-block: 32px;
+  }
+  .sg-hdr-{{ section.id }} .sg-nav {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    align-items: center;
+    gap: 24px;
+  }
+  .sg-hdr-{{ section.id }} .sg-nav__item {
+    position: relative;
+  }
+  .sg-hdr-{{ section.id }} .sg-nav__link {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    font-family: var(--sg-display, 'Fraunces', serif);
+    font-style: italic;
+    font-weight: 500;
+    font-size: 16px;
+    color: var(--sg-ink, #4A3D2F);
+    text-decoration: none;
+    padding: 8px 4px;
+    transition: color .2s ease;
+  }
+  .sg-hdr-{{ section.id }} .sg-nav__item:hover .sg-nav__link,
+  .sg-hdr-{{ section.id }} .sg-nav__item:focus-within .sg-nav__link {
+    color: var(--sg-terra, #C2562B);
+  }
+  .sg-hdr-{{ section.id }} .sg-nav__chev {
+    transition: transform .2s ease;
+  }
+  .sg-hdr-{{ section.id }} .sg-nav__item:hover .sg-nav__chev,
+  .sg-hdr-{{ section.id }} .sg-nav__item:focus-within .sg-nav__chev {
+    transform: rotate(180deg);
+  }
 
-.sg-hdr-right {
-  display: flex;
-  gap: 14px;
-  justify-self: end;
-  align-items: center;
-}
-.sg-hdr-icon {
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  width: 40px; height: 40px;
-  border-radius: 50%;
-  color: var(--sg-brown);
-  transition: all .15s;
-  position: relative;
-}
-.sg-hdr-icon:hover { background: var(--sg-peach); color: var(--sg-orange-dk); }
-.sg-hdr-icon svg { width: 20px; height: 20px; }
-.sg-hdr-count {
-  position: absolute;
-  top: 4px; right: 3px;
-  width: 18px; height: 18px;
-  background: var(--sg-orange);
-  color: #fff;
-  border-radius: 50%;
-  font-size: 10px;
-  font-weight: 700;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  border: 2px solid var(--sg-white);
-  font-family: var(--sg-sans);
-}
+  /* ===== Mega menu ===== */
+  .sg-hdr-{{ section.id }} .sg-mega {
+    position: absolute;
+    top: 100%;
+    left: 50%;
+    transform: translateX(-50%) translateY(-4px);
+    width: min(980px, 95vw);
+    background: #fff;
+    border: 1px solid var(--sg-line, #ECE3D0);
+    border-radius: 0 0 var(--sg-r-md, 14px) var(--sg-r-md, 14px);
+    padding: 32px;
+    box-shadow: 0 20px 40px -14px rgba(26,22,20,.15);
+    opacity: 0;
+    visibility: hidden;
+    pointer-events: none;
+    transition: opacity .22s ease, transform .22s ease, visibility .22s ease;
+    z-index: 60;
+  }
+  .sg-hdr-{{ section.id }} .sg-nav__item.has-mega:hover .sg-mega,
+  .sg-hdr-{{ section.id }} .sg-nav__item.has-mega:focus-within .sg-mega {
+    opacity: 1;
+    visibility: visible;
+    pointer-events: auto;
+    transform: translateX(-50%) translateY(0);
+  }
+  .sg-hdr-{{ section.id }} .sg-mega__grid {
+    display: grid;
+    grid-template-columns: 1.2fr 1.2fr 1.3fr 1.3fr;
+    gap: 28px;
+  }
+  .sg-hdr-{{ section.id }} .sg-mega__col--empty {
+    visibility: hidden;
+  }
+  .sg-hdr-{{ section.id }} .sg-mega__heading {
+    margin: 0 0 14px 0;
+    padding-bottom: 10px;
+    border-bottom: 1px solid var(--sg-line, #ECE3D0);
+    font-family: var(--sg-display, 'Fraunces', serif);
+    font-style: italic;
+    font-weight: 500;
+    font-size: 14px;
+    color: var(--sg-terra, #C2562B);
+    letter-spacing: 0;
+  }
+  .sg-hdr-{{ section.id }} .sg-mega__list {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    flex-direction: column;
+    gap: 9px;
+  }
+  .sg-hdr-{{ section.id }} .sg-mega__list a {
+    font-family: var(--sg-sans, 'Inter', sans-serif);
+    font-size: 13.5px;
+    font-weight: 500;
+    color: var(--sg-brown, #6F5840);
+    text-decoration: none;
+    text-transform: none;
+    display: inline-block;
+    transition: color .18s ease, transform .18s ease;
+  }
+  .sg-hdr-{{ section.id }} .sg-mega__list a:hover {
+    color: #D26939;
+    transform: translateX(3px);
+  }
 
-.sg-hdr-nav {
-  border-top: 1px solid var(--sg-line);
-  background: inherit;
-}
-.sg-hdr-nav-in {
-  max-width: var(--sg-container);
-  margin: 0 auto;
-  padding: 0 var(--sg-gutter);
-  display: none;
-  gap: 36px;
-  justify-content: center;
-  align-items: stretch;
-}
-@media (min-width: 1000px) { .sg-hdr-nav-in { display: flex; } }
-.sg-nav-item { position: relative; padding: 14px 0; }
-.sg-nav-item > a {
-  font-family: var(--sg-sans);
-  font-size: 13.5px;
-  font-weight: 500;
-  color: var(--sg-brown);
-  transition: color .15s;
-  display: inline-flex;
-  align-items: center;
-  gap: 5px;
-}
-.sg-nav-item > a:hover { color: var(--sg-orange-dk); }
-.sg-nav-item.sg-special > a { color: var(--sg-terra); font-weight: 600; }
-.sg-nav-item.sg-sale > a { color: var(--sg-terra); }
-.sg-nav-item > a svg { width: 10px; height: 10px; opacity: 0.5; transition: transform .2s; }
-.sg-nav-item:hover > a svg { transform: rotate(180deg); }
+  /* Feature card */
+  .sg-hdr-{{ section.id }} .sg-mega__feat {
+    position: relative;
+    display: block;
+    aspect-ratio: 4 / 5;
+    border-radius: var(--sg-r-md, 14px);
+    overflow: hidden;
+    background-size: cover;
+    background-position: center;
+    background-color: #f1ebdf;
+    text-decoration: none;
+    color: #fff;
+  }
+  .sg-hdr-{{ section.id }} .sg-mega__feat-overlay {
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(180deg, rgba(26,22,20,0) 45%, rgba(26,22,20,.75) 100%);
+    pointer-events: none;
+  }
+  .sg-hdr-{{ section.id }} .sg-mega__feat-body {
+    position: absolute;
+    left: 16px;
+    right: 16px;
+    bottom: 16px;
+    color: #fff;
+  }
+  .sg-hdr-{{ section.id }} .sg-mega__feat-tag {
+    display: block;
+    font-family: var(--sg-script, 'Dancing Script', cursive);
+    font-size: 17px;
+    color: #F5A67A;
+    margin-bottom: 2px;
+    line-height: 1;
+  }
+  .sg-hdr-{{ section.id }} .sg-mega__feat-title {
+    margin: 0 0 6px 0;
+    font-family: var(--sg-display, 'Fraunces', serif);
+    font-style: italic;
+    font-weight: 500;
+    font-size: 19px;
+    color: #fff;
+    line-height: 1.15;
+  }
+  .sg-hdr-{{ section.id }} .sg-mega__feat-go {
+    font-family: var(--sg-sans, 'Inter', sans-serif);
+    font-size: 11px;
+    font-weight: 600;
+    color: var(--sg-butter, #F0D288);
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+  }
 
-/* Mega */
-.sg-mega {
-  position: absolute;
-  top: calc(100% - 1px);
-  left: 50%;
-  transform: translateX(-50%) translateY(-4px);
-  width: min(980px, 95vw);
-  background: var(--sg-white);
-  border: 1px solid var(--sg-line);
-  border-top: none;
-  border-radius: 0 0 var(--sg-r-md) var(--sg-r-md);
-  box-shadow: 0 20px 40px -14px rgba(26,22,20,.15);
-  padding: 32px;
-  opacity: 0;
-  visibility: hidden;
-  pointer-events: none;
-  transition: all .22s var(--sg-ease);
-  z-index: 95;
-}
-.sg-nav-item:hover .sg-mega,
-.sg-nav-item:focus-within .sg-mega {
-  opacity: 1; visibility: visible; pointer-events: auto;
-  transform: translateX(-50%) translateY(0);
-}
-.sg-mega-grid {
-  display: grid;
-  grid-template-columns: 1.2fr 1.2fr 1.3fr 1.3fr;
-  gap: 28px;
-}
-.sg-mega-col h5 {
-  font-family: var(--sg-display);
-  font-style: italic;
-  font-weight: 500;
-  font-size: 14px;
-  color: var(--sg-terra);
-  margin-bottom: 14px;
-  padding-bottom: 10px;
-  border-bottom: 1px solid var(--sg-line);
-}
-.sg-mega-col ul { list-style: none; display: flex; flex-direction: column; gap: 9px; }
-.sg-mega-col a {
-  font-size: 13.5px;
-  font-weight: 500;
-  color: var(--sg-brown);
-  transition: color .15s, transform .15s;
-  display: inline-block;
-}
-.sg-mega-col a:hover { color: var(--sg-orange-dk); transform: translateX(3px); }
-.sg-mega-feat {
-  aspect-ratio: 4/5;
-  border-radius: var(--sg-r-md);
-  overflow: hidden;
-  background-size: cover;
-  background-position: center;
-  background-color: var(--sg-peach);
-  position: relative;
-  display: flex;
-  flex-direction: column;
-  justify-content: flex-end;
-  padding: 16px;
-  color: #fff;
-  transition: transform .2s;
-  text-decoration: none;
-}
-.sg-mega-feat:hover { transform: translateY(-3px); }
-.sg-mega-feat::after { content: ''; position: absolute; inset: 0; background: linear-gradient(180deg, transparent 45%, rgba(26,22,20,.75)); }
-.sg-mega-feat > * { position: relative; z-index: 2; }
-.sg-mega-feat small {
-  font-family: var(--sg-script);
-  font-size: 17px;
-  color: var(--sg-orange-soft);
-  margin-bottom: 2px;
-}
-.sg-mega-feat h4 {
-  font-family: var(--sg-display);
-  font-style: italic;
-  font-weight: 400;
-  font-size: 19px;
-  color: #fff;
-  line-height: 1.15;
-  margin-bottom: 6px;
-}
-.sg-mega-feat .go {
-  font-size: 11px;
-  font-weight: 600;
-  color: var(--sg-butter);
-  letter-spacing: 0.1em;
-  text-transform: uppercase;
-}
+  /* ===== Mobile ===== */
+  @media (max-width: 900px) {
+    .sg-hdr-{{ section.id }} .sg-hdr__top {
+      grid-template-columns: auto 1fr auto;
+    }
+    .sg-hdr-{{ section.id }} .sg-search {
+      display: none;
+    }
+    .sg-hdr-{{ section.id }} .sg-hdr__hamburger {
+      display: inline-flex;
+    }
+    .sg-hdr-{{ section.id }} .sg-hdr__nav {
+      display: none;
+      padding-block: 16px;
+    }
+    .sg-hdr-{{ section.id }} .sg-hdr__nav.is-open {
+      display: flex;
+    }
+    .sg-hdr-{{ section.id }} .sg-nav {
+      flex-direction: column;
+      align-items: stretch;
+      width: 100%;
+      gap: 4px;
+    }
+    .sg-hdr-{{ section.id }} .sg-nav__link {
+      padding: 12px 4px;
+      font-size: 18px;
+    }
+    .sg-hdr-{{ section.id }} .sg-mega {
+      position: static;
+      transform: none;
+      width: 100%;
+      box-shadow: none;
+      border: 0;
+      padding: 12px 0 20px;
+      opacity: 1;
+      visibility: visible;
+      pointer-events: auto;
+      display: none;
+    }
+    .sg-hdr-{{ section.id }} .sg-nav__item.has-mega:hover .sg-mega,
+    .sg-hdr-{{ section.id }} .sg-nav__item.has-mega:focus-within .sg-mega {
+      transform: none;
+      display: block;
+    }
+    .sg-hdr-{{ section.id }} .sg-mega__grid {
+      grid-template-columns: 1fr;
+      gap: 16px;
+    }
+  }
 </style>
+
+<script>
+  (function () {
+    var root = document.querySelector('.sg-hdr-{{ section.id }}');
+    if (!root) return;
+    var btn = root.querySelector('[data-sg-nav-toggle]');
+    var nav = root.querySelector('.sg-hdr__nav');
+    if (btn && nav) {
+      btn.addEventListener('click', function () {
+        var open = nav.classList.toggle('is-open');
+        btn.setAttribute('aria-expanded', open ? 'true' : 'false');
+      });
+    }
+  })();
+</script>
 
 {% schema %}
 {
-  "name": "SG — Header (Mega Menu)",
+  "name": "SG Header (Mega)",
   "tag": "header",
-  "class": "section-sg-header-mega",
+  "class": "sg-section-header",
   "settings": [
-    { "type": "image_picker", "id": "logo", "label": "Logo image" },
-    { "type": "link_list", "id": "menu", "label": "Main menu", "default": "main-menu" },
-    { "type": "color", "id": "bg_color", "label": "Background", "default": "#FFFFFF" },
-    { "type": "checkbox", "id": "sticky", "label": "Sticky on scroll", "default": true },
-    { "type": "checkbox", "id": "show_wishlist", "label": "Show wishlist icon (for Wishlist Hero app)", "default": true }
+    {
+      "type": "image_picker",
+      "id": "logo",
+      "label": "Logo (falls back to shop name)"
+    },
+    {
+      "type": "link_list",
+      "id": "menu",
+      "label": "Menu",
+      "default": "main-menu"
+    },
+    {
+      "type": "color",
+      "id": "bg_color",
+      "label": "Background color",
+      "default": "#FFFFFF"
+    },
+    {
+      "type": "color",
+      "id": "text_color",
+      "label": "Text color",
+      "default": "#4A3D2F"
+    },
+    {
+      "type": "color",
+      "id": "divider_color",
+      "label": "Divider color",
+      "default": "#ECE3D0"
+    },
+    {
+      "type": "checkbox",
+      "id": "show_search",
+      "label": "Show search",
+      "default": true
+    },
+    {
+      "type": "checkbox",
+      "id": "show_account",
+      "label": "Show account icon",
+      "default": true
+    },
+    {
+      "type": "checkbox",
+      "id": "show_cart",
+      "label": "Show cart icon",
+      "default": true
+    },
+    {
+      "type": "checkbox",
+      "id": "sticky",
+      "label": "Sticky header",
+      "default": true
+    }
   ],
   "blocks": [
     {
       "type": "mega_feature",
-      "name": "Mega menu feature card",
+      "name": "Mega menu feature",
       "settings": [
-        { "type": "text", "id": "menu_label", "label": "Attach to nav item (title match)", "info": "Must match the menu item title exactly, e.g., 'Paper Kits'" },
-        { "type": "image_picker", "id": "image", "label": "Image" },
-        { "type": "text", "id": "tag", "label": "Tag label (script)", "default": "bestseller" },
-        { "type": "text", "id": "title", "label": "Title", "default": "Featured product" },
-        { "type": "url", "id": "link", "label": "Link" }
+        {
+          "type": "image_picker",
+          "id": "image",
+          "label": "Image"
+        },
+        {
+          "type": "text",
+          "id": "menu_label",
+          "label": "Attach to top-nav item — exact title match",
+          "info": "Must match the top-nav item's title exactly, e.g. 'Paper Kits'"
+        },
+        {
+          "type": "text",
+          "id": "tag",
+          "label": "Small accent tag (e.g. bestseller)"
+        },
+        {
+          "type": "text",
+          "id": "title",
+          "label": "Card title"
+        },
+        {
+          "type": "url",
+          "id": "link",
+          "label": "Link"
+        }
       ]
     }
   ],
   "presets": [
     {
-      "name": "SG — Header (Mega Menu)"
+      "name": "SG Header (Mega)",
+      "blocks": [
+        { "type": "mega_feature" },
+        { "type": "mega_feature" },
+        { "type": "mega_feature" },
+        { "type": "mega_feature" }
+      ]
     }
   ]
 }
