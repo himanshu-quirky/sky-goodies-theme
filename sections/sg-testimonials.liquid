@@ -102,14 +102,31 @@
 .sg-rev-head h2 em { font-style: normal; font-weight: 500; color: var(--sg-terra); }
 
 .sg-rev-grid {
-  max-width: var(--sg-container);
-  margin: 0 auto;
-  padding: 0 var(--sg-gutter);
-  display: grid;
-  grid-template-columns: 1fr;
-  gap: 16px;
+  display: flex;
+  gap: 14px;
+  overflow-x: auto;
+  scrollbar-width: none;
+  scroll-snap-type: x mandatory;
+  padding: 4px 16px 12px;
 }
-@media (min-width: 768px) { .sg-rev-grid { grid-template-columns: repeat(3, 1fr); gap: 22px; } }
+.sg-rev-grid::-webkit-scrollbar { display: none; }
+.sg-rev-grid > .sg-review {
+  flex: 0 0 84%;
+  max-width: 360px;
+  scroll-snap-align: start;
+}
+@media (min-width: 768px) {
+  .sg-rev-grid {
+    max-width: var(--sg-container);
+    margin: 0 auto;
+    padding: 0 var(--sg-gutter);
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 22px;
+    overflow: visible;
+  }
+  .sg-rev-grid > .sg-review { flex: initial; max-width: none; }
+}
 
 .sg-review {
   background: var(--sg-ivory);

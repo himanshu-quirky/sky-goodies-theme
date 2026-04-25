@@ -1,34 +1,13 @@
-/*
- * ------------------------------------------------------------
- * IMPORTANT: The contents of this file are auto-generated.
- *
- * This file may be updated by the Shopify admin theme editor
- * or related systems. Please exercise caution as any changes
- * made to this file may be overwritten.
- * ------------------------------------------------------------
- */
 {
   "name": "Footer",
   "type": "footer",
   "sections": {
-    "sg_footer": {
-      "type": "sg-footer",
-      "blocks": {
-        "col-1": { "type": "column", "settings": { "heading": "Shop" } },
-        "col-2": { "type": "column", "settings": { "heading": "Help", "whatsapp_url": "https://wa.me/919768888688" } },
-        "col-3": { "type": "column", "settings": { "heading": "Sky Goodies" } }
-      },
-      "block_order": ["col-1", "col-2", "col-3"],
-      "settings": {
-        "tagline": "Simple joys in a complex world :)",
-        "description": "Handcrafted paper kits, designed in our Khar, Mumbai studio by NID-trained artists. Since 2013.",
-        "copyright": "© 2026 Sky Goodies Products Pvt Ltd · Handcrafted in Mumbai 🇮🇳",
-        "bottom_right": "Free shipping over ₹1,000 · COD available",
-        "bg_color": "#4A3D2F",
-        "text_color": "#F5EFE3",
-        "accent_color": "#F0D288"
-      }
+    "footer": {
+      "type": "footer",
+      "blocks": {},
+      "block_order": [],
+      "settings": {}
     }
   },
-  "order": ["sg_footer"]
+  "order": ["footer"]
 }

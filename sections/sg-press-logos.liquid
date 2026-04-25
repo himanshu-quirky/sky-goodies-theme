@@ -15,9 +15,15 @@
     <span class="sg-press-label">— {{ section.settings.label }} —</span>
   {%- endif -%}
   <div class="sg-press-logos">
-    {%- for block in section.blocks -%}
-      <span class="{{ block.settings.style }}" {{ block.shopify_attributes }}>{{ block.settings.name }}</span>
-    {%- endfor -%}
+    <div class="sg-press-track">
+      {%- for block in section.blocks -%}
+        <span class="{{ block.settings.style }}" {{ block.shopify_attributes }}>{{ block.settings.name }}</span>
+      {%- endfor -%}
+      {%- comment -%} duplicate set for seamless infinite scroll on mobile {%- endcomment -%}
+      {%- for block in section.blocks -%}
+        <span class="{{ block.settings.style }}" aria-hidden="true">{{ block.settings.name }}</span>
+      {%- endfor -%}
+    </div>
   </div>
 </section>
 
@@ -35,12 +41,35 @@
 .sg-press-logos {
   max-width: var(--sg-container);
   margin: 0 auto;
-  padding: 0 var(--sg-gutter);
+  overflow: hidden;
+  position: relative;
+  -webkit-mask-image: linear-gradient(90deg, transparent, #000 8%, #000 92%, transparent);
+          mask-image: linear-gradient(90deg, transparent, #000 8%, #000 92%, transparent);
+}
+.sg-press-track {
   display: flex;
   gap: 42px;
   align-items: center;
-  justify-content: center;
-  flex-wrap: wrap;
+  width: max-content;
+  animation: sg-press-marquee 28s linear infinite;
+}
+@media (min-width: 900px) {
+  .sg-press-logos {
+    padding: 0 var(--sg-gutter);
+    -webkit-mask-image: none;
+            mask-image: none;
+  }
+  .sg-press-track {
+    width: 100%;
+    justify-content: center;
+    flex-wrap: wrap;
+    animation: none;
+  }
+  .sg-press-track > span[aria-hidden="true"] { display: none; }
+}
+@keyframes sg-press-marquee {
+  0% { transform: translateX(0); }
+  100% { transform: translateX(-50%); }
 }
 .sg-press-logos span {
   font-family: var(--sg-display);

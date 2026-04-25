@@ -29,15 +29,37 @@
   <div class="sg-vid-scroll">
     {%- for block in section.blocks -%}
       {%- assign product = block.settings.product -%}
-      <div class="sg-vid-card" data-sg-video-url="{{ block.settings.video_url }}"
-           {% if block.settings.thumbnail %}style="background-image: url('{{ block.settings.thumbnail | image_url: width: 600 }}');"{% elsif product.featured_image %}style="background-image: url('{{ product.featured_image | image_url: width: 600 }}');"{% endif %}
+      {%- assign video_file = block.settings.video_file -%}
+      {%- assign poster_url = '' -%}
+      {%- if block.settings.thumbnail -%}
+        {%- assign poster_url = block.settings.thumbnail | image_url: width: 600 -%}
+      {%- elsif product.featured_image -%}
+        {%- assign poster_url = product.featured_image | image_url: width: 600 -%}
+      {%- endif -%}
+      <div class="sg-vid-card{% if video_file or block.settings.video_url != blank %} sg-vid-card--has-video{% endif %}"
+           {% if poster_url != '' %}style="background-image: url('{{ poster_url }}');"{% endif %}
            {{ block.shopify_attributes }}>
+        {%- if video_file -%}
+          <video class="sg-vid-media" autoplay muted loop playsinline preload="metadata"
+                 {% if poster_url != '' %}poster="{{ poster_url }}"{% endif %}>
+            {%- for source in video_file.sources -%}
+              <source src="{{ source.url }}" type="{{ source.mime_type }}">
+            {%- endfor -%}
+          </video>
+        {%- elsif block.settings.video_url != blank -%}
+          {%- assign url = block.settings.video_url | downcase -%}
+          {%- if url contains '.mp4' or url contains '.webm' or url contains '.mov' -%}
+            <video class="sg-vid-media" autoplay muted loop playsinline preload="metadata"
+                   {% if poster_url != '' %}poster="{{ poster_url }}"{% endif %}>
+              <source src="{{ block.settings.video_url }}">
+            </video>
+          {%- endif -%}
+        {%- endif -%}
         {%- if block.settings.likes != blank -%}
           <div class="sg-vid-likes">
             <svg viewBox="0 0 24 24" fill="currentColor"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg>{{ block.settings.likes }}
           </div>
         {%- endif -%}
-        <div class="sg-vid-play"><svg viewBox="0 0 24 24" fill="currentColor"><polygon points="5 3 19 12 5 21 5 3"/></svg></div>
         <div class="sg-vid-info">
           {%- if product != blank -%}
             <a href="{{ product.url }}" class="sg-vid-prod">
@@ -95,26 +117,20 @@
 @media (min-width: 700px) { .sg-vid-card { flex: 0 0 28%; } }
 @media (min-width: 1100px) { .sg-vid-card { flex: 0 0 19%; } }
 .sg-vid-card:hover { transform: translateY(-3px); }
+.sg-vid-media {
+  position: absolute; inset: 0;
+  width: 100%; height: 100%;
+  object-fit: cover;
+  z-index: 1;
+}
 .sg-vid-card::after {
   content: '';
   position: absolute; inset: 0;
   background: linear-gradient(180deg, rgba(26,22,20,.15) 0%, transparent 35%, transparent 55%, rgba(26,22,20,.75) 100%);
+  z-index: 2;
+  pointer-events: none;
 }
-.sg-vid-card > * { position: relative; z-index: 2; }
-.sg-vid-play {
-  position: absolute;
-  top: 50%; left: 50%;
-  transform: translate(-50%,-50%);
-  width: 52px; height: 52px;
-  background: rgba(255,253,248,.92);
-  color: var(--sg-ink);
-  border-radius: 50%;
-  display: flex; align-items: center; justify-content: center;
-  backdrop-filter: blur(8px);
-  transition: transform .2s;
-}
-.sg-vid-card:hover .sg-vid-play { transform: translate(-50%,-50%) scale(1.1); }
-.sg-vid-play svg { width: 18px; height: 18px; margin-left: 3px; }
+.sg-vid-card > *:not(.sg-vid-media) { position: relative; z-index: 3; }
 .sg-vid-info {
   position: absolute;
   bottom: 12px; left: 12px; right: 12px;
@@ -187,8 +203,9 @@
       "type": "video",
       "name": "Video",
       "settings": [
-        { "type": "image_picker", "id": "thumbnail", "label": "Video thumbnail (9:16 recommended)" },
-        { "type": "url", "id": "video_url", "label": "Video URL (YouTube / Vimeo / direct MP4)" },
+        { "type": "image_picker", "id": "thumbnail", "label": "Poster image (9:16 recommended)" },
+        { "type": "video", "id": "video_file", "label": "Video file (Shopify upload — autoplays)" },
+        { "type": "url", "id": "video_url", "label": "Or paste a direct .mp4 / .webm URL (autoplays). YouTube/Vimeo links are NOT supported here." },
         { "type": "product", "id": "product", "label": "Tagged product" },
         { "type": "text", "id": "product_label", "label": "Product label (if no product picked)" },
         { "type": "text", "id": "product_price", "label": "Product price override" },

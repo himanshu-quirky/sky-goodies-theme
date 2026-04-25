@@ -42,23 +42,21 @@
 
   {%- if collection.products.size > 0 -%}
     {%- for product in collection.products limit: section.settings.products_to_show -%}
-      {%- assign savings = 0 -%}
+      {%- assign savings_paise = 0 -%}
       {%- if product.compare_at_price > product.price -%}
-        {%- assign savings = product.compare_at_price | minus: product.price -%}
+        {%- assign savings_paise = product.compare_at_price | minus: product.price -%}
       {%- endif -%}
       <article class="sg-prod-card">
-        <div class="sg-prod-img">
+        <a href="{{ product.url }}" class="sg-prod-img">
           <div class="sg-prod-badges">
             {%- if product.tags contains 'bestseller' or product.tags contains 'Bestseller' -%}<span class="sg-prod-badge best">★ Bestseller</span>{%- endif -%}
-            {%- if savings > 0 -%}<span class="sg-prod-badge save">Save ₹{{ savings }}</span>{%- endif -%}
+            {%- if savings_paise > 0 -%}<span class="sg-prod-badge save">Save ₹{{ savings_paise | money_without_currency | remove: '.00' | remove: ',' }}</span>{%- endif -%}
             {%- if product.tags contains 'new' or product.tags contains 'New' -%}<span class="sg-prod-badge new">Just In</span>{%- endif -%}
           </div>
-          <a href="#" class="sg-prod-heart" data-sg-wishlist-toggle data-product-id="{{ product.id }}" aria-label="Save to wishlist"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg></a>
-          <a href="{{ product.url }}"><img src="{{ product.featured_image | image_url: width: 720 }}" alt="{{ product.featured_image.alt | default: product.title | escape }}" loading="lazy" width="720" height="720"/></a>
-          <button class="sg-prod-quick" data-sg-atc data-variant-id="{{ product.selected_or_first_available_variant.id }}" {% unless product.available %}disabled{% endunless %}>
-            {% if product.available %}Quick Add{% else %}Sold Out{% endif %}
-          </button>
-        </div>
+          {%- if product.featured_image -%}
+            <img src="{{ product.featured_image | image_url: width: 720 }}" alt="{{ product.featured_image.alt | default: product.title | escape }}" loading="lazy" width="720" height="720"/>
+          {%- endif -%}
+        </a>
         <div class="sg-prod-rating">
           <span class="stars">★★★★★</span>
           <strong>{{ product.metafields.reviews.rating.value | default: '4.9' }}</strong>
@@ -70,26 +68,33 @@
           <span class="sg-prod-price">₹{{ product.price | money_without_currency | remove: '.00' | remove: ',' }}</span>
           {%- if product.compare_at_price > product.price -%}
             <span class="sg-prod-mrp">₹{{ product.compare_at_price | money_without_currency | remove: '.00' | remove: ',' }}</span>
-            {%- assign pct = savings | times: 100 | divided_by: product.compare_at_price -%}
+            {%- assign pct = savings_paise | times: 100 | divided_by: product.compare_at_price -%}
             <span class="sg-prod-off">-{{ pct }}%</span>
           {%- endif -%}
         </div>
+        {%- if product.available -%}
+          <form class="sg-atc-form" data-sg-atc-form action="/cart/add" method="post">
+            <input type="hidden" name="id" value="{{ product.selected_or_first_available_variant.id }}"/>
+            <input type="hidden" name="quantity" value="1"/>
+            <button type="submit" class="sg-prod-atc">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="9" cy="21" r="1"/><circle cx="20" cy="21" r="1"/><path d="M1 1h4l2.7 13.4a2 2 0 0 0 2 1.6h9.7a2 2 0 0 0 2-1.6L23 6H6"/></svg>
+              Add to Cart
+            </button>
+          </form>
+        {%- else -%}
+          <button class="sg-prod-atc sg-prod-atc--soldout" disabled>Sold Out</button>
+        {%- endif -%}
       </article>
     {%- endfor -%}
   {%- else -%}
     {%- for i in (1..section.settings.products_to_show) -%}
       <article class="sg-prod-card">
-        <div class="sg-prod-img">
-          <div class="sg-prod-badges">
-            {%- if forloop.first -%}<span class="sg-prod-badge best">★ Bestseller</span>{%- endif -%}
-          </div>
-          <a href="#" class="sg-prod-heart"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg></a>
-          <button class="sg-prod-quick">Quick Add</button>
-        </div>
+        <div class="sg-prod-img"></div>
         <div class="sg-prod-rating"><span class="stars">★★★★★</span><strong>4.9</strong> · 100 reviews</div>
         <h3 class="sg-prod-title">Example product {{ forloop.index }}</h3>
         <div class="sg-prod-variants">Connect a collection to show real products</div>
         <div class="sg-prod-price-row"><span class="sg-prod-price">₹999</span></div>
+        <button class="sg-prod-atc" disabled>Add to Cart</button>
       </article>
     {%- endfor -%}
   {%- endif -%}
@@ -112,16 +117,21 @@
   gap: 14px;
   overflow-x: auto;
   scrollbar-width: none;
-  padding: 4px var(--sg-gutter) 12px;
-  max-width: var(--sg-container);
-  margin: 0 auto;
+  padding: 4px 16px 12px;
   scroll-snap-type: x mandatory;
 }
 .sg-fp-scroll::-webkit-scrollbar { display: none; }
-@media (min-width: 700px) { .sg-fp-scroll { gap: 22px; } }
+@media (min-width: 700px) {
+  .sg-fp-scroll {
+    gap: 22px;
+    max-width: var(--sg-container, 1280px);
+    margin: 0 auto;
+    padding: 4px var(--sg-gutter, 28px) 12px;
+  }
+}
 .sg-fp-scroll .sg-prod-card {
-  flex: 0 0 72%;
-  max-width: 300px;
+  flex: 0 0 78%;
+  max-width: 320px;
   scroll-snap-align: start;
 }
 @media (min-width: 700px) { .sg-fp-scroll .sg-prod-card { flex: 0 0 32%; } }
@@ -131,22 +141,93 @@
   display: grid;
   grid-template-columns: repeat(2, 1fr);
   gap: 16px 12px;
-  max-width: var(--sg-container);
+  max-width: var(--sg-container, 1280px);
   margin: 0 auto;
-  padding: 0 var(--sg-gutter);
+  padding: 0 16px;
 }
-@media (min-width: 700px) { .sg-fp-grid { grid-template-columns: repeat(3, 1fr); gap: 32px 20px; } }
+@media (min-width: 700px) { .sg-fp-grid { grid-template-columns: repeat(3, 1fr); gap: 32px 20px; padding: 0 var(--sg-gutter, 28px); } }
 @media (min-width: 1100px) { .sg-fp-grid { grid-template-columns: repeat(4, 1fr); gap: 40px 28px; } }
 
 .sg-fp-view-all {
   text-align: center;
   margin-top: 40px;
-  max-width: var(--sg-container);
+  max-width: var(--sg-container, 1280px);
   margin-left: auto;
   margin-right: auto;
-  padding: 0 var(--sg-gutter);
+  padding: 0 var(--sg-gutter, 28px);
 }
+
+.sg-prod-img { display: block; position: relative; aspect-ratio: 1/1; background: #f5efe3; overflow: hidden; border-radius: 12px; }
+.sg-prod-img img { width: 100%; height: 100%; object-fit: cover; display: block; transition: transform .35s; }
+.sg-prod-card:hover .sg-prod-img img { transform: scale(1.04); }
+.sg-prod-badges { position: absolute; top: 10px; left: 10px; display: flex; flex-direction: column; gap: 6px; z-index: 2; }
+.sg-prod-badge { font-size: 10px; padding: 4px 10px; border-radius: 100px; font-weight: 600; letter-spacing: .04em; background: #4A3D2F; color: #fff; }
+.sg-prod-badge.save { background: #E8845A; }
+.sg-prod-badge.new { background: #F0D288; color: #4A3D2F; }
+
+.sg-prod-atc {
+  display: flex; align-items: center; justify-content: center; gap: 8px;
+  width: 100%;
+  margin-top: 12px;
+  padding: 12px 16px;
+  background: #4A3D2F;
+  color: #fff;
+  border: 1px solid #4A3D2F;
+  border-radius: 100px;
+  font-size: 13px;
+  font-weight: 600;
+  letter-spacing: .04em;
+  font-family: inherit;
+  cursor: pointer;
+  transition: background .2s, transform .15s;
+}
+.sg-prod-atc:hover { background: #3D3833; transform: translateY(-1px); }
+.sg-prod-atc:disabled, .sg-prod-atc--soldout { background: #c8c3bc; border-color: #c8c3bc; cursor: not-allowed; transform: none; }
+.sg-prod-atc svg { width: 16px; height: 16px; }
+.sg-atc-form { margin: 0; padding: 0; }
+
+.sg-prod-rating { font-size: 12px; color: #6f655a; margin: 10px 0 6px; display: flex; align-items: center; gap: 6px; }
+.sg-prod-rating .stars { color: #E8B43A; letter-spacing: 1px; }
+.sg-prod-rating strong { color: #4A3D2F; font-weight: 700; }
+.sg-prod-title { font-size: 15px; font-weight: 600; color: #4A3D2F; margin-bottom: 4px; line-height: 1.3; }
+.sg-prod-title a { color: inherit; text-decoration: none; }
+.sg-prod-variants { font-size: 12px; color: #8B8278; margin-bottom: 8px; }
+.sg-prod-price-row { display: flex; align-items: baseline; gap: 8px; flex-wrap: wrap; }
+.sg-prod-price { font-size: 17px; font-weight: 700; color: #4A3D2F; }
+.sg-prod-mrp { font-size: 13px; text-decoration: line-through; color: #b0a89c; }
+.sg-prod-off { font-size: 11px; color: #E8845A; font-weight: 700; }
 </style>
+
+<script>
+(function() {
+  if (window.__sgAtcInit) return;
+  window.__sgAtcInit = true;
+  document.addEventListener('submit', async function(e) {
+    var form = e.target.closest('[data-sg-atc-form]');
+    if (!form) return;
+    e.preventDefault();
+    var btn = form.querySelector('button[type=submit]');
+    var orig = btn ? btn.innerHTML : '';
+    if (btn) { btn.disabled = true; btn.innerHTML = 'Adding...'; }
+    try {
+      var fd = new FormData(form);
+      var res = await fetch('/cart/add.js', { method: 'POST', body: fd, headers: { 'Accept': 'application/json' } });
+      if (!res.ok) throw new Error('add-failed');
+      // Try to open cart drawer if present
+      var drawer = document.querySelector('[data-sg-cart-drawer], cart-drawer-component, #cart-drawer, .cart-drawer');
+      if (drawer && typeof drawer.show === 'function') drawer.show();
+      else if (window.SGCartDrawer && typeof window.SGCartDrawer.open === 'function') window.SGCartDrawer.open();
+      else document.dispatchEvent(new CustomEvent('cart:open'));
+      // Trigger Shopify cart update event
+      document.dispatchEvent(new CustomEvent('cart:refresh'));
+      if (btn) { btn.innerHTML = '✓ Added'; setTimeout(function(){ btn.innerHTML = orig; btn.disabled = false; }, 1500); }
+    } catch (err) {
+      if (btn) { btn.innerHTML = orig; btn.disabled = false; }
+      console.error('[sg-atc]', err);
+    }
+  });
+})();
+</script>
 
 {% schema %}
 {
