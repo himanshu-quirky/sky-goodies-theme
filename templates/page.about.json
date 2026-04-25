@@ -744,9 +744,8 @@
         "text_MA6FzQ": {
           "type": "text",
           "name": "t:names.text",
-          "disabled": true,
           "settings": {
-            "text": "<p>Sky Goodies’ products have been featured across the world in top design and art blogs, namely, babble.com, colossal.com, mentalfloss.com, buzzfeed.com, huffingtonpost, papercrave.com, etsy.com, etc. We have also been featured in print by premier magazines like Vogue Magazine, Brand Magazine (Shanghai), Lonely Planet Magazine, Elle Decor Magazine, Printing Friends Magazine (Sweden) and local newspapers in India. We are fortunate to have received over 1000 5-Star reviews from our customers across the world. (<a href=\"https://www.etsy.com/in-en/shop/SkyGoodies/reviews\" target=\"_blank\">https://www.etsy.com/in-en/shop/SkyGoodies/reviews</a>)</p>",
+            "text": "<p>A few years ago, the Victoria & Albert Museum had curated an exhibit called ‘The Power of Making’. It really expresses what Sky Goodies believes in, so we quote from one of their curators below:</p>",
             "width": "100%",
             "max_width": "none",
             "alignment": "left",
