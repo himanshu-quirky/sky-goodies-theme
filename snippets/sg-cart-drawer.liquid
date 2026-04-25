@@ -491,12 +491,27 @@
       .then(refreshCart)
       .then(function() {
         atc.textContent = atc.classList.contains('sg-ucard-add') ? '✓' : 'Added';
-        setTimeout(function() {
-          atc.textContent = originalText;
-          atc.disabled = false;
+        // Re-fetch the drawer body so the new line item shows up immediately.
+        return fetch(window.location.pathname + '?sections=sg-cart-drawer-fragment').catch(function(){return null;}).then(function(){
           openDrawer();
-          window.location.reload();
-        }, 400);
+          // Reload only the drawer items area via fragment fetch
+          return fetch('/cart?view=drawer').then(function(r){return r.text();}).then(function(html){
+            try {
+              var doc = new DOMParser().parseFromString(html, 'text/html');
+              var newItems = doc.querySelector('[data-sg-cart-items]');
+              var curItems = drawer.querySelector('[data-sg-cart-items]');
+              if (newItems && curItems) curItems.innerHTML = newItems.innerHTML;
+              var newSubtotal = doc.querySelector('[data-sg-cart-subtotal]');
+              var curSubtotal = drawer.querySelector('[data-sg-cart-subtotal]');
+              if (newSubtotal && curSubtotal) curSubtotal.innerHTML = newSubtotal.innerHTML;
+            } catch(e) {}
+          }).catch(function(){});
+        }).then(function(){
+          setTimeout(function() {
+            atc.textContent = originalText;
+            atc.disabled = false;
+          }, 800);
+        });
       })
       .catch(function() {
         atc.textContent = originalText;

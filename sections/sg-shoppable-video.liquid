@@ -36,24 +36,30 @@
       {%- elsif product.featured_image -%}
         {%- assign poster_url = product.featured_image | image_url: width: 600 -%}
       {%- endif -%}
-      <div class="sg-vid-card{% if video_file or block.settings.video_url != blank %} sg-vid-card--has-video{% endif %}"
+      {%- assign has_video_file = false -%}
+      {%- if video_file != blank and video_file.sources.size > 0 -%}{%- assign has_video_file = true -%}{%- endif -%}
+      {%- assign has_video_url = false -%}
+      {%- if block.settings.video_url != blank -%}
+        {%- assign url_lower = block.settings.video_url | downcase -%}
+        {%- if url_lower contains '.mp4' or url_lower contains '.webm' or url_lower contains '.mov' -%}
+          {%- assign has_video_url = true -%}
+        {%- endif -%}
+      {%- endif -%}
+      <div class="sg-vid-card{% if has_video_file or has_video_url %} sg-vid-card--has-video{% endif %}"
            {% if poster_url != '' %}style="background-image: url('{{ poster_url }}');"{% endif %}
            {{ block.shopify_attributes }}>
-        {%- if video_file -%}
-          <video class="sg-vid-media" autoplay muted loop playsinline preload="metadata"
+        {%- if has_video_file -%}
+          <video class="sg-vid-media" autoplay muted loop playsinline preload="auto"
                  {% if poster_url != '' %}poster="{{ poster_url }}"{% endif %}>
             {%- for source in video_file.sources -%}
-              <source src="{{ source.url }}" type="{{ source.mime_type }}">
+              <source src="{{ source.url }}"{% if source.mime_type %} type="{{ source.mime_type }}"{% endif %}>
             {%- endfor -%}
           </video>
-        {%- elsif block.settings.video_url != blank -%}
-          {%- assign url = block.settings.video_url | downcase -%}
-          {%- if url contains '.mp4' or url contains '.webm' or url contains '.mov' -%}
-            <video class="sg-vid-media" autoplay muted loop playsinline preload="metadata"
-                   {% if poster_url != '' %}poster="{{ poster_url }}"{% endif %}>
-              <source src="{{ block.settings.video_url }}">
-            </video>
-          {%- endif -%}
+        {%- elsif has_video_url -%}
+          <video class="sg-vid-media" autoplay muted loop playsinline preload="auto"
+                 {% if poster_url != '' %}poster="{{ poster_url }}"{% endif %}>
+            <source src="{{ block.settings.video_url }}">
+          </video>
         {%- endif -%}
         {%- if block.settings.likes != blank -%}
           <div class="sg-vid-likes">
@@ -183,6 +189,31 @@
 }
 .sg-vid-likes svg { width: 12px; height: 12px; }
 </style>
+
+<script>
+(function() {
+  if (window.__sgVidAutoplayInit) return;
+  window.__sgVidAutoplayInit = true;
+  function tryPlay() {
+    document.querySelectorAll('.sg-vid-media').forEach(function(v) {
+      v.muted = true;
+      v.setAttribute('muted', '');
+      v.setAttribute('playsinline', '');
+      var p = v.play();
+      if (p && p.catch) p.catch(function(){});
+    });
+  }
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', tryPlay);
+  } else {
+    tryPlay();
+  }
+  // Retry on first user interaction (mobile fallback)
+  ['click','touchstart','scroll'].forEach(function(evt) {
+    window.addEventListener(evt, tryPlay, { once: true, passive: true });
+  });
+})();
+</script>
 
 {% schema %}
 {

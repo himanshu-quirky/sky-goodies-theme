@@ -309,3 +309,123 @@ button{font-family:var(--bd);cursor:pointer;border:none;outline:none;background:
   .kits__grid{grid-template-columns:1fr 1fr}
   .kits__grid .pc,.diy__grid .pc{min-width:unset;max-width:unset;width:100%}
 }
+
+/* =================================================================
+   SG — Horizon overrides (announcement bar, search, mega menu)
+   ================================================================= */
+
+/* Announcement bar: peach background, center-align text, orange-dark color */
+.shopify-section-group-header-group .announcement-bar,
+.shopify-section-group-header-group .announcement-bar.section,
+section[id*="header_announcements"] .announcement-bar {
+  background: #FCEEE6 !important;
+  color: #D26939 !important;
+  text-align: center !important;
+  border-bottom: 1px solid #F8DCCA !important;
+}
+.shopify-section-group-header-group .announcement-bar a,
+section[id*="header_announcements"] .announcement-bar a {
+  color: #D26939 !important;
+  text-decoration: underline;
+  text-underline-offset: 3px;
+}
+.shopify-section-group-header-group .announcement-bar a:hover { color: #B0521D !important; }
+.shopify-section-group-header-group .announcement-bar__slides,
+.shopify-section-group-header-group .announcement-bar__slider {
+  text-align: center !important;
+  justify-content: center !important;
+}
+.shopify-section-group-header-group .announcement-bar__slide {
+  text-align: center !important;
+  justify-content: center !important;
+  width: 100% !important;
+}
+.shopify-section-group-header-group .announcement-bar__slide-content,
+.shopify-section-group-header-group .announcement-bar__slide-text,
+.shopify-section-group-header-group .announcement-bar__inner {
+  text-align: center !important;
+  justify-content: center !important;
+  margin-left: auto !important;
+  margin-right: auto !important;
+}
+
+/* Search popup — keep centered on the screen */
+predictive-search-component[open],
+search-modal[open],
+.search-modal[open] {
+  inset: 0 !important;
+}
+.search-modal__content,
+.predictive-search,
+predictive-search-component .search-modal {
+  margin-left: auto !important;
+  margin-right: auto !important;
+  max-width: min(720px, 92vw) !important;
+  left: 50% !important;
+  right: auto !important;
+  transform: translateX(-50%) !important;
+}
+@media (min-width: 900px) {
+  .search-modal__content {
+    top: 80px !important;
+  }
+}
+
+/* Header mega menu — match v7 wireframe visual */
+.header-section .mega-menu,
+.header-section [data-mega-menu],
+.header-section .header-menu__mega-menu,
+.header-menu__mega-menu,
+.mega-menu {
+  background: #ffffff !important;
+  border-radius: 0 0 16px 16px !important;
+  border: 1px solid #ECE3D0 !important;
+  border-top: none !important;
+  box-shadow: 0 20px 40px -14px rgba(26,22,20,.15) !important;
+  padding: 32px !important;
+}
+.header-section .mega-menu .mega-menu__list,
+.header-section .header-menu__mega-menu-content {
+  display: grid !important;
+  grid-template-columns: repeat(4, minmax(0, 1fr)) !important;
+  gap: 28px !important;
+}
+.header-section .mega-menu h5,
+.header-section .mega-menu__heading {
+  font-family: 'Fraunces', serif !important;
+  font-style: italic !important;
+  font-size: 14px !important;
+  color: #C2562B !important;
+  border-bottom: 1px solid #ECE3D0 !important;
+  padding-bottom: 10px !important;
+  margin-bottom: 14px !important;
+}
+.header-section .mega-menu a {
+  font-size: 13.5px !important;
+  font-weight: 500 !important;
+  color: #6F5840 !important;
+  text-transform: none !important;
+  letter-spacing: 0 !important;
+  transition: color .15s, transform .15s !important;
+}
+.header-section .mega-menu a:hover {
+  color: #D26939 !important;
+  transform: translateX(3px);
+}
+
+/* Featured collection cards inside mega menu */
+.header-section .mega-menu__featured,
+.header-section .mega-menu__collection,
+.header-section .mega-menu__image-card {
+  aspect-ratio: 4 / 5 !important;
+  border-radius: 14px !important;
+  overflow: hidden !important;
+  position: relative !important;
+}
+.header-section .mega-menu__featured img,
+.header-section .mega-menu__collection img {
+  width: 100% !important;
+  height: 100% !important;
+  object-fit: cover !important;
+}
+

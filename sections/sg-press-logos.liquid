@@ -10,21 +10,70 @@
   }
 {%- endstyle -%}
 
+{%- assign row1_blocks = section.blocks | where: 'settings.row', '1' -%}
+{%- assign row2_blocks = section.blocks | where: 'settings.row', '2' -%}
+{%- assign all_blocks = section.blocks -%}
+{%- if row2_blocks.size == 0 -%}
+  {%- comment -%} If user hasn't tagged blocks, split in half {%- endcomment -%}
+  {%- assign half = all_blocks.size | divided_by: 2 -%}
+{%- endif -%}
+
 <section class="sg-root sg-press-{{ section.id }}" {{ section.shopify_attributes }}>
   {%- if section.settings.label != blank -%}
     <span class="sg-press-label">— {{ section.settings.label }} —</span>
   {%- endif -%}
-  <div class="sg-press-logos">
-    <div class="sg-press-track">
-      {%- for block in section.blocks -%}
-        <span class="{{ block.settings.style }}" {{ block.shopify_attributes }}>{{ block.settings.name }}</span>
-      {%- endfor -%}
-      {%- comment -%} duplicate set for seamless infinite scroll on mobile {%- endcomment -%}
-      {%- for block in section.blocks -%}
-        <span class="{{ block.settings.style }}" aria-hidden="true">{{ block.settings.name }}</span>
-      {%- endfor -%}
+
+  {%- comment -%} ROW 1 — scroll right→left {%- endcomment -%}
+  <div class="sg-press-marquee">
+    <div class="sg-press-track sg-press-track--ltr">
+      {%- if row2_blocks.size > 0 -%}
+        {%- for block in row1_blocks -%}
+          <span class="{{ block.settings.style }}" {{ block.shopify_attributes }}>{{ block.settings.name }}</span>
+        {%- endfor -%}
+        {%- for block in row1_blocks -%}
+          <span class="{{ block.settings.style }}" aria-hidden="true">{{ block.settings.name }}</span>
+        {%- endfor -%}
+      {%- else -%}
+        {%- for block in all_blocks -%}
+          {%- if forloop.index0 < half -%}
+            <span class="{{ block.settings.style }}" {{ block.shopify_attributes }}>{{ block.settings.name }}</span>
+          {%- endif -%}
+        {%- endfor -%}
+        {%- for block in all_blocks -%}
+          {%- if forloop.index0 < half -%}
+            <span class="{{ block.settings.style }}" aria-hidden="true">{{ block.settings.name }}</span>
+          {%- endif -%}
+        {%- endfor -%}
+      {%- endif -%}
     </div>
   </div>
+
+  {%- comment -%} ROW 2 — scroll left→right (only if there are enough blocks) {%- endcomment -%}
+  {%- if all_blocks.size >= 4 -%}
+    <div class="sg-press-marquee sg-press-marquee--row2">
+      <div class="sg-press-track sg-press-track--rtl">
+        {%- if row2_blocks.size > 0 -%}
+          {%- for block in row2_blocks -%}
+            <span class="{{ block.settings.style }}" {{ block.shopify_attributes }}>{{ block.settings.name }}</span>
+          {%- endfor -%}
+          {%- for block in row2_blocks -%}
+            <span class="{{ block.settings.style }}" aria-hidden="true">{{ block.settings.name }}</span>
+          {%- endfor -%}
+        {%- else -%}
+          {%- for block in all_blocks -%}
+            {%- if forloop.index0 >= half -%}
+              <span class="{{ block.settings.style }}" {{ block.shopify_attributes }}>{{ block.settings.name }}</span>
+            {%- endif -%}
+          {%- endfor -%}
+          {%- for block in all_blocks -%}
+            {%- if forloop.index0 >= half -%}
+              <span class="{{ block.settings.style }}" aria-hidden="true">{{ block.settings.name }}</span>
+            {%- endif -%}
+          {%- endfor -%}
+        {%- endif -%}
+      </div>
+    </div>
+  {%- endif -%}
 </section>
 
 <style>
@@ -38,56 +87,50 @@
   margin-bottom: 18px;
   display: block;
 }
-.sg-press-logos {
-  max-width: var(--sg-container);
-  margin: 0 auto;
+.sg-press-marquee {
   overflow: hidden;
   position: relative;
-  -webkit-mask-image: linear-gradient(90deg, transparent, #000 8%, #000 92%, transparent);
-          mask-image: linear-gradient(90deg, transparent, #000 8%, #000 92%, transparent);
+  -webkit-mask-image: linear-gradient(90deg, transparent, #000 6%, #000 94%, transparent);
+          mask-image: linear-gradient(90deg, transparent, #000 6%, #000 94%, transparent);
 }
+.sg-press-marquee--row2 { margin-top: 16px; }
 .sg-press-track {
   display: flex;
   gap: 42px;
   align-items: center;
   width: max-content;
-  animation: sg-press-marquee 28s linear infinite;
+  animation: sg-press-ltr 35s linear infinite;
 }
-@media (min-width: 900px) {
-  .sg-press-logos {
-    padding: 0 var(--sg-gutter);
-    -webkit-mask-image: none;
-            mask-image: none;
-  }
-  .sg-press-track {
-    width: 100%;
-    justify-content: center;
-    flex-wrap: wrap;
-    animation: none;
-  }
-  .sg-press-track > span[aria-hidden="true"] { display: none; }
-}
-@keyframes sg-press-marquee {
-  0% { transform: translateX(0); }
-  100% { transform: translateX(-50%); }
-}
-.sg-press-logos span {
+.sg-press-track--rtl { animation: sg-press-rtl 35s linear infinite; }
+.sg-press-track > span {
   font-family: var(--sg-display);
   font-weight: 400;
-  font-size: 20px;
+  font-size: 22px;
   color: var(--sg-brown);
   opacity: 0.55;
   transition: opacity .2s;
   letter-spacing: 0.01em;
+  flex-shrink: 0;
 }
-.sg-press-logos span:hover { opacity: 1; }
-.sg-press-logos span.italic { font-style: italic; font-weight: 500; }
-.sg-press-logos span.sans {
+.sg-press-track > span:hover { opacity: 1; }
+.sg-press-track > span.italic { font-style: italic; font-weight: 500; }
+.sg-press-track > span.sans {
   font-family: var(--sg-sans);
   font-size: 12px;
   font-weight: 600;
   letter-spacing: 0.22em;
   text-transform: uppercase;
+}
+@keyframes sg-press-ltr {
+  0%   { transform: translateX(0); }
+  100% { transform: translateX(-50%); }
+}
+@keyframes sg-press-rtl {
+  0%   { transform: translateX(-50%); }
+  100% { transform: translateX(0); }
+}
+@media (prefers-reduced-motion: reduce) {
+  .sg-press-track { animation: none; justify-content: center; flex-wrap: wrap; width: 100%; }
 }
 </style>
 
@@ -97,21 +140,26 @@
   "tag": "section",
   "class": "section-sg-press-logos",
   "settings": [
-    { "type": "text", "id": "label", "label": "Eyebrow label", "default": "As featured in" },
+    { "type": "text", "id": "label", "label": "Label above logos", "default": "As featured in" },
     { "type": "color", "id": "bg_color", "label": "Background", "default": "#FAF6EC" },
-    { "type": "range", "id": "padding", "label": "Vertical padding", "min": 16, "max": 120, "step": 4, "default": 32 }
+    { "type": "range", "id": "padding", "label": "Vertical padding", "min": 16, "max": 100, "step": 4, "default": 32 },
+    { "type": "paragraph", "content": "Add as many logos as you like. Mark each with row 1 or row 2 to control which marquee they appear in. If you don't, blocks will be split in half automatically." }
   ],
-  "max_blocks": 12,
+  "max_blocks": 30,
   "blocks": [
     {
       "type": "logo",
-      "name": "Publication",
+      "name": "Logo",
       "settings": [
-        { "type": "text", "id": "name", "label": "Name", "default": "Vogue" },
+        { "type": "text", "id": "name", "label": "Publication name", "default": "Vogue" },
         { "type": "select", "id": "style", "label": "Style", "options": [
           { "value": "italic", "label": "Italic serif" },
-          { "value": "sans", "label": "All caps sans" }
-        ], "default": "italic" }
+          { "value": "sans", "label": "Uppercase sans" }
+        ], "default": "italic" },
+        { "type": "select", "id": "row", "label": "Marquee row", "options": [
+          { "value": "1", "label": "Row 1 (scrolls right → left)" },
+          { "value": "2", "label": "Row 2 (scrolls left → right)" }
+        ], "default": "1" }
       ]
     }
   ],
@@ -119,13 +167,13 @@
     {
       "name": "SG — Press Logos",
       "blocks": [
-        { "type": "logo", "settings": { "name": "Vogue", "style": "italic" } },
-        { "type": "logo", "settings": { "name": "Elle Decor", "style": "sans" } },
-        { "type": "logo", "settings": { "name": "Lonely Planet", "style": "italic" } },
-        { "type": "logo", "settings": { "name": "The Hindu", "style": "sans" } },
-        { "type": "logo", "settings": { "name": "Verve", "style": "italic" } },
-        { "type": "logo", "settings": { "name": "Mid-Day", "style": "sans" } },
-        { "type": "logo", "settings": { "name": "Architectural Digest", "style": "italic" } }
+        { "type": "logo", "settings": { "name": "Vogue", "style": "italic", "row": "1" } },
+        { "type": "logo", "settings": { "name": "Elle Decor", "style": "sans", "row": "1" } },
+        { "type": "logo", "settings": { "name": "Lonely Planet", "style": "italic", "row": "1" } },
+        { "type": "logo", "settings": { "name": "The Hindu", "style": "sans", "row": "1" } },
+        { "type": "logo", "settings": { "name": "Verve", "style": "italic", "row": "2" } },
+        { "type": "logo", "settings": { "name": "Mid-Day", "style": "sans", "row": "2" } },
+        { "type": "logo", "settings": { "name": "Architectural Digest", "style": "italic", "row": "2" } }
       ]
     }
   ]
