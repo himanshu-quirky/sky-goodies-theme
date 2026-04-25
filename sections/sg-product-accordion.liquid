@@ -1,0 +1,148 @@
+{{ 'sg-theme.css' | asset_url | stylesheet_tag }}
+
+{%- if section.blocks.size > 0 -%}
+  <section class="sg-root sg-acc sg-acc-{{ section.id }}" {{ section.shopify_attributes }}>
+    {%- if section.settings.heading != blank -%}
+      <h2 class="sg-acc__title">{{ section.settings.heading }}</h2>
+    {%- endif -%}
+
+    <div class="sg-acc__list">
+      {%- for block in section.blocks -%}
+        <details class="sg-acc__item" {% if block.settings.open_default %}open{% endif %} {{ block.shopify_attributes }}>
+          <summary class="sg-acc__head">
+            <span>{{ block.settings.label }}</span>
+            <span class="sg-acc__plus" aria-hidden="true">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
+                <line x1="12" y1="5" x2="12" y2="19"/>
+                <line x1="5" y1="12" x2="19" y2="12"/>
+              </svg>
+            </span>
+          </summary>
+          <div class="sg-acc__body">
+            <div class="sg-acc__inner">
+              {{ block.settings.body }}
+            </div>
+          </div>
+        </details>
+      {%- endfor -%}
+    </div>
+  </section>
+{%- endif -%}
+
+<style>
+  .sg-acc-{{ section.id }} {
+    max-width: var(--sg-container, 1280px);
+    margin: {{ section.settings.margin_top | default: 40 }}px auto 0;
+    padding: 0 var(--sg-gutter, 28px) {{ section.settings.padding_bottom | default: 24 }}px;
+  }
+  .sg-acc-{{ section.id }} .sg-acc__title {
+    font-family: var(--sg-display, 'Fraunces', serif);
+    font-style: italic;
+    font-weight: 500;
+    font-size: clamp(22px, 2.6vw, 30px);
+    color: var(--sg-ink, #4A3D2F);
+    margin: 0 0 16px;
+    letter-spacing: -0.01em;
+  }
+  .sg-acc-{{ section.id }} .sg-acc__list {
+    border-top: 1px solid var(--sg-line, #ECE3D0);
+  }
+  .sg-acc-{{ section.id }} .sg-acc__item {
+    border-bottom: 1px solid var(--sg-line, #ECE3D0);
+  }
+  .sg-acc-{{ section.id }} .sg-acc__head {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 16px;
+    padding: 18px 4px;
+    cursor: pointer;
+    font-family: var(--sg-display, 'Fraunces', serif);
+    font-style: italic;
+    font-weight: 500;
+    font-size: 18px;
+    color: var(--sg-ink, #4A3D2F);
+    list-style: none;
+    user-select: none;
+  }
+  .sg-acc-{{ section.id }} .sg-acc__head::-webkit-details-marker { display: none; }
+  .sg-acc-{{ section.id }} .sg-acc__plus {
+    width: 28px;
+    height: 28px;
+    border-radius: 50%;
+    background: #F5EFE3;
+    color: var(--sg-ink, #4A3D2F);
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+    transition: transform .25s ease, background .2s, color .2s;
+  }
+  .sg-acc-{{ section.id }} .sg-acc__plus svg { width: 12px; height: 12px; transition: transform .25s ease; }
+  .sg-acc-{{ section.id }} .sg-acc__item[open] .sg-acc__plus {
+    background: #E8845A;
+    color: #fff;
+  }
+  .sg-acc-{{ section.id }} .sg-acc__item[open] .sg-acc__plus svg {
+    transform: rotate(45deg);
+  }
+  .sg-acc-{{ section.id }} .sg-acc__body { overflow: hidden; }
+  .sg-acc-{{ section.id }} .sg-acc__inner {
+    padding: 0 4px 18px;
+    font-size: 14px;
+    color: #6F5840;
+    line-height: 1.65;
+  }
+  .sg-acc-{{ section.id }} .sg-acc__inner p { margin: 0 0 10px; }
+  .sg-acc-{{ section.id }} .sg-acc__inner p:last-child { margin-bottom: 0; }
+  .sg-acc-{{ section.id }} .sg-acc__inner ul,
+  .sg-acc-{{ section.id }} .sg-acc__inner ol {
+    margin: 0 0 10px 18px;
+    padding: 0;
+  }
+  @media (max-width: 600px) {
+    .sg-acc-{{ section.id }} .sg-acc__head { font-size: 16px; padding: 16px 2px; }
+    .sg-acc-{{ section.id }} .sg-acc__inner { font-size: 13.5px; padding: 0 2px 16px; }
+  }
+</style>
+
+{% schema %}
+{
+  "name": "SG — Product Accordion",
+  "tag": "section",
+  "class": "section-sg-product-accordion",
+  "settings": [
+    { "type": "text", "id": "heading", "label": "Section heading (optional)", "default": "" },
+    { "type": "header", "content": "Spacing" },
+    { "type": "range", "id": "margin_top", "label": "Top margin", "min": 0, "max": 120, "step": 4, "default": 40, "unit": "px" },
+    { "type": "range", "id": "padding_bottom", "label": "Bottom padding", "min": 0, "max": 120, "step": 4, "default": 24, "unit": "px" }
+  ],
+  "max_blocks": 8,
+  "blocks": [
+    {
+      "type": "row",
+      "name": "Accordion row",
+      "settings": [
+        { "type": "text", "id": "label", "label": "Heading", "default": "Product details" },
+        { "type": "richtext", "id": "body", "label": "Body content", "default": "<p>Add the description, dimensions, materials, etc.</p>" },
+        { "type": "checkbox", "id": "open_default", "label": "Open by default", "default": false }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "SG — Product Accordion",
+      "category": "Sky Goodies",
+      "blocks": [
+        { "type": "row", "settings": { "label": "Product details", "open_default": true, "body": "<p>Hand-illustrated by our Mumbai studio. FSC-certified paper. Pre-cut and pre-creased — fold and slot, no glue.</p>" } },
+        { "type": "row", "settings": { "label": "Shipping & returns", "body": "<p>Free shipping on orders above ₹1,000. COD across India. 7-day easy returns. Ships in 24 hours.</p>" } },
+        { "type": "row", "settings": { "label": "The story behind this kit", "body": "<p>Designed by NID-trained artists Amit and Misha, born on a dining table in Khar, Mumbai.</p>" } },
+        { "type": "row", "settings": { "label": "Gifting & bulk orders", "body": "<p>Every kit ships gift-ready in a kraft box. Bulk orders of 50+ get personalised packaging — write to us at hello@skygoodies.co.</p>" } }
+      ]
+    }
+  ],
+  "enabled_on": {
+    "templates": ["product"]
+  }
+}
+{% endschema %}

@@ -1,0 +1,73 @@
+{{ 'sg-theme.css' | asset_url | stylesheet_tag }}
+
+{%- comment -%}
+  Sold count badge for PDP. Reads `sold_this_week` metafield first
+  (custom.sold_this_week), falls back to a manual count from settings.
+{%- endcomment -%}
+
+{%- assign mf_sold = product.metafields.custom.sold_this_week.value -%}
+{%- assign mf_sold_alt = product.metafields.sg.sold_this_week.value -%}
+{%- assign sold = section.settings.fallback_count -%}
+{%- if mf_sold != blank -%}
+  {%- assign sold = mf_sold -%}
+{%- elsif mf_sold_alt != blank -%}
+  {%- assign sold = mf_sold_alt -%}
+{%- endif -%}
+
+{%- if sold != blank and sold > 0 -%}
+  <div class="sg-root sg-sold sg-sold-{{ section.id }}" {{ section.shopify_attributes }}>
+    <span class="sg-sold__icon" aria-hidden="true">{{ section.settings.icon | default: '🔥' }}</span>
+    <span class="sg-sold__text">
+      <strong>{{ sold }}</strong> {{ section.settings.suffix_text | default: 'sold this week' }}
+    </span>
+  </div>
+{%- elsif section.settings.show_when_zero -%}
+  {%- comment -%} hidden by default if 0 {%- endcomment -%}
+{%- endif -%}
+
+<style>
+  .sg-sold-{{ section.id }} {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    background: {{ section.settings.bg_color | default: '#FCEEE6' }};
+    color: {{ section.settings.text_color | default: '#C2562B' }};
+    padding: 7px 14px;
+    border-radius: 100px;
+    font-size: 13px;
+    font-weight: 600;
+    line-height: 1.2;
+    font-family: var(--sg-sans, 'Inter', sans-serif);
+  }
+  .sg-sold-{{ section.id }} strong { font-weight: 700; }
+  .sg-sold-{{ section.id }} .sg-sold__icon { font-size: 14px; }
+  @media (max-width: 600px) {
+    .sg-sold-{{ section.id }} { font-size: 12px; padding: 6px 12px; }
+  }
+</style>
+
+{% schema %}
+{
+  "name": "SG — Sold Count Badge",
+  "tag": "section",
+  "class": "section-sg-product-sold",
+  "settings": [
+    { "type": "paragraph", "content": "Reads from product metafield `custom.sold_this_week` (number). Falls back to the count below. Hidden if both are blank or 0." },
+    { "type": "text", "id": "icon", "label": "Leading icon (emoji)", "default": "🔥" },
+    { "type": "text", "id": "suffix_text", "label": "Text after the number", "default": "sold this week" },
+    { "type": "number", "id": "fallback_count", "label": "Fallback count (used when metafield is empty)" },
+    { "type": "header", "content": "Appearance" },
+    { "type": "color", "id": "bg_color", "label": "Background", "default": "#FCEEE6" },
+    { "type": "color", "id": "text_color", "label": "Text color", "default": "#C2562B" }
+  ],
+  "presets": [
+    {
+      "name": "SG — Sold Count Badge",
+      "category": "Sky Goodies"
+    }
+  ],
+  "enabled_on": {
+    "templates": ["product"]
+  }
+}
+{% endschema %}

@@ -1,0 +1,59 @@
+{{ 'sg-theme.css' | asset_url | stylesheet_tag }}
+
+{%- assign hook_text = section.settings.text -%}
+{%- if hook_text == blank and section.settings.use_first_paragraph -%}
+  {%- assign first_paragraph = product.description | split: '</p>' | first | strip_html -%}
+  {%- assign hook_text = first_paragraph -%}
+{%- endif -%}
+
+{%- if hook_text != blank -%}
+  <div class="sg-root sg-hook sg-hook-{{ section.id }}" {{ section.shopify_attributes }}>
+    <p>{{ hook_text }}</p>
+  </div>
+{%- endif -%}
+
+<style>
+  .sg-hook-{{ section.id }} {
+    background: {{ section.settings.bg_color | default: '#FCEEE6' }};
+    border-left: 3px solid {{ section.settings.accent_color | default: '#E8845A' }};
+    border-radius: 8px;
+    padding: 16px 20px;
+    margin: 4px 0;
+  }
+  .sg-hook-{{ section.id }} p {
+    margin: 0;
+    font-size: 14.5px;
+    color: {{ section.settings.text_color | default: '#6F5840' }};
+    line-height: 1.55;
+    font-family: var(--sg-sans, 'Inter', sans-serif);
+  }
+  @media (max-width: 600px) {
+    .sg-hook-{{ section.id }} { padding: 14px 16px; }
+    .sg-hook-{{ section.id }} p { font-size: 13.5px; }
+  }
+</style>
+
+{% schema %}
+{
+  "name": "SG — Product Hook",
+  "tag": "section",
+  "class": "section-sg-product-hook",
+  "settings": [
+    { "type": "textarea", "id": "text", "label": "Hook text", "info": "A short evocative line about the product. Leave blank to auto-use the first paragraph of the product description." },
+    { "type": "checkbox", "id": "use_first_paragraph", "label": "If hook text above is empty, use the first paragraph of the product description", "default": true },
+    { "type": "header", "content": "Appearance" },
+    { "type": "color", "id": "bg_color", "label": "Background", "default": "#FCEEE6" },
+    { "type": "color", "id": "accent_color", "label": "Left border accent", "default": "#E8845A" },
+    { "type": "color", "id": "text_color", "label": "Text color", "default": "#6F5840" }
+  ],
+  "presets": [
+    {
+      "name": "SG — Product Hook",
+      "category": "Sky Goodies"
+    }
+  ],
+  "enabled_on": {
+    "templates": ["product"]
+  }
+}
+{% endschema %}

@@ -1,0 +1,91 @@
+{{ 'sg-theme.css' | asset_url | stylesheet_tag }}
+
+{%- if section.blocks.size > 0 -%}
+  <ul class="sg-root sg-bullets sg-bullets-{{ section.id }}" {{ section.shopify_attributes }}>
+    {%- for block in section.blocks -%}
+      <li {{ block.shopify_attributes }}>
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" aria-hidden="true">
+          <polyline points="20 6 9 17 4 12"/>
+        </svg>
+        <span>
+          {%- if block.settings.label != blank -%}<strong>{{ block.settings.label }}</strong>{%- if block.settings.text != blank -%} — {%- endif -%}{%- endif -%}
+          {{ block.settings.text }}
+        </span>
+      </li>
+    {%- endfor -%}
+  </ul>
+{%- endif -%}
+
+<style>
+  .sg-bullets-{{ section.id }} {
+    list-style: none;
+    padding: 0;
+    margin: 4px 0;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+  }
+  .sg-bullets-{{ section.id }} li {
+    display: flex;
+    align-items: flex-start;
+    gap: 10px;
+    font-size: 14px;
+    color: {{ section.settings.text_color | default: '#6F5840' }};
+    line-height: 1.5;
+    font-family: var(--sg-sans, 'Inter', sans-serif);
+  }
+  .sg-bullets-{{ section.id }} li svg {
+    width: 18px;
+    height: 18px;
+    flex-shrink: 0;
+    color: {{ section.settings.icon_color | default: '#E8845A' }};
+    margin-top: 2px;
+  }
+  .sg-bullets-{{ section.id }} li strong {
+    color: {{ section.settings.label_color | default: '#4A3D2F' }};
+    font-weight: 600;
+  }
+  @media (max-width: 600px) {
+    .sg-bullets-{{ section.id }} li { font-size: 13.5px; gap: 8px; }
+  }
+</style>
+
+{% schema %}
+{
+  "name": "SG — Feature Bullets",
+  "tag": "section",
+  "class": "section-sg-product-bullets",
+  "settings": [
+    { "type": "header", "content": "Appearance" },
+    { "type": "color", "id": "icon_color", "label": "Checkmark color", "default": "#E8845A" },
+    { "type": "color", "id": "label_color", "label": "Label (bold) color", "default": "#4A3D2F" },
+    { "type": "color", "id": "text_color", "label": "Text color", "default": "#6F5840" }
+  ],
+  "max_blocks": 12,
+  "blocks": [
+    {
+      "type": "bullet",
+      "name": "Bullet",
+      "settings": [
+        { "type": "text", "id": "label", "label": "Bold label (optional)", "default": "12 unique species" },
+        { "type": "text", "id": "text", "label": "Text", "default": "each with its own story card" }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "SG — Feature Bullets",
+      "category": "Sky Goodies",
+      "blocks": [
+        { "type": "bullet", "settings": { "label": "12 unique species", "text": "each with its own story card" } },
+        { "type": "bullet", "settings": { "label": "Ages 7+", "text": "no glue, no mess · fold-and-slot" } },
+        { "type": "bullet", "settings": { "label": "FSC-certified recycled paper", "text": "biodegradable packaging" } },
+        { "type": "bullet", "settings": { "label": "Ships gift-ready", "text": "kraft box and species guide" } }
+      ]
+    }
+  ],
+  "enabled_on": {
+    "templates": ["product"]
+  }
+}
+{% endschema %}
