@@ -307,6 +307,7 @@
         "vid-4",
         "vid-5"
       ],
+      "disabled": true,
       "settings": {
         "eyebrow": "Watch & shop",
         "heading_plain": "See them",
