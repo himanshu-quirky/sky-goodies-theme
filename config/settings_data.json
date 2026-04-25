@@ -678,5 +678,10 @@
         }
       }
     }
+  },
+  "platform_customizations": {
+    "custom_css": [
+      ".sg-prod-sticky {display:none;}"
+    ]
   }
 }
