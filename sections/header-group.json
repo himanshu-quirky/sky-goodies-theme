@@ -44,15 +44,6 @@
     "sg_header": {
       "type": "sg-header-mega",
       "blocks": {
-        "feat-1": {
-          "type": "mega_feature",
-          "settings": {
-            "menu_label": "Paper Kits",
-            "tag": "bestseller",
-            "title": "Endangered Animals BOX SET",
-            "link": ""
-          }
-        },
         "feat-2": {
           "type": "mega_feature",
           "settings": {
@@ -82,7 +73,6 @@
         }
       },
       "block_order": [
-        "feat-1",
         "feat-2",
         "feat-3",
         "feat-4"
