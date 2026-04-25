@@ -11,6 +11,36 @@
   "type": "header",
   "name": "Header",
   "sections": {
+    "header_announcements_4jmnMA": {
+      "type": "header-announcements",
+      "blocks": {
+        "announcement_xdTAdT": {
+          "type": "_announcement",
+          "settings": {
+            "text": "Shop our latest arrivals!",
+            "link": "",
+            "font": "var(--font-body--family)",
+            "font_size": "1rem",
+            "weight": "",
+            "letter_spacing": "normal",
+            "case": "none"
+          },
+          "blocks": {}
+        }
+      },
+      "block_order": [
+        "announcement_xdTAdT"
+      ],
+      "name": "t:names.announcement_bar",
+      "settings": {
+        "speed": 5,
+        "section_width": "page-width",
+        "color_scheme": "",
+        "divider_width": 0,
+        "padding-block-start": 15,
+        "padding-block-end": 15
+      }
+    },
     "sg_header": {
       "type": "sg-header-mega",
       "blocks": {
@@ -83,41 +113,11 @@
         "logo_height": 48,
         "menu": "new-menu"
       }
-    },
-    "header_announcements_4jmnMA": {
-      "type": "header-announcements",
-      "blocks": {
-        "announcement_xdTAdT": {
-          "type": "_announcement",
-          "settings": {
-            "text": "Shop our latest arrivals!",
-            "link": "",
-            "font": "var(--font-body--family)",
-            "font_size": "1rem",
-            "weight": "",
-            "letter_spacing": "normal",
-            "case": "none"
-          },
-          "blocks": {}
-        }
-      },
-      "block_order": [
-        "announcement_xdTAdT"
-      ],
-      "name": "t:names.announcement_bar",
-      "settings": {
-        "speed": 5,
-        "section_width": "page-width",
-        "color_scheme": "",
-        "divider_width": 0,
-        "padding-block-start": 15,
-        "padding-block-end": 15
-      }
     }
   },
   "order": [
+    "header_announcements_4jmnMA",
     "sg_header",
-    "skygoodies_header_rdprRa",
-    "header_announcements_4jmnMA"
+    "skygoodies_header_rdprRa"
   ]
 }
