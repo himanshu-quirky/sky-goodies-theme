@@ -711,6 +711,96 @@
         "padding-block-start": 40,
         "padding-block-end": 40
       }
+    },
+    "section_67PeyG": {
+      "type": "section",
+      "blocks": {
+        "text_JD9qHc": {
+          "type": "text",
+          "name": "t:names.heading",
+          "settings": {
+            "text": "<h2>Our Philosophy</h2>",
+            "width": "fit-content",
+            "max_width": "normal",
+            "alignment": "left",
+            "type_preset": "rte",
+            "font": "var(--font-body--family)",
+            "font_size": "1rem",
+            "line_height": "normal",
+            "letter_spacing": "normal",
+            "case": "none",
+            "wrap": "pretty",
+            "color": "var(--color-foreground)",
+            "background": false,
+            "background_color": "#00000026",
+            "corner_radius": 0,
+            "padding-block-start": 0,
+            "padding-block-end": 0,
+            "padding-inline-start": 0,
+            "padding-inline-end": 0
+          },
+          "blocks": {}
+        },
+        "text_MA6FzQ": {
+          "type": "text",
+          "name": "t:names.text",
+          "disabled": true,
+          "settings": {
+            "text": "<p>Sky Goodies’ products have been featured across the world in top design and art blogs, namely, babble.com, colossal.com, mentalfloss.com, buzzfeed.com, huffingtonpost, papercrave.com, etsy.com, etc. We have also been featured in print by premier magazines like Vogue Magazine, Brand Magazine (Shanghai), Lonely Planet Magazine, Elle Decor Magazine, Printing Friends Magazine (Sweden) and local newspapers in India. We are fortunate to have received over 1000 5-Star reviews from our customers across the world. (<a href=\"https://www.etsy.com/in-en/shop/SkyGoodies/reviews\" target=\"_blank\">https://www.etsy.com/in-en/shop/SkyGoodies/reviews</a>)</p>",
+            "width": "100%",
+            "max_width": "none",
+            "alignment": "left",
+            "type_preset": "custom",
+            "font": "var(--font-body--family)",
+            "font_size": "1.125rem",
+            "line_height": "loose",
+            "letter_spacing": "loose",
+            "case": "none",
+            "wrap": "pretty",
+            "color": "var(--color-foreground)",
+            "background": false,
+            "background_color": "#00000026",
+            "corner_radius": 0,
+            "padding-block-start": 0,
+            "padding-block-end": 0,
+            "padding-inline-start": 0,
+            "padding-inline-end": 0
+          },
+          "blocks": {}
+        }
+      },
+      "block_order": [
+        "text_JD9qHc",
+        "text_MA6FzQ"
+      ],
+      "name": "t:names.rich_text_section",
+      "settings": {
+        "content_direction": "column",
+        "vertical_on_mobile": true,
+        "horizontal_alignment": "flex-start",
+        "vertical_alignment": "center",
+        "align_baseline": false,
+        "horizontal_alignment_flex_direction_column": "center",
+        "vertical_alignment_flex_direction_column": "center",
+        "gap": 25,
+        "section_width": "page-width",
+        "section_height": "",
+        "section_height_custom": 50,
+        "color_scheme": "",
+        "background_media": "none",
+        "video_position": "cover",
+        "background_image_position": "cover",
+        "border": "none",
+        "border_width": 1,
+        "border_opacity": 100,
+        "border_radius": 0,
+        "toggle_overlay": false,
+        "overlay_color": "#00000026",
+        "overlay_style": "solid",
+        "gradient_direction": "to top",
+        "padding-block-start": 48,
+        "padding-block-end": 48
+      }
     }
   },
   "order": [
@@ -720,6 +810,7 @@
     "section_8bre4z",
     "section_MQNdwY",
     "hero_xFJUfF",
-    "section_VnUbzN"
+    "section_VnUbzN",
+    "section_67PeyG"
   ]
 }
