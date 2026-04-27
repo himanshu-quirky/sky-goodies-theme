@@ -65,6 +65,16 @@
               {%- endif -%}
             </div>
 
+            {%- comment -%} Full-slide clickable link {%- endcomment -%}
+            {%- if block.settings.button_link != blank -%}
+              <a
+                href="{{ block.settings.button_link }}"
+                class="slideshow__full-link"
+                aria-label="{{ block.settings.heading | default: 'View' | escape }}"
+                tabindex="-1"
+              ></a>
+            {%- endif -%}
+
             {%- comment -%} Overlay {%- endcomment -%}
             {%- if block.settings.overlay_opacity > 0 -%}
               <div
