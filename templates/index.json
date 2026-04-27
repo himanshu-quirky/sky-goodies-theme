@@ -110,12 +110,46 @@
             "button_bg_color_2": "rgba(0,0,0,0)",
             "button_border_color_2": "#ffffff"
           }
+        },
+        "slide_4ef8rm": {
+          "type": "slide",
+          "settings": {
+            "image": "shopify://shop_images/2025-home-TRAVEL-horizontal-banner.jpg",
+            "image_mobile": "shopify://shop_images/2025-home-TRAVEL-vertical-banner-2.jpg",
+            "overlay_color": "rgba(0,0,0,0)",
+            "overlay_opacity": 30,
+            "content_position": "middle-left",
+            "text_alignment": "left",
+            "content_max_width": 560,
+            "subheading": "",
+            "subheading_size": 14,
+            "heading": "",
+            "heading_size": 52,
+            "heading_line_height": 58,
+            "description": "",
+            "description_size": 15,
+            "heading_color": "#ffffff",
+            "text_color": "#ffffff",
+            "button_label": "",
+            "button_link": "shopify://collections/the-best-traveling-gifts-artistic-souvenirs-of-india",
+            "button_style": "solid",
+            "button_text_color": "#ffffff",
+            "button_bg_color": "#1a1a1a",
+            "button_border_color": "#1a1a1a",
+            "button_label_2": "",
+            "button_link_2": "",
+            "button_style_2": "outline",
+            "button_text_color_2": "#ffffff",
+            "button_bg_color_2": "rgba(0,0,0,0)",
+            "button_border_color_2": "#ffffff"
+          }
         }
       },
       "block_order": [
         "slide_rmbUN4",
         "slide_FtWbeU",
-        "slide_N3dzJU"
+        "slide_N3dzJU",
+        "slide_4ef8rm"
       ],
       "name": "Slideshow",
       "settings": {
