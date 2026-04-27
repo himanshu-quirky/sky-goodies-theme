@@ -154,7 +154,7 @@
       "name": "Slideshow",
       "settings": {
         "autoplay": true,
-        "autoplay_speed": "5000",
+        "autoplay_speed": "6000",
         "transition_fade": false,
         "show_arrows": true,
         "show_dots": true,
