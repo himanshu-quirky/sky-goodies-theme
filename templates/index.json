@@ -1762,7 +1762,7 @@
         "cta_link": "",
         "bg_color": "#fceee6",
         "mobile_padding": 56,
-        "desktop_padding": 72
+        "desktop_padding": 64
       }
     },
     "sg_press": {
