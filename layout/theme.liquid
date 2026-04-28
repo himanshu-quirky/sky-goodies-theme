@@ -39,7 +39,7 @@
     <link rel="stylesheet" href="{{ 'skygoodies-custom.css' | asset_url }}">
     {{ 'sg-theme.css' | asset_url | stylesheet_tag }}
     <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=DM+Serif+Display:ital@0;1&display=swap" rel="stylesheet">
-    <meta name="referrer" content="no-referrer">
+    <meta name="referrer" content="strict-origin-when-cross-origin">
 
     {% if request.design_mode %}
       {%- render 'theme-editor' -%}
