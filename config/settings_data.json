@@ -45,6 +45,19 @@
         "type": "shopify://apps/instafeed/blocks/head-block/c447db20-095d-4a10-9725-b5977662c9d5",
         "disabled": false,
         "settings": {}
+      },
+      "2950567246721570496": {
+        "type": "shopify://apps/tabs-studio/blocks/global_embed_block/19980fb9-f2ca-4ada-ad36-c0364c3318b8",
+        "disabled": false,
+        "settings": {
+          "location": "auto",
+          "init_type": "default",
+          "init_selector": "",
+          "replace_contents": false,
+          "init_timing": "immediate",
+          "custom_script": "",
+          "custom_style": ""
+        }
       }
     },
     "color_schemes": {
