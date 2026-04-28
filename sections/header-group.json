@@ -17,6 +17,7 @@
         "announcement_Rypkz9": {
           "type": "_announcement",
           "name": "t:names.announcement",
+          "disabled": true,
           "settings": {
             "text": "Get 10% Off on your first order | Use Code: <strong>WELCOME10</strong>",
             "link": "",
