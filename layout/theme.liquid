@@ -174,5 +174,13 @@
     </script>
 
     {% render 'sg-cart-drawer' %}
+    <script>
+  // Auto-fix YouTube embeds: rewrite youtube.com to youtube-nocookie.com
+  document.addEventListener('DOMContentLoaded', function () {
+    document.querySelectorAll('iframe[src*="youtube.com/embed"]').forEach(function (iframe) {
+      iframe.src = iframe.src.replace('www.youtube.com', 'www.youtube-nocookie.com');
+    });
+  });
+</script>
   </body>
 </html>
