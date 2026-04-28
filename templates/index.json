@@ -854,7 +854,7 @@
               "type": "_product-list-text",
               "name": "t:names.collection_title",
               "settings": {
-                "text": "<h4>Fun & Educational Gifts For kids</h4>",
+                "text": "<h4>Kids Summer Special</h4>",
                 "width": "fit-content",
                 "max_width": "normal",
                 "alignment": "left",
