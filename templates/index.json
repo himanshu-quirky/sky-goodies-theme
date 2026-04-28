@@ -621,7 +621,7 @@
               "type": "_product-list-text",
               "name": "t:names.collection_title",
               "settings": {
-                "text": "<h2>The <em>Pooja & Festivals Edit</em></h2>",
+                "text": "<h2>DIY Paper Crafts</h2>",
                 "width": "fit-content",
                 "max_width": "normal",
                 "alignment": "left",
@@ -794,7 +794,7 @@
       },
       "name": "t:names.products_carousel",
       "settings": {
-        "collection": "thoughtful-gifts-for-kids",
+        "collection": "diy-papercraft-kits",
         "layout_type": "carousel",
         "carousel_on_mobile": false,
         "max_products": 6,
